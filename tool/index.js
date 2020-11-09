@@ -16,7 +16,7 @@ const adjust = (template, app) => ({
   name: app,
   repository: {
     url: GIT_ORIGIN,
-    stackfile: `${ STACKS_DIR }/${ app }/${ DOCKER_COMPOSE_FILE }`,
+    stackfile: `${STACKS_DIR}/${app}/${DOCKER_COMPOSE_FILE}`,
   },
   ...template,
 });
@@ -50,7 +50,7 @@ const extractEnv = content => {
   const raw = content.match(/\${.*:.*}.*#.*/gm);
 
   const env = raw.reverse().map(line => {
-    const [ name, defaultValue ] = line.match(/\${([^}]+)}/)[1].split`:`;
+    const [ name, defaultValue ] = line.match(/\${([^}]+)}/)[1].split`:-`;
     const [ , label ] = line.match(/\s#\s([^$]+)/);
 
     return {

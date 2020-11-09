@@ -10,8 +10,8 @@ services:
     image: portainer/portainer-ce
     restart: unless-stopped
     ports:
-      - ${PORT:9000}:9000 # WebUI Port
-      - ${EDGE_PORT:8000}:8000 # Edge Agent Port
+      - ${PORT:-9000}:9000 # WebUI Port
+      - ${EDGE_PORT:-8000}:8000 # Edge Agent Port
     volumes:
-      - ${DOCKER_SOCKET:/var/run/docker.sock}:/var/run/docker.sock # Docker socket path
-      - ${CONFIG:/appdata/portainer}:/data # Config path
+      - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock # Docker socket path
+      - ${CONFIG:-/appdata/portainer}:/data # Config path

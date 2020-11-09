@@ -10,9 +10,9 @@ services:
     image: ghcr.io/linuxserver/jackett
     restart: unless-stopped
     environment:
-      - TZ=${TZ:Europe/Chisinau} # Timezone
+      - TZ=${TZ:-Europe/Chisinau} # Timezone
     volumes:
-      - ${CONFIG:/appdata/jackett}:/config # Config path
-      - ${BLACKHOLE:/mnt/storage/downloads/torrents}:/downloads # Blackhole path
+      - ${CONFIG:-/appdata/jackett}:/config # Config path
+      - ${BLACKHOLE:-/mnt/storage/downloads/torrents}:/downloads # Blackhole path
     ports:
-      - ${PORT:9117}:9117 # WebUI Port
+      - ${PORT:-9117}:9117 # WebUI Port
