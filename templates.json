@@ -32,6 +32,47 @@
           "name": "TZ",
           "label": "Timezone",
           "default": "Europe/Chisinau"
+        },
+        {
+          "name": "PGID",
+          "label": "GroupID",
+          "default": "1000"
+        },
+        {
+          "name": "PUID",
+          "label": "UserID",
+          "default": "1000"
+        }
+      ]
+    },
+    {
+      "type": 2,
+      "name": "nginx-proxy-manager",
+      "repository": {
+        "url": "https://github.com/hobroker/nas-setup.git",
+        "stackfile": "stacks/nginx-proxy-manager/docker-stack.yml"
+      },
+      "title": "Tautulli",
+      "description": "Monitoring and tracking tool for Plex Media Server",
+      "logo": "https://raw.githubusercontent.com/Tautulli/Tautulli/master/data/interfaces/default/images/logo-circle.png",
+      "categories": [
+        "media"
+      ],
+      "env": [
+        {
+          "name": "PORT",
+          "label": "WebUI Port",
+          "default": "81"
+        },
+        {
+          "name": "HTTP_PORT",
+          "label": "HTTPS Port",
+          "default": "443"
+        },
+        {
+          "name": "HTTP_PORT",
+          "label": "HTTP Port",
+          "default": "80"
         }
       ]
     },
@@ -99,13 +140,13 @@
           "default": "Europe/Chisinau"
         },
         {
-          "name": "PUID",
-          "label": "UserID",
+          "name": "PGID",
+          "label": "GroupID",
           "default": "1000"
         },
         {
-          "name": "PGID",
-          "label": "GroupID",
+          "name": "PUID",
+          "label": "UserID",
           "default": "1000"
         }
       ]

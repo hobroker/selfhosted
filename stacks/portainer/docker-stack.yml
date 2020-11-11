@@ -1,7 +1,7 @@
 # title=Portainer
 # description=Management UI to easily manage different Docker environments
 # logo=https://raw.githubusercontent.com/portainer/portainer/develop/app/assets/ico/apple-touch-icon.png
-# categories=docker
+# categories=docker,network
 
 ---
 version: "3.2"

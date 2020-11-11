@@ -11,8 +11,8 @@ services:
     image: tautulli/tautulli
     restart: unless-stopped
     environment:
-      - PGID=${PGID:-1000} # GroupID
       - PUID=${PUID:-1000} # UserID
+      - PGID=${PGID:-1000} # GroupID
       - TZ=${TZ:-Europe/Chisinau} # Timezone
     volumes:
       - ${CONFIG_PATH}:/config # Contains Tautulli config and database

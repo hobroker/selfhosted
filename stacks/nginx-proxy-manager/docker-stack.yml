@@ -1,0 +1,22 @@
+# title=Nginx Proxy Manager
+# description=Container for managing Nginx proxy hosts with a simple, powerful interface
+# logo=https://raw.githubusercontent.com/jc21/nginx-proxy-manager/master/frontend/app-images/logo-256.png
+# categories=network
+
+---
+version: "3.2"
+services:
+  nginx-pm:
+    image: jc21/nginx-proxy-manager:2
+    restart: unless-stopped
+    ports:
+      - ${HTTP_PORT:-80}:80 # HTTP Port
+      - ${HTTP_PORT:-443}:443 # HTTPS Port
+      - ${PORT:-81}:81 # WebUI Port
+    environment:
+      DISABLE_IPV6: ${DISABLE_IPV6:-true}
+    volumes:
+      - ${CONFIG_JSON}:/app/config/production.json
+      - ${DB}:/app/npm.db
+      - ${DATA}:/data
+      - ${LETSENCRYPT}:/etc/letsencrypt
