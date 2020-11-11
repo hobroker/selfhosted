@@ -11,6 +11,8 @@ services:
     image: ghcr.io/linuxserver/jackett
     restart: unless-stopped
     environment:
+      - PGID=${PGID:-1000} # GroupID
+      - PUID=${PUID:-1000} # UserID
       - TZ=${TZ:-Europe/Chisinau} # Timezone
     volumes:
       - ${CONFIG}:/config # Config path
