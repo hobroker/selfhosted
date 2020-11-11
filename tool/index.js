@@ -3,7 +3,7 @@ const path = require('path');
 const { exec, identity, invariant } = require('./util');
 
 const STACKS_DIR = 'stacks';
-const DOCKER_COMPOSE_FILE = 'docker-compose.yml';
+const DOCKER_COMPOSE_FILE = 'docker-stack.yml';
 const FINAL_TEMPLATES_FILE = 'templates.json';
 
 const GIT_ORIGIN = exec('git config --get remote.origin.url');
@@ -12,7 +12,7 @@ const STACKS_PATH = path.join(ROOT_PATH, STACKS_DIR);
 const FINAL_TEMPLATES_PATH = path.join(ROOT_PATH, FINAL_TEMPLATES_FILE);
 
 const adjust = (template, app) => ({
-  type: 3,
+  type: 2,
   name: app,
   repository: {
     url: GIT_ORIGIN,

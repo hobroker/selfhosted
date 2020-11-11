@@ -2,11 +2,11 @@
   "version": "2",
   "templates": [
     {
-      "type": 3,
+      "type": 2,
       "name": "jackett",
       "repository": {
         "url": "https://github.com/hobroker/nas-setup.git",
-        "stackfile": "stacks/jackett/docker-compose.yml"
+        "stackfile": "stacks/jackett/docker-stack.yml"
       },
       "title": "Jackett",
       "description": "API Support for your favorite torrent trackers",
@@ -38,11 +38,11 @@
       ]
     },
     {
-      "type": 3,
+      "type": 2,
       "name": "portainer",
       "repository": {
         "url": "https://github.com/hobroker/nas-setup.git",
-        "stackfile": "stacks/portainer/docker-compose.yml"
+        "stackfile": "stacks/portainer/docker-stack.yml"
       },
       "title": "Portainer",
       "description": "Management UI to easily manage different Docker environments",
@@ -74,11 +74,11 @@
       ]
     },
     {
-      "type": 3,
+      "type": 2,
       "name": "tautulli",
       "repository": {
         "url": "https://github.com/hobroker/nas-setup.git",
-        "stackfile": "stacks/tautulli/docker-compose.yml"
+        "stackfile": "stacks/tautulli/docker-stack.yml"
       },
       "title": "Tautulli",
       "description": "Monitoring and tracking tool for Plex Media Server",
