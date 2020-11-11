@@ -16,7 +16,7 @@ services:
       - TZ=${TZ:-Europe/Chisinau} # Timezone
     volumes:
       - ${CONFIG_PATH:-/appdata/sonarr}:/config # App data
-      - ${TV_PATH:-/mnt/storage/tv-shows}:/tv # The TV Shows location
-      - ${DOWNLOADS_PATH:-/mnt/storage/downloads}:/downloads # The downloads location
+      - ${TV_PATH:-/storage/tv-shows}:/tv # The TV Shows location
+      - ${DOWNLOADS_PATH:-/storage/downloads}:/downloads # The downloads location
     ports:
       - ${PORT:-8989}:8989 # WebUI Port

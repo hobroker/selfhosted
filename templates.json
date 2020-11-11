@@ -38,7 +38,7 @@
         {
           "name": "BLACKHOLE",
           "label": "Blackhole path",
-          "default": "/mnt/storage/downloads/torrents/"
+          "default": "/storage/downloads/torrents/"
         },
         {
           "name": "PORT",
@@ -208,7 +208,7 @@
         {
           "name": "DOWNLOADS_PATH",
           "label": "Downloads path",
-          "default": "/mnt/storage/downloads"
+          "default": "/storage/downloads"
         },
         {
           "name": "TCP_PORT",
@@ -295,12 +295,12 @@
         {
           "name": "TV_PATH",
           "label": "The TV Shows location",
-          "default": "/mnt/storage/tv-shows"
+          "default": "/storage/tv-shows"
         },
         {
           "name": "DOWNLOADS_PATH",
           "label": "The downloads location",
-          "default": "/mnt/storage/downloads"
+          "default": "/storage/downloads"
         },
         {
           "name": "PORT",

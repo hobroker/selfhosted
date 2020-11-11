@@ -16,7 +16,7 @@ services:
       - TZ=${TZ:-Europe/Chisinau} # Timezone
     volumes:
       - /appdata/radarr:/config # App data
-      - /mnt/storage/movies:/movies # The Movies location
-      - /mnt/storage/downloads:/downloads # The downloads location
+      - /storage/movies:/movies # The Movies location
+      - /storage/downloads:/downloads # The downloads location
     ports:
       - ${PORT:-7878}:7878 # WebUI Port

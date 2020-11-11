@@ -17,7 +17,7 @@ services:
       - TZ=${TZ:-Europe/Chisinau} # Timezone
     volumes:
       - ${CONFIG_PATH:-/appdata/qbittorrent}:/config # App data
-      - ${DOWNLOADS_PATH:-/mnt/storage/downloads}:/downloads # Downloads path
+      - ${DOWNLOADS_PATH:-/storage/downloads}:/downloads # Downloads path
     ports:
       - ${WEBUI_PORT}:${WEBUI_PORT}
       - ${TCP_PORT:-6881}:6881 # TCP connection port
