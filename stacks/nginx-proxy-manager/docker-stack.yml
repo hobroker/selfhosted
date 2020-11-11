@@ -20,20 +20,14 @@ services:
         protocol: tcp
         mode: host
     environment:
-      DISABLE_IPV6: ${DISABLE_IPV6:-true}
+      DISABLE_IPV6: ${DISABLE_IPV6:-true} # Disable IPv6
     volumes:
       - ${CONFIG_JSON:-/appdata/nginx-proxy-manager/config.json}:/app/config/production.json # JSON Config
       - ${DB:-/appdata/nginx-proxy-manager/npm.db}:/app/npm.db # Database
       - ${DATA:-/appdata/nginx-proxy-manager/data}:/data # App data
       - ${LETSENCRYPT:-/appdata/nginx-proxy-manager/letsencrypt}:/etc/letsencrypt # Let's Encrypt data
-    networks:
-      - nginx_network
     deploy:
       mode: replicated
       replicas: 1
       placement:
         constraints: [node.role == manager]
-
-networks:
-  nginx_network:
-    driver: overlay

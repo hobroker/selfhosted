@@ -62,6 +62,11 @@
       },
       "env": [
         {
+          "name": "DISABLE_IPV6",
+          "label": "Disable IPv6",
+          "default": "true"
+        },
+        {
           "name": "CONFIG_JSON",
           "label": "JSON Config",
           "default": "/appdata/nginx-proxy-manager/config.json"
@@ -85,7 +90,7 @@
     },
     {
       "name": "plex",
-      "type": 3,
+      "type": 2,
       "title": "Plex",
       "description": "Media player and organizational tool for accessing videos, music and pictures",
       "logo": "https://raw.githubusercontent.com/plexinc/plex-media-player/master/resources/images/icon.png",
@@ -94,7 +99,7 @@
       ],
       "repository": {
         "url": "https://github.com/hobroker/nas-setup.git",
-        "stackfile": "stacks/plex/docker-compose.yml"
+        "stackfile": "stacks/plex/docker-stack.yml"
       },
       "env": [
         {
@@ -119,8 +124,13 @@
         },
         {
           "name": "STORAGE",
-          "label": "Media library location",
+          "label": "Media library location 1",
           "default": "/mnt/storage"
+        },
+        {
+          "name": "STORAGE",
+          "label": "Media library location 2",
+          "default": "/storage"
         }
       ]
     },

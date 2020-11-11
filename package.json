@@ -18,10 +18,13 @@
     "portainer"
   ],
   "main": "tool/index.js",
-  "dependencies": {},
+  "dependencies": {
+    "serve": "^11.3.2"
+  },
   "devDependencies": {},
   "scripts": {
     "build": "node tool",
+    "serve": "serve -l 8000",
     "dev": "npm run build && cat templates.json"
   }
 }

@@ -4,10 +4,10 @@
 # categories=media
 
 ---
-version: "2.4"
+version: '3.2'
 
 services:
-  app:
+  plex:
     image: ghcr.io/linuxserver/plex
     network_mode: host
     restart: unless-stopped
@@ -17,6 +17,17 @@ services:
       - UMASK_SET=${UMASK_SET:-022} # Plex file-creation mode
       - VERSION=docker #
       - PLEX_CLAIM= # Claim at https://plex.tv/claim
+    ports:
+      - 32400:32400 # WebUI Port
+      - 1900:1900/udp # Plex DLNA Server
+      - 3005:3005 # Control Plex Home Theater via Plex Companion
+      - 5353:5353/udp # Old Bonjour/Avahi network discovery
+      - 32410:32410/udp # GDM network discovery
+      - 32412:32412/udp # GDM network discovery
+      - 32413:32413/udp # GDM network discovery
+      - 32414:32414/udp # GDM network discovery
+      - 32469:32469 # Plex DLNA Server
     volumes:
       - ${APPDATA:-/appdata/plex}:/config # Plex appdata location
-      - ${STORAGE:-/mnt/storage}:/mnt/storage # Media library location
+      - ${STORAGE:-/mnt/storage}:/mnt/storage # Media library location 1
+      - ${STORAGE:-/storage}:/storage # Media library location 2
