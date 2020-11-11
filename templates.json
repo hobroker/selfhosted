@@ -335,7 +335,8 @@
         },
         {
           "name": "CONFIG_PATH",
-          "label": "Contains Tautulli config and database"
+          "label": "Contains Tautulli config and database",
+          "default": "/appdata/tautulli"
         },
         {
           "name": "PORT",
