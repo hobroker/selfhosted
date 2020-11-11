@@ -246,7 +246,7 @@
           "default": "Europe/Chisinau"
         },
         {
-          "name": "7878",
+          "name": "PORT",
           "label": "WebUI Port",
           "default": "7878"
         }
