@@ -7,7 +7,7 @@
 version: "3.2"
 
 services:
-  tautulli:
+  app:
     image: tautulli/tautulli
     restart: unless-stopped
     environment:

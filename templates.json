@@ -175,6 +175,11 @@
       ],
       "env": [
         {
+          "name": "WEBUI_PORT",
+          "label": "WebUI Port",
+          "default": "8112"
+        },
+        {
           "name": "PUID",
           "label": "UserID",
           "default": "1000"

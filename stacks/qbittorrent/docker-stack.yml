@@ -7,11 +7,11 @@
 version: "3.2"
 
 services:
-  qbittorrent:
+  app:
     image: ghcr.io/linuxserver/qbittorrent
     restart: unless-stopped
     environment:
-      - ${WEBUI_PORT:-8112}=8112
+      - WEBUI_PORT=${WEBUI_PORT:-8112} # WebUI Port
       - PUID=${PUID:-1000} # UserID
       - PGID=${PGID:-1000} # GroupID
       - TZ=${TZ:-Europe/Chisinau} # Timezone

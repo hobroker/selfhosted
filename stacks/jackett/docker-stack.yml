@@ -7,7 +7,7 @@
 version: "3.2"
 
 services:
-  jackett:
+  app:
     image: ghcr.io/linuxserver/jackett
     restart: unless-stopped
     environment:
