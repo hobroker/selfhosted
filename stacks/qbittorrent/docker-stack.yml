@@ -1,0 +1,24 @@
+# title=qBittorrent
+# description=BitTorrent client
+# logo=https://raw.githubusercontent.com/qbittorrent/qBittorrent/master/dist/unix/menuicons/128x128/apps/qbittorrent.png
+# categories=torrent
+
+---
+version: "3.2"
+
+services:
+  qbittorrent:
+    image: ghcr.io/linuxserver/qbittorrent
+    restart: unless-stopped
+    environment:
+      - ${WEBUI_PORT:-8112}=8112
+      - PUID=${PUID:-1000} # UserID
+      - PGID=${PGID:-1000} # GroupID
+      - TZ=${TZ:-Europe/Chisinau} # Timezone
+    volumes:
+      - ${CONFIG_PATH:-/appdata/qbittorrent}:/config # App data
+      - ${DOWNLOADS_PATH:-/mnt/storage/downloads}:/downloads # Downloads path
+    ports:
+      - ${WEBUI_PORT}:${WEBUI_PORT}
+      - ${TCP_PORT:-6881}:6881 # TCP connection port
+      - ${UDP_PORT:-6881}:6881/udp # UDP connection port

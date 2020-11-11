@@ -121,6 +121,57 @@
     },
     {
       "type": 2,
+      "name": "qbittorrent",
+      "repository": {
+        "url": "https://github.com/hobroker/nas-setup.git",
+        "stackfile": "stacks/qbittorrent/docker-stack.yml"
+      },
+      "title": "qBittorrent",
+      "description": "BitTorrent client",
+      "logo": "https://raw.githubusercontent.com/qbittorrent/qBittorrent/master/dist/unix/menuicons/128x128/apps/qbittorrent.png",
+      "categories": [
+        "torrent"
+      ],
+      "env": [
+        {
+          "name": "PUID",
+          "label": "UserID",
+          "default": "1000"
+        },
+        {
+          "name": "PGID",
+          "label": "GroupID",
+          "default": "1000"
+        },
+        {
+          "name": "TZ",
+          "label": "Timezone",
+          "default": "Europe/Chisinau"
+        },
+        {
+          "name": "CONFIG_PATH",
+          "label": "App data",
+          "default": "/appdata/qbittorrent"
+        },
+        {
+          "name": "DOWNLOADS_PATH",
+          "label": "Downloads path",
+          "default": "/mnt/storage/downloads"
+        },
+        {
+          "name": "TCP_PORT",
+          "label": "TCP connection port",
+          "default": "6881"
+        },
+        {
+          "name": "UDP_PORT",
+          "label": "UDP connection port",
+          "default": "6881"
+        }
+      ]
+    },
+    {
+      "type": 2,
       "name": "radarr",
       "repository": {
         "url": "https://github.com/hobroker/nas-setup.git",
