@@ -8,11 +8,8 @@ version: "3.2"
 services:
   app:
     image: jc21/nginx-proxy-manager:2
+    network_mode: host
     restart: unless-stopped
-    ports:
-      - ${HTTP_PORT:-80}:80 # HTTP Port
-      - ${HTTPS_PORT:-443}:443 # HTTPS Port
-      - ${UI_PORT:-81}:81 # WebUI Port
     environment:
       DISABLE_IPV6: ${DISABLE_IPV6:-true}
     volumes:
