@@ -15,6 +15,6 @@ services:
       - PUID=${PUID:-1000} # UserID
       - TZ=${TZ:-Europe/Chisinau} # Timezone
     volumes:
-      - ${CONFIG_PATH:-/appdata/tautulli}:/config # Contains Tautulli config and database
+      - ${CONFIG_PATH}:/config # Contains Tautulli config and database
     ports:
-      - ${PORT:-8181}:8181' # WebUI Port
+      - ${PORT:-8181}:8181 # WebUI Port

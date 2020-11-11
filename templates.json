@@ -22,13 +22,11 @@
         },
         {
           "name": "BLACKHOLE",
-          "label": "Blackhole path",
-          "default": "/mnt/storage/downloads/torrents"
+          "label": "Blackhole path"
         },
         {
           "name": "CONFIG",
-          "label": "Config path",
-          "default": "/appdata/jackett"
+          "label": "Config path"
         },
         {
           "name": "TZ",
@@ -53,8 +51,7 @@
       "env": [
         {
           "name": "CONFIG",
-          "label": "Config path",
-          "default": "/appdata/portainer"
+          "label": "Config path"
         },
         {
           "name": "DOCKER_SOCKET",
@@ -94,8 +91,7 @@
         },
         {
           "name": "CONFIG_PATH",
-          "label": "Contains Tautulli config and database",
-          "default": "/appdata/tautulli"
+          "label": "Contains Tautulli config and database"
         },
         {
           "name": "TZ",

@@ -13,7 +13,7 @@ services:
     environment:
       - TZ=${TZ:-Europe/Chisinau} # Timezone
     volumes:
-      - ${CONFIG:-/appdata/jackett}:/config # Config path
-      - ${BLACKHOLE:-/mnt/storage/downloads/torrents}:/downloads # Blackhole path
+      - ${CONFIG}:/config # Config path
+      - ${BLACKHOLE}:/downloads # Blackhole path
     ports:
       - ${PORT:-9117}:9117 # WebUI Port

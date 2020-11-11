@@ -15,4 +15,4 @@ services:
       - ${EDGE_PORT:-8000}:8000 # Edge Agent Port
     volumes:
       - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock # Docker socket path
-      - ${CONFIG:-/appdata/portainer}:/data # Config path
+      - ${CONFIG}:/data # Config path

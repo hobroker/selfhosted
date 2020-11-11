@@ -47,7 +47,7 @@ const extractMeta = content => {
 };
 
 const extractEnv = content => {
-  const raw = content.match(/\${.*:.*}.*#.*/gm);
+  const raw = content.match(/\${.*}.*#.*/gm);
 
   const env = raw.reverse().map(line => {
     const [ name, defaultValue ] = line.match(/\${([^}]+)}/)[1].split`:-`;
