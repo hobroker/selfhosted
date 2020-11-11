@@ -61,21 +61,6 @@
       ],
       "env": [
         {
-          "name": "HTTP_PORT",
-          "label": "HTTP Port",
-          "default": "80"
-        },
-        {
-          "name": "HTTPS_PORT",
-          "label": "HTTPS Port",
-          "default": "443"
-        },
-        {
-          "name": "UI_PORT",
-          "label": "WebUI Port",
-          "default": "81"
-        },
-        {
           "name": "CONFIG_JSON",
           "label": "JSON Config",
           "default": "/appdata/nginx-proxy-manager/config.json"
@@ -131,6 +116,57 @@
           "name": "CONFIG",
           "label": "Config path",
           "default": "/appdata/portainer"
+        }
+      ]
+    },
+    {
+      "type": 2,
+      "name": "sonarr",
+      "repository": {
+        "url": "https://github.com/hobroker/nas-setup.git",
+        "stackfile": "stacks/sonarr/docker-stack.yml"
+      },
+      "title": "Sonarr",
+      "description": "PVR for newsgroup and bittorrent users for downloading/organising TV shows",
+      "logo": "https://raw.githubusercontent.com/Sonarr/Sonarr/phantom-develop/Logo/256.png",
+      "categories": [
+        "media"
+      ],
+      "env": [
+        {
+          "name": "PUID",
+          "label": "UserID",
+          "default": "1000"
+        },
+        {
+          "name": "PGID",
+          "label": "GroupID",
+          "default": "1000"
+        },
+        {
+          "name": "TZ",
+          "label": "Timezone",
+          "default": "Europe/Chisinau"
+        },
+        {
+          "name": "CONFIG_PATH",
+          "label": "App data",
+          "default": "/appdata/sonarr"
+        },
+        {
+          "name": "TV_PATH",
+          "label": "The TV Shows location",
+          "default": "/mnt/storage/tv-shows"
+        },
+        {
+          "name": "DOWNLOADS_PATH",
+          "label": "The downloads location",
+          "default": "/mnt/storage/downloads"
+        },
+        {
+          "name": "PORT",
+          "label": "WebUI Port",
+          "default": "8989"
         }
       ]
     },
