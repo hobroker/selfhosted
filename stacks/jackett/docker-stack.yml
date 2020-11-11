@@ -15,7 +15,7 @@ services:
       - PGID=${PGID:-1000} # GroupID
       - TZ=${TZ:-Europe/Chisinau} # Timezone
     volumes:
-      - ${CONFIG}:/config # Config path
+      - ${CONFIG:-/appdata/jackett}:/config # Config path
       - ${BLACKHOLE}:/downloads # Blackhole path
     ports:
       - ${PORT:-9117}:9117 # WebUI Port

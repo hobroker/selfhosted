@@ -16,22 +16,9 @@
       ],
       "env": [
         {
-          "name": "PORT",
-          "label": "WebUI Port",
-          "default": "9117"
-        },
-        {
-          "name": "BLACKHOLE",
-          "label": "Blackhole path"
-        },
-        {
-          "name": "CONFIG",
-          "label": "Config path"
-        },
-        {
-          "name": "TZ",
-          "label": "Timezone",
-          "default": "Europe/Chisinau"
+          "name": "PUID",
+          "label": "UserID",
+          "default": "1000"
         },
         {
           "name": "PGID",
@@ -39,9 +26,23 @@
           "default": "1000"
         },
         {
-          "name": "PUID",
-          "label": "UserID",
-          "default": "1000"
+          "name": "TZ",
+          "label": "Timezone",
+          "default": "Europe/Chisinau"
+        },
+        {
+          "name": "CONFIG",
+          "label": "Config path",
+          "default": "/appdata/jackett"
+        },
+        {
+          "name": "BLACKHOLE",
+          "label": "Blackhole path"
+        },
+        {
+          "name": "PORT",
+          "label": "WebUI Port",
+          "default": "9117"
         }
       ]
     },
@@ -52,27 +53,47 @@
         "url": "https://github.com/hobroker/nas-setup.git",
         "stackfile": "stacks/nginx-proxy-manager/docker-stack.yml"
       },
-      "title": "Tautulli",
-      "description": "Monitoring and tracking tool for Plex Media Server",
-      "logo": "https://raw.githubusercontent.com/Tautulli/Tautulli/master/data/interfaces/default/images/logo-circle.png",
+      "title": "Nginx Proxy Manager",
+      "description": "Container for managing Nginx proxy hosts with a simple, powerful interface",
+      "logo": "https://raw.githubusercontent.com/jc21/nginx-proxy-manager/master/frontend/app-images/logo-256.png",
       "categories": [
-        "media"
+        "network"
       ],
       "env": [
-        {
-          "name": "PORT",
-          "label": "WebUI Port",
-          "default": "81"
-        },
-        {
-          "name": "HTTP_PORT",
-          "label": "HTTPS Port",
-          "default": "443"
-        },
         {
           "name": "HTTP_PORT",
           "label": "HTTP Port",
           "default": "80"
+        },
+        {
+          "name": "HTTPS_PORT",
+          "label": "HTTPS Port",
+          "default": "443"
+        },
+        {
+          "name": "UI_PORT",
+          "label": "WebUI Port",
+          "default": "81"
+        },
+        {
+          "name": "CONFIG_JSON",
+          "label": "JSON Config",
+          "default": "/appdata/nginx-proxy-manager/config.json"
+        },
+        {
+          "name": "DB",
+          "label": "Database",
+          "default": "/appdata/nginx-proxy-manager/npm.db"
+        },
+        {
+          "name": "DATA",
+          "label": "App data",
+          "default": "/appdata/nginx-proxy-manager/data"
+        },
+        {
+          "name": "LETSENCRYPT",
+          "label": "Let's Encrypt data",
+          "default": "/appdata/nginx-proxy-manager/letsencrypt"
         }
       ]
     },
@@ -87,17 +108,14 @@
       "description": "Management UI to easily manage different Docker environments",
       "logo": "https://raw.githubusercontent.com/portainer/portainer/develop/app/assets/ico/apple-touch-icon.png",
       "categories": [
-        "docker"
+        "docker",
+        "network"
       ],
       "env": [
         {
-          "name": "CONFIG",
-          "label": "Config path"
-        },
-        {
-          "name": "DOCKER_SOCKET",
-          "label": "Docker socket path",
-          "default": "/var/run/docker.sock"
+          "name": "PORT",
+          "label": "WebUI Port",
+          "default": "9000"
         },
         {
           "name": "EDGE_PORT",
@@ -105,9 +123,14 @@
           "default": "8000"
         },
         {
-          "name": "PORT",
-          "label": "WebUI Port",
-          "default": "9000"
+          "name": "DOCKER_SOCKET",
+          "label": "Docker socket path",
+          "default": "/var/run/docker.sock"
+        },
+        {
+          "name": "CONFIG",
+          "label": "Config path",
+          "default": "/appdata/portainer"
         }
       ]
     },
@@ -126,18 +149,9 @@
       ],
       "env": [
         {
-          "name": "PORT",
-          "label": "WebUI Port",
-          "default": "8181"
-        },
-        {
-          "name": "CONFIG_PATH",
-          "label": "Contains Tautulli config and database"
-        },
-        {
-          "name": "TZ",
-          "label": "Timezone",
-          "default": "Europe/Chisinau"
+          "name": "PUID",
+          "label": "UserID",
+          "default": "1000"
         },
         {
           "name": "PGID",
@@ -145,9 +159,18 @@
           "default": "1000"
         },
         {
-          "name": "PUID",
-          "label": "UserID",
-          "default": "1000"
+          "name": "TZ",
+          "label": "Timezone",
+          "default": "Europe/Chisinau"
+        },
+        {
+          "name": "CONFIG_PATH",
+          "label": "Contains Tautulli config and database"
+        },
+        {
+          "name": "PORT",
+          "label": "WebUI Port",
+          "default": "8181"
         }
       ]
     }

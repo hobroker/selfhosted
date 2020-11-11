@@ -7,7 +7,7 @@
 version: "3.2"
 
 services:
-  portainer-ce:
+  app:
     image: portainer/portainer-ce
     restart: unless-stopped
     ports:
@@ -15,4 +15,4 @@ services:
       - ${EDGE_PORT:-8000}:8000 # Edge Agent Port
     volumes:
       - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock # Docker socket path
-      - ${CONFIG}:/data # Config path
+      - ${CONFIG:-/appdata/portainer}:/data # Config path

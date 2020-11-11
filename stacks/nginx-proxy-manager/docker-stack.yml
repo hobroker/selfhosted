@@ -6,17 +6,17 @@
 ---
 version: "3.2"
 services:
-  nginx-pm:
+  app:
     image: jc21/nginx-proxy-manager:2
     restart: unless-stopped
     ports:
       - ${HTTP_PORT:-80}:80 # HTTP Port
-      - ${HTTP_PORT:-443}:443 # HTTPS Port
-      - ${PORT:-81}:81 # WebUI Port
+      - ${HTTPS_PORT:-443}:443 # HTTPS Port
+      - ${UI_PORT:-81}:81 # WebUI Port
     environment:
       DISABLE_IPV6: ${DISABLE_IPV6:-true}
     volumes:
-      - ${CONFIG_JSON}:/app/config/production.json
-      - ${DB}:/app/npm.db
-      - ${DATA}:/data
-      - ${LETSENCRYPT}:/etc/letsencrypt
+      - ${CONFIG_JSON:-/appdata/nginx-proxy-manager/config.json}:/app/config/production.json # JSON Config
+      - ${DB:-/appdata/nginx-proxy-manager/npm.db}:/app/npm.db # Database
+      - ${DATA:-/appdata/nginx-proxy-manager/data}:/data # App data
+      - ${LETSENCRYPT:-/appdata/nginx-proxy-manager/letsencrypt}:/etc/letsencrypt # Let's Encrypt data
