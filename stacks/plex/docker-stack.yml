@@ -18,7 +18,10 @@ services:
       - VERSION=docker #
       - PLEX_CLAIM= # Claim at https://plex.tv/claim
     ports:
-      - 32400:32400 # WebUI Port
+      - target: 32400
+        published: 32400 # WebUI Port
+        protocol: tcp
+        mode: host
       - 1900:1900/udp # Plex DLNA Server
       - 3005:3005 # Control Plex Home Theater via Plex Companion
       - 5353:5353/udp # Old Bonjour/Avahi network discovery
