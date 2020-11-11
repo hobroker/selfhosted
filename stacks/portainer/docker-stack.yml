@@ -1,18 +1,46 @@
 # title=Portainer
 # description=Management UI to easily manage different Docker environments
 # logo=https://raw.githubusercontent.com/portainer/portainer/develop/app/assets/ico/apple-touch-icon.png
-# categories=docker,network
+# categories=docker,portainer
 
 ---
 version: "3.2"
 
 services:
-  app:
+  agent:
+    image: portainer/agent
+    environment:
+      # REQUIRED: Should be equal to the service name prefixed by "tasks." when
+      # deployed inside an overlay network
+      AGENT_CLUSTER_ADDR: tasks.agent
+      # AGENT_PORT: 9001
+      # LOG_LEVEL: debug
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+    networks:
+      - agent_network
+    deploy:
+      mode: global
+      placement:
+        constraints: [node.platform.os == linux]
+
+  portainer-ce:
     image: portainer/portainer-ce
-    restart: unless-stopped
+    command: -H tcp://tasks.agent:9001 --tlsskipverify
     ports:
       - ${PORT:-9000}:9000 # WebUI Port
       - ${EDGE_PORT:-8000}:8000 # Edge Agent Port
     volumes:
-      - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock # Docker socket path
       - ${CONFIG:-/appdata/portainer}:/data # Config path
+    networks:
+      - agent_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+
+networks:
+  agent_network:
+    driver: overlay

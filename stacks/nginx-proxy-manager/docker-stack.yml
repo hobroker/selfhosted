@@ -8,8 +8,17 @@ version: "3.2"
 services:
   app:
     image: jc21/nginx-proxy-manager:2
-    network_mode: host
-    restart: unless-stopped
+    restart: always
+    ports:
+      - ${PORT:-81}:81
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
     environment:
       DISABLE_IPV6: ${DISABLE_IPV6:-true}
     volumes:
@@ -17,3 +26,14 @@ services:
       - ${DB:-/appdata/nginx-proxy-manager/npm.db}:/app/npm.db # Database
       - ${DATA:-/appdata/nginx-proxy-manager/data}:/data # App data
       - ${LETSENCRYPT:-/appdata/nginx-proxy-manager/letsencrypt}:/etc/letsencrypt # Let's Encrypt data
+    networks:
+      - nginx_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+
+networks:
+  nginx_network:
+    driver: overlay

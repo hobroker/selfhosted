@@ -1,0 +1,27 @@
+{
+  "name": "nas-setup",
+  "version": "0.1.0",
+  "description": "App template definitions",
+  "homepage": "https://github.com/hobroker/nas-setup#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hobroker/nas-setup.git"
+  },
+  "author": "Igor Leahu <igor.leahu24@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hobroker/nas-setup/issues"
+  },
+  "keywords": [
+    "nas",
+    "docker",
+    "portainer"
+  ],
+  "main": "tool/index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "build": "node tool",
+    "dev": "npm run build && cat templates.json"
+  }
+}

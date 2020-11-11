@@ -1,4 +1,7 @@
-# NAS Setup
+# NAS Setup ![GitHub package.json version](https://img.shields.io/github/package-json/v/hobroker/nas-setup)
+---
+
+Dockerized app template definitions
 
 ## Portainer App Templates
 This repository hosts app template definitions for portainer.

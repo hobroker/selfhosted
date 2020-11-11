@@ -2,18 +2,18 @@
   "version": "2",
   "templates": [
     {
-      "type": 2,
       "name": "jackett",
-      "repository": {
-        "url": "https://github.com/hobroker/nas-setup.git",
-        "stackfile": "stacks/jackett/docker-stack.yml"
-      },
+      "type": 2,
       "title": "Jackett",
       "description": "API Support for your favorite torrent trackers",
       "logo": "https://raw.githubusercontent.com/Jackett/Jackett/master/src/Jackett.Common/Content/apple-touch-icon.png",
       "categories": [
         "media"
       ],
+      "repository": {
+        "url": "https://github.com/hobroker/nas-setup.git",
+        "stackfile": "stacks/jackett/docker-stack.yml"
+      },
       "env": [
         {
           "name": "PUID",
@@ -48,18 +48,18 @@
       ]
     },
     {
-      "type": 2,
       "name": "nginx-proxy-manager",
-      "repository": {
-        "url": "https://github.com/hobroker/nas-setup.git",
-        "stackfile": "stacks/nginx-proxy-manager/docker-stack.yml"
-      },
+      "type": 2,
       "title": "Nginx Proxy Manager",
       "description": "Container for managing Nginx proxy hosts with a simple, powerful interface",
       "logo": "https://raw.githubusercontent.com/jc21/nginx-proxy-manager/master/frontend/app-images/logo-256.png",
       "categories": [
         "network"
       ],
+      "repository": {
+        "url": "https://github.com/hobroker/nas-setup.git",
+        "stackfile": "stacks/nginx-proxy-manager/docker-stack.yml"
+      },
       "env": [
         {
           "name": "CONFIG_JSON",
@@ -84,18 +84,18 @@
       ]
     },
     {
-      "type": 2,
       "name": "plex",
-      "repository": {
-        "url": "https://github.com/hobroker/nas-setup.git",
-        "stackfile": "stacks/plex/docker-stack.yml"
-      },
+      "type": 3,
       "title": "Plex",
       "description": "Media player and organizational tool for accessing videos, music and pictures",
       "logo": "https://raw.githubusercontent.com/plexinc/plex-media-player/master/resources/images/icon.png",
       "categories": [
         "media"
       ],
+      "repository": {
+        "url": "https://github.com/hobroker/nas-setup.git",
+        "stackfile": "stacks/plex/docker-compose.yml"
+      },
       "env": [
         {
           "name": "PUID",
@@ -125,19 +125,19 @@
       ]
     },
     {
-      "type": 2,
       "name": "portainer",
-      "repository": {
-        "url": "https://github.com/hobroker/nas-setup.git",
-        "stackfile": "stacks/portainer/docker-stack.yml"
-      },
+      "type": 2,
       "title": "Portainer",
       "description": "Management UI to easily manage different Docker environments",
       "logo": "https://raw.githubusercontent.com/portainer/portainer/develop/app/assets/ico/apple-touch-icon.png",
       "categories": [
         "docker",
-        "network"
+        "portainer"
       ],
+      "repository": {
+        "url": "https://github.com/hobroker/nas-setup.git",
+        "stackfile": "stacks/portainer/docker-stack.yml"
+      },
       "env": [
         {
           "name": "PORT",
@@ -150,11 +150,6 @@
           "default": "8000"
         },
         {
-          "name": "DOCKER_SOCKET",
-          "label": "Docker socket path",
-          "default": "/var/run/docker.sock"
-        },
-        {
           "name": "CONFIG",
           "label": "Config path",
           "default": "/appdata/portainer"
@@ -162,18 +157,18 @@
       ]
     },
     {
-      "type": 2,
       "name": "qbittorrent",
-      "repository": {
-        "url": "https://github.com/hobroker/nas-setup.git",
-        "stackfile": "stacks/qbittorrent/docker-stack.yml"
-      },
+      "type": 2,
       "title": "qBittorrent",
       "description": "BitTorrent client",
       "logo": "https://raw.githubusercontent.com/qbittorrent/qBittorrent/master/dist/unix/menuicons/128x128/apps/qbittorrent.png",
       "categories": [
         "torrent"
       ],
+      "repository": {
+        "url": "https://github.com/hobroker/nas-setup.git",
+        "stackfile": "stacks/qbittorrent/docker-stack.yml"
+      },
       "env": [
         {
           "name": "WEBUI_PORT",
@@ -218,18 +213,18 @@
       ]
     },
     {
-      "type": 2,
       "name": "radarr",
-      "repository": {
-        "url": "https://github.com/hobroker/nas-setup.git",
-        "stackfile": "stacks/radarr/docker-stack.yml"
-      },
+      "type": 2,
       "title": "Radarr",
       "description": "Movie collection manager for Usenet and BitTorrent users",
       "logo": "https://raw.githubusercontent.com/Radarr/Radarr/develop/Logo/64.png",
       "categories": [
         "media"
       ],
+      "repository": {
+        "url": "https://github.com/hobroker/nas-setup.git",
+        "stackfile": "stacks/radarr/docker-stack.yml"
+      },
       "env": [
         {
           "name": "PUID",
@@ -254,18 +249,18 @@
       ]
     },
     {
-      "type": 2,
       "name": "sonarr",
-      "repository": {
-        "url": "https://github.com/hobroker/nas-setup.git",
-        "stackfile": "stacks/sonarr/docker-stack.yml"
-      },
+      "type": 2,
       "title": "Sonarr",
       "description": "TV Shows collection manager for Usenet and BitTorrent users",
       "logo": "https://raw.githubusercontent.com/Sonarr/Sonarr/phantom-develop/Logo/256.png",
       "categories": [
         "media"
       ],
+      "repository": {
+        "url": "https://github.com/hobroker/nas-setup.git",
+        "stackfile": "stacks/sonarr/docker-stack.yml"
+      },
       "env": [
         {
           "name": "PUID",
@@ -305,18 +300,18 @@
       ]
     },
     {
-      "type": 2,
       "name": "tautulli",
-      "repository": {
-        "url": "https://github.com/hobroker/nas-setup.git",
-        "stackfile": "stacks/tautulli/docker-stack.yml"
-      },
+      "type": 2,
       "title": "Tautulli",
       "description": "Monitoring and tracking tool for Plex Media Server",
       "logo": "https://raw.githubusercontent.com/Tautulli/Tautulli/master/data/interfaces/default/images/logo-circle.png",
       "categories": [
         "media"
       ],
+      "repository": {
+        "url": "https://github.com/hobroker/nas-setup.git",
+        "stackfile": "stacks/tautulli/docker-stack.yml"
+      },
       "env": [
         {
           "name": "PUID",
@@ -346,12 +341,8 @@
       ]
     },
     {
-      "type": 2,
       "name": "xteve",
-      "repository": {
-        "url": "https://github.com/hobroker/nas-setup.git",
-        "stackfile": "stacks/xteve/docker-stack.yml"
-      },
+      "type": 2,
       "title": "xTeVe",
       "description": "M3U Proxy for Plex DVR and Emby Live TV",
       "logo": "https://raw.githubusercontent.com/xteve-project/xTeVe/master/html/img/x_black.png",
@@ -359,6 +350,10 @@
         "media",
         "iptv"
       ],
+      "repository": {
+        "url": "https://github.com/hobroker/nas-setup.git",
+        "stackfile": "stacks/xteve/docker-stack.yml"
+      },
       "env": [
         {
           "name": "PORT",
