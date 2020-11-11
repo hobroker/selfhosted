@@ -7,7 +7,7 @@
 version: "3.2"
 
 services:
-  sonarr:
+  app:
     image: ghcr.io/linuxserver/sonarr
     restart: unless-stopped
     environment:

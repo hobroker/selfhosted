@@ -121,13 +121,49 @@
     },
     {
       "type": 2,
+      "name": "radarr",
+      "repository": {
+        "url": "https://github.com/hobroker/nas-setup.git",
+        "stackfile": "stacks/radarr/docker-stack.yml"
+      },
+      "title": "Radarr",
+      "description": "Movie collection manager for Usenet and BitTorrent users",
+      "logo": "https://raw.githubusercontent.com/Radarr/Radarr/develop/Logo/64.png",
+      "categories": [
+        "media"
+      ],
+      "env": [
+        {
+          "name": "PUID",
+          "label": "UserID",
+          "default": "1000"
+        },
+        {
+          "name": "PGID",
+          "label": "GroupID",
+          "default": "1000"
+        },
+        {
+          "name": "TZ",
+          "label": "Timezone",
+          "default": "Europe/Chisinau"
+        },
+        {
+          "name": "7878",
+          "label": "WebUI Port",
+          "default": "7878"
+        }
+      ]
+    },
+    {
+      "type": 2,
       "name": "sonarr",
       "repository": {
         "url": "https://github.com/hobroker/nas-setup.git",
         "stackfile": "stacks/sonarr/docker-stack.yml"
       },
       "title": "Sonarr",
-      "description": "PVR for newsgroup and bittorrent users for downloading/organising TV shows",
+      "description": "TV Shows collection manager for Usenet and BitTorrent users",
       "logo": "https://raw.githubusercontent.com/Sonarr/Sonarr/phantom-develop/Logo/256.png",
       "categories": [
         "media"
@@ -207,6 +243,63 @@
           "name": "PORT",
           "label": "WebUI Port",
           "default": "8181"
+        }
+      ]
+    },
+    {
+      "type": 2,
+      "name": "xteve",
+      "repository": {
+        "url": "https://github.com/hobroker/nas-setup.git",
+        "stackfile": "stacks/xteve/docker-stack.yml"
+      },
+      "title": "xTeVe",
+      "description": "M3U Proxy for Plex DVR and Emby Live TV",
+      "logo": "https://raw.githubusercontent.com/xteve-project/xTeVe/master/html/img/x_black.png",
+      "categories": [
+        "media",
+        "iptv"
+      ],
+      "env": [
+        {
+          "name": "34400",
+          "label": "Exposed port",
+          "default": "34400"
+        },
+        {
+          "name": "TZ",
+          "label": "Timezone",
+          "default": "Europe/Chisinau"
+        },
+        {
+          "name": "ROOT_PATH",
+          "label": "Root path",
+          "default": "/appdata/xteve/root"
+        },
+        {
+          "name": "CONFIG_PATH",
+          "label": "Config path",
+          "default": "/appdata/xteve/_config/"
+        },
+        {
+          "name": "GUIDE2GO_PATH",
+          "label": "Guide2go path",
+          "default": "/appdata/xteve/_guide2go/"
+        },
+        {
+          "name": "OWI2PLEX_PATH",
+          "label": "Owi2plex path",
+          "default": "/appdata/xteve/_owi2plex/"
+        },
+        {
+          "name": "TVHEADEND_PATH",
+          "label": "Tvheadend path",
+          "default": "/appdata/xteve/tvheadend/data/"
+        },
+        {
+          "name": "TMP_PATH",
+          "label": "tmp path",
+          "default": "/tmp/xteve/"
         }
       ]
     }
