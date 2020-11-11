@@ -84,6 +84,47 @@
     },
     {
       "type": 2,
+      "name": "plex",
+      "repository": {
+        "url": "https://github.com/hobroker/nas-setup.git",
+        "stackfile": "stacks/plex/docker-stack.yml"
+      },
+      "title": "Plex",
+      "description": "Media player and organizational tool for accessing videos, music and pictures",
+      "logo": "https://raw.githubusercontent.com/plexinc/plex-media-player/master/resources/images/icon.png",
+      "categories": [
+        "media"
+      ],
+      "env": [
+        {
+          "name": "PUID",
+          "label": "UserID",
+          "default": "1000"
+        },
+        {
+          "name": "PGID",
+          "label": "GroupID",
+          "default": "1000"
+        },
+        {
+          "name": "UMASK_SET",
+          "label": "Plex file-creation mode",
+          "default": "022"
+        },
+        {
+          "name": "APPDATA",
+          "label": "Plex appdata location",
+          "default": "/appdata/plex"
+        },
+        {
+          "name": "STORAGE",
+          "label": "Media library location",
+          "default": "/mnt/storage"
+        }
+      ]
+    },
+    {
+      "type": 2,
       "name": "portainer",
       "repository": {
         "url": "https://github.com/hobroker/nas-setup.git",
@@ -313,7 +354,7 @@
       ],
       "env": [
         {
-          "name": "34400",
+          "name": "PORT",
           "label": "Exposed port",
           "default": "34400"
         },

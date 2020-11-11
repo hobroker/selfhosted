@@ -11,7 +11,7 @@ services:
     image: alturismo/xteve_g2g_owi
     restart: unless-stopped
     ports:
-      - ${34400:-34400}:34400 # Exposed port
+      - ${PORT:-34400}:34400 # Exposed port
     environment:
       - TZ=${TZ:-Europe/Chisinau} # Timezone
     volumes:
