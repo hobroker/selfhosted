@@ -16,6 +16,6 @@ services:
       - TZ=${TZ:-Europe/Chisinau} # Timezone
     volumes:
       - ${CONFIG:-/appdata/jackett}:/config # Config path
-      - ${BLACKHOLE}:/downloads # Blackhole path
+      - ${BLACKHOLE:-/mnt/storage/downloads/torrents/}:/downloads # Blackhole path
     ports:
       - ${PORT:-9117}:9117 # WebUI Port

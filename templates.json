@@ -37,7 +37,8 @@
         },
         {
           "name": "BLACKHOLE",
-          "label": "Blackhole path"
+          "label": "Blackhole path",
+          "default": "/mnt/storage/downloads/torrents/"
         },
         {
           "name": "PORT",
