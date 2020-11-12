@@ -28,6 +28,8 @@ services:
         published: 443
         protocol: tcp
         mode: host
+    extra_hosts:
+      - docker.host.internal:172.17.0.1
     deploy:
       mode: replicated
       replicas: 1
