@@ -25,6 +25,8 @@ services:
       - ${DB:-/appdata/nginx-proxy-manager/npm.db}:/app/npm.db # Database
       - ${DATA:-/appdata/nginx-proxy-manager/data}:/data # App data
       - ${LETSENCRYPT:-/appdata/nginx-proxy-manager/letsencrypt}:/etc/letsencrypt # Let's Encrypt data
+    extra_hosts:
+      - docker.host.internal:172.17.0.1
     deploy:
       mode: replicated
       replicas: 1

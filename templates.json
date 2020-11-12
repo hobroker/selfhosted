@@ -149,31 +149,21 @@
       },
       "env": [
         {
-          "name": "COOKIE_SECRET",
-          "label": "Cookie secret (head -c32 /dev/urandom | base64)",
-          "default": "H86GGEoBldvvkw3M+R9U36TJhamUkQaL77PYCs7aD5k="
-        },
-        {
-          "name": "COOKIE_SECRET",
-          "label": "Shared secret (head -c32 /dev/urandom | base64)",
-          "default": "H86GGEoBldvvkw3M+R9U36TJhamUkQaL77PYCs7aD5k="
-        },
-        {
           "name": "AUTHENTICATE_SERVICE_URL",
           "label": "Secret key",
           "default": "https://auth.hobroker.me"
         },
         {
           "name": "IDP_CLIENT_ID",
-          "label": "Google Client ID"
+          "label": " Google Client ID"
         },
         {
           "name": "IDP_CLIENT_SECRET",
-          "label": "Google Client Secret"
+          "label": " Google Client Secret"
         },
         {
           "name": "POLICY",
-          "label": "base64 encoded yaml/json file"
+          "label": "Policy (base64)"
         }
       ]
     },
