@@ -9,8 +9,6 @@ version: '3.2'
 services:
   plex:
     image: ghcr.io/linuxserver/plex
-    network_mode: host
-    restart: unless-stopped
     environment:
       - PUID=${PUID:-1000} # UserID
       - PGID=${PGID:-1000} # GroupID

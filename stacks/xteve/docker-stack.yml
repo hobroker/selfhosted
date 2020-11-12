@@ -9,7 +9,6 @@ version: "3.2"
 services:
   app:
     image: alturismo/xteve_g2g_owi
-    restart: unless-stopped
     ports:
       - ${PORT:-34400}:34400 # Exposed port
     environment:

@@ -2,6 +2,7 @@
 # description=BitTorrent client
 # logo=https://raw.githubusercontent.com/qbittorrent/qBittorrent/master/dist/unix/menuicons/128x128/apps/qbittorrent.png
 # categories=torrent
+# restart_policy=unless-stopped
 
 ---
 version: "3.2"
@@ -9,7 +10,6 @@ version: "3.2"
 services:
   app:
     image: ghcr.io/linuxserver/qbittorrent
-    restart: unless-stopped
     environment:
       - WEBUI_PORT=${WEBUI_PORT:-8112} # WebUI Port
       - PUID=${PUID:-1000} # UserID

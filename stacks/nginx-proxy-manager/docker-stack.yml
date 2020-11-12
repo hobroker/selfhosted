@@ -8,7 +8,6 @@ version: "3.2"
 services:
   app:
     image: jc21/nginx-proxy-manager:2
-    restart: always
     ports:
       - ${PORT:-81}:81
       - target: 80

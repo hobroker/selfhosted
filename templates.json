@@ -175,6 +175,7 @@
       "categories": [
         "torrent"
       ],
+      "restart_policy": "unless-stopped",
       "repository": {
         "url": "https://github.com/hobroker/nas-setup.git",
         "stackfile": "stacks/qbittorrent/docker-stack.yml"
