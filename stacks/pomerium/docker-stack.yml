@@ -10,11 +10,21 @@ services:
   pomerium:
     image: pomerium/pomerium:latest
     environment:
-      - COOKIE_SECRET=${COOKIE_SECRET:-H86GGEoBldvvkw3M+R9U36TJhamUkQaL77PYCs7aD5k=} # Secret key
+      - COOKIE_SECRET=${COOKIE_SECRET:-H86GGEoBldvvkw3M+R9U36TJhamUkQaL77PYCs7aD5k=} # Cookie secret (head -c32 /dev/urandom | base64)
+      - SHARED_SECRET=${COOKIE_SECRET:-H86GGEoBldvvkw3M+R9U36TJhamUkQaL77PYCs7aD5k=} # Shared secret (head -c32 /dev/urandom | base64)
+      - AUTHENTICATE_SERVICE_URL=${AUTHENTICATE_SERVICE_URL:-https://auth.hobroker.me} # Secret key
+      - CERTIFICATE_FILE=/config/certs/fullchain.cer
+      - CERTIFICATE_KEY_FILE=/config/certs/certpriv.key
+      - SHARED_SECRET=EgMK3uYhqPeENCMnOx1roosDhZCj5Z59GpnC9eRZRDA=
+      - COOKIE_SECRET=nvbo8rnH6ZqrTfC7uNGfXlLR3xJ0BFTaN9VCnJx9ipo=
+      - IDP_PROVIDER=${IDP_PROVIDER:-google}
+      - IDP_PROVIDER_URL=${IDP_PROVIDER_URL:-https://accounts.google.com}
+      - IDP_CLIENT_ID=${IDP_CLIENT_ID} # Google Client ID
+      - IDP_CLIENT_SECRET=${IDP_CLIENT_SECRET} # Google Client Secret
+      - POLICY=${POLICY} # base64 encoded yaml/json file
     volumes:
       - /appdata/pomerium/data:/data:rw # Pomerium data location
-      - /appdata/pomerium/sync/config.sh:/pomerium/config.env:ro
-      - ${CONFIG_PATH:-/appdata/pomerium/sync}:/config # Config directory location
+      - /appdata/pomerium/sync:/config # Config directory location
     ports:
       - target: 443
         published: 443
