@@ -1,0 +1,26 @@
+# title=Pomerium
+# description=Management UI to easily manage different Docker environments
+# logo=https://raw.githubusercontent.com/portainer/portainer/develop/app/assets/ico/apple-touch-icon.png
+# categories=docker,portainer
+
+---
+version: "3.2"
+
+services:
+  pomerium:
+    image: pomerium/pomerium:latest
+    environment:
+      - COOKIE_SECRET=${COOKIE_SECRET:-H86GGEoBldvvkw3M+R9U36TJhamUkQaL77PYCs7aD5k=} # Secret key
+    volumes:
+      - /appdata/pomerium/data:/data:rw # Pomerium data location
+      - ${DOWNLOADS_PATH:-/appdata/pomerium/sync}:/env # Config directory location
+    ports:
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]

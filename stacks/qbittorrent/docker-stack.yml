@@ -2,7 +2,6 @@
 # description=BitTorrent client
 # logo=https://raw.githubusercontent.com/qbittorrent/qBittorrent/master/dist/unix/menuicons/128x128/apps/qbittorrent.png
 # categories=torrent
-# restart_policy=unless-stopped
 
 ---
 version: "3.2"
@@ -19,6 +18,17 @@ services:
       - ${CONFIG_PATH:-/appdata/qbittorrent}:/config # App data
       - ${DOWNLOADS_PATH:-/storage/downloads}:/downloads # Downloads path
     ports:
-      - ${WEBUI_PORT}:${WEBUI_PORT}
+      - target: ${WEBUI_PORT}
+        published: ${WEBUI_PORT}
+        protocol: tcp
+        mode: host
       - ${TCP_PORT:-6881}:6881 # TCP connection port
       - ${UDP_PORT:-6881}:6881/udp # UDP connection port
+    deploy:
+      mode: global
+    networks:
+      - nginx_network
+
+networks:
+  nginx_network:
+    external: true

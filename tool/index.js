@@ -65,35 +65,50 @@ const extractEnv = content => {
 
 const apps = readdirSync(STACKS_PATH);
 
-const templates = apps.sort().flatMap(app => {
-  const templateDir = path.join(STACKS_PATH, app);
-  const templates = readdirSync(templateDir).map(file => {
-    const type = TEMPLATE_TYPES[file];
-    invariant(type);
+const generateTemplates = () => {
+  let idx = 0;
+  return apps.sort().flatMap(app => {
+    const templateDir = path.join(STACKS_PATH, app);
+    const templates = readdirSync(templateDir).map(file => {
+      const type = TEMPLATE_TYPES[file];
 
-    const stackfile = path.join(STACKS_DIR, app, file);
-    const composeContent = readFileSync(stackfile, 'utf8');
+      if (!type) {
+        return null;
+      }
 
-    const meta = extractMeta(composeContent);
-    const env = extractEnv(composeContent);
+      const stackfile = path.join(STACKS_DIR, app, file);
+      const composeContent = readFileSync(stackfile, 'utf8');
 
-    return {
-      name: app,
-      type,
-      ...meta,
-      repository: {
-        url: GIT_ORIGIN,
-        stackfile,
-      },
-      env,
-    };
+      const meta = extractMeta(composeContent);
+      const env = extractEnv(composeContent);
+
+      console.log(`${++idx}.`.padStart(5).padEnd(3), app);
+
+      return {
+        name: app,
+        type,
+        ...meta,
+        repository: {
+          url: GIT_ORIGIN,
+          stackfile,
+        },
+        env,
+      };
+    });
+
+    return templates.filter(Boolean);
   });
+};
 
-  return templates;
-});
+const log = message => console.log(`> ${message}`);
 
+log('generating...');
+
+const templates = generateTemplates();
 const json = { version: '2', templates };
-
 const string = JSON.stringify(json, null, 2);
 
+log('writing the file...');
 writeFileSync(FINAL_TEMPLATES_PATH, string + '\n');
+
+log('done.');

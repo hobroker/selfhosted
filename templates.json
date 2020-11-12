@@ -135,6 +135,33 @@
       ]
     },
     {
+      "name": "pomerium",
+      "type": 2,
+      "title": "Pomerium",
+      "description": "Management UI to easily manage different Docker environments",
+      "logo": "https://raw.githubusercontent.com/portainer/portainer/develop/app/assets/ico/apple-touch-icon.png",
+      "categories": [
+        "docker",
+        "portainer"
+      ],
+      "repository": {
+        "url": "https://github.com/hobroker/nas-setup.git",
+        "stackfile": "stacks/pomerium/docker-stack.yml"
+      },
+      "env": [
+        {
+          "name": "COOKIE_SECRET",
+          "label": "Secret key",
+          "default": "H86GGEoBldvvkw3M+R9U36TJhamUkQaL77PYCs7aD5k="
+        },
+        {
+          "name": "DOWNLOADS_PATH",
+          "label": "Config directory location",
+          "default": "/appdata/pomerium/sync"
+        }
+      ]
+    },
+    {
       "name": "portainer",
       "type": 2,
       "title": "Portainer",
@@ -175,7 +202,6 @@
       "categories": [
         "torrent"
       ],
-      "restart_policy": "unless-stopped",
       "repository": {
         "url": "https://github.com/hobroker/nas-setup.git",
         "stackfile": "stacks/qbittorrent/docker-stack.yml"
