@@ -138,11 +138,10 @@
       "name": "pomerium",
       "type": 2,
       "title": "Pomerium",
-      "description": "Management UI to easily manage different Docker environments",
-      "logo": "https://raw.githubusercontent.com/portainer/portainer/develop/app/assets/ico/apple-touch-icon.png",
+      "description": "Identity-aware access proxy that enables secure access to internal applications",
+      "logo": "https://raw.githubusercontent.com/pomerium/pomerium/master/docs/.vuepress/public/img/logo-round.png",
       "categories": [
-        "docker",
-        "portainer"
+        "network"
       ],
       "repository": {
         "url": "https://github.com/hobroker/nas-setup.git",

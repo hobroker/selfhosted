@@ -1,7 +1,7 @@
 # title=Pomerium
-# description=Management UI to easily manage different Docker environments
-# logo=https://raw.githubusercontent.com/portainer/portainer/develop/app/assets/ico/apple-touch-icon.png
-# categories=docker,portainer
+# description=Identity-aware access proxy that enables secure access to internal applications
+# logo=https://raw.githubusercontent.com/pomerium/pomerium/master/docs/.vuepress/public/img/logo-round.png
+# categories=network
 
 ---
 version: "3.2"
@@ -13,7 +13,8 @@ services:
       - COOKIE_SECRET=${COOKIE_SECRET:-H86GGEoBldvvkw3M+R9U36TJhamUkQaL77PYCs7aD5k=} # Secret key
     volumes:
       - /appdata/pomerium/data:/data:rw # Pomerium data location
-      - ${DOWNLOADS_PATH:-/appdata/pomerium/sync}:/env # Config directory location
+      - /appdata/pomerium/sync/config.sh:/pomerium/config.env:ro
+      - ${CONFIG_PATH:-/appdata/pomerium/sync}:/config # Config directory location
     ports:
       - target: 443
         published: 443
