@@ -8,7 +8,7 @@ version: "3.2"
 
 services:
   pomerium:
-    image: pomerium/pomerium:latest
+    image: pomerium/pomerium
     environment:
       - AUTHENTICATE_SERVICE_URL=${AUTHENTICATE_SERVICE_URL:-https://auth.hobroker.me} # Secret key
       - CERTIFICATE_FILE=/config/certs/fullchain.cer

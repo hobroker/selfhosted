@@ -8,15 +8,11 @@ version: "3.2"
 
 services:
   app:
-    image: alturismo/xteve_g2g_owi
+    image: tnwhitwell/xteve
     ports:
       - ${PORT:-34400}:34400 # Exposed port
     environment:
       - TZ=${TZ:-Europe/Chisinau} # Timezone
     volumes:
       - ${ROOT_PATH:-/appdata/xteve/root}:/root/.xteve # Root path
-      - ${CONFIG_PATH:-/appdata/xteve/_config/}:/config # Config path
-      - ${GUIDE2GO_PATH:-/appdata/xteve/_guide2go/}:/guide2go # Guide2go path
-      - ${OWI2PLEX_PATH:-/appdata/xteve/_owi2plex/}:/owi2plex # Owi2plex path
-      - ${TVHEADEND_PATH:-/appdata/xteve/tvheadend/data/}:/TVH # Tvheadend path
       - ${TMP_PATH:-/tmp/xteve/}:/tmp/xteve # tmp path

@@ -2,7 +2,7 @@ const { readdirSync, readFileSync, writeFileSync } = require('fs');
 const path = require('path');
 const { exec, identity, invariant } = require('./util');
 
-const STACKS_DIR = 'stacks';
+const STACKS_SINGLE_DIR = 'stacks/single';
 const FINAL_TEMPLATES_FILE = 'templates.json';
 
 const DOCKER_COMPOSE_FILE = 'docker-compose.yml';
@@ -14,7 +14,7 @@ const TEMPLATE_TYPES = {
 
 const GIT_ORIGIN = exec('git config --get remote.origin.url');
 const ROOT_PATH = path.resolve(__dirname, '..');
-const STACKS_PATH = path.join(ROOT_PATH, STACKS_DIR);
+const STACKS_PATH = path.join(ROOT_PATH, STACKS_SINGLE_DIR);
 const FINAL_TEMPLATES_PATH = path.join(ROOT_PATH, FINAL_TEMPLATES_FILE);
 
 const metaFormatters = {
@@ -76,8 +76,12 @@ const generateTemplates = () => {
         return null;
       }
 
-      const stackfile = path.join(STACKS_DIR, app, file);
+      const stackfile = path.join(STACKS_SINGLE_DIR, app, file);
       const composeContent = readFileSync(stackfile, 'utf8');
+
+      if (composeContent.startsWith('#no-touch#')) {
+        return null;
+      }
 
       const meta = extractMeta(composeContent);
       const env = extractEnv(composeContent);

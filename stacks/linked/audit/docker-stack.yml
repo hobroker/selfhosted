@@ -1,0 +1,31 @@
+#no-touch#
+
+---
+version: "3.3"
+
+services:
+  # https://hub.docker.com/r/basi/prometheus-swarm
+  prometheus:
+    image: basi/prometheus-swarm
+    ports:
+      - 9090:9090
+    networks:
+      - chief_network
+    command: -config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -web.console.libraries=/etc/prometheus/console_libraries -web.console.templates=/etc/prometheus/consoles -alertmanager.url=http://alertmanager:9093
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1024M
+        reservations:
+          cpus: '0.50'
+          memory: 128M
+    volumes:
+      - /appdata/prometheus:/etc/prometheus.yml # Root path
+      - /tmp/xteve:/tmp/xteve # tmp path
+
+networks:
+  chief_network:
+    external: true
