@@ -23,7 +23,7 @@ services:
     volumes:
       - ${CONFIG_JSON:-/appdata/nginx-proxy-manager/config.json}:/app/config/production.json # JSON Config
       - ${DB:-/appdata/nginx-proxy-manager/npm.db}:/app/npm.db # Database
-      - ${DATA:-/appdata/nginx-proxy-manager/data}:/data # App data
+      - ${DATA:-/appdata/nginx-proxy-manager/data}:/data # Appdata
       - ${LETSENCRYPT:-/appdata/nginx-proxy-manager/letsencrypt}:/etc/letsencrypt # Let's Encrypt data
     deploy:
       mode: replicated

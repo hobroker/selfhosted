@@ -1,0 +1,47 @@
+#no-touch#
+
+---
+version: "3.3"
+
+services:
+  # https://hub.docker.com/r/linuxserver/qbittorrent
+  qbittorrent:
+    image: ghcr.io/linuxserver/qbittorrent
+    networks:
+      - chief_network
+    ports:
+      - target: 8112
+        published: 8112
+        protocol: tcp
+        mode: host
+      - 6881:6881 # TCP connection port
+      - 6881:6881/udp # UDP connection port
+    environment:
+      - WEBUI_PORT=8112 # WebUI Port
+      - PUID=1000 # UserID
+      - PGID=1000 # GroupID
+      - UMASK_SET=022 # Plex file-creation mode
+      - TZ=Europe/Chisinau # Timezone
+    volumes:
+      - /appdata/qbittorrent:/config # Appdata
+      - /storage/downloads:/downloads # Downloads path
+
+  # https://hub.docker.com/r/linuxserver/jackett
+  jackett:
+    image: ghcr.io/linuxserver/jackett
+    networks:
+      - chief_network
+    ports:
+      - 9117:9117 # WebUI Port
+    environment:
+      - PUID=1000 # UserID
+      - PGID=1000 # GroupID
+      - UMASK_SET=022 # Plex file-creation mode
+      - TZ=Europe/Chisinau # Timezone
+    volumes:
+      - /appdata/jackett:/config # Config path
+      - /storage/downloads/torrents/:/downloads # Blackhole path
+
+networks:
+  chief_network:
+    external: true

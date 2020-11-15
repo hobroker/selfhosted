@@ -14,7 +14,7 @@ services:
       - PGID=${PGID:-1000} # GroupID
       - TZ=${TZ:-Europe/Chisinau} # Timezone
     volumes:
-      - ${CONFIG_PATH:-/appdata/sonarr}:/config # App data
+      - ${CONFIG_PATH:-/appdata/sonarr}:/config # Appdata
       - ${TV_PATH:-/storage/tv-shows}:/tv # The TV Shows location
       - ${DOWNLOADS_PATH:-/storage/downloads}:/downloads # The downloads location
     ports:

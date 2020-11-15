@@ -1,0 +1,25 @@
+#no-touch#
+
+---
+version: "3.3"
+
+services:
+  # https://hub.docker.com/r/basi/amir20/dozzle
+  dozzle:
+    image: amir20/dozzle
+    ports:
+      - 8888:8888
+    networks:
+      - chief_network
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+
+networks:
+  chief_network:
+    external: true
+

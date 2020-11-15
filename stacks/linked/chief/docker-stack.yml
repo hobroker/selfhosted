@@ -15,11 +15,11 @@ services:
         protocol: tcp
         mode: host
     extra_hosts:
-      - docker.host.internal:172.17.0.1
+      - docker.host.internal:172.17.0.1 # localhost (127.0.0.1)
     environment:
       - AUTHENTICATE_SERVICE_URL=https://auth.hobroker.me # Auth service URL
-      - CERTIFICATE_FILE=/config/certs/fullchain.cer
-      - CERTIFICATE_KEY_FILE=/config/certs/certpriv.key
+      - CERTIFICATE_FILE=/config/certs/fullchain.cer # Certificate for *.domain.example.com
+      - CERTIFICATE_KEY_FILE=/config/certs/certpriv.key # Certificate key for *.domain.example.com
       - SHARED_SECRET=${SHARED_SECRET} # Shared secret (head -c32 /dev/urandom | base64)
       - COOKIE_SECRET=${COOKIE_SECRET} # Cookie secret (head -c32 /dev/urandom | base64)
       - IDP_PROVIDER=google
@@ -27,7 +27,7 @@ services:
       - IDP_CLIENT_ID=${GOOGLE_CLIENT_ID} #  Google Client ID
       - IDP_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET} #  Google Client Secret
       - POLICY=${POMERIUM_POLICY} # Pomerium Policy (base64)
-      - ADMINISTRATORS="igor.leahu24@gmail.com" # Pomerium Policy (base64)
+      - ADMINISTRATORS="${ADMINISTRATORS}" # Administrator emails (comma separated)
     volumes:
       - /appdata/pomerium/data:/data:rw # Pomerium data location
       - /appdata/pomerium/sync:/config # Config directory location
@@ -35,7 +35,9 @@ services:
       mode: replicated
       replicas: 1
       placement:
-        constraints: [node.role == manager]
+        constraints:
+          - node.role == manager
+          - node.platform.os == linux
 
 networks:
   network:

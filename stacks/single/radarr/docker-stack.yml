@@ -14,7 +14,7 @@ services:
       - PGID=${PGID:-1000} # GroupID
       - TZ=${TZ:-Europe/Chisinau} # Timezone
     volumes:
-      - /appdata/radarr:/config # App data
+      - /appdata/radarr:/config # Appdata
       - /storage/movies:/movies # The Movies location
       - /storage/downloads:/downloads # The downloads location
     ports:
