@@ -11,7 +11,7 @@
         "media"
       ],
       "repository": {
-        "url": "https://github.com/hobroker/nas-setup.git",
+        "url": "https://github.com/hobroker/selfhosted.git",
         "stackfile": "stacks/single/jackett/docker-stack.yml"
       },
       "env": [
@@ -57,7 +57,7 @@
         "network"
       ],
       "repository": {
-        "url": "https://github.com/hobroker/nas-setup.git",
+        "url": "https://github.com/hobroker/selfhosted.git",
         "stackfile": "stacks/single/nginx-proxy-manager/docker-stack.yml"
       },
       "env": [
@@ -78,7 +78,7 @@
         },
         {
           "name": "DATA",
-          "label": "App data",
+          "label": "Appdata",
           "default": "/appdata/nginx-proxy-manager/data"
         },
         {
@@ -98,7 +98,7 @@
         "media"
       ],
       "repository": {
-        "url": "https://github.com/hobroker/nas-setup.git",
+        "url": "https://github.com/hobroker/selfhosted.git",
         "stackfile": "stacks/single/plex/docker-stack.yml"
       },
       "env": [
@@ -144,7 +144,7 @@
         "network"
       ],
       "repository": {
-        "url": "https://github.com/hobroker/nas-setup.git",
+        "url": "https://github.com/hobroker/selfhosted.git",
         "stackfile": "stacks/single/pomerium/docker-stack.yml"
       },
       "env": [
@@ -178,7 +178,7 @@
         "portainer"
       ],
       "repository": {
-        "url": "https://github.com/hobroker/nas-setup.git",
+        "url": "https://github.com/hobroker/selfhosted.git",
         "stackfile": "stacks/single/portainer/docker-stack.yml"
       },
       "env": [
@@ -209,7 +209,7 @@
         "torrent"
       ],
       "repository": {
-        "url": "https://github.com/hobroker/nas-setup.git",
+        "url": "https://github.com/hobroker/selfhosted.git",
         "stackfile": "stacks/single/qbittorrent/docker-stack.yml"
       },
       "env": [
@@ -235,7 +235,7 @@
         },
         {
           "name": "CONFIG_PATH",
-          "label": "App data",
+          "label": "Appdata",
           "default": "/appdata/qbittorrent"
         },
         {
@@ -265,7 +265,7 @@
         "media"
       ],
       "repository": {
-        "url": "https://github.com/hobroker/nas-setup.git",
+        "url": "https://github.com/hobroker/selfhosted.git",
         "stackfile": "stacks/single/radarr/docker-stack.yml"
       },
       "env": [
@@ -301,7 +301,7 @@
         "media"
       ],
       "repository": {
-        "url": "https://github.com/hobroker/nas-setup.git",
+        "url": "https://github.com/hobroker/selfhosted.git",
         "stackfile": "stacks/single/sonarr/docker-stack.yml"
       },
       "env": [
@@ -322,7 +322,7 @@
         },
         {
           "name": "CONFIG_PATH",
-          "label": "App data",
+          "label": "Appdata",
           "default": "/appdata/sonarr"
         },
         {
@@ -352,7 +352,7 @@
         "media"
       ],
       "repository": {
-        "url": "https://github.com/hobroker/nas-setup.git",
+        "url": "https://github.com/hobroker/selfhosted.git",
         "stackfile": "stacks/single/tautulli/docker-stack.yml"
       },
       "env": [
@@ -394,7 +394,7 @@
         "iptv"
       ],
       "repository": {
-        "url": "https://github.com/hobroker/nas-setup.git",
+        "url": "https://github.com/hobroker/selfhosted.git",
         "stackfile": "stacks/single/xteve/docker-stack.yml"
       },
       "env": [

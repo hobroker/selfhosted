@@ -12,9 +12,12 @@ const invariant = (condition, message = 'Invalid value') => {
 
 const identity = value => value;
 
+const log = (...messages) => console.log('>', ...messages);
+
 module.exports = {
   capitalize,
   exec,
   identity,
   invariant,
+  log,
 };

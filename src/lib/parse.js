@@ -1,21 +1,12 @@
-const { readdirSync, readFileSync, writeFileSync } = require('fs');
+const { readdirSync, readFileSync } = require('fs');
 const path = require('path');
-const { exec, identity, invariant } = require('./util');
-
-const STACKS_SINGLE_DIR = 'stacks/single';
-const FINAL_TEMPLATES_FILE = 'templates.json';
-
-const DOCKER_COMPOSE_FILE = 'docker-compose.yml';
-const DOCKER_STACK_FILE = 'docker-stack.yml';
-const TEMPLATE_TYPES = {
-  [DOCKER_STACK_FILE]: 2,
-  [DOCKER_COMPOSE_FILE]: 3,
-};
-
-const GIT_ORIGIN = exec('git config --get remote.origin.url');
-const ROOT_PATH = path.resolve(__dirname, '..');
-const STACKS_PATH = path.join(ROOT_PATH, STACKS_SINGLE_DIR);
-const FINAL_TEMPLATES_PATH = path.join(ROOT_PATH, FINAL_TEMPLATES_FILE);
+const { log, identity, invariant } = require('./util');
+const {
+  STACKS_SINGLE_DIR,
+  TEMPLATE_TYPES,
+  GIT_ORIGIN,
+  STACKS_PATH,
+} = require('./constants');
 
 const metaFormatters = {
   categories: value => value.split`,`,
@@ -63,9 +54,7 @@ const extractEnv = content => {
   return env;
 };
 
-const apps = readdirSync(STACKS_PATH);
-
-const generateTemplates = () => {
+const generateTemplates = (apps) => {
   let idx = 0;
   return apps.sort().flatMap(app => {
     const templateDir = path.join(STACKS_PATH, app);
@@ -104,15 +93,16 @@ const generateTemplates = () => {
   });
 };
 
-const log = message => console.log(`> ${message}`);
+const parse = () => {
+  log('parse', STACKS_PATH);
 
-log('generating...');
+  const apps = readdirSync(STACKS_PATH);
+  const templates = generateTemplates(apps);
 
-const templates = generateTemplates();
-const json = { version: '2', templates };
-const string = JSON.stringify(json, null, 2);
+  return {
+    version: '2',
+    templates,
+  };
+};
 
-log('writing the file...');
-writeFileSync(FINAL_TEMPLATES_PATH, string + '\n');
-
-log('done.');
+module.exports = parse;
