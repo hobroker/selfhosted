@@ -1,7 +1,7 @@
-# Personal selfhosted services ![GitHub package.json version](https://img.shields.io/github/package-json/v/hobroker/selfhosted)
+Selfhosted ![GitHub package.json version](https://img.shields.io/github/package-json/v/hobroker/selfhosted)
 ---
 
-Dockerized app template definitions
+Personal Docker Stack services 
 
 ## Portainer App Templates
 This repository hosts [app template definitions](templates.json) for portainer.
