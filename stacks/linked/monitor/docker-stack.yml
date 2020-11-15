@@ -1,0 +1,46 @@
+#no-touch#
+
+---
+version: '3.3'
+
+services:
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - /appdata/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /appdata/prometheus/alert.rules.yml:/etc/prometheus/alert.rules.yml
+
+  grafana:
+    image: grafana/grafana
+    user: root
+    ports:
+      - 3002:3000
+    environment:
+      - GF_INSTALL_PLUGINS=grafana-strava-datasource
+    volumes:
+      - /appdata/grafana/lib/grafana.db:/var/lib/grafana/grafana.db
+      - /appdata/grafana/etc:/etc/grafana
+
+  alertmanager:
+    image: prom/alertmanager:v0.18.0
+    command:
+      - "--config.file=/alertmanager.yml"
+      - "--storage.path=/alertmanager"
+    ports:
+      - 9093:9093
+    volumes:
+      - /appdata/alertmanager/alertmanager.yml:/alertmanager.yml
+    deploy:
+      resources:
+        limits:
+          memory: 50M
+        reservations:
+          memory: 20M
+      placement:
+        constraints: [ node.role == manager ]
+
+networks:
+  network:
+    driver: overlay

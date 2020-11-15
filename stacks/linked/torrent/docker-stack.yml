@@ -20,7 +20,6 @@ services:
       - WEBUI_PORT=8112 # WebUI Port
       - PUID=1000 # UserID
       - PGID=1000 # GroupID
-      - UMASK_SET=022 # Plex file-creation mode
       - TZ=Europe/Chisinau # Timezone
     volumes:
       - /appdata/qbittorrent:/config # Appdata
@@ -36,7 +35,6 @@ services:
     environment:
       - PUID=1000 # UserID
       - PGID=1000 # GroupID
-      - UMASK_SET=022 # Plex file-creation mode
       - TZ=Europe/Chisinau # Timezone
     volumes:
       - /appdata/jackett:/config # Config path

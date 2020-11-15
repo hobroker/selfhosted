@@ -14,21 +14,15 @@ services:
         published: 32400 # WebUI Port
         protocol: tcp
         mode: host
-      - 1900:1900/udp # Plex DLNA Server
-      - 3005:3005 # Control Plex Home Theater via Plex Companion
-      - 5353:5353/udp # Old Bonjour/Avahi network discovery
       - 32410:32410/udp # GDM network discovery
       - 32412:32412/udp # GDM network discovery
       - 32413:32413/udp # GDM network discovery
       - 32414:32414/udp # GDM network discovery
-      - 32469:32469 # Plex DLNA Server
     environment:
       - PUID=1000 # UserID
       - PGID=1000 # GroupID
-      - UMASK_SET=022 # Plex file-creation mode
       - TZ=Europe/Chisinau # Timezone
       - VERSION=docker # Do not update PLEX internally
-      - PLEX_CLAIM= # Claim at https://plex.tv/claim
     volumes:
       - /appdata/plex:/config # Plex appdata location
       - /mnt/storage:/mnt/storage # Media library location 1
@@ -44,7 +38,6 @@ services:
     environment:
       - PUID=1000 # UserID
       - PGID=1000 # GroupID
-      - UMASK_SET=022 # Plex file-creation mode
       - TZ=Europe/Chisinau # Timezone
     volumes:
       - /appdata/tautulli:/config # Tautulli config and database
@@ -59,7 +52,6 @@ services:
     environment:
       - PUID=1000 # UserID
       - PGID=1000 # GroupID
-      - UMASK_SET=022 # Plex file-creation mode
       - TZ=Europe/Chisinau # Timezone
     volumes:
       - /appdata/xteve/root:/config # Root path

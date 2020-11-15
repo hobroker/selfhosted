@@ -1,0 +1,27 @@
+#no-touch#
+
+---
+version: "3.3"
+
+services:
+  # https://hub.docker.com/r/linuxserver/code-server
+  vscode:
+    image: ghcr.io/linuxserver/code-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Chisinau
+    volumes:
+      - /appdata/code-server:/config
+      - /home/kira/compose:/compose
+    ports:
+      - 8084:8443
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+
+networks:
+  network:
+    driver: overlay
