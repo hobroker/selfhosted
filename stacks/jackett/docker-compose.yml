@@ -1,0 +1,18 @@
+# title=Jackett
+# description=API Support for your favorite torrent trackers
+# logo=https://raw.githubusercontent.com/Jackett/Jackett/master/src/Jackett.Common/Content/apple-touch-icon.png
+# categories=media
+
+---
+version: "2.4"
+services:
+  jackett:
+    image: ghcr.io/linuxserver/jackett
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ:Europe/Chisinau} # Timezone
+    volumes:
+      - ${CONFIG:/appdata/jackett}:/config # Config path
+      - ${BLACKHOLE:/mnt/storage/downloads/torrents}:/downloads # Blackhole path
+    ports:
+      - ${PORT:9117}:9117 # WebUI Port

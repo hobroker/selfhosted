@@ -1,0 +1,118 @@
+{
+  "version": "2",
+  "templates": [
+    {
+      "type": 3,
+      "name": "jackett",
+      "repository": {
+        "url": "https://github.com/hobroker/nas-setup.git",
+        "stackfile": "stacks/jackett/docker-compose.yml"
+      },
+      "title": "Jackett",
+      "description": "API Support for your favorite torrent trackers",
+      "logo": "https://raw.githubusercontent.com/Jackett/Jackett/master/src/Jackett.Common/Content/apple-touch-icon.png",
+      "categories": [
+        "media"
+      ],
+      "env": [
+        {
+          "name": "PORT",
+          "label": "WebUI Port",
+          "default": "9117"
+        },
+        {
+          "name": "BLACKHOLE",
+          "label": "Blackhole path",
+          "default": "/mnt/storage/downloads/torrents"
+        },
+        {
+          "name": "CONFIG",
+          "label": "Config path",
+          "default": "/appdata/jackett"
+        },
+        {
+          "name": "TZ",
+          "label": "Timezone",
+          "default": "Europe/Chisinau"
+        }
+      ]
+    },
+    {
+      "type": 3,
+      "name": "portainer",
+      "repository": {
+        "url": "https://github.com/hobroker/nas-setup.git",
+        "stackfile": "stacks/portainer/docker-compose.yml"
+      },
+      "title": "Portainer",
+      "description": "Management UI to easily manage different Docker environments",
+      "logo": "https://raw.githubusercontent.com/portainer/portainer/develop/app/assets/ico/apple-touch-icon.png",
+      "categories": [
+        "docker"
+      ],
+      "env": [
+        {
+          "name": "CONFIG",
+          "label": "Config path",
+          "default": "/appdata/portainer"
+        },
+        {
+          "name": "DOCKER_SOCKET",
+          "label": "Docker socket path",
+          "default": "/var/run/docker.sock"
+        },
+        {
+          "name": "EDGE_PORT",
+          "label": "Edge Agent Port",
+          "default": "8000"
+        },
+        {
+          "name": "PORT",
+          "label": "WebUI Port",
+          "default": "9000"
+        }
+      ]
+    },
+    {
+      "type": 3,
+      "name": "tautulli",
+      "repository": {
+        "url": "https://github.com/hobroker/nas-setup.git",
+        "stackfile": "stacks/tautulli/docker-compose.yml"
+      },
+      "title": "Tautulli",
+      "description": "Monitoring and tracking tool for Plex Media Server",
+      "logo": "https://raw.githubusercontent.com/Tautulli/Tautulli/master/data/interfaces/default/images/logo-circle.png",
+      "categories": [
+        "media"
+      ],
+      "env": [
+        {
+          "name": "PORT",
+          "label": "WebUI Port",
+          "default": "8181"
+        },
+        {
+          "name": "CONFIG_PATH",
+          "label": "Contains Tautulli config and database",
+          "default": "/appdata/tautulli"
+        },
+        {
+          "name": "TZ",
+          "label": "Timezone",
+          "default": "Europe/Chisinau"
+        },
+        {
+          "name": "PUID",
+          "label": "UserID",
+          "default": "1000"
+        },
+        {
+          "name": "PGID",
+          "label": "GroupID",
+          "default": "1000"
+        }
+      ]
+    }
+  ]
+}
