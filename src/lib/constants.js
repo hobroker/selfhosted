@@ -1,7 +1,7 @@
 const path = require('path');
 const { exec } = require('./util');
 
-const STACKS_SINGLE_DIR = 'stacks/single';
+const STACKS_SINGLE_DIR = 'for-portainer';
 const FINAL_TEMPLATES_FILE = 'templates.json';
 
 const DOCKER_COMPOSE_FILE = 'docker-compose.yml';
@@ -12,7 +12,7 @@ const TEMPLATE_TYPES = {
 };
 
 const GIT_ORIGIN = exec('git config --get remote.origin.url');
-const ROOT_PATH = path.resolve(__dirname, '..');
+const ROOT_PATH = path.resolve(__dirname, '../..');
 const STACKS_PATH = path.join(ROOT_PATH, STACKS_SINGLE_DIR);
 const FINAL_TEMPLATES_PATH = path.join(ROOT_PATH, FINAL_TEMPLATES_FILE);
 

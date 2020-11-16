@@ -12,7 +12,7 @@
       ],
       "repository": {
         "url": "https://github.com/hobroker/selfhosted.git",
-        "stackfile": "stacks/single/jackett/docker-stack.yml"
+        "stackfile": "for-portainer/jackett/docker-stack.yml"
       },
       "env": [
         {
@@ -58,7 +58,7 @@
       ],
       "repository": {
         "url": "https://github.com/hobroker/selfhosted.git",
-        "stackfile": "stacks/single/nginx-proxy-manager/docker-stack.yml"
+        "stackfile": "for-portainer/nginx-proxy-manager/docker-stack.yml"
       },
       "env": [
         {
@@ -99,7 +99,7 @@
       ],
       "repository": {
         "url": "https://github.com/hobroker/selfhosted.git",
-        "stackfile": "stacks/single/plex/docker-stack.yml"
+        "stackfile": "for-portainer/plex/docker-stack.yml"
       },
       "env": [
         {
@@ -145,7 +145,7 @@
       ],
       "repository": {
         "url": "https://github.com/hobroker/selfhosted.git",
-        "stackfile": "stacks/single/pomerium/docker-stack.yml"
+        "stackfile": "for-portainer/pomerium/docker-stack.yml"
       },
       "env": [
         {
@@ -179,7 +179,7 @@
       ],
       "repository": {
         "url": "https://github.com/hobroker/selfhosted.git",
-        "stackfile": "stacks/single/portainer/docker-stack.yml"
+        "stackfile": "for-portainer/portainer/docker-stack.yml"
       },
       "env": [
         {
@@ -210,7 +210,7 @@
       ],
       "repository": {
         "url": "https://github.com/hobroker/selfhosted.git",
-        "stackfile": "stacks/single/qbittorrent/docker-stack.yml"
+        "stackfile": "for-portainer/qbittorrent/docker-stack.yml"
       },
       "env": [
         {
@@ -266,7 +266,7 @@
       ],
       "repository": {
         "url": "https://github.com/hobroker/selfhosted.git",
-        "stackfile": "stacks/single/radarr/docker-stack.yml"
+        "stackfile": "for-portainer/radarr/docker-stack.yml"
       },
       "env": [
         {
@@ -302,7 +302,7 @@
       ],
       "repository": {
         "url": "https://github.com/hobroker/selfhosted.git",
-        "stackfile": "stacks/single/sonarr/docker-stack.yml"
+        "stackfile": "for-portainer/sonarr/docker-stack.yml"
       },
       "env": [
         {
@@ -353,7 +353,7 @@
       ],
       "repository": {
         "url": "https://github.com/hobroker/selfhosted.git",
-        "stackfile": "stacks/single/tautulli/docker-stack.yml"
+        "stackfile": "for-portainer/tautulli/docker-stack.yml"
       },
       "env": [
         {
@@ -395,7 +395,7 @@
       ],
       "repository": {
         "url": "https://github.com/hobroker/selfhosted.git",
-        "stackfile": "stacks/single/xteve/docker-stack.yml"
+        "stackfile": "for-portainer/xteve/docker-stack.yml"
       },
       "env": [
         {
