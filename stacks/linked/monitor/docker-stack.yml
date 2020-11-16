@@ -1,46 +1,57 @@
-#no-touch#
-
----
 version: '3.3'
-
 services:
+  alertmanager:
+    image: prom/alertmanager:v0.18.0
+    command:
+      - --config.file=/alertmanager.yml
+      - --storage.path=/alertmanager
+    ports:
+      - 9093:9093
+    volumes:
+      - /appdata/alertmanager/alertmanager.yml:/alertmanager.yml
+    networks:
+      - default
+    logging:
+      driver: json-file
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      resources:
+        reservations:
+          memory: 20M
+        limits:
+          memory: 50M
+  grafana:
+    image: grafana/grafana:latest
+    user: root
+    environment:
+      GF_INSTALL_PLUGINS: grafana-strava-datasource
+    ports:
+      - 3002:3000
+    volumes:
+      - /appdata/grafana/lib/grafana.db:/var/lib/grafana/grafana.db
+      - /appdata/grafana/etc:/etc/grafana
+    networks:
+      - default
+    logging:
+      driver: json-file
   prometheus:
-    image: prom/prometheus
+    image: prom/prometheus:latest
+    user: root
+    environment:
+      PGID: '1000'
+      PUID: '1000'
     ports:
       - 9090:9090
     volumes:
       - /appdata/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - /appdata/prometheus/alert.rules.yml:/etc/prometheus/alert.rules.yml
-
-  grafana:
-    image: grafana/grafana
-    user: root
-    ports:
-      - 3002:3000
-    environment:
-      - GF_INSTALL_PLUGINS=grafana-strava-datasource
-    volumes:
-      - /appdata/grafana/lib/grafana.db:/var/lib/grafana/grafana.db
-      - /appdata/grafana/etc:/etc/grafana
-
-  alertmanager:
-    image: prom/alertmanager:v0.18.0
-    command:
-      - "--config.file=/alertmanager.yml"
-      - "--storage.path=/alertmanager"
-    ports:
-      - 9093:9093
-    volumes:
-      - /appdata/alertmanager/alertmanager.yml:/alertmanager.yml
-    deploy:
-      resources:
-        limits:
-          memory: 50M
-        reservations:
-          memory: 20M
-      placement:
-        constraints: [ node.role == manager ]
-
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - default
+    logging:
+      driver: json-file
 networks:
-  network:
+  default:
     driver: overlay

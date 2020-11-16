@@ -1,62 +1,98 @@
-#no-touch#
-
----
-version: "3.3"
-
+version: '3.3'
 services:
-  # https://hub.docker.com/r/linuxserver/plex
   app:
-    image: ghcr.io/linuxserver/plex
+    image: ghcr.io/linuxserver/plex:latest
+    environment:
+      PGID: '1000'
+      PLEX_CLAIM: ''
+      PUID: '1000'
+      TZ: Europe/Chisinau
+      UMASK_SET: '022'
+      VERSION: public
+    ports:
+      - 32400:32400
+      - 32410:32410/udp
+      - 32412:32412/udp
+      - 32413:32413/udp
+      - 32414:32414/udp
+    volumes:
+      - /appdata/plex:/config
+      - /mnt/storage:/mnt/storage
+      - /storage:/storage
     networks:
       - chief_network
-    ports:
-      - target: 32400
-        published: 32400 # WebUI Port
-        protocol: tcp
-        mode: host
-      - 32410:32410/udp # GDM network discovery
-      - 32412:32412/udp # GDM network discovery
-      - 32413:32413/udp # GDM network discovery
-      - 32414:32414/udp # GDM network discovery
+    logging:
+      driver: json-file
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 15s
+        window: 120s
+        max_attempts: 5
+      placement:
+        constraints:
+          - node.role == manager
+      resources:
+        reservations:
+          memory: 200M
+        limits:
+          memory: 1536M
+  ombi:
+    image: ghcr.io/linuxserver/ombi:latest
     environment:
-      - PUID=1000 # UserID
-      - PGID=1000 # GroupID
-      - TZ=Europe/Chisinau # Timezone
-      - VERSION=docker # Do not update PLEX internally
+      PGID: '1000'
+      PUID: '1000'
+      TZ: Europe/Chisinau
+      UMASK_SET: '022'
+    ports:
+      - 3579:3579
     volumes:
-      - /appdata/plex:/config # Plex appdata location
-      - /mnt/storage:/mnt/storage # Media library location 1
-      - /storage:/storage # Media library location 2
-
-  # https://hub.docker.com/r/tautulli/tautulli
+      - /appdata/ombi:/config
+    networks:
+      - default
+    logging:
+      driver: json-file
   tautulli:
-    image: tautulli/tautulli
+    image: tautulli/tautulli:latest
+    environment:
+      PGID: '1000'
+      PUID: '1000'
+      TZ: Europe/Chisinau
+      UMASK_SET: '022'
+    ports:
+      - 8181:8181
+    volumes:
+      - /appdata/tautulli:/config
     networks:
       - chief_network
-    ports:
-      - 8181:8181 # WebUI Port
-    environment:
-      - PUID=1000 # UserID
-      - PGID=1000 # GroupID
-      - TZ=Europe/Chisinau # Timezone
-    volumes:
-      - /appdata/tautulli:/config # Tautulli config and database
-
-  # https://hub.docker.com/r/alturismo/xteve_g2g_owi
+    logging:
+      driver: json-file
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
   xteve:
-    image: tnwhitwell/xteve
+    image: tnwhitwell/xteve:latest
+    environment:
+      PGID: '1000'
+      PUID: '1000'
+      TZ: Europe/Chisinau
+      UMASK_SET: '022'
+    ports:
+      - 34400:34400
+    volumes:
+      - /appdata/xteve/root:/config
+      - /tmp/xteve:/tmp/xteve
     networks:
       - chief_network
-    ports:
-      - 34400:34400 # Exposed port
-    environment:
-      - PUID=1000 # UserID
-      - PGID=1000 # GroupID
-      - TZ=Europe/Chisinau # Timezone
-    volumes:
-      - /appdata/xteve/root:/config # Root path
-      - /tmp/xteve:/tmp/xteve # tmp path
-
+    logging:
+      driver: json-file
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
 networks:
   chief_network:
     external: true
+  default:
+    driver: overlay

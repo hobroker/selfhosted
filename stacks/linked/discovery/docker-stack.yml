@@ -1,43 +1,47 @@
-#no-touch#
-
----
-version: "3.3"
-
+version: '3.3'
 services:
-  # https://hub.docker.com/r/linuxserver/radarr
   radarr:
-    image: ghcr.io/linuxserver/radarr
-    networks:
-      - chief_network
-    ports:
-      - 7878:7878 # WebUI Port
+    image: ghcr.io/linuxserver/radarr:latest
     environment:
-      - PUID=1000 # UserID
-      - PGID=1000 # GroupID
-      - UMASK_SET=022 # Plex file-creation mode
-      - TZ=Europe/Chisinau # Timezone
+      PGID: '1000'
+      PUID: '1000'
+      TZ: Europe/Chisinau
+      UMASK_SET: '022'
+    ports:
+      - 7878:7878
     volumes:
-      - /appdata/radarr:/config # Appdata
-      - /storage/movies:/movies # The Movies location
-      - /storage/downloads:/downloads # The downloads location
-
-  # https://hub.docker.com/r/linuxserver/sonarr
+      - /appdata/radarr:/config
+      - /storage/movies:/movies
+      - /storage/downloads:/downloads
+    networks:
+      - default
+    logging:
+      driver: json-file
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
   sonarr:
-    image: ghcr.io/linuxserver/sonarr
-    networks:
-      - chief_network
-    ports:
-      - 8989:8989 # WebUI Port
+    image: ghcr.io/linuxserver/sonarr:latest
     environment:
-      - PUID=1000 # UserID
-      - PGID=1000 # GroupID
-      - UMASK_SET=022 # Plex file-creation mode
-      - TZ=Europe/Chisinau # Timezone
+      PGID: '1000'
+      PUID: '1000'
+      TZ: Europe/Chisinau
+      UMASK_SET: '022'
+    ports:
+      - 8989:8989
     volumes:
-      - /appdata/sonarr:/config # Appdata
-      - /storage/tv-shows:/tv # The TV Shows location
-      - /storage/downloads:/downloads # The downloads location
-
+      - /appdata/sonarr:/config
+      - /storage/tv-shows:/tv
+      - /storage/downloads:/downloads
+    networks:
+      - default
+    logging:
+      driver: json-file
+    deploy:
+      placement:
+        constraints:
+          - node.role ==manager
 networks:
-  chief_network:
-    external: true
+  default:
+    driver: overlay

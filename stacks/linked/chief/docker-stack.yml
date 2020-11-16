@@ -1,44 +1,58 @@
-#no-touch#
-
----
-version: "3.3"
-
+version: '3.3'
 services:
-  # https://hub.docker.com/r/pomerium/pomerium
-  pomerium:
-    image: pomerium/pomerium
+  adguard:
+    image: adguard/adguardhome:latest
+    ports:
+      - 53:53
+      - 53:53/udp
+      - 67:67/udp
+      - 853:853
+      - 3001:80
+    volumes:
+      - /appdata/adguard/work:/opt/adguardhome/work
+      - /appdata/adguard/conf:/opt/adguardhome/conf
     networks:
       - network
-    ports:
-      - target: 443
-        published: 443
-        protocol: tcp
-        mode: host
-    extra_hosts:
-      - docker.host.internal:172.17.0.1 # localhost (127.0.0.1)
-    environment:
-      - AUTHENTICATE_SERVICE_URL=https://auth.hobroker.me # Auth service URL
-      - CERTIFICATE_FILE=/config/certs/fullchain.cer # Certificate for *.domain.example.com
-      - CERTIFICATE_KEY_FILE=/config/certs/certpriv.key # Certificate key for *.domain.example.com
-      - SHARED_SECRET=${SHARED_SECRET} # Shared secret (head -c32 /dev/urandom | base64)
-      - COOKIE_SECRET=${COOKIE_SECRET} # Cookie secret (head -c32 /dev/urandom | base64)
-      - IDP_PROVIDER=google
-      - IDP_PROVIDER_URL=https://accounts.google.com
-      - IDP_CLIENT_ID=${GOOGLE_CLIENT_ID} #  Google Client ID
-      - IDP_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET} #  Google Client Secret
-      - POLICY=${POMERIUM_POLICY} # Pomerium Policy (base64)
-      - ADMINISTRATORS="${ADMINISTRATORS}" # Administrator emails (comma separated)
-    volumes:
-      - /appdata/pomerium/data:/data:rw # Pomerium data location
-      - /appdata/pomerium/sync:/config # Config directory location
+    logging:
+      driver: json-file
     deploy:
-      mode: replicated
-      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+  pomerium:
+    image: pomerium/pomerium:latest
+    extra_hosts:
+      - docker.host.internal:172.17.0.1
+    environment:
+      POLICY: ${POLICY}
+      ADMINISTRATORS: ${ADMINISTRATORS}
+      AUTHENTICATE_SERVICE_URL: ${AUTHENTICATE_SERVICE_URL}
+      COOKIE_SECRET: ${COOKIE_SECRET}
+      SHARED_SECRET: ${SHARED_SECRET}
+      IDP_CLIENT_ID: ${IDP_CLIENT_ID}
+      IDP_CLIENT_SECRET: ${IDP_CLIENT_SECRET}
+      IDP_PROVIDER: google
+      IDP_PROVIDER_URL: https://accounts.google.com
+      CERTIFICATE_FILE: /config/certs/fullchain.cer
+      CERTIFICATE_KEY_FILE: /config/certs/certpriv.key
+    ports:
+      - 443:443
+    volumes:
+      - /appdata/pomerium/data:/data
+      - /appdata/pomerium/sync:/config
+    networks:
+      - network
+    logging:
+      driver: json-file
+    deploy:
       placement:
         constraints:
           - node.role == manager
           - node.platform.os == linux
-
+      resources:
+        reservations:
+          cpus: '0.2'
+          memory: 200M
 networks:
   network:
     driver: overlay

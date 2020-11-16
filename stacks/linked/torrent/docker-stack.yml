@@ -1,45 +1,48 @@
-#no-touch#
-
----
-version: "3.3"
-
+version: '3.3'
 services:
-  # https://hub.docker.com/r/linuxserver/qbittorrent
   qbittorrent:
-    image: ghcr.io/linuxserver/qbittorrent
-    networks:
-      - chief_network
-    ports:
-      - target: 8112
-        published: 8112
-        protocol: tcp
-        mode: host
-      - 6881:6881 # TCP connection port
-      - 6881:6881/udp # UDP connection port
+    image: ghcr.io/linuxserver/qbittorrent:latest
     environment:
-      - WEBUI_PORT=8112 # WebUI Port
-      - PUID=1000 # UserID
-      - PGID=1000 # GroupID
-      - TZ=Europe/Chisinau # Timezone
+      PGID: '1000'
+      PUID: '1000'
+      TZ: Europe/Chisinau
+      UMASK_SET: '022'
+      WEBUI_PORT: '8112'
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
+      - 8112:8112
     volumes:
-      - /appdata/qbittorrent:/config # Appdata
-      - /storage/downloads:/downloads # Downloads path
-
-  # https://hub.docker.com/r/linuxserver/jackett
+      - /appdata/qbittorrent:/config
+      - /storage/downloads:/downloads
+    networks:
+      - default
+    logging:
+      driver: json-file
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
   jackett:
-    image: ghcr.io/linuxserver/jackett
-    networks:
-      - chief_network
-    ports:
-      - 9117:9117 # WebUI Port
+    image: ghcr.io/linuxserver/jackett:latest
     environment:
-      - PUID=1000 # UserID
-      - PGID=1000 # GroupID
-      - TZ=Europe/Chisinau # Timezone
+      PGID: '1000'
+      PUID: '1000'
+      TZ: Europe/Chisinau
+      UMASK_SET: '022'
+    ports:
+      - 9117:9117
     volumes:
-      - /appdata/jackett:/config # Config path
-      - /storage/downloads/torrents/:/downloads # Blackhole path
-
+      - /appdata/jackett:/config
+      - /storage/downloads/torrents/:/downloads
+    networks:
+      - default
+    logging:
+      driver: json-file
+    deploy:
+      placement:
+        constraints:
+          - node.role ==manager
 networks:
-  chief_network:
-    external: true
+  default:
+    driver: overlay
