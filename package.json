@@ -19,8 +19,7 @@
   ],
   "main": "src/meta/index.js",
   "scripts": {
-    "start": "node src/meta",
-    "serve": "node src/dev-server"
+    "start": "node src/meta"
   },
   "dependencies": {
     "yaml": "^1.10.0"

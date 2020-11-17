@@ -17,11 +17,16 @@ const stackToJson = name => {
 
 const mapServiceEntries = entries => Object.entries(entries).map(([
   name,
-  { image },
-]) => ({
-  name,
-  image: image.replace(/:.*/, '').split('/').slice(-2).join('/'),
-}));
+  stack,
+]) => {
+  const image = stack.image.replace(/:.*/, '').split('/').slice(-2).join('/');
+
+  return ({
+    name,
+    image,
+    url: `https://hub.docker.com/r/${image}`,
+  });
+});
 
 const parseStack = name => {
   const yaml = stackToJson(name);

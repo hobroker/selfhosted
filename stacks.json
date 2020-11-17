@@ -4,11 +4,13 @@
     "services": [
       {
         "name": "adguard",
-        "image": "adguard/adguardhome"
+        "image": "adguard/adguardhome",
+        "url": "https://hub.docker.com/r/adguard/adguardhome"
       },
       {
         "name": "pomerium",
-        "image": "pomerium/pomerium"
+        "image": "pomerium/pomerium",
+        "url": "https://hub.docker.com/r/pomerium/pomerium"
       }
     ]
   },
@@ -17,11 +19,13 @@
     "services": [
       {
         "name": "code-server",
-        "image": "linuxserver/code-server"
+        "image": "linuxserver/code-server",
+        "url": "https://hub.docker.com/r/linuxserver/code-server"
       },
       {
         "name": "dozzle",
-        "image": "amir20/dozzle"
+        "image": "amir20/dozzle",
+        "url": "https://hub.docker.com/r/amir20/dozzle"
       }
     ]
   },
@@ -30,11 +34,13 @@
     "services": [
       {
         "name": "radarr",
-        "image": "linuxserver/radarr"
+        "image": "linuxserver/radarr",
+        "url": "https://hub.docker.com/r/linuxserver/radarr"
       },
       {
         "name": "sonarr",
-        "image": "linuxserver/sonarr"
+        "image": "linuxserver/sonarr",
+        "url": "https://hub.docker.com/r/linuxserver/sonarr"
       }
     ]
   },
@@ -43,23 +49,28 @@
     "services": [
       {
         "name": "basic-auth-plugin",
-        "image": "openfaas/basic-auth-plugin"
+        "image": "openfaas/basic-auth-plugin",
+        "url": "https://hub.docker.com/r/openfaas/basic-auth-plugin"
       },
       {
         "name": "faas-swarm",
-        "image": "openfaas/faas-swarm"
+        "image": "openfaas/faas-swarm",
+        "url": "https://hub.docker.com/r/openfaas/faas-swarm"
       },
       {
         "name": "gateway",
-        "image": "openfaas/gateway"
+        "image": "openfaas/gateway",
+        "url": "https://hub.docker.com/r/openfaas/gateway"
       },
       {
         "name": "nats",
-        "image": "nats-streaming"
+        "image": "nats-streaming",
+        "url": "https://hub.docker.com/r/nats-streaming"
       },
       {
         "name": "queue-worker",
-        "image": "openfaas/queue-worker"
+        "image": "openfaas/queue-worker",
+        "url": "https://hub.docker.com/r/openfaas/queue-worker"
       }
     ]
   },
@@ -68,15 +79,18 @@
     "services": [
       {
         "name": "alertmanager",
-        "image": "prom/alertmanager"
+        "image": "prom/alertmanager",
+        "url": "https://hub.docker.com/r/prom/alertmanager"
       },
       {
         "name": "grafana",
-        "image": "grafana/grafana"
+        "image": "grafana/grafana",
+        "url": "https://hub.docker.com/r/grafana/grafana"
       },
       {
         "name": "prometheus",
-        "image": "prom/prometheus"
+        "image": "prom/prometheus",
+        "url": "https://hub.docker.com/r/prom/prometheus"
       }
     ]
   },
@@ -85,19 +99,23 @@
     "services": [
       {
         "name": "app",
-        "image": "linuxserver/plex"
+        "image": "linuxserver/plex",
+        "url": "https://hub.docker.com/r/linuxserver/plex"
       },
       {
         "name": "ombi",
-        "image": "linuxserver/ombi"
+        "image": "linuxserver/ombi",
+        "url": "https://hub.docker.com/r/linuxserver/ombi"
       },
       {
         "name": "tautulli",
-        "image": "tautulli/tautulli"
+        "image": "tautulli/tautulli",
+        "url": "https://hub.docker.com/r/tautulli/tautulli"
       },
       {
         "name": "xteve",
-        "image": "tnwhitwell/xteve"
+        "image": "tnwhitwell/xteve",
+        "url": "https://hub.docker.com/r/tnwhitwell/xteve"
       }
     ]
   },
@@ -106,19 +124,23 @@
     "services": [
       {
         "name": "agent",
-        "image": "swarmpit/agent"
+        "image": "swarmpit/agent",
+        "url": "https://hub.docker.com/r/swarmpit/agent"
       },
       {
         "name": "app",
-        "image": "swarmpit/swarmpit"
+        "image": "swarmpit/swarmpit",
+        "url": "https://hub.docker.com/r/swarmpit/swarmpit"
       },
       {
         "name": "db",
-        "image": "couchdb"
+        "image": "couchdb",
+        "url": "https://hub.docker.com/r/couchdb"
       },
       {
         "name": "influxdb",
-        "image": "influxdb"
+        "image": "influxdb",
+        "url": "https://hub.docker.com/r/influxdb"
       }
     ]
   },
@@ -127,11 +149,13 @@
     "services": [
       {
         "name": "qbittorrent",
-        "image": "linuxserver/qbittorrent"
+        "image": "linuxserver/qbittorrent",
+        "url": "https://hub.docker.com/r/linuxserver/qbittorrent"
       },
       {
         "name": "jackett",
-        "image": "linuxserver/jackett"
+        "image": "linuxserver/jackett",
+        "url": "https://hub.docker.com/r/linuxserver/jackett"
       }
     ]
   }
