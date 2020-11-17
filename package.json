@@ -19,7 +19,8 @@
   ],
   "main": "src/meta/index.js",
   "scripts": {
-    "start": "node src/meta"
+    "start": "node src meta",
+    "docs": "node src docs"
   },
   "dependencies": {
     "yaml": "^1.10.0"

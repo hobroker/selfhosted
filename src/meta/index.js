@@ -1,19 +1,24 @@
-const { log } = require('../util');
+const { STACKS_DIRNAME, STACKS_JSON_FILENAME } = require('../constants');
+const { assert } = require('../util');
 const parse = require('./parse');
 const write = require('./write');
 
-const done = () => {
-  log('done');
-
-  process.exit(0);
+const validate = ({ file, dir }) => {
+  assert(file && !file.startsWith('/'),
+    '"file" must be a string and not start with "/"');
+  assert(dir && !dir.startsWith('/'),
+    '"dir" must exist and not start with "/"');
 };
 
-const main = () => {
-  const json = parse();
+const meta = ({
+  file = STACKS_JSON_FILENAME,
+  dir = STACKS_DIRNAME,
+}) => {
+  validate({ file, dir });
 
-  write(json);
+  const json = parse(dir);
 
-  done();
+  write(json, file);
 };
 
-main();
+module.exports = meta;

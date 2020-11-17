@@ -1,14 +1,14 @@
 const { writeFileSync } = require('fs');
-const { FINAL_FILE_PATH } = require('./constants');
-const { log } = require('../util');
+const { absolutPathTo, log } = require('../util');
 
-const write = json => {
-  log(`writing ${FINAL_FILE_PATH}...`);
+const write = (json, filename) => {
+  log(`writing ./${filename}`, '...');
+
+  const filepath = absolutPathTo(filename);
   const string = JSON.stringify(json, null, 2);
+  writeFileSync(filepath, string + '\n');
 
-  writeFileSync(FINAL_FILE_PATH, string + '\n');
-
-  log('...writing done');
+  log('...', 'writing done');
 };
 
 module.exports = write;

@@ -1,31 +1,27 @@
 const { execSync } = require('child_process');
+const { resolve } = require('path');
 
 const exec = cmd => execSync(cmd, { encoding: 'utf8' }).trim();
 
 const capitalize = string => string[0].toUpperCase() + string.slice(1);
 
-const invariant = (condition, message = 'Invalid value') => {
+const assert = (condition, message = 'Invalid value') => {
   if (!condition) {
     throw new Error(message);
   }
 };
 
-const log = (...messages) => console.log('>', ...messages);
+let logIndent = 0;
+const log = (...messages) => messages.length
+  && console.log(`${'   '.repeat(logIndent)} >`, ...messages)
+  || (indent => (logIndent += indent) && false || log);
 
-const run = ([ start, end ] = []) => fn => (...args) => {
-  start && log(start + (end ? '...' : ''));
-
-  const result = fn(...args);
-
-  end && log(`...${end}`);
-
-  return result;
-};
+const absolutPathTo = (...pathSegments) => resolve(__dirname, '../..', ...pathSegments);
 
 module.exports = {
+  absolutPathTo,
   capitalize,
   exec,
-  invariant,
+  assert,
   log,
-  run,
 };
