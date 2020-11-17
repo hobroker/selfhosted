@@ -10,14 +10,22 @@ const invariant = (condition, message = 'Invalid value') => {
   }
 };
 
-const identity = value => value;
-
 const log = (...messages) => console.log('>', ...messages);
+
+const run = ([ start, end ] = []) => fn => (...args) => {
+  start && log(start + (end ? '...' : ''));
+
+  const result = fn(...args);
+
+  end && log(`...${end}`);
+
+  return result;
+};
 
 module.exports = {
   capitalize,
   exec,
-  identity,
   invariant,
   log,
+  run,
 };

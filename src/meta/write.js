@@ -1,12 +1,12 @@
 const { writeFileSync } = require('fs');
-const { STACKS_JSON_PATH } = require('./constants');
+const { FINAL_FILE_PATH } = require('./constants');
 const { log } = require('../util');
 
 const write = json => {
-  log(`writing ${STACKS_JSON_PATH}...`);
+  log(`writing ${FINAL_FILE_PATH}...`);
   const string = JSON.stringify(json, null, 2);
 
-  writeFileSync(STACKS_JSON_PATH, string + '\n');
+  writeFileSync(FINAL_FILE_PATH, string + '\n');
 
   log('...writing done');
 };
