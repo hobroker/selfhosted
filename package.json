@@ -13,16 +13,17 @@
     "url": "https://github.com/hobroker/selfhosted/issues"
   },
   "keywords": [
-    "nas",
+    "selfhosted",
     "docker",
-    "portainer"
+    "swarm"
   ],
-  "main": "src/lib/index.js",
+  "main": "src/meta/index.js",
   "scripts": {
-    "start": "node src/lib",
-    "serve": "node src/dev-server",
-    "dev": "npm run start && cat templates.json"
+    "start": "node src/meta",
+    "serve": "node src/dev-server"
   },
-  "dependencies": {},
+  "dependencies": {
+    "yaml": "^1.10.0"
+  },
   "devDependencies": {}
 }

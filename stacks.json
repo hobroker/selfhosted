@@ -1,0 +1,138 @@
+[
+  {
+    "name": "chief",
+    "services": [
+      {
+        "name": "adguard",
+        "image": "adguard/adguardhome"
+      },
+      {
+        "name": "pomerium",
+        "image": "pomerium/pomerium"
+      }
+    ]
+  },
+  {
+    "name": "debug",
+    "services": [
+      {
+        "name": "code-server",
+        "image": "linuxserver/code-server"
+      },
+      {
+        "name": "dozzle",
+        "image": "amir20/dozzle"
+      }
+    ]
+  },
+  {
+    "name": "discovery",
+    "services": [
+      {
+        "name": "radarr",
+        "image": "linuxserver/radarr"
+      },
+      {
+        "name": "sonarr",
+        "image": "linuxserver/sonarr"
+      }
+    ]
+  },
+  {
+    "name": "faas",
+    "services": [
+      {
+        "name": "basic-auth-plugin",
+        "image": "openfaas/basic-auth-plugin"
+      },
+      {
+        "name": "faas-swarm",
+        "image": "openfaas/faas-swarm"
+      },
+      {
+        "name": "gateway",
+        "image": "openfaas/gateway"
+      },
+      {
+        "name": "nats",
+        "image": "nats-streaming"
+      },
+      {
+        "name": "queue-worker",
+        "image": "openfaas/queue-worker"
+      }
+    ]
+  },
+  {
+    "name": "monitor",
+    "services": [
+      {
+        "name": "alertmanager",
+        "image": "prom/alertmanager"
+      },
+      {
+        "name": "grafana",
+        "image": "grafana/grafana"
+      },
+      {
+        "name": "prometheus",
+        "image": "prom/prometheus"
+      }
+    ]
+  },
+  {
+    "name": "plex",
+    "services": [
+      {
+        "name": "app",
+        "image": "linuxserver/plex"
+      },
+      {
+        "name": "ombi",
+        "image": "linuxserver/ombi"
+      },
+      {
+        "name": "tautulli",
+        "image": "tautulli/tautulli"
+      },
+      {
+        "name": "xteve",
+        "image": "tnwhitwell/xteve"
+      }
+    ]
+  },
+  {
+    "name": "swarmpit",
+    "services": [
+      {
+        "name": "agent",
+        "image": "swarmpit/agent"
+      },
+      {
+        "name": "app",
+        "image": "swarmpit/swarmpit"
+      },
+      {
+        "name": "db",
+        "image": "couchdb"
+      },
+      {
+        "name": "influxdb",
+        "image": "influxdb"
+      }
+    ]
+  },
+  {
+    "name": "torrent",
+    "services": [
+      {
+        "name": "qbittorrent",
+        "image": "linuxserver/qbittorrent"
+      },
+      {
+        "name": "jackett",
+        "image": "linuxserver/jackett"
+      }
+    ]
+  }
+]
