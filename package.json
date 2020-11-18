@@ -17,7 +17,7 @@
     "docker",
     "swarm"
   ],
-  "main": "src/meta/index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "node src meta",
     "docs": "node src docs"

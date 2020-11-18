@@ -1,9 +1,9 @@
 const { readdirSync, readFileSync } = require('fs');
 const path = require('path');
 const YAML = require('yaml');
-const { absolutPathTo, log } = require('../util');
+const { absolutPathTo, log } = require('../../util');
 const { formatServiceEntry } = require('./facade');
-const { DOCKER_STACK_FILE } = require('../constants');
+const { DOCKER_STACK_FILE } = require('../../constants');
 
 const stackToJson = filepath => {
   const content = readFileSync(filepath, 'utf8');

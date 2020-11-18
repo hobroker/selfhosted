@@ -1,5 +1,5 @@
-const { STACKS_DIRNAME, STACKS_JSON_FILENAME } = require('../constants');
-const { assert } = require('../util');
+const { STACKS_DIRNAME, STACKS_JSON_FILENAME } = require('../../constants');
+const { assert } = require('../../util');
 const parse = require('./parse');
 const write = require('./write');
 

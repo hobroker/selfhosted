@@ -1,4 +1,4 @@
-const { log } = require('../util');
+const { log } = require('../../util');
 
 const formatServiceEntry = ([name, service]) => {
   log(name);

@@ -1,5 +1,5 @@
-const { STACKS_JSON_FILENAME } = require('../constants');
-const { assert } = require('../util');
+const { STACKS_JSON_FILENAME } = require('../../constants');
+const { assert } = require('../../util');
 
 const validate = ({ file, dir }) => {
   assert(file && !file.startsWith('/'),

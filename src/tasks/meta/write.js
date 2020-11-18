@@ -1,5 +1,5 @@
 const { writeFileSync } = require('fs');
-const { absolutPathTo, log } = require('../util');
+const { absolutPathTo, log } = require('../../util');
 
 const write = (json, filename) => {
   log(`writing ./${filename}`, '...');
