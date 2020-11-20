@@ -17,10 +17,10 @@
     "docker",
     "swarm"
   ],
-  "main": "src/index.js",
+  "main": "tool/index.js",
   "scripts": {
-    "start": "node src meta",
-    "docs": "node src docs"
+    "meta": "node tool meta",
+    "docs": "node tool docs"
   },
   "dependencies": {
     "yaml": "^1.10.0"
