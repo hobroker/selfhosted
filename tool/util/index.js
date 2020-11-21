@@ -1,5 +1,6 @@
 const { execSync } = require('child_process');
 const { resolve } = require('path');
+const { readFileSync, writeFileSync } = require('fs');
 
 const exec = cmd => execSync(cmd, { encoding: 'utf8' }).trim();
 
@@ -18,10 +19,13 @@ const log = (...messages) => messages.length
 
 const absolutPathTo = (...pathSegments) => resolve(__dirname, '../..', ...pathSegments);
 
+const readJsonFile = filepath => JSON.parse(readFileSync(filepath, 'utf8'));
+
 module.exports = {
   absolutPathTo,
+  assert,
   capitalize,
   exec,
-  assert,
   log,
+  readJsonFile,
 };
