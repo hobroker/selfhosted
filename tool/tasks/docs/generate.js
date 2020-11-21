@@ -1,13 +1,17 @@
 const { log } = require('../../util');
 
+let idx = 1;
+
 const walkServices = services => services.map(({ name, image, url }) =>
   `<tr>
+    <td>${idx++}</td>
     <td>${name}</td>
     <td><a href="${url}">${image}</a></td>
   </tr>`);
 
 const walkStaks = stacks => stacks.map(({ name, services }) =>
   `<tr>
+    <td>${idx++}</td>
     <td rowspan=${services.length}>${name}</td>
     <td>${services[0].name}</td>
     <td><a href="${services[0].url}">${services[0].image}</a></td>
@@ -26,6 +30,7 @@ const generate = stacks => {
       <th>Stack</th>
       <th>Service name</th>
       <th>URL</th>
+      <th>N</th>
     </tr>
   </thead>
     <tbody>
