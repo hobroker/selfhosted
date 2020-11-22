@@ -1,2 +1,7 @@
 .DS_Store
 node_modules
+terraform/.terraform
+terraform/certs/*
+terraform/.auto.tfvars
+terraform.tfstate
+terraform.tfstate.backup

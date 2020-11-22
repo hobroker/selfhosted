@@ -2,7 +2,7 @@ const { log } = require('../util');
 const readArgs = require('./readArgs');
 const tasks = require('./tasks');
 
-const runTasks = args => {
+const runTasks = async args => {
   const entries = Object.entries(args);
   log(`Running tasks`, Object.keys(args))(1);
 
@@ -11,7 +11,7 @@ const runTasks = args => {
 
     log(`Running task: ${name}`, '...')(1);
 
-    task(taskArgs);
+    await task(taskArgs);
 
     log()(-1)('...', `task "${name}" done`);
   }
@@ -19,13 +19,13 @@ const runTasks = args => {
   log()(-1)('all tasks done\n');
 };
 
-const run = () => {
+const run = async () => {
   const args = readArgs();
 
   if (Object.keys(args).length === 0) {
     log('No tasks specified');
   } else {
-    runTasks(args);
+    await runTasks(args);
   }
 
   process.exit(0);
