@@ -19,10 +19,6 @@ resource "docker_image" "image" {
 resource "docker_service" "dozzle" {
   name = "dozzle"
 
-  mode {
-    global = true
-  }
-
   task_spec {
     container_spec {
       image     = docker_image.image.name
