@@ -34,3 +34,14 @@ module "sonarr" {
     downloads = "/storage/downloads"
   }
 }
+
+module "radarr" {
+  source = "./services/radarr"
+
+  port    = 7878
+  volumes = {
+    config    = "/appdata/radarr"
+    movies    = "/storage/movies"
+    downloads = "/storage/downloads"
+  }
+}

@@ -16,5 +16,9 @@ output "services" {
       name = "sonarr",
       port = module.sonarr.port
     },
+    {
+      name = "radarr",
+      port = module.radarr.port
+    },
   ]
 }
