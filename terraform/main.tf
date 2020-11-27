@@ -1,17 +1,15 @@
-terraform {
-  required_providers {
-    docker = {
-      source = "terraform-providers/docker"
-    }
-  }
-}
-
-provider "docker" {
-  host      = var.docker_host
-  cert_path = "certs"
-}
-
 module "dozzle" {
-  source    = "./modules/dozzle"
-  port      = 8888
+  source = "./services/dozzle"
+
+  port = 8888
+}
+
+module "jackett" {
+  source = "./services/jackett"
+
+  port    = 9117
+  volumes = {
+    config = "/appdata/jackett"
+    downloads = "/storage/downloads/torrents"
+  }
 }

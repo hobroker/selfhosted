@@ -1,13 +1,13 @@
-terraform {
-  required_providers {
-    docker = {
-      source = "terraform-providers/docker"
-    }
-  }
+locals {
+  name = "dozzle"
+}
+
+module "constants" {
+  source = "../../constants"
 }
 
 resource "docker_network" "network" {
-  name   = "debug-net"
+  name   = "${local.name}-network"
   driver = "overlay"
 }
 
@@ -16,10 +16,16 @@ resource "docker_image" "image" {
   keep_locally = true
 }
 
-resource "docker_service" "dozzle" {
-  name = "dozzle"
+resource "docker_service" "app" {
+  name = local.name
 
   task_spec {
+    restart_policy = module.constants.default_restart_policy
+
+    networks = [
+      docker_network.network.id
+    ]
+
     container_spec {
       image     = docker_image.image.name
       read_only = true
@@ -32,22 +38,9 @@ resource "docker_service" "dozzle" {
       }
     }
 
-    restart_policy = {
-      condition    = "on-failure"
-      delay        = "3s"
-      max_attempts = 5
-      window       = "10s"
-    }
-
     placement {
-      constraints = [
-        "node.role==manager"
-      ]
+      constraints = module.constants.manager_constraints
     }
-
-    networks = [
-      docker_network.network.id
-    ]
 
     log_driver {
       name = "json-file"
@@ -59,7 +52,6 @@ resource "docker_service" "dozzle" {
       target_port    = 8080
       published_port = var.port
       protocol       = "tcp"
-      publish_mode   = "ingress"
     }
   }
 }

@@ -1,4 +1,4 @@
 variable "port" {
-  type = number
+  type    = number
   default = 8888
 }

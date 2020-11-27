@@ -1,3 +1,12 @@
-output "published_ports" {
-  value = module.dozzle.ports
+output "services" {
+  value = [
+    {
+      name = "dozzle",
+      port = module.dozzle.port
+    },
+    {
+      name = "jackett",
+      port = module.jackett.port
+    },
+  ]
 }
