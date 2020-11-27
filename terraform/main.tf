@@ -9,7 +9,17 @@ module "jackett" {
 
   port    = 9117
   volumes = {
-    config = "/appdata/jackett"
+    config    = "/appdata/jackett"
+    downloads = "/storage/downloads/torrents"
+  }
+}
+
+module "qbittorrent" {
+  source = "./services/qbittorrent"
+
+  port    = 8112
+  volumes = {
+    config    = "/appdata/qbittorrent"
     downloads = "/storage/downloads/torrents"
   }
 }
