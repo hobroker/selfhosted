@@ -23,3 +23,14 @@ module "qbittorrent" {
     downloads = "/storage/downloads/torrents"
   }
 }
+
+module "sonarr" {
+  source = "./services/sonarr"
+
+  port    = 8989
+  volumes = {
+    config    = "/appdata/sonarr"
+    tv        = "/storage/tv-shows"
+    downloads = "/storage/downloads"
+  }
+}
