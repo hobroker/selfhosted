@@ -56,3 +56,10 @@ module "adguard" {
   config_path = "/appdata/adguard/conf"
   data_path   = "/appdata/adguard/work"
 }
+
+module "tautulli" {
+  source = "./services/tautulli"
+
+  port        = 8181
+  config_path = "/appdata/tautulli"
+}

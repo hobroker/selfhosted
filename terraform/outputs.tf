@@ -28,5 +28,9 @@ output "services" {
       name = "adguard",
       port = module.adguard.port
     },
+    {
+      name = "tautulli",
+      port = module.tautulli.port
+    },
   ]
 }
