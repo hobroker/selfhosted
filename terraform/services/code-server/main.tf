@@ -1,5 +1,5 @@
 locals {
-  name = "sonarr"
+  name = "code-server"
 }
 
 module "constants" {
@@ -7,7 +7,7 @@ module "constants" {
 }
 
 resource "docker_image" "image" {
-  name         = "linuxserver/sonarr:latest"
+  name         = "linuxserver/code-server:latest"
   keep_locally = true
 }
 
@@ -28,24 +28,29 @@ resource "docker_service" "app" {
 
     container_spec {
       image = docker_image.image.name
-      env   = module.constants.default_container_env
+      env   = merge(module.constants.default_container_env, {
+        PASSWORD      = var.password
+        SUDO_PASSWORD = var.sudo_password
+      })
 
-      mounts {
-        source = var.config_path
-        target = "/config"
-        type   = "bind"
+      dynamic "mounts" {
+        for_each = var.config_path == "" ? [] : [1]
+
+        content {
+          source = var.config_path
+          target = "/config"
+          type   = "bind"
+        }
       }
 
-      mounts {
-        source = var.downloads_path
-        target = "/downloads"
-        type   = "bind"
-      }
+      dynamic "mounts" {
+        for_each = var.mounts
 
-      mounts {
-        source = var.tv_path
-        target = "/tv"
-        type   = "bind"
+        content {
+          target = mounts.value
+          source = mounts.key
+          type   = "bind"
+        }
       }
     }
 
@@ -60,7 +65,7 @@ resource "docker_service" "app" {
 
   endpoint_spec {
     ports {
-      target_port    = 8989
+      target_port    = 8443
       published_port = var.port
       protocol       = "tcp"
       publish_mode   = "ingress"

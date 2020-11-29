@@ -20,5 +20,13 @@ output "services" {
       name = "radarr",
       port = module.radarr.port
     },
+    {
+      name = "code-server",
+      port = module.code-server.port
+    },
+    {
+      name = "adguard",
+      port = module.adguard.port
+    },
   ]
 }

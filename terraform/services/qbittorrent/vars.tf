@@ -1,11 +1,16 @@
 variable "port" {
-  type    = number
-  default = 8112
+  type        = number
+  default     = 8112
+  description = "WEBUI Port"
 }
 
-variable "volumes" {
-  type = object({
-    config    = string
-    downloads = string
-  })
+variable "config_path" {
+  type        = string
+  default     = ""
+  description = "Config folder path"
+}
+
+variable "blackhole_path" {
+  type        = string
+  description = "Blackhole folder path"
 }

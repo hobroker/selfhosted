@@ -1,6 +1,6 @@
 variable "port" {
   type        = number
-  default     = 7878
+  default     = 3001
   description = "WEBUI Port"
 }
 
@@ -9,12 +9,7 @@ variable "config_path" {
   description = "Config folder path"
 }
 
-variable "downloads_path" {
+variable "data_path" {
   type        = string
-  description = "Downloads folder path"
-}
-
-variable "movies_path" {
-  type        = string
-  description = "Movies folder path"
+  description = "Data folder path"
 }

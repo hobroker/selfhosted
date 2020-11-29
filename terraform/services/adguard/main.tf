@@ -1,5 +1,5 @@
 locals {
-  name = "sonarr"
+  name = "adguard"
 }
 
 module "constants" {
@@ -7,7 +7,7 @@ module "constants" {
 }
 
 resource "docker_image" "image" {
-  name         = "linuxserver/sonarr:latest"
+  name         = "adguard/adguardhome:latest"
   keep_locally = true
 }
 
@@ -32,19 +32,13 @@ resource "docker_service" "app" {
 
       mounts {
         source = var.config_path
-        target = "/config"
+        target = "/opt/adguardhome/conf"
         type   = "bind"
       }
 
       mounts {
-        source = var.downloads_path
-        target = "/downloads"
-        type   = "bind"
-      }
-
-      mounts {
-        source = var.tv_path
-        target = "/tv"
+        source = var.data_path
+        target = "/opt/adguardhome/work"
         type   = "bind"
       }
     }
@@ -60,7 +54,35 @@ resource "docker_service" "app" {
 
   endpoint_spec {
     ports {
-      target_port    = 8989
+      target_port    = 53
+      published_port = 53
+      protocol       = "tcp"
+      publish_mode   = "ingress"
+    }
+
+    ports {
+      target_port    = 53
+      published_port = 53
+      protocol       = "udp"
+      publish_mode   = "ingress"
+    }
+
+    ports {
+      target_port    = 67
+      published_port = 67
+      protocol       = "udp"
+      publish_mode   = "ingress"
+    }
+
+    ports {
+      target_port    = 853
+      published_port = 853
+      protocol       = "tcp"
+      publish_mode   = "ingress"
+    }
+
+    ports {
+      target_port    = 80
       published_port = var.port
       protocol       = "tcp"
       publish_mode   = "ingress"
