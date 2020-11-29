@@ -1,42 +1,5 @@
 version: '3.3'
 services:
-  app:
-    image: ghcr.io/linuxserver/plex:latest
-    environment:
-      PGID: '1000'
-      PUID: '1000'
-      TZ: Europe/Chisinau
-      UMASK_SET: '022'
-      PLEX_CLAIM: ''
-      VERSION: public
-    ports:
-      - 32400:32400
-      - 32410:32410/udp
-      - 32412:32412/udp
-      - 32413:32413/udp
-      - 32414:32414/udp
-    volumes:
-      - /appdata/plex:/config
-      - /mnt/storage:/mnt/storage
-      - /storage:/storage
-    networks:
-      - chief_network
-    logging:
-      driver: json-file
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 15s
-        window: 120s
-        max_attempts: 5
-      placement:
-        constraints:
-          - node.role == manager
-      resources:
-        reservations:
-          memory: 200M
-        limits:
-          memory: 1536M
   ombi:
     image: ghcr.io/linuxserver/ombi:latest
     environment:
