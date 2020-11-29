@@ -15,6 +15,10 @@ output "default_container_env" {
   }
 }
 
+output "docker_user" {
+  value = "1000:1000"
+}
+
 output "manager_constraints" {
   value = [
     "node.role==manager"
