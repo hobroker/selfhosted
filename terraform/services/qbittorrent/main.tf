@@ -28,9 +28,9 @@ resource "docker_service" "app" {
 
     container_spec {
       image = docker_image.image.name
-      env   = merge({
+      env   = merge(module.constants.default_container_env, {
         WEBUI_PORT: var.port
-      }, module.constants.default_container_env)
+      })
 
       dynamic "mounts" {
         for_each = var.config_path == "" ? [] : [1]
