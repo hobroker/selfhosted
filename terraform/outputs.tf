@@ -32,5 +32,9 @@ output "services" {
       name = "tautulli",
       port = module.tautulli.port
     },
+    {
+      name = "xteve",
+      port = module.xteve.port
+    },
   ]
 }

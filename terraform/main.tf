@@ -63,3 +63,10 @@ module "tautulli" {
   port        = 8181
   config_path = "/appdata/tautulli"
 }
+
+module "xteve" {
+  source = "./services/xteve"
+
+  port        = 34400
+  config_path = "/appdata/xteve"
+}
