@@ -16,7 +16,7 @@ variable "sudo_password" {
   description = "Container `sudo` password. No `sudo` access if unset"
 }
 
-variable "config_volume" {
+variable "config_path" {
   type        = string
   default     = ""
   description = "Config path"

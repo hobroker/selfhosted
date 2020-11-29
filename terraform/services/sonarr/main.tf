@@ -31,19 +31,19 @@ resource "docker_service" "app" {
       env   = module.constants.default_container_env
 
       mounts {
-        source = var.volumes.config
+        source = var.config_path
         target = "/config"
         type   = "bind"
       }
 
       mounts {
-        source = var.volumes.downloads
+        source = var.downloads_path
         target = "/downloads"
         type   = "bind"
       }
 
       mounts {
-        source = var.volumes.tv
+        source = var.tv_path
         target = "/tv"
         type   = "bind"
       }

@@ -4,12 +4,12 @@ variable "port" {
   description = "WEBUI Port"
 }
 
-variable "config_volume" {
+variable "config_path" {
   type        = string
   description = "Config folder path"
 }
 
-variable "data_volume" {
+variable "data_path" {
   type        = string
   description = "Data folder path"
 }

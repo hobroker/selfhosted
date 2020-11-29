@@ -4,13 +4,13 @@ variable "port" {
   description = "WEBUI Port"
 }
 
-variable "config_volume" {
+variable "config_path" {
   type        = string
   default     = ""
   description = "Config folder path"
 }
 
-variable "blackhole_volume" {
+variable "blackhole_path" {
   type        = string
   description = "Blackhole folder path"
 }

@@ -31,13 +31,13 @@ resource "docker_service" "app" {
       env   = module.constants.default_container_env
 
       mounts {
-        source = var.config_volume
+        source = var.config_path
         target = "/opt/adguardhome/conf"
         type   = "bind"
       }
 
       mounts {
-        source = var.data_volume
+        source = var.data_path
         target = "/opt/adguardhome/work"
         type   = "bind"
       }

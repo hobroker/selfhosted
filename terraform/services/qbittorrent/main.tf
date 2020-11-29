@@ -33,20 +33,20 @@ resource "docker_service" "app" {
       }, module.constants.default_container_env)
 
       dynamic "mounts" {
-        for_each = var.config_volume == "" ? [] : [1]
+        for_each = var.config_path == "" ? [] : [1]
 
         content {
-          source = var.config_volume
+          source = var.config_path
           target = "/config"
           type   = "bind"
         }
       }
 
       dynamic "mounts" {
-        for_each = var.config_volume == "" ? [] : [1]
+        for_each = var.config_path == "" ? [] : [1]
 
         content {
-          source = var.blackhole_volume
+          source = var.blackhole_path
           target = "/downloads"
           type   = "bind"
         }

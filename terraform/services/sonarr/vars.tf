@@ -4,11 +4,17 @@ variable "port" {
   description = "WEBUI Port"
 }
 
-variable "volumes" {
-  type        = object({
-    config    = string
-    downloads = string
-    tv        = string
-  })
-  description = "Binded volumes"
+variable "config_path" {
+  type        = string
+  description = "Config folder path"
+}
+
+variable "downloads_path" {
+  type        = string
+  description = "Downloads folder path"
+}
+
+variable "tv_path" {
+  type        = string
+  description = "TV Shows folder path"
 }
