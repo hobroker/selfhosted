@@ -56,3 +56,11 @@ module "code-server" {
     "/appdata"           = "/appdata"
   }
 }
+
+module "adguard" {
+  source = "./services/adguard"
+
+  port          = 3001
+  config_volume = "/appdata/adguard/conf"
+  data_volume   = "/appdata/adguard/work"
+}
