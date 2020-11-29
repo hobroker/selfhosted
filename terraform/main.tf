@@ -7,11 +7,9 @@ module "dozzle" {
 module "jackett" {
   source = "./services/jackett"
 
-  port    = 9117
-  volumes = {
-    config    = "/appdata/jackett"
-    downloads = "/storage/downloads/torrents"
-  }
+  port             = 9117
+  config_volume    = "/appdata/jackett"
+  blackhole_volume = "/storage/downloads/torrents"
 }
 
 module "qbittorrent" {
