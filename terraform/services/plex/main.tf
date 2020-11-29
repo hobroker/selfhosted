@@ -20,7 +20,20 @@ resource "docker_service" "app" {
   name = local.name
 
   task_spec {
-    restart_policy = module.constants.default_restart_policy
+    restart_policy = merge(module.constants.default_restart_policy, {
+      delay  = "15s"
+      window = "60s"
+    })
+
+
+    resources {
+      reservation {
+        memory_bytes = 200e+6
+      }
+      limits {
+        memory_bytes = 3000e+6
+      }
+    }
 
     networks = [
       docker_network.network.id
