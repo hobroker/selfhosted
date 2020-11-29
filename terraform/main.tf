@@ -45,3 +45,14 @@ module "radarr" {
     downloads = "/storage/downloads"
   }
 }
+
+module "code-server" {
+  source = "./services/code-server"
+
+  port          = 8084
+  config_volume = "/appdata/code-server"
+  mounts        = {
+    "/home/kira/compose" = "/compose"
+    "/appdata"           = "/appdata"
+  }
+}
