@@ -32,16 +32,24 @@ resource "docker_service" "app" {
         WEBUI_PORT: var.port
       }, module.constants.default_container_env)
 
-      mounts {
-        source = var.volumes.config
-        target = "/config"
-        type   = "bind"
+      dynamic "mounts" {
+        for_each = var.config_volume == "" ? [] : [1]
+
+        content {
+          source = var.config_volume
+          target = "/config"
+          type   = "bind"
+        }
       }
 
-      mounts {
-        source = var.volumes.downloads
-        target = "/downloads"
-        type   = "bind"
+      dynamic "mounts" {
+        for_each = var.config_volume == "" ? [] : [1]
+
+        content {
+          source = var.blackhole_volume
+          target = "/downloads"
+          type   = "bind"
+        }
       }
     }
 

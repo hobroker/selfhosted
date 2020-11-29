@@ -15,11 +15,9 @@ module "jackett" {
 module "qbittorrent" {
   source = "./services/qbittorrent"
 
-  port    = 8112
-  volumes = {
-    config    = "/appdata/qbittorrent"
-    downloads = "/storage/downloads/torrents"
-  }
+  port             = 8112
+  config_volume    = "/appdata/qbittorrent"
+  blackhole_volume = "/storage/downloads/torrents"
 }
 
 module "sonarr" {

@@ -4,10 +4,13 @@ variable "port" {
   description = "WEBUI Port"
 }
 
-variable "volumes" {
-  type        = object({
-    config    = string
-    downloads = string
-  })
-  description = "Binded volumes"
+variable "config_volume" {
+  type        = string
+  default     = ""
+  description = "Config folder path"
+}
+
+variable "blackhole_volume" {
+  type        = string
+  description = "Blackhole folder path"
 }
