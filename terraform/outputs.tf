@@ -36,5 +36,9 @@ output "services" {
       name = "xteve",
       port = module.xteve.port
     },
+    {
+      name = "plex",
+      port = module.plex.port
+    },
   ]
 }

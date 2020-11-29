@@ -70,3 +70,14 @@ module "xteve" {
   port        = 34400
   config_path = "/appdata/xteve"
 }
+
+
+module "plex" {
+  source = "./services/plex"
+
+  port        = 32400
+  config_path = "/appdata/plex"
+  mounts      = {
+    "/storage" = "/storage"
+  }
+}

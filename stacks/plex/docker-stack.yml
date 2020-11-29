@@ -4,10 +4,10 @@ services:
     image: ghcr.io/linuxserver/plex:latest
     environment:
       PGID: '1000'
-      PLEX_CLAIM: ''
       PUID: '1000'
       TZ: Europe/Chisinau
       UMASK_SET: '022'
+      PLEX_CLAIM: ''
       VERSION: public
     ports:
       - 32400:32400
