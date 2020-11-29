@@ -52,25 +52,6 @@ services:
       - default
     logging:
       driver: json-file
-  tautulli:
-    image: tautulli/tautulli:latest
-    environment:
-      PGID: '1000'
-      PUID: '1000'
-      TZ: Europe/Chisinau
-      UMASK_SET: '022'
-    ports:
-      - 8181:8181
-    volumes:
-      - /appdata/tautulli:/config
-    networks:
-      - chief_network
-    logging:
-      driver: json-file
-    deploy:
-      placement:
-        constraints:
-          - node.role == manager
   xteve:
     image: tnwhitwell/xteve:latest
     environment:
