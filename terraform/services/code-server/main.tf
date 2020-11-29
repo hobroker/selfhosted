@@ -7,7 +7,7 @@ module "constants" {
 }
 
 resource "docker_image" "image" {
-  name         = "ghcr.io/linuxserver/code-server:latest"
+  name         = "linuxserver/code-server:latest"
   keep_locally = true
 }
 
@@ -29,8 +29,8 @@ resource "docker_service" "app" {
     container_spec {
       image = docker_image.image.name
       env   = merge(module.constants.default_container_env, {
-        PASSWORD      = ""
-        SUDO_PASSWORD = ""
+        PASSWORD      = var.password
+        SUDO_PASSWORD = var.sudo_password
       })
 
       dynamic "mounts" {
