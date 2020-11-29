@@ -52,26 +52,6 @@ services:
       - default
     logging:
       driver: json-file
-  xteve:
-    image: tnwhitwell/xteve:latest
-    environment:
-      PGID: '1000'
-      PUID: '1000'
-      TZ: Europe/Chisinau
-      UMASK_SET: '022'
-    ports:
-      - 34400:34400
-    volumes:
-      - /appdata/xteve/root:/config
-      - /tmp/xteve:/tmp/xteve
-    networks:
-      - chief_network
-    logging:
-      driver: json-file
-    deploy:
-      placement:
-        constraints:
-          - node.role == manager
 networks:
   chief_network:
     external: true
