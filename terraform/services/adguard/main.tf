@@ -54,38 +54,32 @@ resource "docker_service" "app" {
 
   endpoint_spec {
     ports {
-      target_port    = 53
-      published_port = 53
-      protocol       = "tcp"
-      publish_mode   = "ingress"
-    }
-
-    ports {
-      target_port    = 53
-      published_port = 53
-      protocol       = "udp"
-      publish_mode   = "ingress"
-    }
-
-    ports {
-      target_port    = 67
-      published_port = 67
-      protocol       = "udp"
-      publish_mode   = "ingress"
-    }
-
-    ports {
-      target_port    = 853
-      published_port = 853
-      protocol       = "tcp"
-      publish_mode   = "ingress"
-    }
-
-    ports {
       target_port    = 80
       published_port = var.port
       protocol       = "tcp"
       publish_mode   = "ingress"
+    }
+
+    dynamic "ports" {
+      for_each = [53, 853]
+
+      content {
+        target_port    = ports.value
+        published_port = ports.value
+        protocol       = "tcp"
+        publish_mode   = "ingress"
+      }
+    }
+
+    dynamic "ports" {
+      for_each = [53, 67]
+
+      content {
+        target_port    = ports.value
+        published_port = ports.value
+        protocol       = "udp"
+        publish_mode   = "ingress"
+      }
     }
   }
 }
