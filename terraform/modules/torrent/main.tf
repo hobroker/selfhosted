@@ -17,7 +17,7 @@ resource "docker_volume" "blackhole_volume" {
 }
 
 module "jackett" {
-  source = "jackett"
+  source = "./jackett"
 
   port             = 9117
   network_ids      = local.networks
@@ -26,7 +26,7 @@ module "jackett" {
 }
 
 module "qbittorrent" {
-  source = "qbittorrent"
+  source = "./qbittorrent"
 
   port             = 8112
   network_ids      = local.networks
