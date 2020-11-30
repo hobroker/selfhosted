@@ -1,5 +1,10 @@
 locals {
   name = "adguard"
+
+  volumes = {
+    "/opt/adguardhome/conf" = var.config_path
+    "/opt/adguardhome/work" = var.data_path
+  }
 }
 
 module "constants" {
@@ -16,6 +21,16 @@ resource "docker_network" "network" {
   driver = "overlay"
 }
 
+resource "docker_volume" "volumes" {
+  for_each = local.volumes
+
+  name        = "${local.name}-${reverse(split("/", each.key))[0]}"
+  driver      = "local-persist"
+  driver_opts = {
+    mountpoint = each.value
+  }
+}
+
 resource "docker_service" "app" {
   name = local.name
 
@@ -30,16 +45,16 @@ resource "docker_service" "app" {
       image = docker_image.image.name
       env   = module.constants.default_container_env
 
-      mounts {
-        source = var.config_path
-        target = "/opt/adguardhome/conf"
-        type   = "bind"
-      }
+      dynamic "mounts" {
+        for_each = {
+        for target, source in local.volumes :
+        target => docker_volume.volumes[target].name}
 
-      mounts {
-        source = var.data_path
-        target = "/opt/adguardhome/work"
-        type   = "bind"
+        content {
+          source = mounts.value
+          target = mounts.key
+          type   = "volume"
+        }
       }
     }
 

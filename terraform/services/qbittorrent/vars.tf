@@ -10,7 +10,8 @@ variable "config_path" {
   description = "Config folder path"
 }
 
-variable "blackhole_path" {
+variable "blackhole_volume" {
   type        = string
-  description = "Blackhole folder path"
+  default     = ""
+  description = "Blackhole volume"
 }

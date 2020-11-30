@@ -16,6 +16,14 @@ resource "docker_network" "network" {
   driver = "overlay"
 }
 
+resource "docker_volume" "config_volume" {
+  name        = "${local.name}-config"
+  driver      = "local-persist"
+  driver_opts = {
+    mountpoint = var.config_path
+  }
+}
+
 resource "docker_service" "app" {
   name = local.name
 
@@ -30,23 +38,19 @@ resource "docker_service" "app" {
       image = docker_image.image.name
       env   = module.constants.default_container_env
 
-      dynamic "mounts" {
-        for_each = var.config_path == "" ? [] : [1]
-
-        content {
-          source = var.config_path
-          target = "/config"
-          type   = "bind"
-        }
+      mounts {
+        source = docker_volume.config_volume.name
+        target = "/config"
+        type   = "volume"
       }
 
       dynamic "mounts" {
-        for_each = var.config_path == "" ? [] : [1]
+        for_each = var.blackhole_volume == "" ? [] : [1]
 
         content {
-          source = var.blackhole_path
+          source = var.blackhole_volume
           target = "/downloads"
-          type   = "bind"
+          type   = "volume"
         }
       }
     }

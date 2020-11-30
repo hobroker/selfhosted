@@ -1,5 +1,11 @@
 locals {
   name = "sonarr"
+
+  volumes = {
+    "/config"    = var.config_path
+    "/downloads" = var.downloads_path
+    "/tv"        = var.tv_path
+  }
 }
 
 module "constants" {
@@ -16,6 +22,16 @@ resource "docker_network" "network" {
   driver = "overlay"
 }
 
+resource "docker_volume" "volumes" {
+  for_each = local.volumes
+
+  name        = "${local.name}-${replace(each.key, "/", "")}"
+  driver      = "local-persist"
+  driver_opts = {
+    mountpoint = each.value
+  }
+}
+
 resource "docker_service" "app" {
   name = local.name
 
@@ -30,22 +46,16 @@ resource "docker_service" "app" {
       image = docker_image.image.name
       env   = module.constants.default_container_env
 
-      mounts {
-        source = var.config_path
-        target = "/config"
-        type   = "bind"
-      }
+      dynamic "mounts" {
+        for_each = {
+        for target, source in local.volumes :
+        target => docker_volume.volumes[target].name}
 
-      mounts {
-        source = var.downloads_path
-        target = "/downloads"
-        type   = "bind"
-      }
-
-      mounts {
-        source = var.tv_path
-        target = "/tv"
-        type   = "bind"
+        content {
+          source = mounts.value
+          target = mounts.key
+          type   = "volume"
+        }
       }
     }
 

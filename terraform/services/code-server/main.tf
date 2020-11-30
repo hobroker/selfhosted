@@ -16,6 +16,26 @@ resource "docker_network" "network" {
   driver = "overlay"
 }
 
+resource "docker_volume" "config_volume" {
+  count = var.config_path == "" ? 0 : 1
+
+  name        = "${local.name}-config"
+  driver      = "local-persist"
+  driver_opts = {
+    mountpoint = var.config_path
+  }
+}
+
+resource "docker_volume" "volumes" {
+  for_each = var.mounts
+
+  name        = "${local.name}-${replace(each.key, "/", "")}"
+  driver      = "local-persist"
+  driver_opts = {
+    mountpoint = each.key
+  }
+}
+
 resource "docker_service" "app" {
   name = local.name
 
@@ -34,7 +54,7 @@ resource "docker_service" "app" {
       })
 
       dynamic "mounts" {
-        for_each = var.config_path == "" ? [] : [1]
+        for_each = docker_volume.config_volume
 
         content {
           source = var.config_path
@@ -44,12 +64,14 @@ resource "docker_service" "app" {
       }
 
       dynamic "mounts" {
-        for_each = var.mounts
+        for_each = {
+        for source, target in var.mounts :
+        target => docker_volume.volumes[source].name}
 
         content {
-          target = mounts.value
-          source = mounts.key
-          type   = "bind"
+          target = mounts.key
+          source = mounts.value
+          type   = "volume"
         }
       }
     }

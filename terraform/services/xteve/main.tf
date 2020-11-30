@@ -16,6 +16,14 @@ resource "docker_network" "network" {
   driver = "overlay"
 }
 
+resource "docker_volume" "config_volume" {
+  name        = "${local.name}-config"
+  driver      = "local-persist"
+  driver_opts = {
+    mountpoint = var.config_path
+  }
+}
+
 resource "docker_service" "app" {
   name = local.name
 
@@ -32,9 +40,9 @@ resource "docker_service" "app" {
       user  = "1000:1000"
 
       mounts {
-        source = var.config_path
+        source = docker_volume.config_volume.name
         target = "/config"
-        type   = "bind"
+        type   = "volume"
       }
 
       mounts {
