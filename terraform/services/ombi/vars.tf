@@ -4,6 +4,17 @@ variable "port" {
   description = "WEBUI Port"
 }
 
+variable "tag" {
+  type        = string
+  default     = "latest"
+  description = "Image version tag"
+
+  validation {
+    condition     = can(regex("(latest|development)", var.tag))
+    error_message = "The `tag` must be one of: latest, development."
+  }
+}
+
 variable "config_path" {
   type        = string
   default     = ""
