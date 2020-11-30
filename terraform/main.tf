@@ -22,8 +22,8 @@ module "qbittorrent" {
 
 module "sonarr" {
   source = "./services/sonarr"
+  tag    = "preview"
 
-  tag            = "preview"
   port           = 8989
   config_path    = "/appdata/sonarr"
   tv_path        = "/storage/tv-shows"
@@ -84,6 +84,7 @@ module "plex" {
 
 module "ombi" {
   source = "./services/ombi"
+  tag    = "development"
 
   port        = 3579
   config_path = "/appdata/ombi"
