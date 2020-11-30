@@ -7,7 +7,7 @@ module "constants" {
 }
 
 resource "docker_image" "image" {
-  name         = "linuxserver/ombi:latest"
+  name         = "linuxserver/ombi:${var.tag}"
   keep_locally = true
 }
 
