@@ -22,16 +22,18 @@ resource "docker_service" "app" {
   task_spec {
     restart_policy = merge(module.constants.default_restart_policy, {
       delay  = "15s"
-      window = "60s"
+      window = "1m"
     })
 
 
     resources {
       reservation {
-        memory_bytes = 200e+6
+        memory_bytes = 200 * 1024e+3
+        nano_cpus    = 1e+6
       }
+
       limits {
-        memory_bytes = 3000e+6
+        memory_bytes = 3000 * 1024e+3
       }
     }
 
