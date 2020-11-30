@@ -11,11 +11,6 @@ resource "docker_image" "image" {
   keep_locally = true
 }
 
-resource "docker_network" "network" {
-  name   = "${local.name}-network"
-  driver = "overlay"
-}
-
 resource "docker_volume" "config_volume" {
   count = var.config_path == "" ? 0 : 1
 
@@ -42,9 +37,7 @@ resource "docker_service" "app" {
   task_spec {
     restart_policy = module.constants.default_restart_policy
 
-    networks = [
-      docker_network.network.id
-    ]
+    networks = var.network_ids
 
     container_spec {
       image = docker_image.image.name

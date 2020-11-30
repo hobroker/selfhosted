@@ -4,6 +4,12 @@ variable "port" {
   description = "WEBUI Port"
 }
 
+variable "network_ids" {
+  type        = list(string)
+  default     = []
+  description = "Docker Network IDs"
+}
+
 variable "plex_claim" {
   type        = string
   default     = ""
