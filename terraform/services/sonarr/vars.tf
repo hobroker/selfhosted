@@ -15,14 +15,14 @@ variable "tag" {
   }
 }
 
+variable "downloads_volume" {
+  type        = string
+  description = "Downloads volume"
+}
+
 variable "config_path" {
   type        = string
   description = "Config folder path"
-}
-
-variable "downloads_path" {
-  type        = string
-  description = "Downloads folder path"
 }
 
 variable "tv_path" {

@@ -26,3 +26,9 @@ variable "mounts" {
   default     = {}
   description = "Media paths"
 }
+
+variable "volumes" {
+  type        = map(string)
+  default     = {}
+  description = "Volumes map"
+}

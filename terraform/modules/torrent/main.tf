@@ -1,5 +1,9 @@
+locals {
+  name = "torrents"
+}
+
 resource "docker_volume" "blackhole_volume" {
-  name        = "torrents-blackhole"
+  name        = "${local.name}-blackhole"
   driver      = "local-persist"
   driver_opts = {
     mountpoint = "/storage/downloads/torrents"

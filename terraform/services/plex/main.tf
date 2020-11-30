@@ -7,7 +7,7 @@ module "constants" {
 }
 
 resource "docker_image" "image" {
-  name         = "ghcr.io/linuxserver/plex:latest"
+  name         = "linuxserver/plex:latest"
   keep_locally = true
 }
 
