@@ -84,7 +84,6 @@ module "plex" {
 
 module "ombi" {
   source = "./services/ombi"
-  tag    = "development"
 
   port        = 3579
   config_path = "/appdata/ombi"
