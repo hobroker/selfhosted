@@ -40,5 +40,9 @@ output "services" {
       name = "plex",
       port = module.plex.port
     },
+    {
+      name = "ombi",
+      port = module.ombi.port
+    },
   ]
 }

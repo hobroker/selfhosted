@@ -71,7 +71,6 @@ module "xteve" {
   config_path = "/appdata/xteve"
 }
 
-
 module "plex" {
   source = "./services/plex"
 
@@ -80,4 +79,11 @@ module "plex" {
   mounts      = {
     "/storage" = "/storage"
   }
+}
+
+module "ombi" {
+  source = "./services/ombi"
+
+  port        = 3579
+  config_path = "/appdata/ombi"
 }
