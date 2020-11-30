@@ -45,6 +45,11 @@ resource "docker_service" "app" {
 
     placement {
       constraints = module.constants.manager_constraints
+
+      platforms {
+        architecture = "amd64"
+        os           = "linux"
+      }
     }
 
     log_driver {
@@ -61,23 +66,17 @@ resource "docker_service" "app" {
     }
 
     dynamic "ports" {
-      for_each = [53, 853]
-
-      content {
-        target_port    = ports.value
-        published_port = ports.value
-        protocol       = "tcp"
-        publish_mode   = "ingress"
+      for_each = {
+        53  = "tcp"
+        853 = "tcp"
+        53  = "udp"
+        67  = "udp"
       }
-    }
-
-    dynamic "ports" {
-      for_each = [53, 67]
 
       content {
-        target_port    = ports.value
-        published_port = ports.value
-        protocol       = "udp"
+        target_port    = ports.key
+        published_port = ports.key
+        protocol       = ports.value
         publish_mode   = "ingress"
       }
     }
