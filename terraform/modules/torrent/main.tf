@@ -6,7 +6,7 @@ resource "docker_volume" "blackhole_volume" {
   name        = "${local.name}-blackhole"
   driver      = "local-persist"
   driver_opts = {
-    mountpoint = "/storage/downloads/torrents"
+    mountpoint = "${var.storage_root}/downloads/torrents"
   }
 }
 

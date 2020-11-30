@@ -24,16 +24,6 @@ resource "docker_volume" "config_volume" {
   }
 }
 
-resource "docker_volume" "volumes" {
-  for_each = var.mounts
-
-  name        = "${local.name}-${replace(each.key, "/", "")}"
-  driver      = "local-persist"
-  driver_opts = {
-    mountpoint = each.key
-  }
-}
-
 resource "docker_service" "app" {
   name = local.name
 
@@ -74,13 +64,11 @@ resource "docker_service" "app" {
       }
 
       dynamic "mounts" {
-        for_each = {
-        for source, target in var.mounts :
-        target => docker_volume.volumes[source].name}
+        for_each = var.volumes
 
         content {
-          target = mounts.key
-          source = mounts.value
+          source = mounts.key
+          target = mounts.value
           type   = "volume"
         }
       }

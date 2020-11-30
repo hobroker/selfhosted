@@ -6,7 +6,7 @@ resource "docker_volume" "storage_volume" {
   name        = "${local.name}-storage"
   driver      = "local-persist"
   driver_opts = {
-    mountpoint = "/storage"
+    mountpoint = var.storage_root
   }
 }
 
@@ -14,7 +14,7 @@ resource "docker_volume" "downloads_volume" {
   name        = "${local.name}-downloads"
   driver      = "local-persist"
   driver_opts = {
-    mountpoint = "/storage/downloads"
+    mountpoint = "${var.storage_root}/downloads"
   }
 }
 
@@ -24,7 +24,7 @@ module "sonarr" {
   tag              = "preview"
   port             = 8989
   config_path      = "${var.appdata_root}/sonarr"
-  tv_path          = "/storage/tv-shows"
+  tv_path          = "${var.storage_root}/tv-shows"
   downloads_volume = docker_volume.downloads_volume.name
 }
 
@@ -33,7 +33,7 @@ module "radarr" {
 
   port             = 7878
   config_path      = "${var.appdata_root}/radarr"
-  movies_path      = "/storage/movies"
+  movies_path      = "${var.storage_root}/movies"
   downloads_volume = docker_volume.downloads_volume.name
 }
 
@@ -57,7 +57,7 @@ module "plex" {
   port        = 32400
   config_path = "${var.appdata_root}/plex"
   volumes     = {
-    (docker_volume.storage_volume.name) = "/storage"
+    (docker_volume.storage_volume.name) = docker_volume.storage_volume.driver_opts.mountpoint
   }
 }
 
