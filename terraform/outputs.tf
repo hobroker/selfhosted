@@ -28,5 +28,21 @@ output "services" {
       name = "adguard",
       port = module.adguard.port
     },
+    {
+      name = "tautulli",
+      port = module.tautulli.port
+    },
+    {
+      name = "xteve",
+      port = module.xteve.port
+    },
+    {
+      name = "plex",
+      port = module.plex.port
+    },
+    {
+      name = "ombi",
+      port = module.ombi.port
+    },
   ]
 }

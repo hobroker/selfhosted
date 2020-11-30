@@ -56,3 +56,34 @@ module "adguard" {
   config_path = "/appdata/adguard/conf"
   data_path   = "/appdata/adguard/work"
 }
+
+module "tautulli" {
+  source = "./services/tautulli"
+
+  port        = 8181
+  config_path = "/appdata/tautulli"
+}
+
+module "xteve" {
+  source = "./services/xteve"
+
+  port        = 34400
+  config_path = "/appdata/xteve"
+}
+
+module "plex" {
+  source = "./services/plex"
+
+  port        = 32400
+  config_path = "/appdata/plex"
+  mounts      = {
+    "/storage" = "/storage"
+  }
+}
+
+module "ombi" {
+  source = "./services/ombi"
+
+  port        = 3579
+  config_path = "/appdata/ombi"
+}

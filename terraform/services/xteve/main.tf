@@ -1,5 +1,5 @@
 locals {
-  name = "qbittorrent"
+  name = "xteve"
 }
 
 module "constants" {
@@ -7,7 +7,7 @@ module "constants" {
 }
 
 resource "docker_image" "image" {
-  name         = "linuxserver/qbittorrent:latest"
+  name         = "tnwhitwell/xteve:latest"
   keep_locally = true
 }
 
@@ -28,28 +28,19 @@ resource "docker_service" "app" {
 
     container_spec {
       image = docker_image.image.name
-      env   = merge(module.constants.default_container_env, {
-        WEBUI_PORT: var.port
-      })
+      env   = module.constants.default_container_env
+      user  = "1000:1000"
 
-      dynamic "mounts" {
-        for_each = var.config_path == "" ? [] : [1]
-
-        content {
-          source = var.config_path
-          target = "/config"
-          type   = "bind"
-        }
+      mounts {
+        source = var.config_path
+        target = "/config"
+        type   = "bind"
       }
 
-      dynamic "mounts" {
-        for_each = var.config_path == "" ? [] : [1]
-
-        content {
-          source = var.blackhole_path
-          target = "/downloads"
-          type   = "bind"
-        }
+      mounts {
+        source = var.tmp_path
+        target = "/tmp/xteve"
+        type   = "bind"
       }
     }
 
@@ -64,7 +55,7 @@ resource "docker_service" "app" {
 
   endpoint_spec {
     ports {
-      target_port    = var.port
+      target_port    = 34400
       published_port = var.port
       protocol       = "tcp"
       publish_mode   = "ingress"

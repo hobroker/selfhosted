@@ -1,5 +1,5 @@
 locals {
-  name = "qbittorrent"
+  name = "ombi"
 }
 
 module "constants" {
@@ -7,7 +7,7 @@ module "constants" {
 }
 
 resource "docker_image" "image" {
-  name         = "linuxserver/qbittorrent:latest"
+  name         = "linuxserver/ombi:latest"
   keep_locally = true
 }
 
@@ -32,24 +32,10 @@ resource "docker_service" "app" {
         WEBUI_PORT: var.port
       })
 
-      dynamic "mounts" {
-        for_each = var.config_path == "" ? [] : [1]
-
-        content {
-          source = var.config_path
-          target = "/config"
-          type   = "bind"
-        }
-      }
-
-      dynamic "mounts" {
-        for_each = var.config_path == "" ? [] : [1]
-
-        content {
-          source = var.blackhole_path
-          target = "/downloads"
-          type   = "bind"
-        }
+      mounts {
+        source = var.config_path
+        target = "/config"
+        type   = "bind"
       }
     }
 
@@ -64,7 +50,7 @@ resource "docker_service" "app" {
 
   endpoint_spec {
     ports {
-      target_port    = var.port
+      target_port    = 3579
       published_port = var.port
       protocol       = "tcp"
       publish_mode   = "ingress"
