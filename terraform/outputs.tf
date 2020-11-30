@@ -44,5 +44,9 @@ output "services" {
       name = "ombi",
       port = module.ombi.port
     },
+    //    {
+    //      name = "grafana",
+    //      port = module.grafana.port
+    //    },
   ]
 }

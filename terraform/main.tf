@@ -89,14 +89,14 @@ module "ombi" {
   config_path = "/appdata/ombi"
 }
 
-module "grafana" {
-  source = "./services/grafana"
-  tag    = "latest"
-
-  port        = 3002
-  config_path = "/appdata/grafana/lib/grafana.db"
-  db_path     = "/appdata/grafana/etc"
-  plugins     = [
-    "grafana-strava-datasource"
-  ]
-}
+//module "grafana" {
+//  source = "./services/grafana"
+//  tag    = "latest"
+//
+//  port        = 3002
+//  config_path = "/appdata/grafana/lib/grafana.db"
+//  db_path     = "/appdata/grafana/etc"
+//  plugins     = [
+//    "grafana-strava-datasource"
+//  ]
+//}
