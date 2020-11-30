@@ -49,7 +49,7 @@ module "tautulli" {
   source = "./tautulli"
 
   port        = 8181
-  network_ids  = local.networks
+  network_ids = local.networks
   config_path = "${var.appdata_root}/tautulli"
 }
 
@@ -57,7 +57,7 @@ module "xteve" {
   source = "./xteve"
 
   port        = 34400
-  network_ids  = local.networks
+  network_ids = local.networks
   config_path = "${var.appdata_root}/xteve"
 }
 
@@ -65,7 +65,7 @@ module "plex" {
   source = "./plex"
 
   port        = 32400
-  network_ids  = local.networks
+  network_ids = local.networks
   config_path = "${var.appdata_root}/plex"
   volumes     = {
     (docker_volume.storage_volume.name) = docker_volume.storage_volume.driver_opts.mountpoint
@@ -76,6 +76,6 @@ module "ombi" {
   source = "./ombi"
 
   port        = 3579
-  network_ids  = local.networks
+  network_ids = local.networks
   config_path = "${var.appdata_root}/ombi"
 }
