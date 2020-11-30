@@ -4,20 +4,10 @@ module "dozzle" {
   port = 8888
 }
 
-module "jackett" {
-  source = "./services/jackett"
+module "torrent" {
+  source = "./modules/torrent"
 
-  port           = 9117
-  config_path    = "${var.appdata_root}/jackett"
-  blackhole_path = "/storage/downloads/torrents"
-}
-
-module "qbittorrent" {
-  source = "./services/qbittorrent"
-
-  port           = 8112
-  config_path    = "${var.appdata_root}/qbittorrent"
-  blackhole_path = "/storage/downloads/torrents"
+  appdata_root = var.appdata_root
 }
 
 module "sonarr" {
@@ -45,7 +35,7 @@ module "code-server" {
   port        = 8084
   config_path = "${var.appdata_root}/code-server"
   mounts      = {
-    (var.appdata_root)     = var.appdata_root
+    (var.appdata_root)   = var.appdata_root
     "/home/kira/compose" = "/compose"
   }
 }
