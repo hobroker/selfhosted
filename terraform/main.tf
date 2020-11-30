@@ -23,6 +23,7 @@ module "qbittorrent" {
 module "sonarr" {
   source = "./services/sonarr"
 
+  tag            = "preview"
   port           = 8989
   config_path    = "/appdata/sonarr"
   tv_path        = "/storage/tv-shows"

@@ -7,7 +7,7 @@ module "constants" {
 }
 
 resource "docker_image" "image" {
-  name         = "linuxserver/sonarr:latest"
+  name         = "linuxserver/sonarr:${var.tag}"
   keep_locally = true
 }
 
