@@ -25,7 +25,7 @@ resource "docker_volume" "downloads_volume" {
 }
 
 module "sonarr" {
-  source = "../../services/sonarr"
+  source = "sonarr"
 
   tag              = "preview"
   port             = 8989
@@ -36,7 +36,7 @@ module "sonarr" {
 }
 
 module "radarr" {
-  source = "../../services/radarr"
+  source = "radarr"
 
   port             = 7878
   network_ids      = local.networks
@@ -46,7 +46,7 @@ module "radarr" {
 }
 
 module "tautulli" {
-  source = "../../services/tautulli"
+  source = "tautulli"
 
   port        = 8181
   network_ids  = local.networks
@@ -54,7 +54,7 @@ module "tautulli" {
 }
 
 module "xteve" {
-  source = "../../services/xteve"
+  source = "xteve"
 
   port        = 34400
   network_ids  = local.networks
@@ -62,7 +62,7 @@ module "xteve" {
 }
 
 module "plex" {
-  source = "../../services/plex"
+  source = "plex"
 
   port        = 32400
   network_ids  = local.networks
@@ -73,7 +73,7 @@ module "plex" {
 }
 
 module "ombi" {
-  source = "../../services/ombi"
+  source = "ombi"
 
   port        = 3579
   network_ids  = local.networks

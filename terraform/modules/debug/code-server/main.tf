@@ -3,7 +3,7 @@ locals {
 }
 
 module "constants" {
-  source = "../../constants"
+  source = "../../../lib/constants"
 }
 
 resource "docker_image" "image" {

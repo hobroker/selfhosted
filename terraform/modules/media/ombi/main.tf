@@ -1,13 +1,13 @@
 locals {
-  name = "sonarr"
+  name = "ombi"
 }
 
 module "constants" {
-  source = "../../constants"
+  source = "../../../lib/constants"
 }
 
 resource "docker_image" "image" {
-  name         = "linuxserver/sonarr:${var.tag}"
+  name         = "linuxserver/ombi:latest"
   keep_locally = true
 }
 
@@ -16,14 +16,6 @@ resource "docker_volume" "config_volume" {
   driver      = "local-persist"
   driver_opts = {
     mountpoint = var.config_path
-  }
-}
-
-resource "docker_volume" "tv_volume" {
-  name        = "${local.name}-tv"
-  driver      = "local-persist"
-  driver_opts = {
-    mountpoint = var.tv_path
   }
 }
 
@@ -37,23 +29,13 @@ resource "docker_service" "app" {
 
     container_spec {
       image = docker_image.image.name
-      env   = module.constants.default_container_env
+      env   = merge(module.constants.default_container_env, {
+        WEBUI_PORT: var.port
+      })
 
       mounts {
         source = docker_volume.config_volume.name
         target = "/config"
-        type   = "volume"
-      }
-
-      mounts {
-        source = docker_volume.tv_volume.name
-        target = "/tv"
-        type   = "volume"
-      }
-
-      mounts {
-        source = var.downloads_volume
-        target = "/downloads"
         type   = "volume"
       }
     }
@@ -69,7 +51,7 @@ resource "docker_service" "app" {
 
   endpoint_spec {
     ports {
-      target_port    = 8989
+      target_port    = 3579
       published_port = var.port
       protocol       = "tcp"
       publish_mode   = "ingress"

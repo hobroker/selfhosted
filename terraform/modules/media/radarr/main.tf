@@ -1,13 +1,13 @@
 locals {
-  name = "xteve"
+  name = "radarr"
 }
 
 module "constants" {
-  source = "../../constants"
+  source = "../../../lib/constants"
 }
 
 resource "docker_image" "image" {
-  name         = "tnwhitwell/xteve:latest"
+  name         = "linuxserver/radarr:latest"
   keep_locally = true
 }
 
@@ -16,6 +16,14 @@ resource "docker_volume" "config_volume" {
   driver      = "local-persist"
   driver_opts = {
     mountpoint = var.config_path
+  }
+}
+
+resource "docker_volume" "movies_volume" {
+  name        = "${local.name}-movies"
+  driver      = "local-persist"
+  driver_opts = {
+    mountpoint = var.movies_path
   }
 }
 
@@ -36,6 +44,18 @@ resource "docker_service" "app" {
         target = "/config"
         type   = "volume"
       }
+
+      mounts {
+        source = docker_volume.movies_volume.name
+        target = "/movies"
+        type   = "volume"
+      }
+
+      mounts {
+        source = var.downloads_volume
+        target = "/downloads"
+        type   = "volume"
+      }
     }
 
     placement {
@@ -49,7 +69,7 @@ resource "docker_service" "app" {
 
   endpoint_spec {
     ports {
-      target_port    = 34400
+      target_port    = 7878
       published_port = var.port
       protocol       = "tcp"
       publish_mode   = "ingress"

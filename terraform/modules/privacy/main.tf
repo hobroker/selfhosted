@@ -9,7 +9,7 @@ resource "docker_network" "network" {
 }
 
 module "adguard" {
-  source = "../../services/adguard"
+  source = "adguard"
 
   port        = 3001
   network_ids = local.networks

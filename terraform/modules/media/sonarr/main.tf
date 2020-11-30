@@ -1,13 +1,13 @@
 locals {
-  name = "radarr"
+  name = "sonarr"
 }
 
 module "constants" {
-  source = "../../constants"
+  source = "../../../lib/constants"
 }
 
 resource "docker_image" "image" {
-  name         = "linuxserver/radarr:latest"
+  name         = "linuxserver/sonarr:${var.tag}"
   keep_locally = true
 }
 
@@ -19,11 +19,11 @@ resource "docker_volume" "config_volume" {
   }
 }
 
-resource "docker_volume" "movies_volume" {
-  name        = "${local.name}-movies"
+resource "docker_volume" "tv_volume" {
+  name        = "${local.name}-tv"
   driver      = "local-persist"
   driver_opts = {
-    mountpoint = var.movies_path
+    mountpoint = var.tv_path
   }
 }
 
@@ -46,8 +46,8 @@ resource "docker_service" "app" {
       }
 
       mounts {
-        source = docker_volume.movies_volume.name
-        target = "/movies"
+        source = docker_volume.tv_volume.name
+        target = "/tv"
         type   = "volume"
       }
 
@@ -69,7 +69,7 @@ resource "docker_service" "app" {
 
   endpoint_spec {
     ports {
-      target_port    = 7878
+      target_port    = 8989
       published_port = var.port
       protocol       = "tcp"
       publish_mode   = "ingress"

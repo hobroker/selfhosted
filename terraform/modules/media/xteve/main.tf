@@ -1,13 +1,13 @@
 locals {
-  name = "ombi"
+  name = "xteve"
 }
 
 module "constants" {
-  source = "../../constants"
+  source = "../../../lib/constants"
 }
 
 resource "docker_image" "image" {
-  name         = "linuxserver/ombi:latest"
+  name         = "tnwhitwell/xteve:latest"
   keep_locally = true
 }
 
@@ -29,9 +29,7 @@ resource "docker_service" "app" {
 
     container_spec {
       image = docker_image.image.name
-      env   = merge(module.constants.default_container_env, {
-        WEBUI_PORT: var.port
-      })
+      env   = module.constants.default_container_env
 
       mounts {
         source = docker_volume.config_volume.name
@@ -51,7 +49,7 @@ resource "docker_service" "app" {
 
   endpoint_spec {
     ports {
-      target_port    = 3579
+      target_port    = 34400
       published_port = var.port
       protocol       = "tcp"
       publish_mode   = "ingress"
