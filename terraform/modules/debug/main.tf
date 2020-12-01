@@ -1,6 +1,9 @@
 locals {
   name     = "debug"
-  networks = [docker_network.network.id]
+  networks = [
+    var.proxy_network_id,
+    docker_network.network.id
+  ]
 }
 
 resource "docker_network" "network" {
@@ -12,7 +15,12 @@ module "dozzle" {
   source = "./dozzle"
 
   port        = 8888
-  network_ids = [docker_network.network.id]
+  network_ids = local.networks
+  labels      = {
+    "traefik.http.routers.debug.rule"                       = "host(`dozzle.${var.hostname}`)"
+    "traefik.http.routers.debug.service"                    = "dozzle"
+    "traefik.http.services.dozzle.loadbalancer.server.port" = "8080"
+  }
 }
 
 module "code-server" {

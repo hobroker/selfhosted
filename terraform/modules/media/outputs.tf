@@ -26,3 +26,8 @@ output "services" {
     },
   ]
 }
+
+output "network_ids" {
+  value = local.networks
+}
+

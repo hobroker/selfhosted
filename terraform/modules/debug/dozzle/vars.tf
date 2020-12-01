@@ -9,3 +9,8 @@ variable "network_ids" {
   default     = []
   description = "Docker Network IDs"
 }
+
+variable "labels" {
+  type        = map(string)
+  description = "Labels map"
+}

@@ -1,5 +1,5 @@
 locals {
-  name = "dozzle"
+  name = "traefik"
 }
 
 module "constants" {
@@ -7,7 +7,7 @@ module "constants" {
 }
 
 resource "docker_image" "image" {
-  name         = "amir20/dozzle:latest"
+  name         = "traefik:${var.tag}"
   keep_locally = true
 }
 
@@ -20,8 +20,8 @@ resource "docker_service" "app" {
     networks = var.network_ids
 
     container_spec {
-      image     = docker_image.image.name
-      read_only = true
+      image = docker_image.image.name
+      env   = module.constants.default_container_env
 
       mounts {
         target    = "/var/run/docker.sock"
@@ -29,10 +29,21 @@ resource "docker_service" "app" {
         type      = "bind"
         read_only = true
       }
+
+      mounts {
+        source = var.config_yaml_path
+        target = "/traefik.yaml"
+        type   = "bind"
+      }
     }
 
     placement {
       constraints = module.constants.manager_constraints
+
+      platforms {
+        architecture = "amd64"
+        os           = "linux"
+      }
     }
 
     log_driver {
@@ -40,20 +51,19 @@ resource "docker_service" "app" {
     }
   }
 
-  dynamic "labels" {
-    for_each = var.labels
-
-    content {
-      label = labels.key
-      value = labels.value
-    }
-  }
-
   endpoint_spec {
     ports {
-      target_port    = 8080
-      published_port = var.port
+      target_port    = 80
+      published_port = 80
       protocol       = "tcp"
+      publish_mode   = "ingress"
+    }
+
+    ports {
+      target_port    = 8080
+      published_port = var.api_port
+      protocol       = "tcp"
+      publish_mode   = "ingress"
     }
   }
 }
