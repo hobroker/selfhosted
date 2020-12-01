@@ -12,8 +12,7 @@ variable "tag" {
 
 variable "network_ids" {
   type        = list(string)
-  default     = []
-  description = "Docker Network IDs"
+  description = "Service networks"
 }
 
 variable "config_yaml_path" {

@@ -1,16 +1,17 @@
-output "services" {
+output "network_id" {
+  value = docker_network.network.id
+}
+
+output "service_names" {
   value = [
-    {
-      name = "dozzle",
-      port = module.dozzle.port
-    },
-    {
-      name = "code-server",
-      port = module.code-server.port
-    },
+    module.dozzle.name,
+    module.code-server.name
   ]
 }
 
-output "network_ids" {
-  value = local.networks
+output "published_ports" {
+  value = {for name, port in {
+    dozzle      = module.dozzle.published_port
+    code-server = module.code-server.published_port
+  }: name => port if name != null}
 }

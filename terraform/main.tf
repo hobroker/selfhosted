@@ -1,19 +1,21 @@
 module "proxy" {
   source = "./modules/proxy"
 
-  hostname     = "hobroker.me"
-  appdata_root = var.appdata_root
-  ssh_host     = var.ssh_host
-  ssh_user     = var.ssh_user
-  ssh_key      = var.ssh_key
+  hostname          = var.domain
+  ssh_host          = var.ssh_host
+  ssh_user          = var.ssh_user
+  ssh_key           = var.ssh_key
+  traefik_yaml_path = "${var.appdata_root}/traefik/traefik.yaml"
+  network_ids       = [
+    module.debug.network_id
+  ]
 }
 
 module "debug" {
   source = "./modules/debug"
 
-  hostname         = "hobroker.me"
-  proxy_network_id = module.proxy.network_id
-  appdata_root     = var.appdata_root
+  hostname     = var.domain
+  appdata_root = var.appdata_root
 }
 
 module "torrent" {

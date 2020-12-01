@@ -1,9 +1,17 @@
 locals {
   name = "dozzle"
+  port = 8080
 }
 
 module "constants" {
   source = "../../../lib/constants"
+}
+
+module "traefik-labels" {
+  source  = "../../../lib/traefik-labels"
+  name    = local.name
+  port    = local.port
+  network = var.network_name
 }
 
 resource "docker_image" "image" {
@@ -41,7 +49,7 @@ resource "docker_service" "app" {
   }
 
   dynamic "labels" {
-    for_each = var.labels
+    for_each = merge(module.traefik-labels.labels, var.labels)
 
     content {
       label = labels.key
@@ -49,11 +57,17 @@ resource "docker_service" "app" {
     }
   }
 
-  endpoint_spec {
-    ports {
-      target_port    = 8080
-      published_port = var.port
-      protocol       = "tcp"
+  dynamic "endpoint_spec" {
+    for_each = var.published_port == null ? {} : {
+      (var.published_port) = local.port
+    }
+
+    content {
+      ports {
+        target_port    = endpoint_spec.value
+        published_port = endpoint_spec.key
+        protocol       = "tcp"
+      }
     }
   }
 }

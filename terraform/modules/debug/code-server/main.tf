@@ -1,9 +1,18 @@
 locals {
-  name = "code-server"
+  name  = "code-server"
+  alias = "vscode"
+  port  = 8443
 }
 
 module "constants" {
   source = "../../../lib/constants"
+}
+
+module "traefik-labels" {
+  source  = "../../../lib/traefik-labels"
+  name    = local.alias
+  port    = local.port
+  network = var.network_name
 }
 
 resource "docker_image" "image" {
@@ -78,12 +87,26 @@ resource "docker_service" "app" {
     }
   }
 
-  endpoint_spec {
-    ports {
-      target_port    = 8443
-      published_port = var.port
-      protocol       = "tcp"
-      publish_mode   = "ingress"
+  dynamic "labels" {
+    for_each = merge(module.traefik-labels.labels, var.labels)
+
+    content {
+      label = labels.key
+      value = labels.value
+    }
+  }
+
+  dynamic "endpoint_spec" {
+    for_each = var.published_port == null ? {} : {
+      (var.published_port) = local.port
+    }
+
+    content {
+      ports {
+        target_port    = endpoint_spec.value
+        published_port = endpoint_spec.key
+        protocol       = "tcp"
+      }
     }
   }
 }

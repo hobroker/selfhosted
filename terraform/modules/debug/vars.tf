@@ -1,8 +1,3 @@
-variable "proxy_network_id" {
-  type        = string
-  description = "Docker Network IDs"
-}
-
 variable "appdata_root" {
   type        = string
   default     = "/appdata"

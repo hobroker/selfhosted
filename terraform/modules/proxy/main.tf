@@ -1,6 +1,6 @@
 locals {
   name     = "proxy"
-  networks = [docker_network.network.id]
+  networks = concat(var.network_ids, [docker_network.network.id])
 }
 
 resource "docker_network" "network" {
@@ -14,7 +14,7 @@ module "upload-traefik-yaml" {
   ssh_host    = var.ssh_host
   ssh_user    = var.ssh_user
   ssh_key     = var.ssh_key
-  destination = "${var.appdata_root}/traefik/traefik.yaml"
+  destination = var.traefik_yaml_path
   content     = yamlencode({
     api       = {
       insecure  = true,
@@ -37,7 +37,7 @@ module "upload-traefik-yaml" {
 module "traefik" {
   source = "./traefik"
 
-  config_yaml_path = "${var.appdata_root}/traefik/traefik.yaml"
-  network_ids      = local.networks
   api_port         = 8080
+  config_yaml_path = var.traefik_yaml_path
+  network_ids      = local.networks
 }
