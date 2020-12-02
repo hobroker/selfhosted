@@ -29,3 +29,9 @@ variable "ssh_key" {
   type        = string
   description = "SSH key path"
 }
+
+variable "pilot_token" {
+  type        = string
+  default     = ""
+  description = "Traefik pilot.token"
+}

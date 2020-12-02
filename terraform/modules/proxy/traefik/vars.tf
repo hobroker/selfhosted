@@ -1,6 +1,5 @@
 variable "api_port" {
   type        = number
-  default     = 8080
   description = "API Port"
 }
 
@@ -15,7 +14,13 @@ variable "network_ids" {
   description = "Service networks"
 }
 
-variable "config_yaml_path" {
+variable "pilot_token" {
   type        = string
-  description = "traefik.yaml path"
+  default     = ""
+  description = "Traefik pilot.token"
+}
+
+variable "hostname" {
+  type        = string
+  description = "Default hostname for subdomains"
 }

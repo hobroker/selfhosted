@@ -3,5 +3,5 @@ output "published_port" {
 }
 
 output "name" {
-  value = local.name
+  value = local.alias
 }

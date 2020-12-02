@@ -15,9 +15,9 @@ module "traefik-labels" {
   network = var.network_name
 }
 
-resource "docker_image" "image" {
-  name         = "linuxserver/code-server:latest"
-  keep_locally = true
+module "image" {
+  source = "../../../lib/image"
+  name   = "linuxserver/code-server:latest"
 }
 
 resource "docker_volume" "config_volume" {
@@ -49,7 +49,7 @@ resource "docker_service" "app" {
     networks = var.network_ids
 
     container_spec {
-      image = docker_image.image.name
+      image = module.image.name
       env   = merge(module.constants.default_container_env, {
         PASSWORD      = var.password
         SUDO_PASSWORD = var.sudo_password

@@ -3,12 +3,6 @@ variable "network_ids" {
   description = "Service networks"
 }
 
-variable "traefik_yaml_path" {
-  type        = string
-  default     = "/appdata"
-  description = "Appdata root"
-}
-
 variable "ssh_host" {
   type        = string
   description = "SSH host"

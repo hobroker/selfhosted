@@ -14,9 +14,9 @@ module "traefik-labels" {
   network = var.network_name
 }
 
-resource "docker_image" "image" {
-  name         = "amir20/dozzle:latest"
-  keep_locally = true
+module "image" {
+  source = "../../../lib/image"
+  name   = "amir20/dozzle:latest"
 }
 
 resource "docker_service" "app" {
@@ -28,7 +28,7 @@ resource "docker_service" "app" {
     networks = var.network_ids
 
     container_spec {
-      image     = docker_image.image.name
+      image     = module.image.name
       read_only = true
 
       mounts {

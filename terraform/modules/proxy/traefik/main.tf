@@ -1,14 +1,15 @@
 locals {
   name = "traefik"
+  port = 8080
 }
 
 module "constants" {
   source = "../../../lib/constants"
 }
 
-resource "docker_image" "image" {
-  name         = "traefik:${var.tag}"
-  keep_locally = true
+module "image" {
+  source = "../../../lib/image"
+  name   = "traefik:${var.tag}"
 }
 
 resource "docker_service" "app" {
@@ -20,20 +21,20 @@ resource "docker_service" "app" {
     networks = var.network_ids
 
     container_spec {
-      image = docker_image.image.name
+      image = module.image.name
       env   = module.constants.default_container_env
+
+      configs {
+        config_id   = docker_config.traefik_yaml.id
+        config_name = docker_config.traefik_yaml.name
+        file_name   = "/traefik.yaml"
+      }
 
       mounts {
         target    = "/var/run/docker.sock"
         source    = "/var/run/docker.sock"
         type      = "bind"
         read_only = true
-      }
-
-      mounts {
-        source = var.config_yaml_path
-        target = "/traefik.yaml"
-        type   = "bind"
       }
     }
 
@@ -52,18 +53,20 @@ resource "docker_service" "app" {
   }
 
   endpoint_spec {
-    ports {
-      target_port    = 80
-      published_port = 80
-      protocol       = "tcp"
-      publish_mode   = "ingress"
-    }
+    dynamic "ports" {
+      for_each = var.api_port == null ? {
+        80 = 80
+      } : {
+        80             = 80,
+        (var.api_port) = local.port
+      }
 
-    ports {
-      target_port    = 8080
-      published_port = var.api_port
-      protocol       = "tcp"
-      publish_mode   = "ingress"
+      content {
+        target_port    = ports.value
+        published_port = ports.key
+        protocol       = "tcp"
+        publish_mode   = "ingress"
+      }
     }
   }
 }

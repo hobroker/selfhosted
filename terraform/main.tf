@@ -1,12 +1,12 @@
 module "proxy" {
   source = "./modules/proxy"
 
-  hostname          = var.domain
-  ssh_host          = var.ssh_host
-  ssh_user          = var.ssh_user
-  ssh_key           = var.ssh_key
-  traefik_yaml_path = "${var.appdata_root}/traefik/traefik.yaml"
-  network_ids       = [
+  hostname    = var.domain
+  ssh_host    = var.ssh_host
+  ssh_user    = var.ssh_user
+  ssh_key     = var.ssh_key
+  pilot_token = var.pilot_token
+  network_ids = [
     module.debug.network_id
   ]
 }
