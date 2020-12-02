@@ -1,90 +1,39 @@
-module "dozzle" {
-  source = "./services/dozzle"
+module "proxy" {
+  source = "./modules/proxy"
 
-  port = 8888
+  hostname    = var.domain
+  ssh_host    = var.ssh_host
+  ssh_user    = var.ssh_user
+  ssh_key     = var.ssh_key
+  pilot_token = var.pilot_token
+  network_ids = [
+    module.debug.network_id
+  ]
 }
 
-module "jackett" {
-  source = "./services/jackett"
+module "debug" {
+  source = "./modules/debug"
 
-  port           = 9117
-  config_path    = "/appdata/jackett"
-  blackhole_path = "/storage/downloads/torrents"
+  hostname     = var.domain
+  appdata_root = var.appdata_root
 }
 
-module "qbittorrent" {
-  source = "./services/qbittorrent"
+module "torrent" {
+  source = "./modules/torrent"
 
-  port           = 8112
-  config_path    = "/appdata/qbittorrent"
-  blackhole_path = "/storage/downloads/torrents"
+  appdata_root = var.appdata_root
+  storage_root = var.storage_root
 }
 
-module "sonarr" {
-  source = "./services/sonarr"
-  tag    = "preview"
+module "media" {
+  source = "./modules/media"
 
-  port           = 8989
-  config_path    = "/appdata/sonarr"
-  tv_path        = "/storage/tv-shows"
-  downloads_path = "/storage/downloads"
+  appdata_root = var.appdata_root
+  storage_root = var.storage_root
 }
 
-module "radarr" {
-  source = "./services/radarr"
+module "privacy" {
+  source = "./modules/privacy"
 
-  port           = 7878
-  config_path    = "/appdata/radarr"
-  movies_path    = "/storage/movies"
-  downloads_path = "/storage/downloads"
-}
-
-module "code-server" {
-  source = "./services/code-server"
-
-  port        = 8084
-  config_path = "/appdata/code-server"
-  mounts      = {
-    "/home/kira/compose" = "/compose"
-    "/appdata"           = "/appdata"
-  }
-}
-
-module "adguard" {
-  source = "./services/adguard"
-
-  port        = 3001
-  config_path = "/appdata/adguard/conf"
-  data_path   = "/appdata/adguard/work"
-}
-
-module "tautulli" {
-  source = "./services/tautulli"
-
-  port        = 8181
-  config_path = "/appdata/tautulli"
-}
-
-module "xteve" {
-  source = "./services/xteve"
-
-  port        = 34400
-  config_path = "/appdata/xteve"
-}
-
-module "plex" {
-  source = "./services/plex"
-
-  port        = 32400
-  config_path = "/appdata/plex"
-  mounts      = {
-    "/storage" = "/storage"
-  }
-}
-
-module "ombi" {
-  source = "./services/ombi"
-
-  port        = 3579
-  config_path = "/appdata/ombi"
+  appdata_root = var.appdata_root
 }

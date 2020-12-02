@@ -28,7 +28,7 @@ provider "aws" {
   s3_force_path_style         = true
 
   endpoints {
-    s3 = "https://minio.hobroker.me"
+    s3 = "https://minio.${var.domain}"
   }
 }
 
