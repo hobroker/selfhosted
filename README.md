@@ -1,4 +1,5 @@
 Selfhosted
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/hobroker/selfhosted?include_prereleases)
 ===
 
 Self-hosted Infrastructure as Code
