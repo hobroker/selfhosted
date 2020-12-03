@@ -12,8 +12,10 @@ _TODO_
 
 References
 ---
- - [Terraform](https://www.terraform.io/)
- - [Traefik Proxy](https://traefik.io/traefik/)
+ - [Terraform](https://www.terraform.io/) - Infrastructure as Code
+ - [Vault](https://www.vaultproject.io/) - Secrets Manager
+ - [MinIO](https://min.io/) - Object Storage
+ - [Traefik Proxy](https://traefik.io/traefik/) - Cloud Native Application Proxy
 
 ---
 
