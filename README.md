@@ -1,5 +1,5 @@
 Selfhosted
-[![Latest GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/hobroker/selfhosted?include_prereleases)](https://github.com/hobroker/selfhosted/releases/latest)
+[![Latest GitHub release (including pre-releases)](https://img.shields.io/github/v/release/hobroker/selfhosted?include_prereleases)](https://github.com/hobroker/selfhosted/releases/latest)
 ===
 
 Self-hosted Infrastructure as Code
@@ -14,7 +14,6 @@ References
 ---
  - [Terraform](https://www.terraform.io/) - Infrastructure as Code
  - [Vault](https://www.vaultproject.io/) - Secrets Manager
- - [MinIO](https://min.io/) - Object Storage
  - [Traefik Proxy](https://traefik.io/traefik/) - HTTP reverse proxy and load balancer
 
 ---
