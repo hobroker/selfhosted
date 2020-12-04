@@ -17,7 +17,7 @@ module "traefik-labels" {
 
 module "image" {
   source = "../../../lib/image"
-  name   = "linuxserver/code-server:latest"
+  name   = "linuxserver/code-server"
 }
 
 resource "docker_volume" "config_volume" {

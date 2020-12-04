@@ -16,7 +16,7 @@ module "traefik-labels" {
 
 module "image" {
   source = "../../../lib/image"
-  name   = "amir20/dozzle:latest"
+  name   = "amir20/dozzle"
 }
 
 resource "docker_service" "app" {
