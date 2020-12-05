@@ -12,6 +12,7 @@ _TODO_
 
 References
 ---
+ - [Docker](https://www.docker.com/) - PaaS
  - [Terraform](https://www.terraform.io/) - Infrastructure as Code
  - [Vault](https://www.vaultproject.io/) - Secrets Manager
  - [Traefik Proxy](https://traefik.io/traefik/) - HTTP reverse proxy and load balancer
