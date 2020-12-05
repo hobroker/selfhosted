@@ -2,6 +2,12 @@ locals {
   name  = "code-server"
   alias = "vscode"
   port  = 8443
+
+  labels          = merge(module.traefik-labels.labels, var.labels)
+  mounts          = {for mount in module.mounts: mount.name => mount.target}
+  published_ports = var.published_port == null ? {} : {
+    (var.published_port) = local.port
+  }
 }
 
 module "constants" {
@@ -9,10 +15,12 @@ module "constants" {
 }
 
 module "traefik-labels" {
-  source  = "../../../lib/traefik-labels"
+  source = "../../../lib/traefik-labels"
+
   name    = local.alias
   port    = local.port
   network = var.network_name
+  enabled = var.enable_proxy
 }
 
 module "image" {
@@ -20,24 +28,15 @@ module "image" {
   name   = "linuxserver/code-server"
 }
 
-resource "docker_volume" "config_volume" {
-  count = var.config_path == "" ? 0 : 1
+module "mounts" {
+  source   = "../../../lib/volume"
+  for_each = merge(var.mounts, {
+    (var.config_path) = "/config"
+  })
 
-  name        = "${local.name}-config"
-  driver      = "local-persist"
-  driver_opts = {
-    mountpoint = var.config_path
-  }
-}
-
-resource "docker_volume" "volumes" {
-  for_each = var.mounts
-
-  name        = "${local.name}-${replace(each.key, "/", "")}"
-  driver      = "local-persist"
-  driver_opts = {
-    mountpoint = each.key
-  }
+  name        = local.name
+  path        = each.key
+  target_path = each.value
 }
 
 resource "docker_service" "app" {
@@ -56,23 +55,11 @@ resource "docker_service" "app" {
       })
 
       dynamic "mounts" {
-        for_each = docker_volume.config_volume
+        for_each = local.mounts
 
         content {
-          source = var.config_path
-          target = "/config"
-          type   = "bind"
-        }
-      }
-
-      dynamic "mounts" {
-        for_each = {
-        for source, target in var.mounts :
-        target => docker_volume.volumes[source].name}
-
-        content {
-          target = mounts.key
-          source = mounts.value
+          target = mounts.value
+          source = mounts.key
           type   = "volume"
         }
       }
@@ -88,7 +75,7 @@ resource "docker_service" "app" {
   }
 
   dynamic "labels" {
-    for_each = merge(module.traefik-labels.labels, var.labels)
+    for_each = local.labels
 
     content {
       label = labels.key
@@ -97,9 +84,7 @@ resource "docker_service" "app" {
   }
 
   dynamic "endpoint_spec" {
-    for_each = var.published_port == null ? {} : {
-      (var.published_port) = local.port
-    }
+    for_each = local.published_ports
 
     content {
       ports {
