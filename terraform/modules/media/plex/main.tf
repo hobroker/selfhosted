@@ -6,9 +6,9 @@ module "constants" {
   source = "../../../lib/constants"
 }
 
-resource "docker_image" "image" {
-  name         = "linuxserver/plex:latest"
-  keep_locally = true
+module "image" {
+  source = "../../../lib/image"
+  name   = "linuxserver/plex"
 }
 
 resource "docker_volume" "config_volume" {
@@ -43,7 +43,7 @@ resource "docker_service" "app" {
     networks = var.network_ids
 
     container_spec {
-      image = docker_image.image.name
+      image = module.image.name
       env   = merge(module.constants.default_container_env, {
         UMASK_SET  = 022
         PLEX_CLAIM = var.plex_claim

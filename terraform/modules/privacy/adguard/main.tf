@@ -11,9 +11,9 @@ module "constants" {
   source = "../../../lib/constants"
 }
 
-resource "docker_image" "image" {
-  name         = "adguard/adguardhome:latest"
-  keep_locally = true
+module "image" {
+  source = "../../../lib/image"
+  name   = "adguard/adguardhome"
 }
 
 resource "docker_volume" "volumes" {
@@ -35,7 +35,7 @@ resource "docker_service" "app" {
     networks = var.network_ids
 
     container_spec {
-      image = docker_image.image.name
+      image = module.image.name
       env   = module.constants.default_container_env
 
       dynamic "mounts" {
