@@ -43,3 +43,9 @@ variable "mounts" {
   default     = {}
   description = "Container binded files/folders"
 }
+
+variable "enable_proxy" {
+  type        = bool
+  default     = true
+  description = "Enable Traefik Proxy"
+}

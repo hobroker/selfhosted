@@ -1,6 +1,10 @@
 locals {
   name = "dozzle"
   port = 8080
+
+  published_ports = var.published_port == null ? {} : {
+    (var.published_port) = local.port
+  }
 }
 
 module "constants" {
@@ -58,9 +62,7 @@ resource "docker_service" "app" {
   }
 
   dynamic "endpoint_spec" {
-    for_each = var.published_port == null ? {} : {
-      (var.published_port) = local.port
-    }
+    for_each = local.published_ports
 
     content {
       ports {

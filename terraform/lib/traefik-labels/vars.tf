@@ -12,3 +12,9 @@ variable "network" {
   type        = string
   description = "Service network"
 }
+
+variable "enabled" {
+  type        = bool
+  default     = true
+  description = "Enable Traefik Proxy"
+}
