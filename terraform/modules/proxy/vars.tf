@@ -3,21 +3,6 @@ variable "network_ids" {
   description = "Service networks"
 }
 
-variable "ssh_host" {
-  type        = string
-  description = "SSH host"
-}
-
-variable "ssh_user" {
-  type        = string
-  description = "SSH user"
-}
-
-variable "ssh_key" {
-  type        = string
-  description = "SSH key path"
-}
-
 variable "pilot_token" {
   type        = string
   default     = ""

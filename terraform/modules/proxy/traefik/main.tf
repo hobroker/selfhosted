@@ -9,7 +9,8 @@ module "constants" {
 
 module "image" {
   source = "../../../lib/image"
-  name   = "traefik:${var.tag}"
+  name   = "traefik"
+  tag    = var.tag
 }
 
 resource "docker_service" "app" {

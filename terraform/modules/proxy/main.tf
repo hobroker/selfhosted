@@ -11,8 +11,8 @@ resource "docker_network" "network" {
 module "traefik" {
   source = "./traefik"
 
-  api_port         = 8080
-  network_ids      = local.networks
-  hostname         = var.hostname
-  pilot_token      = var.pilot_token
+  api_port    = 8080
+  network_ids = local.networks
+  hostname    = var.hostname
+  pilot_token = var.pilot_token
 }

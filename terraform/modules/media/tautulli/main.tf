@@ -6,9 +6,9 @@ module "constants" {
   source = "../../../lib/constants"
 }
 
-resource "docker_image" "image" {
-  name         = "tautulli/tautulli:latest"
-  keep_locally = true
+module "image" {
+  source = "../../../lib/image"
+  name   = "tautulli/tautulli"
 }
 
 resource "docker_volume" "config_volume" {
@@ -28,7 +28,7 @@ resource "docker_service" "app" {
     networks = var.network_ids
 
     container_spec {
-      image = docker_image.image.name
+      image = module.image.name
       env   = module.constants.default_container_env
 
       mounts {

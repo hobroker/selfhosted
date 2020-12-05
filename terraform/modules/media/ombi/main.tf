@@ -6,9 +6,10 @@ module "constants" {
   source = "../../../lib/constants"
 }
 
-resource "docker_image" "image" {
-  name         = "linuxserver/ombi:${var.tag}"
-  keep_locally = true
+module "image" {
+  source = "../../../lib/image"
+  name   = "linuxserver/ombi"
+  tag    = var.tag
 }
 
 resource "docker_volume" "config_volume" {
@@ -28,7 +29,7 @@ resource "docker_service" "app" {
     networks = var.network_ids
 
     container_spec {
-      image = docker_image.image.name
+      image = module.image.name
       env   = merge(module.constants.default_container_env, {
         WEBUI_PORT: var.port
       })
