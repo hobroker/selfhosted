@@ -10,8 +10,8 @@ output "service_names" {
 }
 
 output "published_ports" {
-  value = {for name, port in {
+  value = {
     dozzle      = module.dozzle.published_port
     code-server = module.code-server.published_port
-  }: name => port if name != null}
+  }
 }

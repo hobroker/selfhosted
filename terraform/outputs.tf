@@ -5,5 +5,6 @@ output "service_names" {
 
 output "published_ports" {
   // TODO add remaining modules
-  value = merge(module.debug.published_ports)
+  value = {for name, port in merge(module.debug.published_ports):
+  name => port if port != null}
 }
