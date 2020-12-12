@@ -42,7 +42,7 @@ resource "docker_service" "app" {
 
         content {
           source = var.blackhole_volume
-          target = "/downloads"
+          target = "/blackhole"
           type   = "volume"
         }
       }

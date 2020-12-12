@@ -1,5 +1,13 @@
 locals {
-  name = "ombi"
+  name            = "ombi"
+  port            = 3579
+  mounts          = {for mount in module.mounts: mount.name => mount.target}
+  env             = merge(module.constants.default_container_env, {
+    WEBUI_PORT: var.port
+  })
+  published_ports = var.port == null ? {} : {
+    (var.port) = local.port
+  }
 }
 
 module "constants" {
@@ -12,12 +20,15 @@ module "image" {
   tag    = var.tag
 }
 
-resource "docker_volume" "config_volume" {
-  name        = "${local.name}-config"
-  driver      = "local-persist"
-  driver_opts = {
-    mountpoint = var.config_path
+module "mounts" {
+  source   = "../../../lib/volume"
+  for_each = {
+    (var.config_path) = "/config"
   }
+
+  name        = local.name
+  path        = each.key
+  target_path = each.value
 }
 
 resource "docker_service" "app" {
@@ -30,14 +41,16 @@ resource "docker_service" "app" {
 
     container_spec {
       image = module.image.name
-      env   = merge(module.constants.default_container_env, {
-        WEBUI_PORT: var.port
-      })
+      env   = local.env
 
-      mounts {
-        source = docker_volume.config_volume.name
-        target = "/config"
-        type   = "volume"
+      dynamic "mounts" {
+        for_each = local.mounts
+
+        content {
+          target = mounts.value
+          source = mounts.key
+          type   = "volume"
+        }
       }
     }
 
@@ -50,12 +63,15 @@ resource "docker_service" "app" {
     }
   }
 
-  endpoint_spec {
-    ports {
-      target_port    = 3579
-      published_port = var.port
-      protocol       = "tcp"
-      publish_mode   = "ingress"
+  dynamic "endpoint_spec" {
+    for_each = local.published_ports
+
+    content {
+      ports {
+        target_port    = endpoint_spec.value
+        published_port = endpoint_spec.key
+        protocol       = "tcp"
+      }
     }
   }
 }

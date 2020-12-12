@@ -39,12 +39,18 @@ resource "docker_service" "app" {
         type   = "volume"
       }
 
+      mounts {
+        source = var.downloads_volume
+        target = "/downloads"
+        type   = "volume"
+      }
+
       dynamic "mounts" {
         for_each = var.blackhole_volume == "" ? [] : [1]
 
         content {
           source = var.blackhole_volume
-          target = "/downloads"
+          target = "/blackhole"
           type   = "volume"
         }
       }

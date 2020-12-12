@@ -11,3 +11,10 @@ providers:
     defaultRule: "Host(`{{ index .Labels \"subdomain\" }}.${hostname}`)"
     endpoint: "unix:///var/run/docker.sock"
     swarmMode: true
+
+metrics:
+  prometheus:
+      - 0.1
+      - 0.3
+      - 1.2
+      - 5
