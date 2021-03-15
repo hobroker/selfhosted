@@ -43,7 +43,19 @@ resource "docker_service" "app" {
         for_each = var.blackhole_volume == "" ? [] : [1]
 
         content {
+          read_only = false
           source = var.blackhole_volume
+          target = "/blackhole"
+          type   = "volume"
+        }
+      }
+
+      dynamic "mounts" {
+        for_each = var.downloads_volume == "" ? [] : [1]
+
+        content {
+          read_only = false
+          source = var.downloads_volume
           target = "/downloads"
           type   = "volume"
         }

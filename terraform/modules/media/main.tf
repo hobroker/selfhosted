@@ -72,10 +72,10 @@ module "plex" {
   }
 }
 
-module "ombi" {
-  source = "./ombi"
-
-  port        = 3579
-  network_ids = local.networks
-  config_path = "${var.appdata_root}/ombi"
-}
+//module "ombi" {
+//  source = "./ombi"
+//
+//  port        = 3579
+//  network_ids = local.networks
+//  config_path = "${var.appdata_root}/ombi"
+//}

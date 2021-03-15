@@ -1,0 +1,1 @@
+appdata_root = "/appdata"

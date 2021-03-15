@@ -4,6 +4,9 @@ locals {
 }
 
 resource "docker_network" "network" {
+  lifecycle {
+
+  }
   name   = "${local.name}-network"
   driver = "overlay"
 }
@@ -13,6 +16,14 @@ resource "docker_volume" "blackhole_volume" {
   driver      = "local-persist"
   driver_opts = {
     mountpoint = "${var.storage_root}/downloads/torrents"
+  }
+}
+
+resource "docker_volume" "downloads_volume" {
+  name        = "${local.name}-downloads"
+  driver      = "local-persist"
+  driver_opts = {
+    mountpoint = "${var.storage_root}/downloads"
   }
 }
 
@@ -32,4 +43,5 @@ module "qbittorrent" {
   network_ids      = local.networks
   config_path      = "${var.appdata_root}/qbittorrent"
   blackhole_volume = docker_volume.blackhole_volume.name
+  downloads_volume = docker_volume.downloads_volume.name
 }

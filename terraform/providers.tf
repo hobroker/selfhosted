@@ -3,9 +3,9 @@ terraform {
     docker = {
       source = "kreuzwerker/docker"
     }
-    vault  = {
-      source = "hashicorp/vault"
-    }
+//    vault  = {
+//      source = "hashicorp/vault"
+//    }
   }
 
   backend "remote" {

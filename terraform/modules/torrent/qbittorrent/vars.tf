@@ -20,3 +20,9 @@ variable "blackhole_volume" {
   default     = ""
   description = "Blackhole volume"
 }
+
+variable "downloads_volume" {
+  type        = string
+  default     = ""
+  description = "Downloads volume"
+}
