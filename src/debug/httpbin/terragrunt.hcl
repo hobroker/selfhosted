@@ -1,8 +1,4 @@
-locals {
-}
-
 terraform {
-//  source = "git::git@github.com:gruntwork-io/terragrunt-infrastructure-modules-example.git//mysql?ref=v0.4.0"
   source = "../../modules/httpbin"
 }
 
