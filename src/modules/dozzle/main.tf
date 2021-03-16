@@ -1,6 +1,6 @@
 locals {
-  name = "httpbin"
-  port = 80
+  name = "dozzle"
+  port = 8080
 
   ports = {
     (var.port) = local.port
@@ -8,7 +8,7 @@ locals {
 }
 
 data "docker_registry_image" "image" {
-  name = "kennethreitz/httpbin"
+  name = "amir20/dozzle"
 }
 
 resource "docker_image" "image" {
@@ -26,10 +26,19 @@ resource "docker_service" "app" {
       window       = "10s"
       max_attempts = 3
     }
-    networks       = var.network_ids
+
+    networks = var.network_ids
 
     container_spec {
-      image = docker_image.image.name
+      image     = docker_image.image.name
+      read_only = true
+
+      mounts {
+        target    = "/var/run/docker.sock"
+        source    = "/var/run/docker.sock"
+        type      = "bind"
+        read_only = true
+      }
     }
 
     placement {
