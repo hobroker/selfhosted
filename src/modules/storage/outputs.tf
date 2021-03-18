@@ -1,3 +1,7 @@
+output "appdata_volume" {
+  value = docker_volume.appdata_volume.name
+}
+
 output "downloads_volume" {
   value = docker_volume.downloads_volume.name
 }

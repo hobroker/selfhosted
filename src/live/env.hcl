@@ -1,5 +1,6 @@
 locals {
   storage = {
+    appdata_path   = "/appdata"
     downloads_path = "/storage/downloads"
     torrents_path  = "/storage/downloads/torrents"
   }
@@ -32,5 +33,9 @@ locals {
   qbittorrent = {
     port        = 8112
     config_path = "/appdata/qbittorrent"
+  }
+
+  code-server = {
+    port = 8001
   }
 }

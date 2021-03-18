@@ -13,3 +13,12 @@ resource "docker_volume" "torrents_volume" {
     mountpoint = var.torrents_path
   }
 }
+
+
+resource "docker_volume" "appdata_volume" {
+  name        = "storage-appdata"
+  driver      = "local-persist"
+  driver_opts = {
+    mountpoint = var.appdata_path
+  }
+}

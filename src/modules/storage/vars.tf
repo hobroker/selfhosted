@@ -7,3 +7,9 @@ variable "torrents_path" {
   type        = string
   description = "Torrents folder path"
 }
+
+
+variable "appdata_path" {
+  type        = string
+  description = "Appdata folder path"
+}
