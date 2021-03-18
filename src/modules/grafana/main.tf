@@ -12,7 +12,7 @@ locals {
 }
 
 data "docker_registry_image" "image" {
-  name = "grafana/grafana"
+  name = "grafana/grafana:7.4.5"
 }
 
 resource "docker_image" "image" {

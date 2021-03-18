@@ -1,19 +1,39 @@
 locals {
-  name = "httpbin"
-  port = 80
+  name = "prometheus"
+  port = 9090
 
-  ports = {
+  ports  = {
     (var.port) = local.port
+  }
+  mounts = {
+    (docker_volume.data_volume.name) = "/prometheus",
+    (docker_volume.etc_volume.name)  = "/etc/prometheus",
   }
 }
 
 data "docker_registry_image" "image" {
-  name = "kennethreitz/httpbin:latest"
+  name = "prom/prometheus:v2.25.2"
 }
 
 resource "docker_image" "image" {
   name          = data.docker_registry_image.image.name
   pull_triggers = [data.docker_registry_image.image.sha256_digest]
+}
+
+resource "docker_volume" "etc_volume" {
+  name        = "${local.name}-etc"
+  driver      = "local-persist"
+  driver_opts = {
+    mountpoint = var.etc_path
+  }
+}
+
+resource "docker_volume" "data_volume" {
+  name        = "${local.name}-data"
+  driver      = "local-persist"
+  driver_opts = {
+    mountpoint = var.data_path
+  }
 }
 
 resource "docker_service" "app" {
@@ -30,6 +50,16 @@ resource "docker_service" "app" {
 
     container_spec {
       image = docker_image.image.name
+
+      dynamic "mounts" {
+        for_each = local.mounts
+
+        content {
+          source = mounts.key
+          target = mounts.value
+          type   = "volume"
+        }
+      }
     }
 
     placement {

@@ -8,7 +8,7 @@ locals {
 }
 
 data "docker_registry_image" "image" {
-  name = "amir20/dozzle"
+  name = "amir20/dozzle:v3.2.3"
 }
 
 resource "docker_image" "image" {

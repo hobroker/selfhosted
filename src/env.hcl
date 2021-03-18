@@ -12,4 +12,10 @@ locals {
     lib_path = "/appdata/grafana/lib"
     etc_path = "/appdata/grafana/etc"
   }
+
+  prometheus = {
+    port      = 9090
+    etc_path  = "/appdata/prometheus/etc"
+    data_path = "/appdata/prometheus/data"
+  }
 }
