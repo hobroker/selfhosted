@@ -25,7 +25,12 @@ locals {
   }
 
   jackett = {
-    port     = 9117
+    port        = 9117
     config_path = "/appdata/jackett"
+  }
+
+  qbittorrent = {
+    port        = 8112
+    config_path = "/appdata/qbittorrent"
   }
 }
