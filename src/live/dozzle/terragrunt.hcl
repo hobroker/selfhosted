@@ -11,6 +11,4 @@ include {
   path = find_in_parent_folders()
 }
 
-inputs = {
-  port = local.env.port
-}
+inputs = local.env

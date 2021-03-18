@@ -1,10 +1,10 @@
 locals {
   environment_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
-  env              = local.environment_vars.locals.httpbin
+  env              = local.environment_vars.locals.storage
 }
 
 terraform {
-  source = "../../modules/httpbin"
+  source = "../../modules/storage"
 }
 
 include {

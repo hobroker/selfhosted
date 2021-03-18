@@ -1,4 +1,9 @@
 locals {
+  storage = {
+    downloads_path = "/storage/downloads"
+    torrents_path  = "/storage/downloads/torrents"
+  }
+
   httpbin = {
     port = 9009
   }
@@ -17,5 +22,10 @@ locals {
     port      = 9090
     etc_path  = "/appdata/prometheus/etc"
     data_path = "/appdata/prometheus/data"
+  }
+
+  jackett = {
+    port     = 9117
+    config_path = "/appdata/jackett"
   }
 }
