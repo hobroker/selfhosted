@@ -2,10 +2,10 @@ locals {
   name = "grafana"
   port = 3000
 
-  published_ports = {
+  ports  = {
     (var.port) = local.port
   }
-  mounts          = {
+  mounts = {
     (docker_volume.lib_volume.name) = "/var/lib/grafana",
     (docker_volume.etc_volume.name) = "/etc/grafana",
   }
@@ -73,13 +73,13 @@ resource "docker_service" "app" {
     }
   }
 
-  dynamic "endpoint_spec" {
-    for_each = local.published_ports
+  endpoint_spec {
+    dynamic "ports" {
+      for_each = local.ports
 
-    content {
-      ports {
-        target_port    = endpoint_spec.value
-        published_port = endpoint_spec.key
+      content {
+        target_port    = ports.value
+        published_port = ports.key
         protocol       = "tcp"
       }
     }

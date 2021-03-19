@@ -52,13 +52,13 @@ resource "docker_service" "app" {
     }
   }
 
-  dynamic "endpoint_spec" {
-    for_each = local.ports
+  endpoint_spec {
+    dynamic "ports" {
+      for_each = local.ports
 
-    content {
-      ports {
-        target_port    = endpoint_spec.value
-        published_port = endpoint_spec.key
+      content {
+        target_port    = ports.value
+        published_port = ports.key
         protocol       = "tcp"
       }
     }

@@ -6,6 +6,9 @@ locals {
     (var.downloads_volume)             = "/downloads",
     (docker_volume.config_volume.name) = "/config",
   }
+  ports  = {
+    (var.port) = var.port,
+  }
 }
 
 data "docker_registry_image" "image" {
@@ -70,11 +73,14 @@ resource "docker_service" "app" {
   }
 
   endpoint_spec {
-    ports {
-      target_port    = var.port
-      published_port = var.port
-      protocol       = "tcp"
-      publish_mode   = "ingress"
+    dynamic "ports" {
+      for_each = local.ports
+
+      content {
+        target_port    = ports.value
+        published_port = ports.key
+        protocol       = "tcp"
+      }
     }
   }
 }
