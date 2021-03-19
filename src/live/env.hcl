@@ -47,6 +47,12 @@ locals {
     tv_path     = "/storage/tv-shows"
   }
 
+  radarr = {
+    port        = 7878
+    config_path = "/appdata/radarr"
+    movies_path = "/storage/movies"
+  }
+
   code-server = {
     port = 8001
   }
