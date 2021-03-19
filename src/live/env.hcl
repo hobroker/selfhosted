@@ -53,6 +53,11 @@ locals {
     movies_path = "/storage/movies"
   }
 
+  tautulli = {
+    port        = 8181
+    config_path = "/appdata/tautulli"
+  }
+
   code-server = {
     port = 8001
   }
