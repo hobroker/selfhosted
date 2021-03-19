@@ -1,3 +1,3 @@
-output "published_port" {
+output "port" {
   value = var.port
 }

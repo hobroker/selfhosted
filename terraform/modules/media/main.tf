@@ -24,17 +24,6 @@ resource "docker_volume" "downloads_volume" {
   }
 }
 
-module "sonarr" {
-  source = "./sonarr"
-
-  tag              = "preview"
-  port             = 8989
-  network_ids      = [docker_network.network.id]
-  config_path      = "${var.appdata_root}/sonarr"
-  tv_path          = "${var.storage_root}/tv-shows"
-  downloads_volume = docker_volume.downloads_volume.name
-}
-
 module "radarr" {
   source = "./radarr"
 
