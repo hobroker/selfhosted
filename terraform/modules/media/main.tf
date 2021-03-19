@@ -24,14 +24,6 @@ resource "docker_volume" "downloads_volume" {
   }
 }
 
-module "tautulli" {
-  source = "./tautulli"
-
-  port        = 8181
-  network_ids = local.networks
-  config_path = "${var.appdata_root}/tautulli"
-}
-
 module "xteve" {
   source = "./xteve"
 
