@@ -24,16 +24,6 @@ resource "docker_volume" "downloads_volume" {
   }
 }
 
-module "radarr" {
-  source = "./radarr"
-
-  port             = 7878
-  network_ids      = local.networks
-  config_path      = "${var.appdata_root}/radarr"
-  movies_path      = "${var.storage_root}/movies"
-  downloads_volume = docker_volume.downloads_volume.name
-}
-
 module "tautulli" {
   source = "./tautulli"
 
