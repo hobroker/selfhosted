@@ -41,6 +41,12 @@ locals {
     data_path   = "/appdata/adguard/work"
   }
 
+  sonarr = {
+    port        = 8989
+    config_path = "/appdata/sonarr"
+    tv_path     = "/storage/tv-shows"
+  }
+
   code-server = {
     port = 8001
   }
