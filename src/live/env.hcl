@@ -35,6 +35,12 @@ locals {
     config_path = "/appdata/qbittorrent"
   }
 
+  adguard = {
+    port        = 3001
+    config_path = "/appdata/adguard/conf"
+    data_path   = "/appdata/adguard/work"
+  }
+
   code-server = {
     port = 8001
   }
