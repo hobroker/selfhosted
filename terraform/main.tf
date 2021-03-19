@@ -8,16 +8,9 @@ module "proxy" {
   ]
 }
 
-
 module "media" {
   source = "./modules/media"
 
   appdata_root = var.appdata_root
   storage_root = var.storage_root
-}
-
-module "privacy" {
-  source = "./modules/privacy"
-
-  appdata_root = var.appdata_root
 }
