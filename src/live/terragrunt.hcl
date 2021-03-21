@@ -1,15 +1,15 @@
-generate "provider" {
-  path      = "provider.tf"
-  if_exists = "overwrite_terragrunt"
-  contents  = <<EOF
-terraform {
-  required_providers {
-    docker = {
-      source = "kreuzwerker/docker"
-    }
+remote_state {
+  backend = "gcs"
+
+  config = {
+    project = "my-nas-295409"
+    bucket  = "tf-state-selfhosted"
+    prefix  = "state/${path_relative_to_include()}"
   }
 }
 
-provider "docker" {}
-EOF
+generate "provider" {
+  path      = "provider.tf"
+  if_exists = "overwrite_terragrunt"
+  contents  = file("provider.tf")
 }

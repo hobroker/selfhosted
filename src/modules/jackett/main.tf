@@ -61,6 +61,11 @@ resource "docker_service" "app" {
     }
 
     placement {
+      platforms {
+        architecture = "amd64"
+        os           = "linux"
+      }
+
       constraints = [
         "node.role==manager"
       ]
