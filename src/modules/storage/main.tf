@@ -22,3 +22,11 @@ resource "docker_volume" "appdata_volume" {
     mountpoint = var.appdata_path
   }
 }
+
+resource "docker_volume" "storage_volume" {
+  name        = "storage-volume"
+  driver      = "local-persist"
+  driver_opts = {
+    mountpoint = var.storage_path
+  }
+}

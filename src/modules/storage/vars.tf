@@ -1,3 +1,8 @@
+variable "storage_path" {
+  type        = string
+  description = "Storage folder path"
+}
+
 variable "downloads_path" {
   type        = string
   description = "Downloads folder path"

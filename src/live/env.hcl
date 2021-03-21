@@ -1,6 +1,7 @@
 locals {
   storage = {
     appdata_path   = "/appdata"
+    storage_path   = "/storage"
     downloads_path = "/storage/downloads"
     torrents_path  = "/storage/downloads/torrents"
   }
@@ -56,6 +57,11 @@ locals {
   tautulli = {
     port        = 8181
     config_path = "/appdata/tautulli"
+  }
+
+  plex = {
+    port        = 32400
+    config_path = "/appdata/plex"
   }
 
   code-server = {
