@@ -1,1 +1,0 @@
-appdata_root = "/appdata"
