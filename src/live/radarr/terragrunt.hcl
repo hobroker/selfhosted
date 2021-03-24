@@ -7,10 +7,12 @@ terraform {
   source = "../../modules/radarr"
 }
 
-dependency "storage" {
-  config_path  = "../storage"
-  mock_outputs = {
-    downloads_volume = ""
+dependency "downloads_storage" {
+  config_path = "../_local/storage-downloads"
+
+  mock_outputs_allowed_terraform_commands = ["validate", "plan"]
+  mock_outputs                            = {
+    volume = "mock-downloads-storage"
   }
 }
 
@@ -19,5 +21,5 @@ include {
 }
 
 inputs = merge(local.env, {
-  downloads_volume = dependency.storage.outputs.downloads_volume
+  downloads_volume = dependency.downloads_storage.outputs.volume
 })
