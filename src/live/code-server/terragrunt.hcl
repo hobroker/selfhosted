@@ -7,10 +7,12 @@ terraform {
   source = "../../modules/code-server"
 }
 
-dependency "storage" {
-  config_path  = "../storage"
-  mock_outputs = {
-    appdata_volume = ""
+dependency "appdata_storage" {
+  config_path = "../_local/storage-appdata"
+
+  mock_outputs_allowed_terraform_commands = ["validate", "plan"]
+  mock_outputs                            = {
+    volume = "mock-appdata-storage"
   }
 }
 
@@ -20,6 +22,6 @@ include {
 
 inputs = merge(local.env, {
   mounts = {
-    (dependency.storage.outputs.appdata_volume) = "/appdata"
+    (dependency.appdata_storage.outputs.volume) = "/appdata"
   }
 })

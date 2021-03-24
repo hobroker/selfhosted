@@ -7,10 +7,12 @@ terraform {
   source = "../../modules/plex"
 }
 
-dependency "storage" {
-  config_path  = "../storage"
-  mock_outputs = {
-    storage_volume = ""
+dependency "storage_root" {
+  config_path = "../_local/storage-root"
+
+  mock_outputs_allowed_terraform_commands = ["validate", "plan"]
+  mock_outputs                            = {
+    volume = "mock-root-storage"
   }
 }
 
@@ -20,6 +22,6 @@ include {
 
 inputs = merge(local.env, {
   mounts = {
-    (dependency.storage.outputs.storage_volume) = "/storage"
+    (dependency.storage_root.outputs.volume) = "/storage"
   }
 })
