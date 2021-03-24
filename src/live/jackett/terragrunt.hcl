@@ -7,10 +7,12 @@ terraform {
   source = "../../modules/jackett"
 }
 
-dependency "storage" {
-  config_path  = "../storage"
-  mock_outputs = {
-    torrents_volume = ""
+dependency "torrents_storage" {
+  config_path = "../_local/storage-torrents-blackhole"
+
+  mock_outputs_allowed_terraform_commands = ["validate", "plan"]
+  mock_outputs                            = {
+    volume = "torrents_storage"
   }
 }
 
@@ -19,5 +21,5 @@ include {
 }
 
 inputs = merge(local.env, {
-  torrents_volume = dependency.storage.outputs.torrents_volume
+  torrents_volume = dependency.torrents_storage.outputs.volume
 })
