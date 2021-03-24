@@ -10,6 +10,22 @@ variable "network_ids" {
   description = "Service networks"
 }
 
+variable "restart_policy" {
+  type        = object({
+    condition    = string
+    delay        = string
+    window       = string
+    max_attempts = number
+  })
+  default     = {
+    condition    = "on-failure"
+    delay        = "15s"
+    window       = "30s"
+    max_attempts = 3
+  }
+  description = "Restart policy"
+}
+
 variable "plex_claim" {
   type        = string
   default     = ""

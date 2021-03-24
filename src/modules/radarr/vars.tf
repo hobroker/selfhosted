@@ -10,6 +10,23 @@ variable "network_ids" {
   description = "Service networks"
 }
 
+variable "restart_policy" {
+  type        = object({
+    condition    = string
+    delay        = string
+    window       = string
+    max_attempts = number
+  })
+  default     = {
+    condition    = "on-failure"
+    delay        = "3s"
+    window       = "10s"
+    max_attempts = 3
+  }
+  description = "Restart policy"
+}
+
+
 variable "tag" {
   type        = string
   default     = "latest"

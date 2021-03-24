@@ -14,3 +14,19 @@ variable "config_path" {
   type        = string
   description = "Config folder path"
 }
+
+variable "restart_policy" {
+  type        = object({
+    condition    = string
+    delay        = string
+    window       = string
+    max_attempts = number
+  })
+  default     = {
+    condition    = "on-failure"
+    delay        = "3s"
+    window       = "10s"
+    max_attempts = 3
+  }
+  description = "Restart policy"
+}

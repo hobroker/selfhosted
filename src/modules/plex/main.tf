@@ -39,12 +39,9 @@ resource "docker_service" "app" {
   name = local.name
 
   task_spec {
-    restart_policy = {
-      condition    = "on-failure"
-      delay        = "15s"
-      window       = "30s"
-      max_attempts = 3
-    }
+    restart_policy = var.restart_policy
+
+    networks = var.network_ids
 
     //    resources {
     //      reservation {
@@ -56,8 +53,6 @@ resource "docker_service" "app" {
     //        memory_bytes = 4000 * 1024e+3
     //      }
     //    }
-
-    networks = var.network_ids
 
     container_spec {
       image = docker_image.image.name

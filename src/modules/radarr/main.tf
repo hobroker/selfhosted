@@ -41,12 +41,7 @@ resource "docker_service" "app" {
   name = local.name
 
   task_spec {
-    restart_policy = {
-      condition    = "on-failure"
-      delay        = "3s"
-      window       = "10s"
-      max_attempts = 3
-    }
+    restart_policy = var.restart_policy
 
     networks = var.network_ids
 

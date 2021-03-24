@@ -14,7 +14,6 @@ resource "docker_volume" "torrents_volume" {
   }
 }
 
-
 resource "docker_volume" "appdata_volume" {
   name        = "storage-appdata"
   driver      = "local-persist"
