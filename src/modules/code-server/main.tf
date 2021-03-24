@@ -26,13 +26,10 @@ resource "docker_service" "app" {
 
     container_spec {
       image = docker_image.image.name
-      env   = {
+      env   = merge({
         PASSWORD      = var.password
         SUDO_PASSWORD = var.sudo_password
-        PGID          = "1000"
-        PUID          = "1000"
-        TZ            = "Europe/Chisinau"
-      }
+      }, var.env)
 
       dynamic "mounts" {
         for_each = var.mounts

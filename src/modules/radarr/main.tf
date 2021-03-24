@@ -46,11 +46,7 @@ resource "docker_service" "app" {
 
     container_spec {
       image = docker_image.image.name
-      env   = {
-        PGID = "1000"
-        PUID = "1000"
-        TZ   = "Europe/Chisinau"
-      }
+      env   = var.env
 
       dynamic "mounts" {
         for_each = local.mounts

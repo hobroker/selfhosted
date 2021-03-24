@@ -32,6 +32,16 @@ variable "restart_policy" {
   description = "Restart policy"
 }
 
+variable "env" {
+  type        = map(string)
+  default     = {
+    PGID = "1000"
+    PUID = "1000"
+    TZ   = "Europe/Chisinau"
+  }
+  description = "Environment variables"
+}
+
 variable "plex_claim" {
   type        = string
   default     = ""

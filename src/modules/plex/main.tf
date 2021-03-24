@@ -55,14 +55,11 @@ resource "docker_service" "app" {
 
     container_spec {
       image = docker_image.image.name
-      env   = {
-        PGID       = "1000"
-        PUID       = "1000"
-        TZ         = "Europe/Chisinau"
-        UMASK_SET  = 022
+      env   = merge({
+        UMASK      = 022
         PLEX_CLAIM = var.plex_claim
         VERSION    = var.plex_version
-      }
+      }, var.env)
 
       mounts {
         source = docker_volume.config_volume.name
