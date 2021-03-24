@@ -1,3 +1,9 @@
+variable "name" {
+  type        = string
+  default     = "tautulli"
+  description = "Service name"
+}
+
 variable "port" {
   type        = number
   default     = 8181

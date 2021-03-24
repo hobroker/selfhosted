@@ -1,5 +1,4 @@
 locals {
-  name = "adguard"
   port = 80
 
   ports     = {
@@ -27,7 +26,7 @@ resource "docker_image" "image" {
 }
 
 resource "docker_volume" "config_volume" {
-  name        = "${local.name}-etc"
+  name        = "${var.name}-etc"
   driver      = "local-persist"
   driver_opts = {
     mountpoint = var.config_path
@@ -35,7 +34,7 @@ resource "docker_volume" "config_volume" {
 }
 
 resource "docker_volume" "data_volume" {
-  name        = "${local.name}-lib"
+  name        = "${var.name}-lib"
   driver      = "local-persist"
   driver_opts = {
     mountpoint = var.data_path
@@ -43,7 +42,7 @@ resource "docker_volume" "data_volume" {
 }
 
 resource "docker_service" "app" {
-  name = local.name
+  name = var.name
 
   task_spec {
     restart_policy = var.restart_policy

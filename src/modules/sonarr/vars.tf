@@ -1,3 +1,9 @@
+variable "name" {
+  type        = string
+  default     = "sonarr"
+  description = "Service name"
+}
+
 variable "port" {
   type        = number
   default     = 8989

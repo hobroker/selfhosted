@@ -1,5 +1,4 @@
 locals {
-  name = "grafana"
   port = 3000
 
   ports  = {
@@ -21,7 +20,7 @@ resource "docker_image" "image" {
 }
 
 resource "docker_volume" "etc_volume" {
-  name        = "${local.name}-etc"
+  name        = "${var.name}-etc"
   driver      = "local-persist"
   driver_opts = {
     mountpoint = var.etc_path
@@ -29,7 +28,7 @@ resource "docker_volume" "etc_volume" {
 }
 
 resource "docker_volume" "lib_volume" {
-  name        = "${local.name}-lib"
+  name        = "${var.name}-lib"
   driver      = "local-persist"
   driver_opts = {
     mountpoint = var.lib_path
@@ -37,7 +36,7 @@ resource "docker_volume" "lib_volume" {
 }
 
 resource "docker_service" "app" {
-  name = local.name
+  name = var.name
 
   task_spec {
     restart_policy = var.restart_policy

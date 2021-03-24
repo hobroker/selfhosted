@@ -1,3 +1,9 @@
+variable "name" {
+  type        = string
+  default     = "radarr"
+  description = "Service name"
+}
+
 variable "port" {
   type        = number
   default     = 7878

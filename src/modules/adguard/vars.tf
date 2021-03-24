@@ -1,3 +1,9 @@
+variable "name" {
+  type        = string
+  default     = "adguard"
+  description = "Service name"
+}
+
 variable "port" {
   type        = number
   description = "WEBUI Port"

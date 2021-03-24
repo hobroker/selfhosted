@@ -1,3 +1,9 @@
+variable "name" {
+  type        = string
+  default     = "prometheus"
+  description = "Service name"
+}
+
 variable "port" {
   type        = number
   description = "WEBUI Port"

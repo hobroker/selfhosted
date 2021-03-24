@@ -1,5 +1,4 @@
 locals {
-  name = "tautulli"
   port = 8181
 
   mounts = {
@@ -20,7 +19,7 @@ resource "docker_image" "image" {
 }
 
 resource "docker_volume" "config_volume" {
-  name        = "${local.name}-config"
+  name        = "${var.name}-config"
   driver      = "local-persist"
   driver_opts = {
     mountpoint = var.config_path
@@ -28,7 +27,7 @@ resource "docker_volume" "config_volume" {
 }
 
 resource "docker_service" "app" {
-  name = local.name
+  name = var.name
 
   task_spec {
     restart_policy = var.restart_policy

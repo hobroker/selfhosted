@@ -1,3 +1,9 @@
+variable "name" {
+  type        = string
+  default     = "plex"
+  description = "Service name"
+}
+
 variable "port" {
   type        = number
   default     = 32400

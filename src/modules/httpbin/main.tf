@@ -1,5 +1,4 @@
 locals {
-  name = "httpbin"
   port = 80
 
   ports = {
@@ -17,7 +16,7 @@ resource "docker_image" "image" {
 }
 
 resource "docker_service" "app" {
-  name = local.name
+  name = var.name
 
   task_spec {
     restart_policy = var.restart_policy

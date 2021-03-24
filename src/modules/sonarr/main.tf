@@ -1,5 +1,4 @@
 locals {
-  name = "sonarr"
   port = 8989
 
   mounts = {
@@ -22,7 +21,7 @@ resource "docker_image" "image" {
 }
 
 resource "docker_volume" "config_volume" {
-  name        = "${local.name}-config"
+  name        = "${var.name}-config"
   driver      = "local-persist"
   driver_opts = {
     mountpoint = var.config_path
@@ -30,7 +29,7 @@ resource "docker_volume" "config_volume" {
 }
 
 resource "docker_volume" "tv_volume" {
-  name        = "${local.name}-tv"
+  name        = "${var.name}-tv"
   driver      = "local-persist"
   driver_opts = {
     mountpoint = var.tv_path
@@ -38,7 +37,7 @@ resource "docker_volume" "tv_volume" {
 }
 
 resource "docker_service" "app" {
-  name = local.name
+  name = var.name
 
   task_spec {
     restart_policy = var.restart_policy

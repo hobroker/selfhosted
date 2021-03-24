@@ -1,3 +1,9 @@
+variable "name" {
+  type        = string
+  default     = "jackett"
+  description = "Service name"
+}
+
 variable "port" {
   type        = number
   default     = 9117

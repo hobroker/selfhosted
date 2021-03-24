@@ -1,5 +1,4 @@
 locals {
-  name  = "code-server"
   alias = "vscode"
   port  = 8443
 
@@ -18,7 +17,7 @@ resource "docker_image" "image" {
 }
 
 resource "docker_service" "app" {
-  name = local.name
+  name = var.name
 
   task_spec {
     restart_policy = var.restart_policy

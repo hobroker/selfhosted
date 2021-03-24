@@ -1,3 +1,9 @@
+variable "name" {
+  type        = string
+  default     = "qbittorrent"
+  description = "Service name"
+}
+
 variable "port" {
   type        = number
   default     = 8112
