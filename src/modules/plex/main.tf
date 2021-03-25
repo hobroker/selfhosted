@@ -1,5 +1,4 @@
 locals {
-  name = "plex"
   port = 32400
 
   ports = {
@@ -28,7 +27,7 @@ resource "docker_image" "image" {
 }
 
 resource "docker_volume" "config_volume" {
-  name        = "${local.name}-config"
+  name        = "${var.name}-config"
   driver      = "local-persist"
   driver_opts = {
     mountpoint = var.config_path
@@ -36,15 +35,12 @@ resource "docker_volume" "config_volume" {
 }
 
 resource "docker_service" "app" {
-  name = local.name
+  name = var.name
 
   task_spec {
-    restart_policy = {
-      condition    = "on-failure"
-      delay        = "15s"
-      window       = "30s"
-      max_attempts = 3
-    }
+    restart_policy = var.restart_policy
+
+    networks = var.network_ids
 
     //    resources {
     //      reservation {
@@ -57,18 +53,13 @@ resource "docker_service" "app" {
     //      }
     //    }
 
-    networks = var.network_ids
-
     container_spec {
       image = docker_image.image.name
-      env   = {
-        PGID       = "1000"
-        PUID       = "1000"
-        TZ         = "Europe/Chisinau"
-        UMASK_SET  = 022
+      env   = merge({
+        UMASK      = 022
         PLEX_CLAIM = var.plex_claim
         VERSION    = var.plex_version
-      }
+      }, var.env)
 
       mounts {
         source = docker_volume.config_volume.name

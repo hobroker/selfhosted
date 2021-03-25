@@ -1,5 +1,4 @@
 locals {
-  name = "httpbin"
   port = 80
 
   ports = {
@@ -17,16 +16,12 @@ resource "docker_image" "image" {
 }
 
 resource "docker_service" "app" {
-  name = local.name
+  name = var.name
 
   task_spec {
-    restart_policy = {
-      condition    = "on-failure"
-      delay        = "3s"
-      window       = "10s"
-      max_attempts = 3
-    }
-    networks       = var.network_ids
+    restart_policy = var.restart_policy
+
+    networks = var.network_ids
 
     container_spec {
       image = docker_image.image.name

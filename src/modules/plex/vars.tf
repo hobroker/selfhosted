@@ -1,3 +1,9 @@
+variable "name" {
+  type        = string
+  default     = "plex"
+  description = "Service name"
+}
+
 variable "port" {
   type        = number
   default     = 32400
@@ -8,6 +14,32 @@ variable "network_ids" {
   type        = list(string)
   default     = []
   description = "Service networks"
+}
+
+variable "restart_policy" {
+  type        = object({
+    condition    = string
+    delay        = string
+    window       = string
+    max_attempts = number
+  })
+  default     = {
+    condition    = "on-failure"
+    delay        = "15s"
+    window       = "30s"
+    max_attempts = 3
+  }
+  description = "Restart policy"
+}
+
+variable "env" {
+  type        = map(string)
+  default     = {
+    PGID = "1000"
+    PUID = "1000"
+    TZ   = "Europe/Chisinau"
+  }
+  description = "Environment variables"
 }
 
 variable "plex_claim" {
