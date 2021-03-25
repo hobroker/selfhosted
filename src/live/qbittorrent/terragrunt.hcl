@@ -7,11 +7,21 @@ terraform {
   source = "../../modules/qbittorrent"
 }
 
-dependency "storage" {
-  config_path  = "../storage"
-  mock_outputs = {
-    torrents_volume  = ""
-    downloads_volume = ""
+dependency "downloads_storage" {
+  config_path = "../_local/storage-downloads"
+
+  mock_outputs_allowed_terraform_commands = ["validate", "plan"]
+  mock_outputs                            = {
+    volume = "mock-downloads-storage"
+  }
+}
+
+dependency "torrents_storage" {
+  config_path = "../_local/storage-torrents-blackhole"
+
+  mock_outputs_allowed_terraform_commands = ["validate", "plan"]
+  mock_outputs                            = {
+    volume = "mock-torrents-storage"
   }
 }
 
@@ -20,6 +30,6 @@ include {
 }
 
 inputs = merge(local.env, {
-  torrents_volume  = dependency.storage.outputs.torrents_volume
-  downloads_volume = dependency.storage.outputs.downloads_volume
+  torrents_volume  = dependency.torrents_storage.outputs.volume
+  downloads_volume = dependency.downloads_storage.outputs.volume
 })
