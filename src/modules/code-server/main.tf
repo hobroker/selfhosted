@@ -1,5 +1,4 @@
 locals {
-  name  = "code-server"
   alias = "vscode"
   port  = 8443
 
@@ -18,26 +17,19 @@ resource "docker_image" "image" {
 }
 
 resource "docker_service" "app" {
-  name = local.name
+  name = var.name
 
   task_spec {
-    restart_policy = {
-      condition    = "on-failure"
-      delay        = "3s"
-      window       = "10s"
-      max_attempts = 3
-    }
-    networks       = var.network_ids
+    restart_policy = var.restart_policy
+
+    networks = var.network_ids
 
     container_spec {
       image = docker_image.image.name
-      env   = {
+      env   = merge({
         PASSWORD      = var.password
         SUDO_PASSWORD = var.sudo_password
-        PGID          = "1000"
-        PUID          = "1000"
-        TZ            = "Europe/Chisinau"
-      }
+      }, var.env)
 
       dynamic "mounts" {
         for_each = var.mounts

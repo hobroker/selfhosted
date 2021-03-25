@@ -1,5 +1,4 @@
 locals {
-  name = "prometheus"
   port = 9090
 
   ports  = {
@@ -21,7 +20,7 @@ resource "docker_image" "image" {
 }
 
 resource "docker_volume" "etc_volume" {
-  name        = "${local.name}-etc"
+  name        = "${var.name}-etc"
   driver      = "local-persist"
   driver_opts = {
     mountpoint = var.etc_path
@@ -29,7 +28,7 @@ resource "docker_volume" "etc_volume" {
 }
 
 resource "docker_volume" "data_volume" {
-  name        = "${local.name}-data"
+  name        = "${var.name}-data"
   driver      = "local-persist"
   driver_opts = {
     mountpoint = var.data_path
@@ -37,16 +36,12 @@ resource "docker_volume" "data_volume" {
 }
 
 resource "docker_service" "app" {
-  name = local.name
+  name = var.name
 
   task_spec {
-    restart_policy = {
-      condition    = "on-failure"
-      delay        = "3s"
-      window       = "10s"
-      max_attempts = 3
-    }
-    networks       = var.network_ids
+    restart_policy = var.restart_policy
+
+    networks = var.network_ids
 
     container_spec {
       image = docker_image.image.name

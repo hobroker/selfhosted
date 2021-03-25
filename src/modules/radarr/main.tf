@@ -1,5 +1,4 @@
 locals {
-  name = "radarr"
   port = 7878
 
   mounts = {
@@ -22,7 +21,7 @@ resource "docker_image" "image" {
 }
 
 resource "docker_volume" "config_volume" {
-  name        = "${local.name}-config"
+  name        = "${var.name}-config"
   driver      = "local-persist"
   driver_opts = {
     mountpoint = var.config_path
@@ -30,7 +29,7 @@ resource "docker_volume" "config_volume" {
 }
 
 resource "docker_volume" "movies_volume" {
-  name        = "${local.name}-movies"
+  name        = "${var.name}-movies"
   driver      = "local-persist"
   driver_opts = {
     mountpoint = var.movies_path
@@ -38,25 +37,16 @@ resource "docker_volume" "movies_volume" {
 }
 
 resource "docker_service" "app" {
-  name = local.name
+  name = var.name
 
   task_spec {
-    restart_policy = {
-      condition    = "on-failure"
-      delay        = "3s"
-      window       = "10s"
-      max_attempts = 3
-    }
+    restart_policy = var.restart_policy
 
     networks = var.network_ids
 
     container_spec {
       image = docker_image.image.name
-      env   = {
-        PGID = "1000"
-        PUID = "1000"
-        TZ   = "Europe/Chisinau"
-      }
+      env   = var.env
 
       dynamic "mounts" {
         for_each = local.mounts
