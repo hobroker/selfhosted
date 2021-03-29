@@ -14,6 +14,10 @@ locals {
     port = 9010
   }
 
+  node-exporter = {
+    port = 9100
+  }
+
   grafana = {
     port     = 5000
     lib_path = "/appdata/grafana/lib"
