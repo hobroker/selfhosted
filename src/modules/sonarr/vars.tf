@@ -46,11 +46,6 @@ variable "tag" {
   type        = string
   default     = "latest"
   description = "Image version tag"
-
-  validation {
-    condition     = can(regex("(latest|develop|preview)", var.tag))
-    error_message = "The `tag` must be one of: latest, develop, preview."
-  }
 }
 
 variable "downloads_volume" {
