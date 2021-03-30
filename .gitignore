@@ -3,4 +3,3 @@
 .terraform
 .terragrunt-cache
 google.json
-local-env.*
