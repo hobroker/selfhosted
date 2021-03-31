@@ -11,4 +11,17 @@ include {
   path = find_in_parent_folders()
 }
 
-inputs = local.env
+dependency "network" {
+  config_path = "../network-debug"
+
+  mock_outputs_allowed_terraform_commands = ["validate", "plan"]
+  mock_outputs                            = {
+    id   = "fake-id"
+    name = "fake-name"
+  }
+}
+
+inputs = merge(local.env, {
+  network_ids  = [dependency.network.outputs.id]
+  network_name = dependency.network.outputs.name
+})

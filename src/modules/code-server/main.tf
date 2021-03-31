@@ -5,6 +5,14 @@ locals {
   ports = {
     (var.port) = local.port
   }
+
+  traefik_labels = {
+    "subdomain"                                                     = local.alias
+    "traefik.http.routers.${local.alias}.service"                   = local.alias
+    "traefik.http.services.${local.alias}.loadbalancer.server.port" = local.port
+    "traefik.docker.network"                                        = var.network_name
+  }
+  labels         = var.network_name == null ? {} : local.traefik_labels
 }
 
 data "docker_registry_image" "image" {
@@ -55,6 +63,15 @@ resource "docker_service" "app" {
 
     log_driver {
       name = "json-file"
+    }
+  }
+
+  dynamic "labels" {
+    for_each = local.labels
+
+    content {
+      label = labels.key
+      value = labels.value
     }
   }
 

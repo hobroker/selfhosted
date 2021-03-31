@@ -7,6 +7,10 @@ terraform {
   source = "../../modules/code-server"
 }
 
+include {
+  path = find_in_parent_folders()
+}
+
 dependency "appdata_storage" {
   config_path = "../_local/storage-appdata"
 
@@ -16,12 +20,19 @@ dependency "appdata_storage" {
   }
 }
 
-include {
-  path = find_in_parent_folders()
+dependency "traefik-network" {
+  config_path = "../network-traefik"
+
+  mock_outputs_allowed_terraform_commands = ["validate", "plan"]
+  mock_outputs                            = {
+    id = "fake-id"
+  }
 }
 
 inputs = merge(local.env, {
-  mounts = {
+  network_ids  = [dependency.traefik-network.outputs.id]
+  network_name = dependency.traefik-network.outputs.name
+  mounts       = {
     (dependency.appdata_storage.outputs.volume) = "/appdata"
   }
 })
