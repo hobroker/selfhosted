@@ -4,3 +4,4 @@
 .terragrunt-cache
 google.json
 local-env.*
+src/live/pomerium.hcl

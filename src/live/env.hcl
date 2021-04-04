@@ -1,9 +1,7 @@
 locals {
-  storage = {
-    appdata_path   = "/appdata"
-    storage_path   = "/storage"
-    downloads_path = "/storage/downloads"
-    torrents_path  = "/storage/downloads/torrents"
+  pomerium = {
+    config_path = "/appdata/pomerium/config"
+    data_path   = "/appdata/pomerium/data"
   }
 
   httpbin = {
