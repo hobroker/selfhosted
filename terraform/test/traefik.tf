@@ -1,0 +1,3 @@
+locals {
+  ones = 2
+}

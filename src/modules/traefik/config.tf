@@ -4,6 +4,7 @@ data "template_file" "traefik_yaml_tpl" {
   vars = {
     pilot_token = var.pilot_token
     hostname    = var.hostname
+    network     = var.network_name
   }
 }
 

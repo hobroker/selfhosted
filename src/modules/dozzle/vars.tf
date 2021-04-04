@@ -21,6 +21,12 @@ variable "network_name" {
   description = "Service network name"
 }
 
+variable "labels" {
+  type        = map(string)
+  default     = {}
+  description = "Labels"
+}
+
 variable "restart_policy" {
   type        = object({
     condition    = string

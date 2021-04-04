@@ -16,7 +16,8 @@ dependency "network" {
 
   mock_outputs_allowed_terraform_commands = ["validate", "plan"]
   mock_outputs                            = {
-    id = "fake-id"
+    id   = "fake-id"
+    name = "fake-name"
   }
 }
 
@@ -30,8 +31,9 @@ dependency "debug-network" {
 }
 
 inputs = merge(local.env, {
-  network_ids = [
+  network_ids  = [
     dependency.network.outputs.id,
     dependency.debug-network.outputs.id
   ]
+  network_name = dependency.network.outputs.name
 })

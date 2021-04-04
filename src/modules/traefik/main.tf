@@ -43,6 +43,17 @@ resource "docker_service" "app" {
         type      = "bind"
         read_only = true
       }
+
+      mounts {
+        target = "/certs"
+        source = "/appdata/pomerium/sync/certs"
+        type   = "bind"
+      }
+
+      hosts {
+        host = "host.docker.internal"
+        ip   = "172.17.0.1"
+      }
     }
 
     placement {

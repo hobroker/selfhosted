@@ -25,7 +25,8 @@ dependency "traefik-network" {
 
   mock_outputs_allowed_terraform_commands = ["validate", "plan"]
   mock_outputs                            = {
-    id = "fake-id"
+    id   = "fake-id"
+    name = "fake-name"
   }
 }
 

@@ -4,14 +4,7 @@ locals {
   ports = {
     (var.port) = local.port
   }
-
-  traefik_labels = {
-    "subdomain"                                                  = var.name
-    "traefik.http.routers.${var.name}.service"                   = var.name
-    "traefik.http.services.${var.name}.loadbalancer.server.port" = local.port
-    "traefik.docker.network"                                     = var.network_name
-  }
-  labels         = var.network_name == null ? {} : local.traefik_labels
+  labels = var.labels
 }
 
 data "docker_registry_image" "image" {
