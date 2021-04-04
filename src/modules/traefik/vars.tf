@@ -1,12 +1,12 @@
-variable "name" {
-  type        = string
-  default     = "code-server"
-  description = "Service name"
+variable "api_port" {
+  type        = number
+  description = "API Port"
 }
 
-variable "port" {
-  type        = number
-  description = "WEBUI Port"
+variable "tag" {
+  type        = string
+  default     = "v2.3"
+  description = "Image version tag"
 }
 
 variable "network_ids" {
@@ -47,20 +47,13 @@ variable "env" {
   description = "Environment variables"
 }
 
-variable "password" {
+variable "pilot_token" {
   type        = string
   default     = ""
-  description = "WEBUI password"
+  description = "Traefik pilot.token"
 }
 
-variable "sudo_password" {
+variable "hostname" {
   type        = string
-  default     = ""
-  description = "Container `sudo` password. No `sudo` access if unset"
-}
-
-variable "mounts" {
-  type        = map(string)
-  default     = {}
-  description = "Volume/mount map"
+  description = "Default hostname for subdomains"
 }

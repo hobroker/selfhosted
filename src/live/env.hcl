@@ -1,9 +1,7 @@
 locals {
-  storage = {
-    appdata_path   = "/appdata"
-    storage_path   = "/storage"
-    downloads_path = "/storage/downloads"
-    torrents_path  = "/storage/downloads/torrents"
+  traefik = {
+    api_port = 8081
+    hostname = "hobroker.me"
   }
 
   httpbin = {

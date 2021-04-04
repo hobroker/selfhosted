@@ -1,14 +1,17 @@
 locals {
+  name = "traefik"
   port = 8080
 
-  ports = {
-    (var.port) = local.port
+  ports = var.api_port == null ? {
+    80 = 80
+  } : {
+    80             = 80,
+    (var.api_port) = local.port
   }
-  labels = var.labels
 }
 
 data "docker_registry_image" "image" {
-  name = "amir20/dozzle:v3.2.3"
+  name = "traefik:${var.tag}"
 }
 
 resource "docker_image" "image" {
@@ -17,7 +20,7 @@ resource "docker_image" "image" {
 }
 
 resource "docker_service" "app" {
-  name = var.name
+  name = local.name
 
   task_spec {
     restart_policy = var.restart_policy
@@ -25,14 +28,31 @@ resource "docker_service" "app" {
     networks = var.network_ids
 
     container_spec {
-      image     = docker_image.image.name
-      read_only = true
+      image = docker_image.image.name
+      env   = var.env
+
+      configs {
+        config_id   = docker_config.traefik_yaml.id
+        config_name = docker_config.traefik_yaml.name
+        file_name   = "/traefik.yaml"
+      }
 
       mounts {
         target    = "/var/run/docker.sock"
         source    = "/var/run/docker.sock"
         type      = "bind"
         read_only = true
+      }
+
+      mounts {
+        target = "/certs"
+        source = "/appdata/pomerium/sync/certs"
+        type   = "bind"
+      }
+
+      hosts {
+        host = "host.docker.internal"
+        ip   = "172.17.0.1"
       }
     }
 
@@ -49,15 +69,6 @@ resource "docker_service" "app" {
 
     log_driver {
       name = "json-file"
-    }
-  }
-
-  dynamic "labels" {
-    for_each = local.labels
-
-    content {
-      label = labels.key
-      value = labels.value
     }
   }
 

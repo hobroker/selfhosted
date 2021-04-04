@@ -15,6 +15,18 @@ variable "network_ids" {
   description = "Service networks"
 }
 
+variable "network_name" {
+  type        = string
+  default     = null
+  description = "Service network name"
+}
+
+variable "labels" {
+  type        = map(string)
+  default     = {}
+  description = "Labels"
+}
+
 variable "restart_policy" {
   type        = object({
     condition    = string
