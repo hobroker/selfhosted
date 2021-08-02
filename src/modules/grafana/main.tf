@@ -11,7 +11,7 @@ locals {
 }
 
 data "docker_registry_image" "image" {
-  name = "grafana/grafana:7.4.5"
+  name = "grafana/grafana:${var.tag}"
 }
 
 resource "docker_image" "image" {
@@ -45,6 +45,9 @@ resource "docker_service" "app" {
 
     container_spec {
       image = docker_image.image.name
+      env = {
+        GF_INSTALL_PLUGINS = var.plugins
+      }
 
       dynamic "mounts" {
         for_each = local.mounts

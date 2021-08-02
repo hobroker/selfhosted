@@ -10,7 +10,7 @@ locals {
 }
 
 data "docker_registry_image" "image" {
-  name = "tautulli/tautulli"
+  name = "tautulli/tautulli:${var.tag}"
 }
 
 resource "docker_image" "image" {

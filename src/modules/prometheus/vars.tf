@@ -4,6 +4,12 @@ variable "name" {
   description = "Service name"
 }
 
+variable "tag" {
+  type        = string
+  default     = "v2.28.1"
+  description = "Image version tag"
+}
+
 variable "port" {
   type        = number
   description = "WEBUI Port"

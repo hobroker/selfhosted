@@ -4,9 +4,21 @@ variable "name" {
   description = "Service name"
 }
 
+variable "tag" {
+  type        = string
+  default     = "7.5.0"
+  description = "Image version tag"
+}
+
 variable "port" {
   type        = number
   description = "WEBUI Port"
+}
+
+variable "plugins" {
+  type        = string
+  default     = ""
+  description = "Plugins"
 }
 
 variable "network_ids" {

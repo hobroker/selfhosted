@@ -11,7 +11,7 @@ locals {
 }
 
 data "docker_registry_image" "image" {
-  name = "prom/prometheus:v2.25.2"
+  name = "prom/prometheus:${var.tag}"
 }
 
 resource "docker_image" "image" {

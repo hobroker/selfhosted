@@ -10,6 +10,13 @@ variable "port" {
   description = "WEBUI Port"
 }
 
+variable "tag" {
+  type        = string
+  default     = "v2.7.4"
+  description = "Image version tag"
+}
+
+
 variable "network_ids" {
   type        = list(string)
   default     = []

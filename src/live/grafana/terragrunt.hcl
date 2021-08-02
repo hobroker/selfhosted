@@ -11,4 +11,6 @@ include {
   path = find_in_parent_folders()
 }
 
-inputs = local.env
+inputs = merge(local.env, {
+  plugins = "grafana-strava-datasource,grafana-worldmap-panel"
+})
