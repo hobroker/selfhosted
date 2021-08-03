@@ -1,5 +1,5 @@
 terraform {
-  source = "../../modules/network"
+  source = "../..//modules/network"
 }
 
 include {

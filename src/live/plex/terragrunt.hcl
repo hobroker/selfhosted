@@ -4,7 +4,7 @@ locals {
 }
 
 terraform {
-  source = "../../modules/plex"
+  source = "../..//modules/plex"
 }
 
 dependency "storage_root" {

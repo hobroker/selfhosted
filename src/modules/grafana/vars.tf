@@ -21,6 +21,13 @@ variable "plugins" {
   description = "Plugins"
 }
 
+
+variable "env" {
+  type        = map(string)
+  default     = {}
+  description = "Environment variables"
+}
+
 variable "network_ids" {
   type        = list(string)
   default     = []

@@ -45,9 +45,9 @@ resource "docker_service" "app" {
 
     container_spec {
       image = docker_image.image.name
-      env = {
+      env = merge(var.env, {
         GF_INSTALL_PLUGINS = var.plugins
-      }
+      })
 
       dynamic "mounts" {
         for_each = local.mounts

@@ -4,7 +4,7 @@ locals {
 }
 
 terraform {
-  source = "../../modules/dozzle"
+  source = "../..//modules/dozzle"
 }
 
 include {

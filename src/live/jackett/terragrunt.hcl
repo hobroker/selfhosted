@@ -4,7 +4,7 @@ locals {
 }
 
 terraform {
-  source = "../../modules/jackett"
+  source = "../..//modules/jackett"
 }
 
 dependency "torrents_storage" {

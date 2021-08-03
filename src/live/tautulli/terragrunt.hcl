@@ -4,7 +4,7 @@ locals {
 }
 
 terraform {
-  source = "../../modules/tautulli"
+  source = "../..//modules/tautulli"
 }
 
 include {

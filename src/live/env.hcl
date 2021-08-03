@@ -7,7 +7,7 @@ locals {
   }
 
   httpbin = {
-    port = 9009
+    port = 8185
   }
 
   dozzle = {

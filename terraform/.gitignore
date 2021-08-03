@@ -1,4 +1,0 @@
-terraform.tfstate*
-.terraform
-env.fish
-.auto.tfvars
