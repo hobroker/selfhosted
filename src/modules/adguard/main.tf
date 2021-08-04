@@ -41,64 +41,38 @@ resource "docker_volume" "data_volume" {
   }
 }
 
-resource "docker_service" "app" {
-  name = var.name
+resource "docker_container" "app" {
+  name         = var.name
+  image        = docker_image.image.name
+  restart      = "unless-stopped"
 
-  task_spec {
-    restart_policy = var.restart_policy
+  dynamic "mounts" {
+    for_each = local.mounts
 
-    networks = var.network_ids
-
-    container_spec {
-      image = docker_image.image.name
-      env   = var.env
-
-      dynamic "mounts" {
-        for_each = local.mounts
-
-        content {
-          source = mounts.key
-          target = mounts.value
-          type   = "volume"
-        }
-      }
-    }
-
-    placement {
-      platforms {
-        architecture = "amd64"
-        os           = "linux"
-      }
-
-      constraints = [
-        "node.role==manager"
-      ]
-    }
-
-    log_driver {
-      name = "json-file"
+    content {
+      source = mounts.key
+      target = mounts.value
+      type   = "volume"
     }
   }
 
-  endpoint_spec {
-    dynamic "ports" {
-      for_each = local.ports
+  dynamic "ports" {
+    for_each = local.ports
 
-      content {
-        target_port    = ports.value
-        published_port = ports.key
-        protocol       = "tcp"
-      }
+    content {
+      internal = ports.value
+      external = ports.key
+      protocol = "tcp"
     }
+  }
 
-    dynamic "ports" {
-      for_each = local.udp_ports
+  dynamic "ports" {
+    for_each = local.udp_ports
 
-      content {
-        target_port    = ports.value
-        published_port = ports.key
-        protocol       = "udp"
-      }
+    content {
+      internal = ports.value
+      external = ports.key
+      protocol = "udp"
     }
   }
 }

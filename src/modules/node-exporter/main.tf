@@ -20,11 +20,6 @@ resource "docker_container" "app" {
   pid_mode     = "host"
   restart      = "unless-stopped"
   network_mode = "host"
-  //  volumes {
-  //    host_path      = "/"
-  //    container_path = "/host"
-  //    read_only      = true
-  //  }
 
   mounts {
     source    = "/"

@@ -46,6 +46,10 @@ locals {
     data_path   = "/appdata/adguard/work"
   }
 
+  adguard-exporter = {
+    port = 9617
+  }
+
   sonarr = {
     port        = 8989
     config_path = "/appdata/sonarr"
