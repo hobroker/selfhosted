@@ -4,7 +4,7 @@ locals {
 }
 
 terraform {
-  source = "../../modules/radarr"
+  source = "../..//modules/radarr"
 }
 
 dependency "downloads_storage" {

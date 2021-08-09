@@ -4,7 +4,7 @@ locals {
 }
 
 terraform {
-  source = "../../modules/qbittorrent"
+  source = "../..//modules/qbittorrent"
 }
 
 dependency "downloads_storage" {

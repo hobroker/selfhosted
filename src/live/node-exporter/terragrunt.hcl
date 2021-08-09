@@ -4,7 +4,7 @@ locals {
 }
 
 terraform {
-  source = "../../modules/node-exporter"
+  source = "../..//modules/node-exporter"
 }
 
 include {

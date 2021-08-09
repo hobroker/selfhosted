@@ -4,7 +4,7 @@ locals {
 }
 
 terraform {
-  source = "../../modules/httpbin"
+  source = "../..//modules/httpbin"
 }
 
 include {

@@ -12,6 +12,6 @@ include {
 }
 
 inputs = {
-  name       = "mount-storage"
-  mountpoint = local.env.storage_path
+  name       = "mount-compose"
+  mountpoint = local.env.compose_path
 }

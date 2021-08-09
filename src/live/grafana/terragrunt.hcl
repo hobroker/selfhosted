@@ -4,11 +4,21 @@ locals {
 }
 
 terraform {
-  source = "../../modules/grafana"
+  source = "../..//modules/grafana"
 }
 
 include {
   path = find_in_parent_folders()
 }
 
-inputs = local.env
+inputs = merge(local.env, {
+  plugins = join(",", [
+    "grafana-strava-datasource",
+    "grafana-worldmap-panel",
+    "grafana-piechart-panel",
+    "grafana-googlesheets-datasource"
+  ])
+  env     = {
+    GF_STRAVA_DS_DATA_PATH = "/var/lib/grafana/strava"
+  }
+})

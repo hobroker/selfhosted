@@ -1,38 +1,18 @@
 locals {
-  port = 9090
+  port = 9617
 
-  ports  = {
+  ports = {
     (var.port) = local.port
-  }
-  mounts = {
-    (docker_volume.data_volume.name) = "/prometheus",
-    (docker_volume.etc_volume.name)  = "/etc/prometheus",
   }
 }
 
 data "docker_registry_image" "image" {
-  name = "prom/prometheus:${var.tag}"
+  name = "ebrianne/adguard-exporter:latest"
 }
 
 resource "docker_image" "image" {
   name          = data.docker_registry_image.image.name
   pull_triggers = [data.docker_registry_image.image.sha256_digest]
-}
-
-resource "docker_volume" "etc_volume" {
-  name        = "${var.name}-etc"
-  driver      = "local-persist"
-  driver_opts = {
-    mountpoint = var.etc_path
-  }
-}
-
-resource "docker_volume" "data_volume" {
-  name        = "${var.name}-data"
-  driver      = "local-persist"
-  driver_opts = {
-    mountpoint = var.data_path
-  }
 }
 
 resource "docker_service" "app" {
@@ -45,19 +25,23 @@ resource "docker_service" "app" {
 
     container_spec {
       image = docker_image.image.name
-
-      dynamic "mounts" {
-        for_each = local.mounts
-
-        content {
-          source = mounts.key
-          target = mounts.value
-          type   = "volume"
-        }
+      env   = {
+        adguard_protocol = "http"
+        adguard_hostname = var.adguard_hostname
+        adguard_username = var.adguard_username
+        adguard_password = var.adguard_password
+        adguard_port     = var.adguard_port
+        interval         = "10s"
+        log_limit        = 10000
       }
     }
 
     placement {
+      platforms {
+        architecture = "amd64"
+        os           = "linux"
+      }
+
       constraints = [
         "node.role==manager"
       ]

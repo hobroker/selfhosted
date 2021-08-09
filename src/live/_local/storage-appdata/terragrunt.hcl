@@ -4,7 +4,7 @@ locals {
 }
 
 terraform {
-  source = "../../../modules/local-mount"
+  source = "../../..//modules/local-mount"
 }
 
 include {

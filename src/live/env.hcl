@@ -7,7 +7,7 @@ locals {
   }
 
   httpbin = {
-    port = 9009
+    port = 8185
   }
 
   dozzle = {
@@ -44,6 +44,10 @@ locals {
     port        = 3001
     config_path = "/appdata/adguard/conf"
     data_path   = "/appdata/adguard/work"
+  }
+
+  adguard-exporter = {
+    port = 9617
   }
 
   sonarr = {

@@ -4,7 +4,7 @@ locals {
 }
 
 terraform {
-  source = "../../modules/prometheus"
+  source = "../..//modules/prometheus"
 }
 
 include {

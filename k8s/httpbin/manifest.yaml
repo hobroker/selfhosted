@@ -1,0 +1,38 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: doks-example
+spec:
+  type: LoadBalancer
+#  externalIPs:
+#    - 192.168.29.242
+  selector:
+    app: doks-example
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: doks-example
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: doks-example
+  template:
+    metadata:
+      labels:
+        app: doks-example
+    spec:
+      containers:
+        - name: nginx
+          image: digitalocean/doks-example
+          imagePullPolicy: "Always"
+          ports:
+            - containerPort: 80
+              protocol: TCP

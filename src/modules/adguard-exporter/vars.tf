@@ -1,18 +1,33 @@
 variable "name" {
   type        = string
-  default     = "prometheus"
+  default     = "adguard-exporter"
   description = "Service name"
-}
-
-variable "tag" {
-  type        = string
-  default     = "v2.28.1"
-  description = "Image version tag"
 }
 
 variable "port" {
   type        = number
-  description = "WEBUI Port"
+  description = "API Port"
+}
+
+variable "adguard_hostname" {
+  type        = string
+  description = "Adguard hostname"
+}
+
+variable "adguard_username" {
+  type        = string
+  description = "Adguard username"
+}
+
+variable "adguard_password" {
+  type        = string
+  sensitive   = true
+  description = "Adguard password"
+}
+
+variable "adguard_port" {
+  type        = string
+  description = "Adguard port"
 }
 
 variable "network_ids" {
@@ -35,14 +50,4 @@ variable "restart_policy" {
     max_attempts = 3
   }
   description = "Restart policy"
-}
-
-variable "etc_path" {
-  type        = string
-  description = "etc folder path"
-}
-
-variable "data_path" {
-  type        = string
-  description = "data folder path"
 }

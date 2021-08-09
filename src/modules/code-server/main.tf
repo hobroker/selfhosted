@@ -35,9 +35,10 @@ resource "docker_service" "app" {
         for_each = var.mounts
 
         content {
-          target = mounts.value
-          source = mounts.key
-          type   = "volume"
+          read_only = false
+          target    = mounts.value
+          source    = mounts.key
+          type      = "volume"
         }
       }
     }
