@@ -1,0 +1,10 @@
+replicaCount: 1
+externalIp:
+
+image:
+  repository: kennethreitz/httpbin
+  tag: latest
+  pullPolicy: Always
+
+service:
+  port: 8004
