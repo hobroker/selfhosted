@@ -1,4 +1,6 @@
 locals {
+  domain = "hobroker.me"
+
   storage = {
     appdata_path   = "/appdata"
     storage_path   = "/storage"
@@ -74,5 +76,10 @@ locals {
 
   code-server = {
     port = 8001
+  }
+
+  nextcloud = {
+    port        = 8004
+    config_path = "/appdata/nextcloud"
   }
 }
