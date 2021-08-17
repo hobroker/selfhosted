@@ -13,16 +13,20 @@ spec:
         app: {{ .Release.Name }}
     spec:
       volumes:
-        - name: jackett-pv-config
+        {{- range .Values.volumes }}
+        - name: {{ .name }}
           hostPath:
-            path: '/appdata/k8s-jackett'
+            path: {{ .hostPath }}
+        {{- end }}
       containers:
-        - name: nginx
+        - name: {{ .Release.Name }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.internalPort }}
               protocol: TCP
           volumeMounts:
-            - mountPath: /config/Jackett
-              name: jackett-pv-config
+            {{- range .Values.volumes }}
+            - name: {{ .name }}
+              mountPath: {{ .containerPath }}
+            {{- end }}

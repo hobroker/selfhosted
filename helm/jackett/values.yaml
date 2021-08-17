@@ -10,6 +10,7 @@ service:
   internalPort: 9117
   externalPort: 30002
 
-#mounts:
-#  - persistentVolume: {{ .Release.Name }}-pv-volume
-#    persistentVolumeClaim: {{ .Release.Name }}-pv-claim
+volumes:
+  - name: jackett-pv-config
+    hostPath: '/appdata/k8s-jackett'
+    containerPath: '/config/Jackett'
