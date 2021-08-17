@@ -3,4 +3,4 @@ name: httpbin
 description: A simple HTTP Request & Response Service.
 type: application
 version: 0.1.0
-appVersion: "0.1.0"
+appVersion: "latest"
