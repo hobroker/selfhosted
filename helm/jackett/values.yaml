@@ -1,0 +1,15 @@
+replicaCount: 1
+externalIp:
+
+image:
+  repository: linuxserver/jackett
+  tag: v0.18.545-ls39
+  pullPolicy: Always
+
+service:
+  internalPort: 9117
+  externalPort: 30002
+
+#mounts:
+#  - persistentVolume: {{ .Release.Name }}-pv-volume
+#    persistentVolumeClaim: {{ .Release.Name }}-pv-claim

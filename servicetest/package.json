@@ -1,0 +1,16 @@
+{
+  "name": "servicetest",
+  "version": "0.1.0",
+  "description": "Service test",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Igor Leahu <igor.leahu24@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1"
+  }
+}

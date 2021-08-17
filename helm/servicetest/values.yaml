@@ -1,0 +1,10 @@
+replicaCount: 1
+externalIp:
+
+image:
+  repository: localhost:32000/servicetest
+  tag: registry
+  pullPolicy: Always
+
+service:
+  externalPort: 30001

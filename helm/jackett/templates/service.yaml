@@ -11,4 +11,4 @@ spec:
       protocol: TCP
       port: 80
       nodePort: {{ .Values.service.externalPort }}
-      targetPort: 80
+      targetPort: {{ .Values.service.internalPort }}

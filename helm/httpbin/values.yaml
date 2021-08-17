@@ -7,4 +7,4 @@ image:
   pullPolicy: Always
 
 service:
-  port: 8004
+  externalPort: 30003
