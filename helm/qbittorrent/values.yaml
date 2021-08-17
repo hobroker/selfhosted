@@ -1,0 +1,21 @@
+replicaCount: 1
+externalIp:
+
+image:
+  repository: linuxserver/qbittorrent
+  tag: version-14.3.7.99202108032349-7395-0415c0c6fubuntu20.04.1
+  pullPolicy: Always
+
+service:
+  port: 30004
+
+volumes:
+  - name: qbittorrent-config
+    hostPath: '/appdata/k8s-qbittorrent'
+    containerPath: '/config/qBittorrent'
+  - name: qbittorrent-blackhole
+    hostPath: '/storage/downloads/torrents'
+    containerPath: '/blackhole'
+  - name: qbittorrent-downloads
+    hostPath: '/storage/downloads'
+    containerPath: '/downloads'
