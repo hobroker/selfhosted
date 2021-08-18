@@ -1,4 +1,4 @@
-name: Main
+name: Helm validate
 
 on: push
 
@@ -10,4 +10,4 @@ jobs:
     - name: helm-check
       uses: igabaydulin/helm-check-action@0.2.0
       env:
-        CHART_LOCATION: ./helm
+        CHART_LOCATION: ./helm/*
