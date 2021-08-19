@@ -1,0 +1,16 @@
+replicaCount: 1
+
+image:
+  repository:
+  tag:
+  pullPolicy: Always
+
+service:
+  port: 80
+  nodePort:
+  targetPort:
+
+volumes:
+  - name:
+    hostPath:
+    containerPath:

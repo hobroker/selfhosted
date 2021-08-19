@@ -1,5 +1,4 @@
 replicaCount: 1
-externalIp:
 
 image:
   repository: kennethreitz/httpbin
@@ -7,4 +6,10 @@ image:
   pullPolicy: Always
 
 service:
-  externalPort: 30003
+  port: 80
+  nodePort: 30003
+  targetPort: 80
+
+volumes:
+
+env:

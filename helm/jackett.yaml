@@ -1,5 +1,4 @@
 replicaCount: 1
-externalIp:
 
 image:
   repository: linuxserver/jackett
@@ -7,10 +6,13 @@ image:
   pullPolicy: Always
 
 service:
-  internalPort: 9117
-  externalPort: 30002
+  port: 80
+  nodePort: 30002
+  targetPort: 9117
 
 volumes:
   - name: jackett-pv-config
     hostPath: '/appdata/k8s-jackett'
     containerPath: '/config/Jackett'
+
+env:

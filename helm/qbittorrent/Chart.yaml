@@ -1,6 +1,0 @@
-apiVersion: v2
-name: qbittorrent
-description: A torrent client
-type: application
-version: 0.1.0
-appVersion: "version-14.3.7.99202108032349-7395-0415c0c6fubuntu20.04.1"

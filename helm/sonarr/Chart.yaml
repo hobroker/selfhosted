@@ -1,6 +1,0 @@
-apiVersion: v2
-name: sonarr
-description: TV shows monitor
-type: application
-version: 0.1.0
-appVersion: "version-3.0.6.1265"

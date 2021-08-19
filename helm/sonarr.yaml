@@ -6,8 +6,9 @@ image:
   pullPolicy: Always
 
 service:
-  internalPort: 8989
-  externalPort: 30005
+  port: 80
+  nodePort: 30005
+  targetPort: 8989
 
 volumes:
   - name: sonarr-config

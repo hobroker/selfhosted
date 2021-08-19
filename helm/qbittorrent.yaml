@@ -1,5 +1,4 @@
 replicaCount: 1
-externalIp:
 
 image:
   repository: linuxserver/qbittorrent
@@ -8,6 +7,8 @@ image:
 
 service:
   port: 30004
+  nodePort: 30004
+  targetPort: 30004
 
 volumes:
   - name: qbittorrent-config
@@ -19,3 +20,6 @@ volumes:
   - name: qbittorrent-downloads
     hostPath: '/storage/downloads'
     containerPath: '/downloads'
+
+env:
+  WEBUI_PORT: 30004
