@@ -1,0 +1,24 @@
+replicaCount: 1
+
+image:
+  repository: linuxserver/radarr
+  tag: 3.2.2.5080-ls112
+  pullPolicy: Always
+
+service:
+  port: 80
+  nodePort: 30006
+  targetPort: 7878
+
+volumes:
+  - name: radarr-config
+    hostPath: '/appdata/k8s-radarr'
+    containerPath: '/config'
+  - name: storage-movies
+    hostPath: '/storage/movies'
+    containerPath: '/movies'
+  - name: storage-downloads
+    hostPath: '/storage/downloads'
+    containerPath: '/downloads'
+
+env:
