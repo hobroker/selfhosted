@@ -1,0 +1,25 @@
+replicaCount: 1
+
+image:
+  repository: linuxserver/code-server
+  tag: v3.11.1-ls91
+  pullPolicy: Always
+
+service:
+  name: https
+  port: 80
+  nodePort: 30010
+  targetPort: 8443
+
+volumes:
+  - name: code-server-config
+    hostPath: '/appdata/k8s-code-server'
+    containerPath: '/config'
+  - name: appdata-mount
+    hostPath: '/appdata'
+    containerPath: '/appdata'
+  - name: compose-mount
+    hostPath: '/compose'
+    containerPath: '/compose'
+
+env:
