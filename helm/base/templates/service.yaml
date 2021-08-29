@@ -7,7 +7,7 @@ spec:
   selector:
     app: {{ .Release.Name }}
   ports:
-    - name: http
+    - name: {{ .Values.service.name | default "http" | quote }}
       protocol: TCP
       port: {{ .Values.service.port }}
       nodePort: {{ .Values.service.nodePort }}
