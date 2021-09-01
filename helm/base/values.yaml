@@ -7,7 +7,6 @@ image:
 
 service:
   port: 80
-  nodePort:
   targetPort:
 
 volumes:
