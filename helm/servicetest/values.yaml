@@ -1,5 +1,4 @@
 replicaCount: 1
-externalIp:
 
 image:
   repository: kennethreitz/httpbin
@@ -8,5 +7,4 @@ image:
 
 service:
   port: 80
-  nodePort: 30011
   targetPort: 80

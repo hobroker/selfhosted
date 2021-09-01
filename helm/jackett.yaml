@@ -6,13 +6,12 @@ image:
   pullPolicy: Always
 
 service:
-  port: 80
-  nodePort: 30002
+  port: 9117
   targetPort: 9117
 
 volumes:
   - name: jackett-pv-config
-    hostPath: '/appdata/k3s/jackett'
-    containerPath: '/config/Jackett'
+    hostPath: "/appdata/k3s/jackett"
+    containerPath: "/config/Jackett"
 
 env:

@@ -6,19 +6,18 @@ image:
   pullPolicy: Always
 
 service:
-  port: 80
-  nodePort: 30005
+  port: 8989
   targetPort: 8989
 
 volumes:
   - name: sonarr-config
-    hostPath: '/appdata/k3s/sonarr'
-    containerPath: '/config'
+    hostPath: "/appdata/k3s/sonarr"
+    containerPath: "/config"
   - name: storage-tv
-    hostPath: '/storage/tv-shows'
-    containerPath: '/tv'
+    hostPath: "/storage/tv-shows"
+    containerPath: "/tv"
   - name: storage-downloads
-    hostPath: '/storage/downloads'
-    containerPath: '/downloads'
+    hostPath: "/storage/downloads"
+    containerPath: "/downloads"
 
 env:

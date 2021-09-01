@@ -6,20 +6,20 @@ image:
   pullPolicy: Always
 
 service:
-  port: 30004
-  nodePort: 30004
-  targetPort: 30004
+  port: 8112
+  nodePort: 8112
+  targetPort: 8112
 
 volumes:
   - name: qbittorrent-config
-    hostPath: '/appdata/k3s/qbittorrent'
-    containerPath: '/config/qBittorrent'
+    hostPath: "/appdata/k3s/qbittorrent"
+    containerPath: "/config/qBittorrent"
   - name: qbittorrent-blackhole
-    hostPath: '/storage/downloads/torrents'
-    containerPath: '/blackhole'
+    hostPath: "/storage/downloads/torrents"
+    containerPath: "/blackhole"
   - name: qbittorrent-downloads
-    hostPath: '/storage/downloads'
-    containerPath: '/downloads'
+    hostPath: "/storage/downloads"
+    containerPath: "/downloads"
 
 env:
-  WEBUI_PORT: 30004
+  WEBUI_PORT: 8112

@@ -3,4 +3,4 @@ name: pomerium
 description: pomerium
 type: application
 version: 0.1.0
-appVersion: ""
+appVersion: "latest"

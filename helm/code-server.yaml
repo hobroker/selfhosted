@@ -7,19 +7,18 @@ image:
 
 service:
   name: https
-  port: 80
-  nodePort: 30010
+  port: 8443
   targetPort: 8443
 
 volumes:
   - name: code-server-config
-    hostPath: '/appdata/k3s/code-server'
-    containerPath: '/config'
+    hostPath: "/appdata/k3s/code-server"
+    containerPath: "/config"
   - name: appdata-mount
-    hostPath: '/appdata'
-    containerPath: '/appdata'
+    hostPath: "/appdata"
+    containerPath: "/appdata"
   - name: compose-mount
-    hostPath: '/compose'
-    containerPath: '/compose'
+    hostPath: "/compose"
+    containerPath: "/compose"
 
 env:

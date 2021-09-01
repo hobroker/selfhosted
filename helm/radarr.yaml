@@ -6,19 +6,18 @@ image:
   pullPolicy: Always
 
 service:
-  port: 80
-  nodePort: 30006
+  port: 7878
   targetPort: 7878
 
 volumes:
   - name: radarr-config
-    hostPath: '/appdata/k3s/radarr'
-    containerPath: '/config'
+    hostPath: "/appdata/k3s/radarr"
+    containerPath: "/config"
   - name: storage-movies
-    hostPath: '/storage/movies'
-    containerPath: '/movies'
+    hostPath: "/storage/movies"
+    containerPath: "/movies"
   - name: storage-downloads
-    hostPath: '/storage/downloads'
-    containerPath: '/downloads'
+    hostPath: "/storage/downloads"
+    containerPath: "/downloads"
 
 env:

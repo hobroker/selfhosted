@@ -6,8 +6,7 @@ image:
   pullPolicy: Always
 
 service:
-  port: 80
-  nodePort: 30003
+  port: 8080
   targetPort: 80
 
 volumes:
