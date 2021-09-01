@@ -12,7 +12,7 @@ service:
 
 volumes:
   - name: qbittorrent-config
-    hostPath: '/appdata/k8s-qbittorrent'
+    hostPath: '/appdata/k3s/qbittorrent'
     containerPath: '/config/qBittorrent'
   - name: qbittorrent-blackhole
     hostPath: '/storage/downloads/torrents'

@@ -12,7 +12,7 @@ service:
 
 volumes:
   - name: radarr-config
-    hostPath: '/appdata/k8s-radarr'
+    hostPath: '/appdata/k3s/radarr'
     containerPath: '/config'
   - name: storage-movies
     hostPath: '/storage/movies'

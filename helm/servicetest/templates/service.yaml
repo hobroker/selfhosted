@@ -3,12 +3,11 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: {{ .Release.Name }}
   ports:
     - name: http
       protocol: TCP
-      port: {{ .Values.service.port }}
-      nodePort: {{ .Values.service.nodePort }}
-      targetPort: {{ .Values.service.targetPort }}
+      port: 8087
+      targetPort: 80

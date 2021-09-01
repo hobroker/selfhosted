@@ -15,4 +15,8 @@ volumes:
     hostPath:
     containerPath:
 
+baseEnv:
+  PGID: "1000"
+  PUID: "1000"
+
 env:

@@ -13,7 +13,7 @@ service:
 
 volumes:
   - name: code-server-config
-    hostPath: '/appdata/k8s-code-server'
+    hostPath: '/appdata/k3s/code-server'
     containerPath: '/config'
   - name: appdata-mount
     hostPath: '/appdata'

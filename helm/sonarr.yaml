@@ -12,7 +12,7 @@ service:
 
 volumes:
   - name: sonarr-config
-    hostPath: '/appdata/k8s-sonarr'
+    hostPath: '/appdata/k3s/sonarr'
     containerPath: '/config'
   - name: storage-tv
     hostPath: '/storage/tv-shows'

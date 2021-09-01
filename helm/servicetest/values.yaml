@@ -2,13 +2,11 @@ replicaCount: 1
 externalIp:
 
 image:
-  repository: localhost:32000/servicetest
-  tag: registry
+  repository: kennethreitz/httpbin
+  tag: latest
   pullPolicy: Always
 
 service:
   port: 80
-  nodePort: 30001
-  targetPort: 3000
-
-  
+  nodePort: 30011
+  targetPort: 80

@@ -12,7 +12,7 @@ service:
 
 volumes:
   - name: jackett-pv-config
-    hostPath: '/appdata/k8s-jackett'
+    hostPath: '/appdata/k3s/jackett'
     containerPath: '/config/Jackett'
 
 env:
