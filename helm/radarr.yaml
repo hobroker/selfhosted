@@ -6,9 +6,7 @@ image:
   pullPolicy: Always
 
 ports:
-  - name: http
-    protocol: TCP
-    port: 7878
+  - port: 7878
     containerPort: 7878
 
 volumes:

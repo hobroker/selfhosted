@@ -6,9 +6,7 @@ image:
   pullPolicy: Always
 
 ports:
-  - name: https
-    protocol: TCP
-    port: 8443
+  - port: 8443
     containerPort: 8443
 
 volumes:

@@ -8,7 +8,7 @@ spec:
     app: {{ .Release.Name }}
   ports:
     {{- range .Values.ports }}
-    - name: {{ .name | default "htto" | quote }}
+    - name: port-{{ .containerPort }}
       protocol: {{ .protocol | default "TCP" | quote }}
       targetPort: {{ .containerPort }}
       port: {{ .port }}
