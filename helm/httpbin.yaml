@@ -5,9 +5,11 @@ image:
   tag: latest
   pullPolicy: Always
 
-service:
-  port: 8080
-  targetPort: 80
+ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+    containerPort: 80
 
 volumes:
 

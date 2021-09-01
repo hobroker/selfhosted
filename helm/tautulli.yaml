@@ -5,9 +5,11 @@ image:
   tag: v2.7.4
   pullPolicy: Always
 
-service:
-  port: 8181
-  targetPort: 8181
+ports:
+  - name: http
+    protocol: TCP
+    port: 8181
+    containerPort: 8181
 
 volumes:
   - name: tautulli-config

@@ -5,10 +5,11 @@ image:
   tag: v3.11.1-ls91
   pullPolicy: Always
 
-service:
-  name: https
-  port: 8443
-  targetPort: 8443
+ports:
+  - name: https
+    protocol: TCP
+    port: 8443
+    containerPort: 8443
 
 volumes:
   - name: code-server-config

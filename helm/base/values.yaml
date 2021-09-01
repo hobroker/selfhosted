@@ -9,6 +9,12 @@ service:
   port: 80
   targetPort:
 
+ports:
+  - name: http
+    port: 80
+    containerPort: 80
+    protocol: TCP
+
 volumes:
   - name:
     hostPath:
