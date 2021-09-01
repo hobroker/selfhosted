@@ -5,10 +5,6 @@ image:
   tag:
   pullPolicy: Always
 
-service:
-  port: 80
-  targetPort:
-
 ports:
   - name: http
     port: 80
