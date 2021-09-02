@@ -1,0 +1,17 @@
+replicaCount: 1
+
+image:
+  repository: tautulli/tautulli
+  tag: v2.7.4
+  pullPolicy: IfNotPresent
+
+ports:
+  - port: 8181
+    containerPort: 8181
+
+volumes:
+  - name: tautulli-config
+    hostPath: "/appdata/k3s/tautulli"
+    containerPath: "/config"
+
+env:

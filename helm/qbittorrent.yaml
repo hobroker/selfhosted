@@ -1,0 +1,24 @@
+replicaCount: 1
+
+image:
+  repository: linuxserver/qbittorrent
+  tag: version-14.3.7.99202108032349-7395-0415c0c6fubuntu20.04.1
+  pullPolicy: IfNotPresent
+
+ports:
+  - port: 8112
+    containerPort: 8112
+
+volumes:
+  - name: qbittorrent-config
+    hostPath: "/appdata/k3s/qbittorrent"
+    containerPath: "/config/qBittorrent"
+  - name: qbittorrent-blackhole
+    hostPath: "/storage/downloads/torrents"
+    containerPath: "/blackhole"
+  - name: qbittorrent-downloads
+    hostPath: "/storage/downloads"
+    containerPath: "/downloads"
+
+env:
+  WEBUI_PORT: 8112

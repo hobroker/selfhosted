@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: {{ .Release.Name }}
+  ports:
+    {{- range .Values.ports }}
+    - name: port-{{ .containerPort }}
+      protocol: {{ .protocol | default "TCP" | quote }}
+      targetPort: {{ .containerPort }}
+      port: {{ .port }}
+    {{- end }}

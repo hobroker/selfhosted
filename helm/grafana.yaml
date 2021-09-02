@@ -1,0 +1,26 @@
+replicaCount: 1
+
+image:
+  repository: grafana/grafana
+  tag: 8.1.2
+  pullPolicy: IfNotPresent
+
+ports:
+  - port: 5000
+    containerPort: 3000
+
+volumes:
+  - name: grafana-lib
+    hostPath: "/appdata/k3s/grafana/lib"
+    containerPath: "/var/lib/grafana"
+
+env:
+  GF_SERVER_ROOT_URL: "https://grafana.hobroker.me"
+  GF_STRAVA_DS_DATA_PATH: "/var/lib/grafana/strava"
+  GF_INSTALL_PLUGINS: "grafana-strava-datasource,grafana-worldmap-panel,grafana-piechart-panel,grafana-googlesheets-datasource"
+  GF_AUTH_PROXY_ENABLED: true
+  GF_AUTH_PROXY_HEADER_NAME: "X-Pomerium-Claim-Email"
+  GF_AUTH_PROXY_HEADER_PROPERTY: "username"
+  GF_AUTH_PROXY_AUTO_SIGN_UP: true
+  GF_AUTH_PROXY_ENABLE_LOGIN_TOKEN: false
+  GF_METRICS_ENABLED: true

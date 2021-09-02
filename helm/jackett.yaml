@@ -1,0 +1,17 @@
+replicaCount: 1
+
+image:
+  repository: linuxserver/jackett
+  tag: v0.18.545-ls39
+  pullPolicy: IfNotPresent
+
+ports:
+  - port: 9117
+    containerPort: 9117
+
+volumes:
+  - name: jackett-pv-config
+    hostPath: "/appdata/k3s/jackett"
+    containerPath: "/config/Jackett"
+
+env:

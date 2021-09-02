@@ -1,0 +1,14 @@
+replicaCount: 1
+
+image:
+  repository: kennethreitz/httpbin
+  tag: latest
+  pullPolicy: IfNotPresent
+
+ports:
+  - port: 8080
+    containerPort: 80
+
+volumes:
+
+env:

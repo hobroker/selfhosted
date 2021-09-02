@@ -1,0 +1,17 @@
+replicaCount: 1
+
+image:
+  repository: prom/prometheus
+  tag: v2.29.2
+  pullPolicy: IfNotPresent
+
+ports:
+  - port: 9090
+    containerPort: 9090
+
+volumes:
+  - name: prometheus-data
+    hostPath: "/appdata/k3s/prometheus/data"
+    containerPath: "/prometheus"
+
+env:
