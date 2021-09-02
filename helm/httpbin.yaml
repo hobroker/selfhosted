@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: kennethreitz/httpbin
   tag: latest
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 ports:
   - port: 8080

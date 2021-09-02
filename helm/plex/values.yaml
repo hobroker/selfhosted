@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: linuxserver/plex
   tag: version-1.24.1.4931-1a38e63c6
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 service:
   port: 32400

@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: grafana/grafana
   tag: 8.1.2
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 ports:
   - port: 5000

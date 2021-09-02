@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: linuxserver/qbittorrent
   tag: version-14.3.7.99202108032349-7395-0415c0c6fubuntu20.04.1
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 ports:
   - port: 8112

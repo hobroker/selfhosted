@@ -2,8 +2,8 @@ replicaCount: 1
 
 image:
   repository: pomerium/pomerium
-  tag: latest
-  pullPolicy: Always
+  tag: v0.15.1
+  pullPolicy: IfNotPresent
 
 env:
   ADMINISTRATORS: igor.leahu24@gmail.com
@@ -56,29 +56,34 @@ policy:
     allowed_users:
       - igor.leahu24@gmail.com
 
-  - from: https://adguard.hobroker.me
-    to: http://172.17.0.1:3001
-    allowed_users:
-      - igor.leahu24@gmail.com
-
   - from: https://grafana.hobroker.me
-    to: http://172.17.0.1:5000
+    to: http://grafana-service:5000
     preserve_host_header: true
     pass_identity_headers: true
     allowed_users:
       - igor.leahu24@gmail.com
 
   - from: https://plex.hobroker.me
-    to: http://172.17.0.1:32400
+    to: http://plex-service:32400
     allow_public_unauthenticated_access: true
     allow_websockets: true
+
+  - from: https://tautulli.hobroker.me
+    to: http://tautulli-service:8181
+    preserve_host_header: true
+    allow_public_unauthenticated_access: true
+
+  - from: https://adguard.hobroker.me
+    to: http://172.17.0.1:3001
+    allowed_users:
+      - igor.leahu24@gmail.com
 
   - from: https://portainer.hobroker.me
     to: http://172.17.0.1:9000
     allowed_users:
       - igor.leahu24@gmail.com
 
-  - from: https://tautulli.hobroker.me
-    to: http://172.17.0.1:8181
-    preserve_host_header: true
-    allow_public_unauthenticated_access: true
+  - from: https://rancher.hobroker.me
+    to: https://172.17.0.1:9443
+    allowed_users:
+      - igor.leahu24@gmail.com

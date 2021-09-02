@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: tautulli/tautulli
   tag: v2.7.4
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 ports:
   - port: 8181

@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: linuxserver/jackett
   tag: v0.18.545-ls39
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 ports:
   - port: 9117

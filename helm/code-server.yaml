@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: linuxserver/code-server
   tag: v3.11.1-ls91
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 ports:
   - port: 8443

@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: linuxserver/sonarr
   tag: version-3.0.6.1265
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 ports:
   - port: 8989
