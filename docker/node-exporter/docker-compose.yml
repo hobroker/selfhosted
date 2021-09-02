@@ -1,0 +1,6 @@
+version: '3.3'
+services:
+  node-exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    ports:
+      - 9100:9100
