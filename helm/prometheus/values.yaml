@@ -10,9 +10,6 @@ ports:
     containerPort: 9090
 
 volumes:
-  - name: prometheus-etc
-    hostPath: "/appdata/k3s/prometheus/etc"
-    containerPath: "/etc/prometheus"
   - name: prometheus-data
     hostPath: "/appdata/k3s/prometheus/data"
     containerPath: "/prometheus"
