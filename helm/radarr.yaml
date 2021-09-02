@@ -1,0 +1,23 @@
+replicaCount: 1
+
+image:
+  repository: linuxserver/radarr
+  tag: 3.2.2.5080-ls112
+  pullPolicy: IfNotPresent
+
+ports:
+  - port: 7878
+    containerPort: 7878
+
+volumes:
+  - name: radarr-config
+    hostPath: "/appdata/k3s/radarr"
+    containerPath: "/config"
+  - name: storage-movies
+    hostPath: "/storage/movies"
+    containerPath: "/movies"
+  - name: storage-downloads
+    hostPath: "/storage/downloads"
+    containerPath: "/downloads"
+
+env:

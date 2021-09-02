@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+  adguard:
+    image: adguard/adguardhome:v0.107.0-b.9
+    ports:
+      - 53:53
+      - 53:53/udp
+      - 67:67/udp
+      - 853:853
+      - 3001:80
+    volumes:
+      - /appdata/adguard/work:/opt/adguardhome/work
+      - /appdata/adguard/conf:/opt/adguardhome/conf

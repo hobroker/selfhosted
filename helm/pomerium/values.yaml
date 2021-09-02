@@ -1,0 +1,89 @@
+replicaCount: 1
+
+image:
+  repository: pomerium/pomerium
+  tag: v0.15.1
+  pullPolicy: IfNotPresent
+
+env:
+  ADMINISTRATORS: igor.leahu24@gmail.com
+  AUTHENTICATE_SERVICE_URL: https://auth.hobroker.me
+  CERTIFICATE_FILE: /config/certs/fullchain.cer
+  CERTIFICATE_KEY_FILE: /config/certs/privkey.key
+  COOKIE_SECRET:
+  IDP_CLIENT_ID:
+  IDP_CLIENT_SECRET:
+  IDP_PROVIDER: google
+  IDP_PROVIDER_URL: https://accounts.google.com
+  JWT_CLAIMS_HEADERS: email
+  SHARED_SECRET:
+
+volumes:
+  - name: pomerium-config
+    hostPath: "/appdata/pomerium/config"
+    containerPath: "/config"
+  - name: pomerium-data
+    hostPath: "/appdata/pomerium/data"
+    containerPath: "/data"
+
+# https://www.pomerium.io/reference/#policy
+policy:
+  - from: https://jackett.hobroker.me
+    to: http://jackett-service:9117
+    preserve_host_header: true
+    allowed_users:
+      - igor.leahu24@gmail.com
+
+  - from: https://radarr.hobroker.me
+    to: http://radarr-service:7878
+    allowed_users:
+      - igor.leahu24@gmail.com
+
+  - from: https://sonarr.hobroker.me
+    to: http://sonarr-service:8989
+    allowed_users:
+      - igor.leahu24@gmail.com
+
+  - from: https://qbittorrent.hobroker.me
+    to: http://qbittorrent-service:8112
+    preserve_host_header: true
+    allowed_users:
+      - igor.leahu24@gmail.com
+
+  - from: https://code.hobroker.me
+    to: http://code-server-service:8443
+    allow_websockets: true
+    allowed_users:
+      - igor.leahu24@gmail.com
+
+  - from: https://grafana.hobroker.me
+    to: http://grafana-service:5000
+    preserve_host_header: true
+    pass_identity_headers: true
+    allowed_users:
+      - igor.leahu24@gmail.com
+
+  - from: https://plex.hobroker.me
+    to: http://plex-service:32400
+    allow_public_unauthenticated_access: true
+    allow_websockets: true
+
+  - from: https://tautulli.hobroker.me
+    to: http://tautulli-service:8181
+    preserve_host_header: true
+    allow_public_unauthenticated_access: true
+
+  - from: https://adguard.hobroker.me
+    to: http://172.17.0.1:3001
+    allowed_users:
+      - igor.leahu24@gmail.com
+
+  - from: https://portainer.hobroker.me
+    to: http://172.17.0.1:9000
+    allowed_users:
+      - igor.leahu24@gmail.com
+
+  - from: https://rancher.hobroker.me
+    to: https://172.17.0.1:9443
+    allowed_users:
+      - igor.leahu24@gmail.com

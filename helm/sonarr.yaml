@@ -1,0 +1,23 @@
+replicaCount: 1
+
+image:
+  repository: linuxserver/sonarr
+  tag: version-3.0.6.1265
+  pullPolicy: IfNotPresent
+
+ports:
+  - port: 8989
+    containerPort: 8989
+
+volumes:
+  - name: sonarr-config
+    hostPath: "/appdata/k3s/sonarr"
+    containerPath: "/config"
+  - name: storage-tv
+    hostPath: "/storage/tv-shows"
+    containerPath: "/tv"
+  - name: storage-downloads
+    hostPath: "/storage/downloads"
+    containerPath: "/downloads"
+
+env:

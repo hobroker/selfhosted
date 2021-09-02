@@ -1,0 +1,26 @@
+replicaCount: 1
+
+image:
+  repository: linuxserver/plex
+  tag: version-1.24.1.4931-1a38e63c6
+  pullPolicy: IfNotPresent
+
+service:
+  port: 32400
+  targetPort: 32400
+  udp:
+    - 32410
+    - 32412
+    - 32413
+    - 32414
+
+volumes:
+  - name: plex-config
+    hostPath: "/appdata/k3s/plex"
+    containerPath: "/config"
+  - name: plex-storage
+    hostPath: "/storage"
+    containerPath: "/storage"
+
+env:
+  UMASK: 022
