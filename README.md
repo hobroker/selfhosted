@@ -2,7 +2,7 @@ Selfhosted
 [![Latest GitHub release (including pre-releases)](https://img.shields.io/github/v/release/hobroker/selfhosted?include_prereleases)](https://github.com/hobroker/selfhosted/releases/latest)
 ===
 
-Self-hosted Infrastructure as Code
+Self-hosted services
 
 Setup
 ---
@@ -12,10 +12,9 @@ _TODO_
 
 References
 ---
- - [Docker](https://www.docker.com/) - PaaS
- - [Terraform](https://www.terraform.io/) - Infrastructure as Code
- - [Vault](https://www.vaultproject.io/) - Secrets Manager
- - [Traefik Proxy](https://traefik.io/traefik/) - HTTP reverse proxy and load balancer
+ - [Docker](https://www.docker.com/) - Containerization platform
+ - [K3s](https://k3s.io/) - Lightweight Kubernetes
+ - [Pomerium](https://www.pomerium.com/) - Identity-aware access proxy.
 
 ---
 
