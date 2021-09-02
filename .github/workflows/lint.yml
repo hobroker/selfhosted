@@ -8,4 +8,6 @@ jobs:
     steps:
       - uses: azure/setup-helm@v1.1
         id: install
-      - run: helm --help
+      - run: |
+          cd helm
+          make lint
