@@ -7,7 +7,5 @@ services:
       - '--path.rootfs=/host'
     pid: host
     network_mode: host
-    ports:
-      - 9100:9100
     volumes:
       - '/:/host:ro,rslave'
