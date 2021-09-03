@@ -17,17 +17,21 @@ spec:
         - name: {{ .name }}
           hostPath:
             path: {{ .hostPath }}
-      {{- end }}
+        {{- end }}
       initContainers:
         {{- $namespace := .Release.Namespace }}
         {{- range .Values.waitForServices }}
-        - name: wait-for-{{ .name }}
-          image: stefanevinance/wait-for-200
-          imagePullPolicy: IfNotPresent
-          env:
-            - name: URL
-              value: http://{{ .name }}.{{ $namespace }}.svc.cluster.local:{{ .port }}
-      {{- end }}
+        - name: wait-for-{{ . }}
+          image: gcr.io/kubernetes-e2e-test-images/dnsutils:1.3
+          command:
+            - sh
+            - -c
+            - |
+              until nslookup {{ . }}; do
+                echo waiting for {{ . }};
+                sleep 2;
+              done
+        {{- end }}
       containers:
         - name: {{ .Release.Name }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
@@ -36,7 +40,7 @@ spec:
             {{- range .Values.ports }}
             - containerPort: {{ .containerPort }}
               protocol: {{ .protocol | default "TCP" | quote }}
-          {{- end }}
+            {{- end }}
           env:
             {{- range $key, $value := .Values.env }}
             - name: {{ $key | upper }}
