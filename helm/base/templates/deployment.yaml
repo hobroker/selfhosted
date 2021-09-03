@@ -19,7 +19,6 @@ spec:
             path: {{ .hostPath }}
         {{- end }}
       initContainers:
-        {{- $namespace := .Release.Namespace }}
         {{- range .Values.waitForServices }}
         - name: wait-for-{{ . }}
           image: gcr.io/kubernetes-e2e-test-images/dnsutils:1.3
