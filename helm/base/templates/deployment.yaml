@@ -42,7 +42,7 @@ spec:
             {{- end }}
           env:
             {{- range $key, $value := .Values.env }}
-            - name: {{ $key | upper }}
+            - name: {{ $key }}
               value: {{ $value | quote }}
             {{- end }}
           volumeMounts:
