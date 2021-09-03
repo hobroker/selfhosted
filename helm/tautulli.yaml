@@ -13,5 +13,3 @@ volumes:
   - name: tautulli-config
     hostPath: "/appdata/k3s/tautulli"
     containerPath: "/config"
-
-env:

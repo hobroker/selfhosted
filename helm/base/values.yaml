@@ -12,12 +12,9 @@ ports:
     protocol: TCP
 
 volumes:
-  - name:
-    hostPath:
-    containerPath:
 
-baseEnv:
+env:
   PGID: "1000"
   PUID: "1000"
 
-env:
+waitForServices:

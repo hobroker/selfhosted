@@ -19,5 +19,3 @@ volumes:
   - name: compose-mount
     hostPath: "/compose"
     containerPath: "/compose"
-
-env:

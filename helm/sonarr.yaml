@@ -20,4 +20,8 @@ volumes:
     hostPath: "/storage/downloads"
     containerPath: "/downloads"
 
-env:
+waitForServices:
+  - name: qbittorrent-service
+    port: 8112
+  - name: jackett-service
+    port: 9117

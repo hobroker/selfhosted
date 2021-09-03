@@ -17,7 +17,17 @@ spec:
         - name: {{ .name }}
           hostPath:
             path: {{ .hostPath }}
-        {{- end }}
+      {{- end }}
+      initContainers:
+        {{- $namespace := .Release.Namespace }}
+        {{- range .Values.waitForServices }}
+        - name: wait-for-{{ .name }}
+          image: stefanevinance/wait-for-200
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: URL
+              value: http://{{ .name }}.{{ $namespace }}.svc.cluster.local:{{ .port }}
+      {{- end }}
       containers:
         - name: {{ .Release.Name }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
@@ -26,14 +36,10 @@ spec:
             {{- range .Values.ports }}
             - containerPort: {{ .containerPort }}
               protocol: {{ .protocol | default "TCP" | quote }}
-            {{- end }}
+          {{- end }}
           env:
             {{- range $key, $value := .Values.env }}
-            - name: {{ $key }}
-              value: {{ $value | quote }}
-            {{- end }}
-            {{- range $key, $value := .Values.baseEnv }}
-            - name: {{ $key }}
+            - name: {{ $key | upper }}
               value: {{ $value | quote }}
             {{- end }}
           volumeMounts:
