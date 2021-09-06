@@ -5,9 +5,12 @@ image:
   tag: v0.18.545-ls39
   pullPolicy: IfNotPresent
 
-ports:
-  - port: 9117
-    containerPort: 9117
+services:
+  - type: LoadBalancer
+    ports:
+      - protocol: TCP
+        port: 9117
+        containerPort: 9117
 
 volumes:
   - name: jackett-config

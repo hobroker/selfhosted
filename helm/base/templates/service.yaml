@@ -1,15 +1,23 @@
+{{- $releaseName := .Release.Name }}
+  {{- range .Values.services }}
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-service
+  name: {{ $releaseName }}-service{{ .suffix }}
 spec:
-  type: LoadBalancer
+  type: {{ .type }}
   selector:
-    app: {{ .Release.Name }}
+    app: {{ $releaseName }}
   ports:
-    {{- range .Values.ports }}
-    - name: port-{{ .containerPort }}
+    {{- $serviceType := .type }}
+    {{- range .ports }}
+    - name: {{ .protocol | default "TCP" | lower }}-{{ .containerPort }}
       protocol: {{ .protocol | default "TCP" | quote }}
       targetPort: {{ .containerPort }}
       port: {{ .port }}
+      {{- if eq $serviceType "NodePort" }}
+      nodePort: {{ .port }}
+      {{- end }}
     {{- end }}
+{{- end }}

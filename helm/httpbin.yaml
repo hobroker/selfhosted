@@ -5,6 +5,9 @@ image:
   tag: latest
   pullPolicy: IfNotPresent
 
-ports:
-  - port: 8080
-    containerPort: 80
+services:
+  - type: LoadBalancer
+    ports:
+      - protocol: TCP
+        port: 8080
+        containerPort: 80

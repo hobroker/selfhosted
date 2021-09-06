@@ -5,9 +5,12 @@ image:
   tag: 8.1.2
   pullPolicy: IfNotPresent
 
-ports:
-  - port: 5000
-    containerPort: 3000
+services:
+  - type: LoadBalancer
+    ports:
+      - protocol: TCP
+        port: 5000
+        containerPort: 3000
 
 volumes:
   - name: grafana-lib

@@ -5,9 +5,12 @@ image:
   tag: 3.2.2.5080-ls112
   pullPolicy: IfNotPresent
 
-ports:
-  - port: 7878
-    containerPort: 7878
+services:
+  - type: LoadBalancer
+    ports:
+      - protocol: TCP
+        port: 7878
+        containerPort: 7878
 
 volumes:
   - name: radarr-config
