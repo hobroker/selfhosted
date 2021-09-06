@@ -19,6 +19,7 @@ update-base: ## Update apps that use base chart
 	helm upgrade --install grafana ./base/ --values grafana.yaml
 	helm upgrade --install httpbin ./base/ --values httpbin.yaml
 	helm upgrade --install jackett ./base/ --values jackett.yaml
+	helm upgrade --install plex ./base/ --values plex.yaml
 	helm upgrade --install qbittorrent ./base/ --values qbittorrent.yaml
 	helm upgrade --install radarr ./base/ --values radarr.yaml
 	helm upgrade --install sonarr ./base/ --values sonarr.yaml
