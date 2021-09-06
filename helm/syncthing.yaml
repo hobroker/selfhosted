@@ -1,0 +1,47 @@
+replicaCount: 1
+
+image:
+  repository: linuxserver/syncthing
+  tag: version-v1.18.1
+  pullPolicy: IfNotPresent
+#
+#service:
+#  type: NodePort
+#
+#ports:
+#  - port: 8384
+#    containerPort: 8384
+#  - port: 22000
+#    containerPort: 22000
+#  - protocol: UDP
+#    port: 22000
+#    containerPort: 22000
+#  - protocol: UDP
+#    port: 21027
+#    containerPort: 21027
+
+services:
+  - type: LoadBalancer
+    ports:
+      - port: 8384
+        containerPort: 8384
+  - type: NodePort
+    suffix: -discovery
+    ports:
+      - protocol: TCP
+        port: 22000
+        containerPort: 22000
+      - protocol: UDP
+        port: 22000
+        containerPort: 22000
+      - protocol: UDP
+        port: 21027
+        containerPort: 21027
+
+volumes:
+  - name: syncthing-config
+    hostPath: "/appdata/k3s/syncthing"
+    containerPath: "/config"
+  - name: syncthing-wdata
+    hostPath: "/mnt/wdata"
+    containerPath: "/mnt/wdata"
