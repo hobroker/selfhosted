@@ -12,6 +12,7 @@ lint: ## Run linter
 	helm lint ./base/ --values qbittorrent.yaml
 	helm lint ./base/ --values radarr.yaml
 	helm lint ./base/ --values sonarr.yaml
+	helm lint ./base/ --values syncthing.yaml
 	helm lint ./base/ --values tautulli.yaml
 
 update-base: ## Update apps that use base chart
@@ -23,6 +24,7 @@ update-base: ## Update apps that use base chart
 	helm upgrade --install qbittorrent ./base/ --values qbittorrent.yaml
 	helm upgrade --install radarr ./base/ --values radarr.yaml
 	helm upgrade --install sonarr ./base/ --values sonarr.yaml
+	helm upgrade --install syncthing ./base/ --values syncthing.yaml
 	helm upgrade --install tautulli ./base/ --values tautulli.yaml
 
 .PHONY: help
