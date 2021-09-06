@@ -10,6 +10,9 @@ ports:
     containerPort: 9117
 
 volumes:
-  - name: jackett-pv-config
+  - name: jackett-config
     hostPath: "/appdata/k3s/jackett"
     containerPath: "/config/Jackett"
+  - name: jackett-blackhole
+    hostPath: "/storage/downloads/torrents"
+    containerPath: "/blackhole"
