@@ -1,0 +1,99 @@
+apiVersion: v1
+data:
+  config.yaml: |
+    metrics: true
+    services:
+      - name: Plex
+        url: http://plex-service.self.svc.cluster.local:32400/
+        interval: 1m
+        conditions:
+          - "[STATUS] == 200"
+      - name: Radarr
+        url: http://radarr-service.self.svc.cluster.local:7878/
+        interval: 5m
+        conditions:
+          - "[STATUS] == 200"
+      - name: Sonarr
+        url: http://sonarr-service.self.svc.cluster.local:8989/
+        interval: 5m
+        conditions:
+          - "[STATUS] == 200"
+      - name: Jackett
+        url: http://jackett-service.self.svc.cluster.local:9117/
+        interval: 5m
+        conditions:
+          - "[STATUS] == 200"
+      - name: qBittorrent
+        url: http://qbittorrent-service.self.svc.cluster.local:8112/
+        interval: 5m
+        conditions:
+          - "[STATUS] == 200"
+      - name: Grafana
+        url: http://grafana-service.self.svc.cluster.local:5000/
+        interval: 5m
+        conditions:
+          - "[STATUS] == 200"
+      - name: Prometheus
+        url: http://prometheus-service.self.svc.cluster.local:9090/
+        interval: 5m
+        conditions:
+          - "[STATUS] == 200"
+kind: ConfigMap
+metadata:
+  name: gatus
+#  namespace: kube-system
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gatus
+#  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: gatus
+  template:
+    metadata:
+      labels:
+        k8s-app: gatus
+      name: gatus
+      namespace: kube-system
+    spec:
+      containers:
+        - image: twinproduction/gatus
+          imagePullPolicy: IfNotPresent
+          name: gatus
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 250m
+              memory: 100M
+            requests:
+              cpu: 50m
+              memory: 30M
+          volumeMounts:
+            - mountPath: /config
+              name: gatus-config
+      volumes:
+        - configMap:
+            name: gatus
+          name: gatus-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gatus
+#  namespace: kube-system
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 8082
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    k8s-app: gatus
