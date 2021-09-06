@@ -1,0 +1,45 @@
+version: '3.5'
+
+services:
+  photoprism:
+    # Use photoprism/photoprism:preview instead for testing preview builds:
+    image: photoprism/photoprism:latest
+    container_name: photoprism
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+    ports:
+      - "2342:2342"
+    environment:
+      PHOTOPRISM_ADMIN_PASSWORD: "insecure"          # PLEASE CHANGE: Your initial admin password (min 4 characters)
+      PHOTOPRISM_ORIGINALS_LIMIT: 5000               # File size limit for originals in MB (increase for high-res video)
+      PHOTOPRISM_HTTP_COMPRESSION: "gzip"            # Improves transfer speed and bandwidth utilization (none or gzip)
+      PHOTOPRISM_DEBUG: "false"                      # Run in debug mode (shows additional log messages)
+      PHOTOPRISM_PUBLIC: "false"                     # No authentication required (disables password protection)
+      PHOTOPRISM_READONLY: "false"                   # Don't modify originals directory (reduced functionality)
+      PHOTOPRISM_EXPERIMENTAL: "false"               # Enables experimental features
+      PHOTOPRISM_DISABLE_WEBDAV: "false"             # Disables built-in WebDAV server
+      PHOTOPRISM_DISABLE_SETTINGS: "false"           # Disables Settings in Web UI
+      PHOTOPRISM_DISABLE_TENSORFLOW: "false"         # Disables using TensorFlow for image classification
+      PHOTOPRISM_DARKTABLE_PRESETS: "false"          # Enables Darktable presets and disables concurrent RAW conversion
+      PHOTOPRISM_DETECT_NSFW: "false"                # Flag photos as private that MAY be offensive (requires TensorFlow)
+      PHOTOPRISM_UPLOAD_NSFW: "true"                 # Allow uploads that MAY be offensive
+      PHOTOPRISM_DATABASE_DRIVER: "sqlite"            # SQLite is an embedded database that doesn't require a server
+#      PHOTOPRISM_DATABASE_DRIVER: "mysql"            # Use MariaDB (or MySQL) instead of SQLite for improved performance
+#      PHOTOPRISM_DATABASE_SERVER: "mariadb:3306"     # MariaDB database server (hostname:port)
+#      PHOTOPRISM_DATABASE_NAME: "photoprism"         # MariaDB database schema name
+#      PHOTOPRISM_DATABASE_USER: "photoprism"         # MariaDB database user name
+#      PHOTOPRISM_DATABASE_PASSWORD: "insecure"       # MariaDB database user password
+      PHOTOPRISM_SITE_URL: "http://localhost:2342/"  # Public PhotoPrism URL
+      PHOTOPRISM_SITE_TITLE: "PhotoPrism"
+      PHOTOPRISM_SITE_CAPTION: "Browse Your Life"
+      PHOTOPRISM_SITE_DESCRIPTION: ""
+      PHOTOPRISM_SITE_AUTHOR: ""
+      UID: 1000
+      GID: 1000
+      UMASK: 022
+    volumes:
+      #      - "/mnt/wdata/reddit_sync:/photoprism/originals/reddit_sync"
+      - "/mnt/wdata/photos/camera:/photoprism/originals/camera"
+      - "/mnt/wdata/photos/.import:/photoprism/import"
+      - "/appdata/photoprism:/photoprism/storage"
