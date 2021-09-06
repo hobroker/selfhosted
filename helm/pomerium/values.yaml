@@ -73,6 +73,13 @@ policy:
     preserve_host_header: true
     allow_public_unauthenticated_access: true
 
+  - from: https://syncthing.hobroker.me
+    to: http://syncthing-service:8384
+    preserve_host_header: true
+    allow_websockets: true
+    allowed_users:
+      - igor.leahu24@gmail.com
+
   - from: https://adguard.hobroker.me
     to: http://172.17.0.1:3001
     allowed_users:
