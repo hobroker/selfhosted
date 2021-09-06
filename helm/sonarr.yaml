@@ -20,4 +20,6 @@ volumes:
     hostPath: "/storage/downloads"
     containerPath: "/downloads"
 
-env:
+waitForServices:
+  - qbittorrent-service
+  - jackett-service
