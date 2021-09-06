@@ -5,9 +5,12 @@ image:
   tag: v3.11.1-ls91
   pullPolicy: IfNotPresent
 
-ports:
-  - port: 8443
-    containerPort: 8443
+services:
+  - type: LoadBalancer
+    ports:
+      - protocol: TCP
+        port: 8443
+        containerPort: 8443
 
 volumes:
   - name: code-server-config
@@ -17,5 +20,5 @@ volumes:
     hostPath: "/appdata"
     containerPath: "/appdata"
   - name: compose-mount
-    hostPath: "/compose"
+    hostPath: "/home/kira/compose"
     containerPath: "/compose"

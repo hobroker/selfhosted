@@ -5,9 +5,12 @@ image:
   tag: version-3.0.6.1265
   pullPolicy: IfNotPresent
 
-ports:
-  - port: 8989
-    containerPort: 8989
+services:
+  - type: LoadBalancer
+    ports:
+      - protocol: TCP
+        port: 8989
+        containerPort: 8989
 
 volumes:
   - name: sonarr-config
