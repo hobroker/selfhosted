@@ -4,21 +4,6 @@ image:
   repository: linuxserver/syncthing
   tag: version-v1.18.1
   pullPolicy: IfNotPresent
-#
-#service:
-#  type: NodePort
-#
-#ports:
-#  - port: 8384
-#    containerPort: 8384
-#  - port: 22000
-#    containerPort: 22000
-#  - protocol: UDP
-#    port: 22000
-#    containerPort: 22000
-#  - protocol: UDP
-#    port: 21027
-#    containerPort: 21027
 
 services:
   - type: LoadBalancer
