@@ -1,6 +1,7 @@
 apiVersion: v2
 name: prometheus
 description: Prometheus chart
+icon: https://
 type: application
 version: 0.1.0
 appVersion: "v2.29.2"
