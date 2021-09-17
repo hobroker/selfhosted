@@ -14,9 +14,19 @@ services:
         containerPort: 80
 
 volumes:
+#  - name: base-config
+#    hostPath:
+#      path: "/appdata/k3s/base"
 
-env:
-  PGID: "1000"
-  PUID: "1000"
+volumeMounts:
+#  - name: base-config
+#    mountPath: "/config"
+
+baseEnv:
+  - name: PGID
+    value: "1000"
+  - name: PUID
+    value: "1000"
 
 waitForServices:
+#  - test-service

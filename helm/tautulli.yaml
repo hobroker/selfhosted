@@ -8,11 +8,13 @@ image:
 services:
   - type: LoadBalancer
     ports:
-      - protocol: TCP
-        port: 8181
-        containerPort: 8181
+      - port: 8181
 
 volumes:
   - name: tautulli-config
-    hostPath: "/appdata/k3s/tautulli"
-    containerPath: "/config"
+    hostPath:
+      path: "/appdata/k3s/tautulli"
+
+volumeMounts:
+  - name: tautulli-config
+    mountPath: "/config"

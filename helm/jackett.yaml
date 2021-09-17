@@ -8,14 +8,18 @@ image:
 services:
   - type: LoadBalancer
     ports:
-      - protocol: TCP
-        port: 9117
-        containerPort: 9117
+      - port: 9117
 
 volumes:
   - name: jackett-config
-    hostPath: "/appdata/k3s/jackett"
-    containerPath: "/config/Jackett"
+    hostPath:
+      path: "/appdata/k3s/jackett"
   - name: jackett-blackhole
-    hostPath: "/storage/downloads/torrents"
-    containerPath: "/blackhole"
+    hostPath:
+      path: "/storage/downloads/torrents"
+
+volumeMounts:
+  - name: jackett-config
+    mountPath: "/config/Jackett"
+  - name: jackett-blackhole
+    mountPath: "/blackhole"
