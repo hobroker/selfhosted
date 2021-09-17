@@ -1,17 +1,28 @@
-replicaCount: 1
+base:
+  replicaCount: 1
 
-image:
-  repository: prom/prometheus
-  tag: v2.29.2
-  pullPolicy: IfNotPresent
+  image:
+    repository: prom/prometheus
+    tag: v2.29.2
+    pullPolicy: IfNotPresent
 
-ports:
-  - port: 9090
-    containerPort: 9090
+  services:
+    - type: LoadBalancer
+      ports:
+        - protocol: TCP
+          port: 9090
 
-volumes:
-  - name: prometheus-data
-    hostPath: "/appdata/k3s/prometheus/data"
-    containerPath: "/prometheus"
+  volumes:
+    - name: prometheus-data
+      hostPath:
+        path: "/appdata/k3s/prometheus/data"
+    - name: prometheus-config
+      configMap:
+        name: prometheus-config
 
-env:
+  volumeMounts:
+    - name: prometheus-data
+      mountPath: "/prometheus"
+    - name: prometheus-config
+      subPath: prometheus.yml
+      mountPath: "/etc/prometheus/prometheus.yml"
