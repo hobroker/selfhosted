@@ -30,3 +30,7 @@ baseEnv:
 
 waitForServices:
 #  - test-service
+
+args:
+
+configmaps:

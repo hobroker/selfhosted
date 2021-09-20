@@ -33,6 +33,10 @@ spec:
         - name: {{ .Release.Name }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            {{- if .Values.args }}
+              {{- toYaml .Values.args | nindent 12 }}
+            {{- end }}
           ports:
             {{- range .Values.services }}
             {{- range .ports }}
