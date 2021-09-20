@@ -16,13 +16,34 @@ base:
     - name: prometheus-data
       hostPath:
         path: "/appdata/k3s/prometheus/data"
-    - name: prometheus-config
+    - name: prometheus-configmap
       configMap:
-        name: prometheus-config
+        name: prometheus-configmap
 
   volumeMounts:
     - name: prometheus-data
       mountPath: "/prometheus"
-    - name: prometheus-config
+    - name: prometheus-configmap
       subPath: prometheus.yml
       mountPath: "/etc/prometheus/prometheus.yml"
+
+  configmaps:
+    prometheus-configmap:
+      prometheus.yml:
+        global:
+          evaluation_interval: 15s
+          scrape_interval: 15s
+        scrape_configs:
+          - job_name: prometheus
+            static_configs:
+              - targets:
+                  - localhost:9090
+          - job_name: home_weather
+            scrape_interval: 10s
+            static_configs:
+              - targets:
+                  - 192.168.29.54:5000
+          - job_name: grafana
+            static_configs:
+              - targets:
+                  - grafana:5000
