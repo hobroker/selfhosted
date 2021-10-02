@@ -8,6 +8,4 @@ image:
 services:
   - type: LoadBalancer
     ports:
-      - protocol: TCP
-        port: 8080
-        containerPort: 80
+      - port: 8080

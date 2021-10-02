@@ -2,14 +2,13 @@ replicaCount: 1
 
 image:
   repository: linuxserver/syncthing
-  tag: version-v1.18.1
+  tag: version-v1.18.2
   pullPolicy: IfNotPresent
 
 services:
   - type: LoadBalancer
     ports:
       - port: 8384
-        containerPort: 8384
   - type: NodePort
     suffix: -discovery
     ports:
@@ -25,8 +24,14 @@ services:
 
 volumes:
   - name: syncthing-config
-    hostPath: "/appdata/k3s/syncthing"
-    containerPath: "/config"
+    hostPath:
+      path: "/appdata/k3s/syncthing"
   - name: syncthing-wdata
-    hostPath: "/mnt/wdata"
-    containerPath: "/mnt/wdata"
+    hostPath:
+      path: "/mnt/wdata"
+
+volumeMounts:
+  - name: syncthing-config
+    mountPath: "/config"
+  - name: syncthing-wdata
+    mountPath: "/mnt/wdata"

@@ -2,27 +2,33 @@ replicaCount: 1
 
 image:
   repository: linuxserver/sonarr
-  tag: version-3.0.6.1265
+  tag: version-3.0.6.1342
   pullPolicy: IfNotPresent
 
 services:
   - type: LoadBalancer
     ports:
-      - protocol: TCP
-        port: 8989
-        containerPort: 8989
+      - port: 8989
 
 volumes:
   - name: sonarr-config
-    hostPath: "/appdata/k3s/sonarr"
-    containerPath: "/config"
+    hostPath:
+      path: "/appdata/k3s/sonarr"
   - name: storage-tv
-    hostPath: "/storage/tv-shows"
-    containerPath: "/tv"
+    hostPath:
+      path: "/storage/tv-shows"
   - name: storage-downloads
-    hostPath: "/storage/downloads"
-    containerPath: "/downloads"
+    hostPath:
+      path: "/storage/downloads"
+
+volumeMounts:
+  - name: sonarr-config
+    mountPath: "/config"
+  - name: storage-tv
+    mountPath: "/tv"
+  - name: storage-downloads
+    mountPath: "/downloads"
 
 waitForServices:
-  - qbittorrent-service
-  - jackett-service
+  - qbittorrent
+  - jackett

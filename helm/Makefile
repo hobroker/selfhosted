@@ -18,7 +18,7 @@ lint: ## Run linter
 update-base: ## Update apps that use base chart
 	helm upgrade --install code-server ./base/ --values code-server.yaml
 	helm upgrade --install grafana ./base/ --values grafana.yaml
-	helm upgrade --install httpbin ./base/ --values httpbin.yaml
+# 	helm upgrade --install httpbin ./base/ --values httpbin.yaml
 	helm upgrade --install jackett ./base/ --values jackett.yaml
 	helm upgrade --install plex ./base/ --values plex.yaml
 	helm upgrade --install qbittorrent ./base/ --values qbittorrent.yaml
@@ -26,5 +26,20 @@ update-base: ## Update apps that use base chart
 	helm upgrade --install sonarr ./base/ --values sonarr.yaml
 	helm upgrade --install syncthing ./base/ --values syncthing.yaml
 	helm upgrade --install tautulli ./base/ --values tautulli.yaml
+
+update-prometheus: ## Update Prometheus
+	cd prometheus; \
+	  helm dependency update; \
+	  helm upgrade --install prometheus .
+
+update-pomerium: ## Update Pomerium
+	cd pomerium; \
+	  helm dependency update; \
+	  helm upgrade --install pomerium .
+
+update-all: ## Update all apps
+	make update-base
+	make update-pomerium
+	make update-prometheus
 
 .PHONY: help

@@ -2,27 +2,33 @@ replicaCount: 1
 
 image:
   repository: linuxserver/radarr
-  tag: 3.2.2.5080-ls112
+  tag: version-3.2.2.5080
   pullPolicy: IfNotPresent
 
 services:
   - type: LoadBalancer
     ports:
-      - protocol: TCP
-        port: 7878
-        containerPort: 7878
+      - port: 7878
 
 volumes:
   - name: radarr-config
-    hostPath: "/appdata/k3s/radarr"
-    containerPath: "/config"
+    hostPath:
+      path: "/appdata/k3s/radarr"
   - name: storage-movies
-    hostPath: "/storage/movies"
-    containerPath: "/movies"
+    hostPath:
+      path: "/storage/movies"
   - name: storage-downloads
-    hostPath: "/storage/downloads"
-    containerPath: "/downloads"
+    hostPath:
+      path: "/storage/downloads"
+
+volumeMounts:
+  - name: radarr-config
+    mountPath: "/config"
+  - name: storage-movies
+    mountPath: "/movies"
+  - name: storage-downloads
+    mountPath: "/downloads"
 
 waitForServices:
-  - qbittorrent-service
-  - jackett-service
+  - qbittorrent
+  - jackett
