@@ -27,4 +27,19 @@ update-base: ## Update apps that use base chart
 	helm upgrade --install syncthing ./base/ --values syncthing.yaml
 	helm upgrade --install tautulli ./base/ --values tautulli.yaml
 
+update-prometheus: ## Update Prometheus
+	cd prometheus; \
+	  helm dependency update; \
+	  helm upgrade --install prometheus .
+
+update-pomerium: ## Update Pomerium
+	cd pomerium; \
+	  helm dependency update; \
+	  helm upgrade --install pomerium .
+
+update-all: ## Update all apps
+	make update-base
+	make update-pomerium
+	make update-prometheus
+
 .PHONY: help

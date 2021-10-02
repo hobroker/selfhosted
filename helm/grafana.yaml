@@ -14,16 +14,29 @@ services:
 
 volumes:
   - name: grafana-lib
-    hostPath: "/appdata/k3s/grafana/lib"
-    containerPath: "/var/lib/grafana"
+    hostPath:
+      path: "/appdata/k3s/grafana/lib"
+
+volumeMounts:
+  - name: grafana-lib
+    mountPath: "/var/lib/grafana"
 
 env:
-  GF_SERVER_ROOT_URL: "https://grafana.hobroker.me"
-  GF_STRAVA_DS_DATA_PATH: "/var/lib/grafana/strava"
-  GF_INSTALL_PLUGINS: "grafana-strava-datasource,grafana-worldmap-panel,grafana-piechart-panel,grafana-googlesheets-datasource"
-  GF_AUTH_PROXY_ENABLED: true
-  GF_AUTH_PROXY_HEADER_NAME: "X-Pomerium-Claim-Email"
-  GF_AUTH_PROXY_HEADER_PROPERTY: "username"
-  GF_AUTH_PROXY_AUTO_SIGN_UP: true
-  GF_AUTH_PROXY_ENABLE_LOGIN_TOKEN: false
-  GF_METRICS_ENABLED: true
+  - name: GF_SERVER_ROOT_URL
+    value: "https://grafana.hobroker.me"
+  - name: GF_STRAVA_DS_DATA_PATH
+    value: "/var/lib/grafana/strava"
+  - name: GF_INSTALL_PLUGINS
+    value: "grafana-strava-datasource,grafana-worldmap-panel,grafana-piechart-panel,grafana-googlesheets-datasource"
+  - name: GF_AUTH_PROXY_ENABLED
+    value: "true"
+  - name: GF_AUTH_PROXY_HEADER_NAME
+    value: "X-Pomerium-Claim-Email"
+  - name: GF_AUTH_PROXY_HEADER_PROPERTY
+    value: "username"
+  - name: GF_AUTH_PROXY_AUTO_SIGN_UP
+    value: "true"
+  - name: GF_AUTH_PROXY_ENABLE_LOGIN_TOKEN
+    value: "false"
+  - name: GF_METRICS_ENABLED
+    value: "true"

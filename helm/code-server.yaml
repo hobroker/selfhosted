@@ -8,17 +8,23 @@ image:
 services:
   - type: LoadBalancer
     ports:
-      - protocol: TCP
-        port: 8443
-        containerPort: 8443
+      - port: 8443
 
 volumes:
   - name: code-server-config
-    hostPath: "/appdata/k3s/code-server"
-    containerPath: "/config"
+    hostPath:
+      path: "/appdata/k3s/code-server"
   - name: appdata-mount
-    hostPath: "/appdata"
-    containerPath: "/appdata"
+    hostPath:
+      path: "/appdata"
   - name: compose-mount
-    hostPath: "/home/kira/compose"
-    containerPath: "/compose"
+    hostPath:
+      path: "/home/kira/compose"
+
+volumeMounts:
+  - name: code-server-config
+    mountPath: "/config"
+  - name: appdata-mount
+    mountPath: "/appdata"
+  - name: compose-mount
+    mountPath: "/compose"

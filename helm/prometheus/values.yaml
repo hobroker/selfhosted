@@ -1,17 +1,49 @@
-replicaCount: 1
+base:
+  replicaCount: 1
 
-image:
-  repository: prom/prometheus
-  tag: v2.29.2
-  pullPolicy: IfNotPresent
+  image:
+    repository: prom/prometheus
+    tag: v2.29.2
+    pullPolicy: IfNotPresent
 
-ports:
-  - port: 9090
-    containerPort: 9090
+  services:
+    - type: LoadBalancer
+      ports:
+        - protocol: TCP
+          port: 9090
 
-volumes:
-  - name: prometheus-data
-    hostPath: "/appdata/k3s/prometheus/data"
-    containerPath: "/prometheus"
+  volumes:
+    - name: prometheus-data
+      hostPath:
+        path: "/appdata/k3s/prometheus/data"
+    - name: prometheus-configmap
+      configMap:
+        name: prometheus-configmap
 
-env:
+  volumeMounts:
+    - name: prometheus-data
+      mountPath: "/prometheus"
+    - name: prometheus-configmap
+      subPath: prometheus.yml
+      mountPath: "/etc/prometheus/prometheus.yml"
+
+  configmaps:
+    prometheus-configmap:
+      prometheus.yml: |-
+        global:
+          evaluation_interval: 15s
+          scrape_interval: 15s
+        scrape_configs:
+          - job_name: prometheus
+            static_configs:
+              - targets:
+                  - localhost:9090
+          - job_name: home_weather
+            scrape_interval: 10s
+            static_configs:
+              - targets:
+                  - 192.168.29.54:5000
+          - job_name: grafana
+            static_configs:
+              - targets:
+                  - grafana:5000

@@ -8,20 +8,27 @@ image:
 services:
   - type: LoadBalancer
     ports:
-      - protocol: TCP
-        port: 8112
-        containerPort: 8112
+      - port: 8112
 
 volumes:
   - name: qbittorrent-config
-    hostPath: "/appdata/k3s/qbittorrent"
-    containerPath: "/config/qBittorrent"
+    hostPath:
+      path: "/appdata/k3s/qbittorrent"
   - name: qbittorrent-blackhole
-    hostPath: "/storage/downloads/torrents"
-    containerPath: "/blackhole"
+    hostPath:
+      path: "/storage/downloads/torrents"
   - name: qbittorrent-downloads
-    hostPath: "/storage/downloads"
-    containerPath: "/downloads"
+    hostPath:
+      path: "/storage/downloads"
+
+volumeMounts:
+  - name: qbittorrent-config
+    mountPath: "/config/qBittorrent"
+  - name: qbittorrent-blackhole
+    mountPath: "/blackhole"
+  - name: qbittorrent-downloads
+    mountPath: "/downloads"
 
 env:
-  WEBUI_PORT: 8112
+  - name: WEBUI_PORT
+    value: "8112"
