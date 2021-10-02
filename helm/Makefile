@@ -32,4 +32,14 @@ update-prometheus: ## Update Prometheus
 	  helm dependency update; \
 	  helm upgrade --install prometheus .
 
+update-pomerium: ## Update Pomerium
+	cd pomerium; \
+	  helm dependency update; \
+	  helm upgrade --install pomerium .
+
+update-all: ## Update all apps
+	make update-base
+	make update-pomerium
+	make update-prometheus
+
 .PHONY: help
