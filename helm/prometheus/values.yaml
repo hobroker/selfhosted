@@ -29,7 +29,7 @@ base:
 
   configmaps:
     prometheus-configmap:
-      prometheus.yml:
+      prometheus.yml: |-
         global:
           evaluation_interval: 15s
           scrape_interval: 15s

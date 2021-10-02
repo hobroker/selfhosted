@@ -7,7 +7,7 @@ metadata:
 data:
   {{- range $key, $value := $configs }}
   {{ $key }}: |-
-    {{- toYaml $value | nindent 4 }}
+    {{- $value | nindent 4 }}
   {{- end }}
 {{- end }}
 {{- end }}
