@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-deployment
+  name: {{ .Release.Name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -13,10 +13,8 @@ spec:
         app: {{ .Release.Name }}
     spec:
       volumes:
-        {{- range .Values.volumes }}
-        - name: {{ .name }}
-          hostPath:
-            path: {{ .hostPath }}
+        {{- if .Values.volumes }}
+          {{- toYaml .Values.volumes | nindent 6}}
         {{- end }}
       initContainers:
         {{- range .Values.waitForServices }}
@@ -35,20 +33,25 @@ spec:
         - name: {{ .Release.Name }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            {{- if .Values.args }}
+              {{- toYaml .Values.args | nindent 12 }}
+            {{- end }}
           ports:
             {{- range .Values.services }}
             {{- range .ports }}
-            - containerPort: {{ .containerPort }}
+            - containerPort: {{ .containerPort | default .port }}
               protocol: {{ .protocol | default "TCP" | quote }}
             {{- end }}
             {{- end }}
           env:
-            {{- range $key, $value := .Values.env }}
-            - name: {{ $key }}
-              value: {{ $value | quote }}
+            {{- if .Values.baseEnv }}
+              {{- toYaml .Values.baseEnv | nindent 12 }}
+            {{- end }}
+            {{- if .Values.env }}
+              {{- toYaml .Values.env | nindent 12 }}
             {{- end }}
           volumeMounts:
-            {{- range .Values.volumes }}
-            - name: {{ .name }}
-              mountPath: {{ .containerPath }}
+            {{- if .Values.volumeMounts }}
+              {{- toYaml .Values.volumeMounts | nindent 12 }}
             {{- end }}

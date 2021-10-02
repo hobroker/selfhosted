@@ -2,20 +2,24 @@ replicaCount: 1
 
 image:
   repository: linuxserver/jackett
-  tag: v0.18.545-ls39
+  tag: version-v0.18.887
   pullPolicy: IfNotPresent
 
 services:
   - type: LoadBalancer
     ports:
-      - protocol: TCP
-        port: 9117
-        containerPort: 9117
+      - port: 9117
 
 volumes:
   - name: jackett-config
-    hostPath: "/appdata/k3s/jackett"
-    containerPath: "/config/Jackett"
+    hostPath:
+      path: "/appdata/k3s/jackett"
   - name: jackett-blackhole
-    hostPath: "/storage/downloads/torrents"
-    containerPath: "/blackhole"
+    hostPath:
+      path: "/storage/downloads/torrents"
+
+volumeMounts:
+  - name: jackett-config
+    mountPath: "/config/Jackett"
+  - name: jackett-blackhole
+    mountPath: "/blackhole"
