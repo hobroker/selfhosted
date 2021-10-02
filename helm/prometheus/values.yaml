@@ -3,7 +3,7 @@ base:
 
   image:
     repository: prom/prometheus
-    tag: v2.29.2
+    tag: v2.30.2
     pullPolicy: IfNotPresent
 
   services:

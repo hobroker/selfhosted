@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/sonarr
-  tag: version-3.0.6.1265
+  tag: version-3.0.6.1342
   pullPolicy: IfNotPresent
 
 services:
