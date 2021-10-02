@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/syncthing
-  tag: version-v1.18.1
+  tag: version-v1.18.2
   pullPolicy: IfNotPresent
 
 services:
