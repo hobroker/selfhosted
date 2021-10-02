@@ -3,7 +3,7 @@ base:
 
   image:
     repository: pomerium/pomerium
-    tag: latest
+    tag: v0.15.3
     pullPolicy: IfNotPresent
 
   services:
