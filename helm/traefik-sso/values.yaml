@@ -1,0 +1,39 @@
+base:
+  image:
+    repository: thomseddon/traefik-forward-auth
+    tag: 2
+    pullPolicy: IfNotPresent
+
+  services:
+    - type: ClusterIP
+      ports:
+        - port: 4181
+
+  env:
+    - name: PROVIDERS_GOOGLE_CLIENT_ID
+      valueFrom:
+        secretKeyRef:
+          name: traefik-secret
+          key: PROVIDERS_GOOGLE_CLIENT_ID
+    - name: PROVIDERS_GOOGLE_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: traefik-secret
+          key: PROVIDERS_GOOGLE_CLIENT_SECRET
+    - name: SECRET
+      valueFrom:
+        secretKeyRef:
+          name: traefik-secret
+          key: COOKIE_SECRET
+    - name: COOKIE_DOMAIN
+      value: hobroker.me
+    - name: AUTH_HOST
+      value: auth.hobroker.me
+    - name: INSECURE_COOKIE
+      value: "false"
+    - name: URL_PATH
+      value: /_oauth
+    - name: WHITELIST
+      value: igor.leahu24@gmail.com
+    - name: LOG_LEVEL
+      value: debug

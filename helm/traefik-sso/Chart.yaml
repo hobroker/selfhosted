@@ -1,0 +1,11 @@
+apiVersion: v2
+name: traefik-sso
+description: Traefik Forward Auth chart
+icon: https://
+type: application
+version: 0.1.0
+appVersion: "2"
+dependencies:
+  - name: base
+    version: 1.0.0
+    repository: file://../base
