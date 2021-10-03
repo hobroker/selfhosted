@@ -10,6 +10,16 @@ base:
         - port: 4181
 
   env:
+    - name: INSECURE_COOKIE
+      value: "false"
+    - name: COOKIE_DOMAIN
+      value: hobroker.me
+    - name: URL_PATH
+      value: /_oauth
+    - name: AUTH_HOST
+      value: auth.hobroker.me
+    - name: WHITELIST
+      value: igor.leahu24@gmail.com
     - name: PROVIDERS_GOOGLE_CLIENT_ID
       valueFrom:
         secretKeyRef:
@@ -25,15 +35,10 @@ base:
         secretKeyRef:
           name: traefik-secret
           key: COOKIE_SECRET
-    - name: COOKIE_DOMAIN
-      value: hobroker.me
-    - name: AUTH_HOST
-      value: auth.hobroker.me
-    - name: INSECURE_COOKIE
-      value: "false"
-    - name: URL_PATH
-      value: /_oauth
-    - name: WHITELIST
-      value: igor.leahu24@gmail.com
-    - name: LOG_LEVEL
-      value: debug
+
+  ingressRoutes:
+    websecure:
+      match: Host(`auth.hobroker.me`)
+      port: 4181
+      middlewares:
+        - name: traefik-sso

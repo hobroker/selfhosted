@@ -36,3 +36,10 @@ waitForServices:
 args:
 
 configmaps:
+
+ingressRoutes:
+#  websecure:
+#    match: Host(`httpbin.hobroker.me`)
+#    port: 80
+#    middlewares:
+#      - traefik-sso

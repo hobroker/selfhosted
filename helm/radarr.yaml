@@ -32,3 +32,10 @@ volumeMounts:
 waitForServices:
   - qbittorrent
   - jackett
+
+ingressRoutes:
+  websecure:
+    match: Host(`radarr.hobroker.me`)
+    port: 7878
+    middlewares:
+      - name: traefik-sso

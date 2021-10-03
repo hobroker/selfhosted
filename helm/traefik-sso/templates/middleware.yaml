@@ -8,3 +8,5 @@ spec:
     trustForwardHeader: true
     authResponseHeaders:
       - "X-Forwarded-User"
+      - "X-Auth-User"
+      - "X-Secret"

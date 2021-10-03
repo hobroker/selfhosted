@@ -32,3 +32,10 @@ volumeMounts:
 env:
   - name: WEBUI_PORT
     value: "8112"
+
+ingressRoutes:
+  websecure:
+    match: Host(`qbittorrent.hobroker.me`)
+    port: 8112
+    middlewares:
+      - name: traefik-sso
