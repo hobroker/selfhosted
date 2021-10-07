@@ -32,3 +32,10 @@ volumeMounts:
 waitForServices:
   - qbittorrent
   - jackett
+
+ingressRoutes:
+  websecure:
+    match: Host(`sonarr.hobroker.me`)
+    port: 8989
+    middlewares:
+      - name: traefik-sso

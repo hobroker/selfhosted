@@ -23,3 +23,10 @@ volumeMounts:
     mountPath: "/config/Jackett"
   - name: jackett-blackhole
     mountPath: "/blackhole"
+
+ingressRoutes:
+  websecure:
+    match: Host(`jackett.hobroker.me`)
+    port: 9117
+    middlewares:
+      - name: traefik-sso

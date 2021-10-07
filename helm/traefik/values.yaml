@@ -1,0 +1,38 @@
+traefik:
+  ports:
+    traefik:
+      expose: true
+
+  deployment:
+    additionalVolumes:
+      - name: traefik-acme
+        hostPath:
+          path: "/appdata/k3s/traefik/acme"
+
+  additionalVolumeMounts:
+    - name: traefik-acme
+      mountPath: "/acme"
+
+  additionalArguments:
+    - --certificatesresolvers.letsencrypt.acme.storage=/acme/acme.json
+    - --certificatesresolvers.letsencrypt.acme.dnsChallenge.provider=cloudflare
+    - --certificatesresolvers.letsencrypt.acme.dnsChallenge.delayBeforeCheck=0
+
+  securityContext:
+    capabilities:
+    readOnlyRootFilesystem:
+    runAsGroup: 1000
+    runAsNonRoot: true
+    runAsUser: 1000
+
+  env:
+    - name: CF_API_EMAIL
+      valueFrom:
+        secretKeyRef:
+          name: traefik-secret
+          key: CF_API_EMAIL
+    - name: CF_DNS_API_TOKEN
+      valueFrom:
+        secretKeyRef:
+          key: CF_DNS_API_TOKEN
+          name: traefik-secret

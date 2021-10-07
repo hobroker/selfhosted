@@ -13,6 +13,8 @@ services:
         port: 80
         containerPort: 80
 
+labels:
+
 volumes:
 #  - name: base-config
 #    hostPath:
@@ -34,3 +36,10 @@ waitForServices:
 args:
 
 configmaps:
+
+ingressRoutes:
+#  websecure:
+#    match: Host(`httpbin.hobroker.me`)
+#    port: 80
+#    middlewares:
+#      - traefik-sso

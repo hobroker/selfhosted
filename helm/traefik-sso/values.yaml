@@ -1,0 +1,47 @@
+base:
+  image:
+    repository: ghcr.io/hobroker/traefik-forward-auth
+    tag: v2.3.0
+    pullPolicy: IfNotPresent
+
+  services:
+    - type: ClusterIP
+      ports:
+        - port: 4181
+
+  env:
+    - name: COOKIE_DOMAIN
+      value: hobroker.me
+    - name: URL_PATH
+      value: /_oauth
+    - name: AUTH_HOST
+      value: auth.hobroker.me
+    - name: WHITELIST
+      value: igor.leahu24@gmail.com
+    - name: WHITELISTED_HEADERS
+      valueFrom:
+        secretKeyRef:
+          name: traefik-secret
+          key: WHITELISTED_HEADERS
+    - name: PROVIDERS_GOOGLE_CLIENT_ID
+      valueFrom:
+        secretKeyRef:
+          name: traefik-secret
+          key: PROVIDERS_GOOGLE_CLIENT_ID
+    - name: PROVIDERS_GOOGLE_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: traefik-secret
+          key: PROVIDERS_GOOGLE_CLIENT_SECRET
+    - name: SECRET
+      valueFrom:
+        secretKeyRef:
+          name: traefik-secret
+          key: COOKIE_SECRET
+
+  ingressRoutes:
+    websecure:
+      match: Host(`auth.hobroker.me`)
+      port: 4181
+      middlewares:
+        - name: traefik-sso

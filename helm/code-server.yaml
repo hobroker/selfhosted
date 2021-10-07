@@ -28,3 +28,10 @@ volumeMounts:
     mountPath: "/appdata"
   - name: compose-mount
     mountPath: "/compose"
+
+ingressRoutes:
+  websecure:
+    match: Host(`code.hobroker.me`)
+    port: 8443
+    middlewares:
+      - name: traefik-sso

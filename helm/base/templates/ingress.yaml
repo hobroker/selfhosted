@@ -1,0 +1,28 @@
+{{- $releaseName := .Release.Name }}
+
+{{- if .Values.ingressRoutes }}
+{{- range $entryPoint, $value := .Values.ingressRoutes }}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $releaseName }}-{{ $entryPoint }}
+spec:
+  entryPoints:
+    - {{ $entryPoint }}
+  {{- if eq $entryPoint "websecure" }}
+  tls:
+    certResolver: letsencrypt
+  {{- end }}
+  routes:
+    - match: {{ $value.match }}
+      kind: Rule
+      services:
+        - name: {{ $releaseName }}
+          port: {{ $value.port }}
+      {{- if $value.middlewares }}
+      middlewares:
+        {{- toYaml $value.middlewares | nindent 8 }}
+      {{- end }}
+{{- end }}
+{{- end }}

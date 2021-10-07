@@ -1,0 +1,9 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  chain:
+    middlewares:
+      - name: {{ .Release.Name }}-forward-auth
+      - name: {{ .Release.Name }}-rate-limit

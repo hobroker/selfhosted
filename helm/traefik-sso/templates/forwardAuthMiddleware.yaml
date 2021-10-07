@@ -1,0 +1,12 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ .Release.Name }}-forward-auth
+spec:
+  forwardAuth:
+    address: http://traefik-sso:4181
+    trustForwardHeader: true
+    authResponseHeaders:
+      - "X-Forwarded-User"
+      - "X-Auth-User"
+      - "X-Secret"

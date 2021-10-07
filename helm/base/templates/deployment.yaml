@@ -11,6 +11,7 @@ spec:
     metadata:
       labels:
         app: {{ .Release.Name }}
+        name: {{ .Release.Name }}
     spec:
       volumes:
         {{- if .Values.volumes }}

@@ -1,0 +1,17 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-sso
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`auth.hobroker.me`)
+      kind: Rule
+      services:
+        - name: traefik-sso
+          port: 4181
+      middlewares:
+        - name: traefik-sso
+  tls:
+    certResolver: letsencrypt

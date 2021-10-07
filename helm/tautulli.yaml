@@ -18,3 +18,10 @@ volumes:
 volumeMounts:
   - name: tautulli-config
     mountPath: "/config"
+
+ingressRoutes:
+  websecure:
+    match: Host(`tautulli.hobroker.me`)
+    port: 8181
+    middlewares:
+      - name: traefik-sso
