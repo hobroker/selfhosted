@@ -9,10 +9,12 @@ services:
   - type: LoadBalancer
     ports:
       - port: 8080
+        containerPort: 80
 
 ingressRoutes:
   websecure:
-    match: Host(`httpbin.hobroker.me`)
+    match: Host(`test.hobroker.me`)
     port: 8080
     middlewares:
-      - name: traefik-sso
+      - name: traefik-sso-forward-auth
+      - name: traefik-sso-rate-limit

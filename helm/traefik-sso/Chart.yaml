@@ -2,9 +2,10 @@ apiVersion: v2
 name: traefik-sso
 description: Traefik Forward Auth chart
 icon: https://
+home: https://github.com/hobroker/traefik-forward-auth
 type: application
 version: 0.1.0
-appVersion: "2"
+appVersion: "v2.3.0"
 dependencies:
   - name: base
     version: 1.0.0

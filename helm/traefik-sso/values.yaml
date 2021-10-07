@@ -1,7 +1,7 @@
 base:
   image:
-    repository: thomseddon/traefik-forward-auth
-    tag: 2
+    repository: ghcr.io/hobroker/traefik-forward-auth
+    tag: v2.3.0
     pullPolicy: IfNotPresent
 
   services:
@@ -10,8 +10,6 @@ base:
         - port: 4181
 
   env:
-    - name: INSECURE_COOKIE
-      value: "false"
     - name: COOKIE_DOMAIN
       value: hobroker.me
     - name: URL_PATH
@@ -20,6 +18,11 @@ base:
       value: auth.hobroker.me
     - name: WHITELIST
       value: igor.leahu24@gmail.com
+    - name: WHITELISTED_HEADERS
+      valueFrom:
+        secretKeyRef:
+          name: traefik-secret
+          key: WHITELISTED_HEADERS
     - name: PROVIDERS_GOOGLE_CLIENT_ID
       valueFrom:
         secretKeyRef:
