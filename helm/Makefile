@@ -4,6 +4,8 @@ help: ## Show this help message
 lint: ## Run linter
 	helm lint ./prometheus/
 	helm lint ./pomerium/
+	helm lint ./traefik/
+	helm lint ./traefik-sso/
 	helm lint ./base/ --values code-server.yaml
 	helm lint ./base/ --values grafana.yaml
 	helm lint ./base/ --values httpbin.yaml
