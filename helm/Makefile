@@ -2,7 +2,6 @@ help: ## Show this help message
 	@egrep '^(.+)\:\ ##\ (.+)' ${MAKEFILE_LIST} | column -t -c 2 -s ':#'
 
 lint: ## Run linter
-	helm lint ./prometheus/
 	helm lint ./pomerium/
 	helm lint ./traefik/
 	helm lint ./traefik-sso/
@@ -11,6 +10,7 @@ lint: ## Run linter
 	helm lint ./base/ --values httpbin.yaml
 	helm lint ./base/ --values jackett.yaml
 	helm lint ./base/ --values plex.yaml
+	helm lint ./base/ --values prometheus.yaml
 	helm lint ./base/ --values qbittorrent.yaml
 	helm lint ./base/ --values radarr.yaml
 	helm lint ./base/ --values sonarr.yaml
