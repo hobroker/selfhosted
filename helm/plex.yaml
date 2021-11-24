@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/plex
-  tag: version-1.24.3.5033-757abe6b4
+  tag: 1.24.5
   pullPolicy: IfNotPresent
 
 services:
@@ -39,6 +39,8 @@ volumeMounts:
 env:
   - name: UMASK
     value: "022"
+  - name: VERSION
+    value: "latest"
 
 ingressRoutes:
   websecure:

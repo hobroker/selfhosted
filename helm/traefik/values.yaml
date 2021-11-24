@@ -2,6 +2,8 @@ traefik:
   ports:
     traefik:
       expose: true
+    metrics:
+      expose: true
 
   deployment:
     additionalVolumes:

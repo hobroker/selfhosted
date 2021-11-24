@@ -1,0 +1,18 @@
+replicaCount: 1
+
+image:
+  repository: macropower/wakatime-exporter
+  tag: latest
+  pullPolicy: IfNotPresent
+
+services:
+  - type: LoadBalancer
+    ports:
+      - port: 9212
+
+env:
+  - name: WAKA_API_KEY
+    valueFrom:
+      secretKeyRef:
+        name: wakatime-exporter-secrets
+        key: WAKA_API_KEY
