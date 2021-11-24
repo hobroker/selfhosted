@@ -30,9 +30,8 @@ update-base: ## Update apps that use base chart
 	helm upgrade --install tautulli ./base/ --values tautulli.yaml
 
 update-prometheus: ## Update Prometheus
-	cd prometheus; \
-	  helm dependency update; \
-	  helm upgrade --install prometheus .
+	helm uninstall prometheus; \
+	  helm upgrade --install prometheus ./base/ --values prometheus.yaml
 
 update-pomerium: ## Update Pomerium
 	cd pomerium; \
