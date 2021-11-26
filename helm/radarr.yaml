@@ -3,7 +3,6 @@ replicaCount: 1
 image:
   repository: linuxserver/radarr
   tag: version-3.2.2.5080
-  pullPolicy: IfNotPresent
 
 services:
   - type: LoadBalancer

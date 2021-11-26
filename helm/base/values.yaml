@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository:
   tag:
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 services:
   - type: LoadBalancer

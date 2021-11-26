@@ -2,8 +2,7 @@ replicaCount: 1
 
 image:
   repository: macropower/wakatime-exporter
-  tag: latest
-  pullPolicy: IfNotPresent
+  tag: 0.1.0
 
 services:
   - type: LoadBalancer

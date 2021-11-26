@@ -3,7 +3,6 @@ replicaCount: 1
 image:
   repository: linuxserver/plex
   tag: 1.24.5
-  pullPolicy: IfNotPresent
 
 services:
   - type: LoadBalancer
