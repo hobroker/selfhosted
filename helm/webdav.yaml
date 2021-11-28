@@ -1,0 +1,41 @@
+replicaCount: 1
+
+image:
+  repository: ugeek/webdav
+  tag: amd64
+
+services:
+  - type: LoadBalancer
+    ports:
+      - port: 8185
+        containerPort: 80
+
+volumes:
+  - name: webdav-data
+    hostPath:
+      path: "/mnt/wdata"
+
+volumeMounts:
+  - name: webdav-data
+    mountPath: "/media"
+
+env:
+  - name: GID
+    value: "1000"
+  - name: UID
+    value: "1000"
+  - name: USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: webdav-secrets
+        key: username
+  - name: PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: webdav-secrets
+        key: password
+
+ingressRoutes:
+  websecure:
+    match: Host(`webdav.hobroker.me`)
+    port: 8185
