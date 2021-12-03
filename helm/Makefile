@@ -12,6 +12,7 @@ lint: ## Run linter
 	helm lint ./base/ --values prometheus.yaml
 	helm lint ./base/ --values qbittorrent.yaml
 	helm lint ./base/ --values radarr.yaml
+	helm lint ./base/ --values rsnapshot.yaml
 	helm lint ./base/ --values sonarr.yaml
 	helm lint ./base/ --values syncthing.yaml
 	helm lint ./base/ --values tautulli.yaml
