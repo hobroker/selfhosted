@@ -7,6 +7,7 @@ lint: ## Run linter
 	helm lint ./base/ --values code-server.yaml
 	helm lint ./base/ --values grafana.yaml
 	helm lint ./base/ --values httpbin.yaml
+	helm lint ./base/ --values home-assistant.yaml
 	helm lint ./base/ --values jackett.yaml
 	helm lint ./base/ --values plex.yaml
 	helm lint ./base/ --values prometheus.yaml
