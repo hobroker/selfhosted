@@ -12,6 +12,7 @@ lint: ## Run linter
 	helm lint ./base/ --values prometheus.yaml
 	helm lint ./base/ --values qbittorrent.yaml
 	helm lint ./base/ --values radarr.yaml
+	helm lint ./base/ --values rsnapshot.yaml
 	helm lint ./base/ --values sonarr.yaml
 	helm lint ./base/ --values syncthing.yaml
 	helm lint ./base/ --values tautulli.yaml
@@ -32,6 +33,10 @@ update-base: ## Update apps that use base chart
 update-prometheus: ## Update Prometheus
 	helm uninstall prometheus; \
 	  helm upgrade --install prometheus ./base/ --values prometheus.yaml
+
+update-rsnapshot: ## Update rsnapshot
+	helm uninstall rsnapshot; \
+	  helm upgrade --install rsnapshot ./base/ --values rsnapshot.yaml
 
 update-traefik: ## Update Traefik
 	cd traefik; \

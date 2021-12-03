@@ -1,0 +1,124 @@
+replicaCount: 1
+
+image:
+  repository: linuxserver/rsnapshot
+  tag: latest
+
+volumes:
+  - name: rsnapshot-config
+    hostPath:
+      path: "/appdata/rsnapshot"
+  - name: rsnapshot-data
+    hostPath:
+      path: "/mnt/wdata"
+  - name: rsnapshot-snapshots
+    hostPath:
+      path: "/mnt/wdata/rsnapshots"
+  - name: rsnapshot-configmap
+    configMap:
+      name: rsnapshot-configmap
+
+volumeMounts:
+  - name: rsnapshot-config
+    mountPath: "/config"
+  - name: rsnapshot-data
+    mountPath: "/data"
+  - name: rsnapshot-snapshots
+    mountPath: "/.snapshots"
+  - name: rsnapshot-configmap
+    subPath: crontab
+    mountPath: "/config/crontabs/root"
+  - name: rsnapshot-configmap
+    subPath: rsnapshot.conf
+    mountPath: "/config/rsnapshot.conf"
+  - name: rsnapshot-configmap
+    subPath: snap.sh
+    mountPath: "/config/snap.sh"
+
+env:
+  - name: TZ
+    value: "Europe/Chisinau"
+
+configmaps:
+  rsnapshot-configmap:
+    crontab: |-
+      # do daily/weekly/monthly maintenance
+      # min   hour    day     month   weekday command
+      */15    *       *       *       *       run-parts /etc/periodic/15min
+      0       *       *       *       *       run-parts /etc/periodic/hourly
+      0       2       *       *       *       run-parts /etc/periodic/daily
+      0       3       *       *       6       run-parts /etc/periodic/weekly
+      0       5       1       *       *       run-parts /etc/periodic/monthly
+
+      # rsnapshot examples
+      # run every 4 hours
+      0      */4      *       *       *       bash /config/snap.sh >> /config/.snap.log
+
+    rsnapshot.conf: |-
+      config_version	1.2
+
+      snapshot_root	/.snapshots/
+      cmd_cp		/bin/cp
+      cmd_rm		/bin/rm
+      cmd_rsync	/usr/bin/rsync
+      cmd_ssh	/usr/bin/ssh
+      cmd_logger	/usr/bin/logger
+      cmd_du		/usr/bin/du
+      cmd_rsnapshot_diff	/usr/bin/rsnapshot-diff
+
+      retain	hourly	6
+      retain	daily	7
+      retain	weekly	4
+      retain	monthly	12
+
+      verbose		2
+      loglevel	3
+      logfile	/config/rsnapshot.log
+      lockfile	/var/run/rsnapshot.pid
+      link_dest	1
+
+      backup	/data/photos/camera/		wdata/
+      backup	/data/photos/pictures		wdata/
+      backup	/data/photos/snapseed		wdata/
+
+    snap.sh: |-
+      #!/usr/bin/env bash
+
+      set -e
+
+      COUNTER_FILE="/config/.snap"
+      EVERY=6
+
+      # locals
+      _count=""
+
+      if test -f "$COUNTER_FILE"; then
+          _count=$(cat $COUNTER_FILE)
+      else
+        _count="1"
+        echo "$_count" > $COUNTER_FILE
+      fi
+
+      echo "$_count"
+
+      if [ "$(( _count % (EVERY*7*30) ))" -eq 0 ]; then
+        echo "> monthly"
+        rsnapshot monthly
+      fi
+
+      if [ "$(( _count % (EVERY*7) ))" -eq 0 ]; then
+        echo "> weekly"
+        rsnapshot weekly
+      fi
+
+      if [ "$(( _count % EVERY ))" -eq 0 ]; then
+        echo "> daily"
+        rsnapshot daily
+      fi
+
+      echo "> hourly"
+      rsnapshot hourly
+
+      echo "done"
+
+      echo $((_count+1)) > $COUNTER_FILE
