@@ -3,7 +3,6 @@ replicaCount: 1
 image:
   repository: linuxserver/plex
   tag: 1.24.5
-  pullPolicy: IfNotPresent
 
 services:
   - type: LoadBalancer
@@ -29,12 +28,17 @@ volumes:
   - name: plex-storage
     hostPath:
       path: "/storage"
+  - name: plex-pictures
+    hostPath:
+      path: "/mnt/wdata/photos"
 
 volumeMounts:
   - name: plex-config
     mountPath: "/config"
   - name: plex-storage
     mountPath: "/storage"
+  - name: plex-pictures
+    mountPath: "/photos"
 
 env:
   - name: UMASK

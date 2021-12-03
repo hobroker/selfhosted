@@ -2,8 +2,7 @@ replicaCount: 1
 
 image:
   repository: tautulli/tautulli
-  tag: v2.7.6
-  pullPolicy: IfNotPresent
+  tag: v2.7.7
 
 services:
   - type: LoadBalancer

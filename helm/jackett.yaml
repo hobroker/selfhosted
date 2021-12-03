@@ -2,8 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/jackett
-  tag: version-v0.18.887
-  pullPolicy: IfNotPresent
+  tag: 0.20.63
 
 services:
   - type: LoadBalancer

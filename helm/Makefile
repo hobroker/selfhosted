@@ -2,7 +2,6 @@ help: ## Show this help message
 	@egrep '^(.+)\:\ ##\ (.+)' ${MAKEFILE_LIST} | column -t -c 2 -s ':#'
 
 lint: ## Run linter
-	helm lint ./pomerium/
 	helm lint ./traefik/
 	helm lint ./traefik-sso/
 	helm lint ./base/ --values code-server.yaml
@@ -28,15 +27,11 @@ update-base: ## Update apps that use base chart
 	helm upgrade --install sonarr ./base/ --values sonarr.yaml
 	helm upgrade --install syncthing ./base/ --values syncthing.yaml
 	helm upgrade --install tautulli ./base/ --values tautulli.yaml
+	helm upgrade --install wakatime-exporter ./base/ --values wakatime-exporter.yaml
 
 update-prometheus: ## Update Prometheus
 	helm uninstall prometheus; \
 	  helm upgrade --install prometheus ./base/ --values prometheus.yaml
-
-update-pomerium: ## Update Pomerium
-	cd pomerium; \
-	  helm dependency update; \
-	  helm upgrade --install pomerium .
 
 update-traefik: ## Update Traefik
 	cd traefik; \

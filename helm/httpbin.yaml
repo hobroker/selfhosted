@@ -3,7 +3,6 @@ replicaCount: 1
 image:
   repository: kennethreitz/httpbin
   tag: latest
-  pullPolicy: IfNotPresent
 
 services:
   - type: LoadBalancer

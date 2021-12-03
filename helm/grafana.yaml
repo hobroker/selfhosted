@@ -2,8 +2,7 @@ replicaCount: 1
 
 image:
   repository: grafana/grafana
-  tag: 8.1.5
-  pullPolicy: IfNotPresent
+  tag: 8.2.5
 
 services:
   - type: LoadBalancer
