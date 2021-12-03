@@ -33,6 +33,10 @@ update-prometheus: ## Update Prometheus
 	helm uninstall prometheus; \
 	  helm upgrade --install prometheus ./base/ --values prometheus.yaml
 
+update-rsnapshot: ## Update rsnapshot
+	helm uninstall rsnapshot; \
+	  helm upgrade --install rsnapshot ./base/ --values rsnapshot.yaml
+
 update-traefik: ## Update Traefik
 	cd traefik; \
 	  helm dependency update; \
