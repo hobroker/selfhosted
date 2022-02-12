@@ -5,6 +5,8 @@ image:
   tag:
   pullPolicy: IfNotPresent
 
+nodeName: kira-pc
+
 services:
   - type: LoadBalancer
     suffix:

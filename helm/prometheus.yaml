@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: prom/prometheus
-  tag: v2.31.1
+  tag: v2.33.3
 
 services:
   - type: LoadBalancer
@@ -53,3 +53,10 @@ configmaps:
           static_configs:
             - targets:
                 - wakatime-exporter:9212
+        - job_name: rclone
+          static_configs:
+            - targets:
+                - 192.168.29.242:5572
+          basic_auth:
+            username: 'admin'
+            password: 'admin'

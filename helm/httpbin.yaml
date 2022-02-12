@@ -14,10 +14,10 @@ ingressRoutes:
   web:
     match: Host(`test.hobroker.me`)
     port: 8080
-#
-#  websecure:
-#    match: Host(`test.hobroker.me`)
-#    port: 8080
-#    middlewares:
+
+  websecure:
+    match: Host(`test.hobroker.me`)
+    port: 8080
+    middlewares:
 #      - name: traefik-sso-forward-auth
 #      - name: traefik-sso-rate-limit
