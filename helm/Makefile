@@ -26,6 +26,7 @@ update-base: ## Update apps that use base chart
 	helm upgrade --install qbittorrent ./base/ --values qbittorrent.yaml
 	helm upgrade --install radarr ./base/ --values radarr.yaml
 	helm upgrade --install sonarr ./base/ --values sonarr.yaml
+	helm upgrade --install rsnapshot ./base/ --values rsnapshot.yaml
 	helm upgrade --install syncthing ./base/ --values syncthing.yaml
 	helm upgrade --install tautulli ./base/ --values tautulli.yaml
 	helm upgrade --install wakatime-exporter ./base/ --values wakatime-exporter.yaml
@@ -42,6 +43,8 @@ update-traefik: ## Update Traefik
 	cd traefik; \
 	  helm dependency update; \
 	  helm upgrade --install traefik .
+
+update-traefik-sso: ## Update Traefik
 	cd traefik-sso; \
 	  helm dependency update; \
 	  helm upgrade --install traefik-sso .

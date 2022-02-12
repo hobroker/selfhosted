@@ -13,7 +13,7 @@ services:
 volumes:
   - name: webdav-data
     hostPath:
-      path: "/mnt/wdata"
+      path: "/storage"
 
 volumeMounts:
   - name: webdav-data
