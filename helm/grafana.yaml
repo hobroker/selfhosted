@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: grafana/grafana
-  tag: 8.3.5
+  tag: 9.0.7
 
 services:
   - type: LoadBalancer

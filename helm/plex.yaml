@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/plex
-  tag: 1.25.3
+  tag: 1.29.0
 
 services:
   - type: LoadBalancer
@@ -28,6 +28,9 @@ volumes:
   - name: plex-storage
     hostPath:
       path: "/storage"
+  - name: plex-storage2
+    hostPath:
+      path: "/mnt/onetb"
   - name: plex-pictures
     hostPath:
       path: "/mnt/wdata/photos"
@@ -37,6 +40,8 @@ volumeMounts:
     mountPath: "/config"
   - name: plex-storage
     mountPath: "/storage"
+  - name: plex-storage2
+    mountPath: "/storage2"
   - name: plex-pictures
     mountPath: "/photos"
 

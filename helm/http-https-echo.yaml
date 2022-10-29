@@ -1,11 +1,10 @@
 replicaCount: 1
 
 image:
-  repository: kennethreitz/httpbin
-  tag: latest
+  repository: mendhak/http-https-echo
+  tag: 24
 
 services:
   - type: LoadBalancer
     ports:
       - port: 8080
-        containerPort: 80

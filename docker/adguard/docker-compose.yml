@@ -4,11 +4,11 @@ services:
     image: adguard/adguardhome:v0.107.0-b.9
     restart: unless-stopped
     ports:
-      - 53:53
-      - 53:53/udp
-      - 67:67/udp
-      - 853:853
-      - 3001:80
+      - "53:53"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "853:853"
+      - "3001:80"
     volumes:
       - /appdata/adguard/work:/opt/adguardhome/work
       - /appdata/adguard/conf:/opt/adguardhome/conf

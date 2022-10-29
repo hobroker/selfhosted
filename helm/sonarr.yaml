@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/sonarr
-  tag: 3.0.6
+  tag: 3.0.8
 
 services:
   - type: LoadBalancer
@@ -13,9 +13,12 @@ volumes:
   - name: sonarr-config
     hostPath:
       path: "/appdata/k3s/sonarr"
-  - name: storage-tv
+  - name: storage
     hostPath:
       path: "/storage/tv-shows"
+  - name: storage2
+    hostPath:
+      path: "/mnt/onetb/tv-shows"
   - name: storage-downloads
     hostPath:
       path: "/storage/downloads"
@@ -23,8 +26,10 @@ volumes:
 volumeMounts:
   - name: sonarr-config
     mountPath: "/config"
-  - name: storage-tv
+  - name: storage
     mountPath: "/tv"
+  - name: storage2
+    mountPath: "/tv2"
   - name: storage-downloads
     mountPath: "/downloads"
 
