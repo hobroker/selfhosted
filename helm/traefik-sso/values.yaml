@@ -17,7 +17,10 @@ base:
     - name: AUTH_HOST
       value: auth.hobroker.me
     - name: WHITELIST
-      value: igor.leahu24@gmail.com
+      valueFrom:
+        secretKeyRef:
+          name: traefik-secret
+          key: WHITELIST
     - name: WHITELISTED_HEADERS
       valueFrom:
         secretKeyRef:
