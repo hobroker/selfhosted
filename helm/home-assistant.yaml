@@ -2,26 +2,54 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/home-assistant/home-assistant
-  tag: stable
+  tag: 2022.10.0.dev20220917
 
 services:
   - type: LoadBalancer
     ports:
       - port: 8123
-        containerPort: 8123
-
-ingressRoutes:
-  websecure:
-    match: Host(`home-assistant.hobroker.me`)
-    port: 8123
-    middlewares:
-      - name: traefik-sso
 
 volumes:
   - name: home-assistant-config
     hostPath:
-      path: "/appdata/home-assistant"
+      path: "/appdata/k3s/home-assistant"
+  - name: configmap
+    configMap:
+      name: home-assistant-configuration
 
 volumeMounts:
   - name: home-assistant-config
     mountPath: "/config"
+  - name: configmap
+    subPath: configuration.yaml
+    mountPath: "/config/configuration.yaml"
+
+ingressRoutes:
+  websecure:
+    match: Host(`home.hobroker.me`)
+    port: 8123
+    middlewares:
+      - name: traefik-sso-rate-limit
+
+configmaps:
+  home-assistant-configuration:
+    configuration.yaml: |-
+      default_config:
+      prometheus:
+        namespace: hass
+      tts:
+        - platform: google_translate
+      automation: !include automations.yaml
+      script: !include custom/scripts.yaml
+      scene: !include scenes.yaml
+      http:
+        use_x_forwarded_for: true
+        trusted_proxies:
+          - ::1
+          - 10.42.0.240
+          - 10.42.0.0/16
+
+      sensor: !include custom/sensor.yaml
+      mqtt: !include custom/mqtt.yaml
+      telegram_bot: !include custom/telegram_bot.yaml
+      influxdb: !include custom/influxdb.yaml
