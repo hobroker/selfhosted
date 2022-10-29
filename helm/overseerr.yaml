@@ -1,0 +1,27 @@
+replicaCount: 1
+
+image:
+  repository: linuxserver/overseerr
+  tag: 1.29.1
+
+services:
+  - type: LoadBalancer
+    ports:
+      - port: 5055
+        containerPort: 5055
+
+volumes:
+  - name: config
+    hostPath:
+      path: "/appdata/k3s/overseerr"
+
+volumeMounts:
+  - name: config
+    mountPath: "/config"
+
+ingressRoutes:
+  websecure:
+    match: Host(`overseerr.hobroker.me`)
+    port: 5055
+    middlewares:
+      - name: traefik-sso
