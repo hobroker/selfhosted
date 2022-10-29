@@ -1,0 +1,44 @@
+replicaCount: 1
+
+image:
+  repository: adguard/adguardhome
+  tag: v0.108.0-b.11
+
+hostNetwork: true
+
+services:
+#  - type: LoadBalancer
+#    ports:
+#      - port: 3000
+#  - type: NodePort
+#    suffix: -discovery
+#    ports:
+#      - protocol: TCP
+#        port: 53
+#      - protocol: TCP
+#        port: 853
+#      - protocol: UDP
+#        port: 53
+#      - protocol: UDP
+#        port: 67
+
+volumes:
+  - name: adguard-conf
+    hostPath:
+      path: "/appdata/k3s/adguard/conf"
+  - name: adguard-work
+    hostPath:
+      path: "/appdata/k3s/adguard/work"
+
+volumeMounts:
+  - name: adguard-conf
+    mountPath: "/opt/adguardhome/conf"
+  - name: adguard-work
+    mountPath: "/opt/adguardhome/work"
+
+#ingressRoutes:
+#  websecure:
+#    match: Host(`adguard.hobroker.me`)
+#    port: 3000
+#    middlewares:
+#      - name: traefik-sso
