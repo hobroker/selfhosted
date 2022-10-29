@@ -9,12 +9,17 @@ spec:
       app: {{ .Release.Name }}
   template:
     metadata:
+      {{- if .Values.restartOnConfigChange }}
+      annotations:
+        checksum/config: {{ .Values.configmaps | toYaml | toString | sha256sum }}
+      {{- end }}
       labels:
         app: {{ .Release.Name }}
         name: {{ .Release.Name }}
     spec:
       {{- if .Values.nodeName }}
       nodeName: {{ .Values.nodeName }}
+      hostNetwork: {{ .Values.hostNetwork }}
       {{- end }}
       volumes:
         {{- if .Values.volumes }}
@@ -40,6 +45,10 @@ spec:
           args:
             {{- if .Values.args }}
               {{- toYaml .Values.args | nindent 12 }}
+            {{- end }}
+          command:
+            {{- if .Values.command }}
+              {{- toYaml .Values.command | nindent 12 }}
             {{- end }}
           ports:
             {{- range .Values.services }}

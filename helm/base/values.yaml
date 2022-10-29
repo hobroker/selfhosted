@@ -7,6 +7,8 @@ image:
 
 nodeName: kira-pc
 
+restartOnConfigChange: true
+
 services:
   - type: LoadBalancer
     suffix:
@@ -45,3 +47,5 @@ ingressRoutes:
 #    port: 80
 #    middlewares:
 #      - traefik-sso
+
+hostNetwork:
