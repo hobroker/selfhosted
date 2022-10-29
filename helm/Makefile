@@ -49,6 +49,11 @@ update-traefik-sso: ## Update Traefik
 	  helm dependency update; \
 	  helm upgrade --install traefik-sso .
 
+reinstall-traefik: ## Reinstall Traefik
+	helm uninstall traefik traefik-sso || echo "No traefik or traefik-sso installed"
+	make update-traefik
+	make update-traefik-sso
+
 update-all: ## Update all apps
 	make update-base
 	make update-pomerium
