@@ -6,4 +6,3 @@ spec:
   chain:
     middlewares:
       - name: {{ .Release.Name }}-forward-auth
-      - name: {{ .Release.Name }}-rate-limit
