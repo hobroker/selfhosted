@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/jackett
-  tag: 0.20.555
+  tag: 0.20.1685
 
 services:
   - type: LoadBalancer
