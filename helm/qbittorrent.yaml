@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/qbittorrent
-  tag: 4.4.0
+  tag: 4.4.3
 
 services:
   - type: LoadBalancer
