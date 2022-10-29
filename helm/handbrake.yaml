@@ -1,0 +1,24 @@
+replicaCount: 1
+
+image:
+  repository: jlesage/handbrake
+  tag: latest
+
+services:
+  - type: LoadBalancer
+    ports:
+      - port: 5800
+
+volumes:
+  - name: handbrake-config
+    hostPath:
+      path: "/appdata/k3s/handbrake"
+  - name: handbrake-storage
+    hostPath:
+      path: "/storage"
+
+volumeMounts:
+  - name: handbrake-config
+    mountPath: "/config"
+  - name: handbrake-storage
+    mountPath: "/storage"
