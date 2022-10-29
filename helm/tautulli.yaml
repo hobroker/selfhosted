@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: tautulli/tautulli
-  tag: v2.9.3
+  tag: v2.10.3
 
 services:
   - type: LoadBalancer
