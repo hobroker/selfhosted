@@ -45,14 +45,10 @@ configmaps:
           service: http://radarr:7878
         - hostname: qbittorrent.hobroker.me
           service: http://qbittorrent:8112
-        - hostname: plex.hobroker.me
-          service: http://plex:32400
         - hostname: home.hobroker.me
           service: http://home-assistant:8123
         - hostname: code.hobroker.me
           service: http://code-server:8433
         - hostname: tgmedia.hobroker.me
           service: http://tgmedia-api:3002
-        - hostname: hello.example.com
-          service: hello_world
         - service: http_status:404
