@@ -2,7 +2,9 @@ replicaCount: 1
 
 image:
   repository: prom/prometheus
-  tag: v2.33.3
+  tag: v2.37.0
+
+restartOnConfigChange: false
 
 services:
   - type: LoadBalancer
@@ -25,6 +27,13 @@ volumeMounts:
     subPath: prometheus.yml
     mountPath: "/etc/prometheus/prometheus.yml"
 
+ingressRoutes:
+  websecure:
+    match: Host(`prometheus.hobroker.me`)
+    port: 9090
+    middlewares:
+      - name: traefik-sso
+
 configmaps:
   prometheus-configmap:
     prometheus.yml: |-
@@ -40,11 +49,19 @@ configmaps:
           scrape_interval: 10s
           static_configs:
             - targets:
-                - 192.168.29.54:5000
+                - 192.168.29.60
         - job_name: grafana
           static_configs:
             - targets:
                 - grafana:5000
+        - job_name: node-exporter
+          static_configs:
+            - targets:
+                - prometheus-node-exporter:9100
+        - job_name: adguard
+          static_configs:
+            - targets:
+                - adguard-exporter:9617
         - job_name: traefik
           static_configs:
             - targets:
@@ -53,10 +70,21 @@ configmaps:
           static_configs:
             - targets:
                 - wakatime-exporter:9212
+        - job_name: hass
+          scrape_interval: 30s
+          metrics_path: /api/prometheus
+          bearer_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJkMTIxOTAxNmQwODc0YTdlYjFkOWU1OTlmOGYxMWRmZCIsImlhdCI6MTY2MDU1Mzg5OCwiZXhwIjoxOTc1OTEzODk4fQ.R7FpYl1JdbSzRwVmzBEvvrEddbNfq6pyy7H2ak0Qg0s"
+          static_configs:
+            - targets:
+                - home-assistant:8123
         - job_name: rclone
           static_configs:
             - targets:
                 - 192.168.29.242:5572
+        - job_name: cloudflared
+          static_configs:
+            - targets:
+                - cloudflared:2000
           basic_auth:
             username: 'admin'
             password: 'admin'

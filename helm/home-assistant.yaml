@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/home-assistant/home-assistant
-  tag: 2022.10.0.dev20220917
+  tag: 2022.11
 
 services:
   - type: LoadBalancer
