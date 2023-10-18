@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/bazarr
-  tag: 1.1.0
+  tag: 1.1.4
 
 services:
   - type: LoadBalancer

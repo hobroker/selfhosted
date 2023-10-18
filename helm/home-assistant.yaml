@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/home-assistant/home-assistant
-  tag: 2022.11
+  tag: 2023.7.2
 
 services:
   - type: LoadBalancer
@@ -35,6 +35,8 @@ configmaps:
   home-assistant-configuration:
     configuration.yaml: |-
       default_config:
+      lovelace:
+        mode: yaml
       prometheus:
         namespace: hass
       tts:

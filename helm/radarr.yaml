@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/radarr
-  tag: version-4.2.4.6635
+  tag: 4.6.4
 
 services:
   - type: LoadBalancer

@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/sonarr
-  tag: 3.0.8
+  tag: version-3.0.10.1567
 
 services:
   - type: LoadBalancer

@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/code-server
-  tag: 4.5.1
+  tag: 4.14.1
 
 services:
   - type: LoadBalancer
@@ -19,6 +19,12 @@ volumes:
   - name: compose-mount
     hostPath:
       path: "/home/kira/compose"
+  - name: downloads-mount
+    hostPath:
+      path: "/storage/downloads"
+  - name: ww-mount
+    hostPath:
+      path: "/storage/ww"
 
 volumeMounts:
   - name: code-server-config
@@ -27,6 +33,10 @@ volumeMounts:
     mountPath: "/appdata"
   - name: compose-mount
     mountPath: "/compose"
+  - name: downloads-mount
+    mountPath: "/downloads"
+  - name: ww-mount
+    mountPath: "/ww"
 
 ingressRoutes:
   websecure:

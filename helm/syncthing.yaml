@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/syncthing
-  tag: 1.20.4
+  tag: 1.23.6
 
 services:
   - type: LoadBalancer

@@ -10,13 +10,13 @@ services:
       - port: 5572
 
 command:
-  - rclone
-
-args:
-  - --rc-web-gui
-  - --rc-addr :5572
-  - --rc-user admin
-  - --rc-pass password
+  - "rclone rcd"
+#
+#args:
+#  - --rc-web-gui
+#  - --rc-addr :5572
+#  - --rc-user admin
+#  - --rc-pass password
 
 volumes:
   - name: rclone-config

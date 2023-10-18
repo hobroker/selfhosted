@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: cloudflare/cloudflared
-  tag: 2022.3.0
+  tag: 2023.7.1
 
 args:
   - tunnel
@@ -51,4 +51,10 @@ configmaps:
           service: http://code-server:8433
         - hostname: tgmedia.hobroker.me
           service: http://tgmedia-api:3002
+        - hostname: bazarr.hobroker.me
+          service: http://bazarr:6767
+        - hostname: biomarkers.hobroker.me
+          service: http://biomarkers:3005
+        - hostname: dashboard.hobroker.me
+          service: http://kubernetes-dashboard:9091
         - service: http_status:404
