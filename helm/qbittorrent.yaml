@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/qbittorrent
-  tag: 4.5.4
+  tag: 4.6.2
 
 services:
   - type: LoadBalancer
@@ -36,5 +36,3 @@ ingressRoutes:
   websecure:
     match: Host(`qbittorrent.hobroker.me`)
     port: 8112
-    middlewares:
-      - name: traefik-sso

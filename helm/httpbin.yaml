@@ -1,8 +1,8 @@
 replicaCount: 1
 
 image:
-  repository: kennethreitz/httpbin
-  tag: latest
+  repository: mendhak/http-https-echo
+  tag: 31
 
 services:
   - type: LoadBalancer

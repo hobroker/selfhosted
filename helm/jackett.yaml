@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/jackett
-  tag: 0.21.484
+  tag: 0.21.1280
 
 services:
   - type: LoadBalancer
@@ -27,5 +27,3 @@ ingressRoutes:
   websecure:
     match: Host(`jackett.hobroker.me`)
     port: 9117
-    middlewares:
-      - name: traefik-sso

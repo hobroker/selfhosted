@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: tautulli/tautulli
-  tag: v2.12.5
+  tag: v2.13.2
 
 services:
   - type: LoadBalancer
@@ -22,5 +22,3 @@ ingressRoutes:
   websecure:
     match: Host(`tautulli.hobroker.me`)
     port: 8181
-    middlewares:
-      - name: traefik-sso

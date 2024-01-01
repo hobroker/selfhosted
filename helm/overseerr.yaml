@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/overseerr
-  tag: 1.29.1
+  tag: 1.33.2
 
 services:
   - type: LoadBalancer
@@ -18,10 +18,3 @@ volumes:
 volumeMounts:
   - name: config
     mountPath: "/config"
-
-ingressRoutes:
-  websecure:
-    match: Host(`overseerr.hobroker.me`)
-    port: 5055
-    middlewares:
-      - name: traefik-sso

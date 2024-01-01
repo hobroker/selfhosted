@@ -23,5 +23,3 @@ ingressRoutes:
   websecure:
     match: Host(`organizr.hobroker.me`)
     port: 5002
-    middlewares:
-      - name: traefik-sso

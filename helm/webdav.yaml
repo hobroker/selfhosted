@@ -34,8 +34,3 @@ env:
       secretKeyRef:
         name: webdav-secrets
         key: password
-
-ingressRoutes:
-  websecure:
-    match: Host(`webdav.hobroker.me`)
-    port: 8185

@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/sonarr
-  tag: version-3.0.10.1567
+  tag: 4.0.0-develop
 
 services:
   - type: LoadBalancer
@@ -41,5 +41,3 @@ ingressRoutes:
   websecure:
     match: Host(`sonarr.hobroker.me`)
     port: 8989
-    middlewares:
-      - name: traefik-sso

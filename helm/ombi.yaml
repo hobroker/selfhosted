@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/ombi
-  tag: 4.22.5
+  tag: 4.43.5
 
 services:
   - type: LoadBalancer
@@ -22,10 +22,3 @@ waitForServices:
   - plex
   - sonarr
   - radarr
-
-ingressRoutes:
-  websecure:
-    match: Host(`ombi.hobroker.me`)
-    port: 3579
-    middlewares:
-      - name: traefik-sso

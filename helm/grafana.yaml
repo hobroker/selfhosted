@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: grafana/grafana
-  tag: 10.0.2
+  tag: 10.2.2
 
 services:
   - type: LoadBalancer
@@ -44,5 +44,3 @@ ingressRoutes:
   websecure:
     match: Host(`grafana.hobroker.me`)
     port: 5000
-    middlewares:
-      - name: traefik-sso

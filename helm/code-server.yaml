@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/code-server
-  tag: 4.14.1
+  tag: 4.19.1
 
 services:
   - type: LoadBalancer
@@ -42,5 +42,3 @@ ingressRoutes:
   websecure:
     match: Host(`code.hobroker.me`)
     port: 8443
-    middlewares:
-      - name: traefik-sso
