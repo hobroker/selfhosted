@@ -2,3 +2,5 @@
 .idea
 charts/test
 **/charts/*.tgz
+
+**/default_values.yaml

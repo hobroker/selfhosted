@@ -9,7 +9,6 @@ prometheus:
           resources:
             requests:
               storage: 5G
-
   ingress:
     enabled: true
     ingressClassName: traefik
@@ -25,23 +24,10 @@ grafana:
     hosts:
       - grafana.hobroker.me
   persistence:
-    type: pvc
     enabled: true
+    type: pvc
     storageClassName: local-path
-    size: 5G
+    size: 5Gi
 
 alertmanager:
-  ingress:
-    enabled: true
-    ingressClassName: traefik
-    hosts:
-      - alertmanager.hobroker.me
-  alertmanagerSpec:
-    storage:
-      volumeClaimTemplate:
-        spec:
-          storageClassName: local-path
-          accessModes: ["ReadWriteOnce"]
-          resources:
-            requests:
-              storage: 5G
+  enabled: false
