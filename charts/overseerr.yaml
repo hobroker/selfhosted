@@ -1,0 +1,20 @@
+replicaCount: 1
+
+image:
+  repository: linuxserver/overseerr
+  tag: 1.33.2
+
+services:
+  - type: LoadBalancer
+    ports:
+      - port: 5055
+        containerPort: 5055
+
+volumes:
+  - name: config
+    hostPath:
+      path: "/appdata/k3s/overseerr"
+
+volumeMounts:
+  - name: config
+    mountPath: "/config"

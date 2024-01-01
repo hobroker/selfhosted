@@ -1,0 +1,43 @@
+replicaCount: 1
+
+image:
+  repository: linuxserver/sonarr
+  tag: 4.0.0-develop
+
+services:
+  - type: LoadBalancer
+    ports:
+      - port: 8989
+
+volumes:
+  - name: sonarr-config
+    hostPath:
+      path: "/appdata/k3s/sonarr"
+  - name: storage
+    hostPath:
+      path: "/storage/tv-shows"
+  - name: storage2
+    hostPath:
+      path: "/mnt/onetb/tv-shows"
+  - name: storage-downloads
+    hostPath:
+      path: "/storage/downloads"
+
+volumeMounts:
+  - name: sonarr-config
+    mountPath: "/config"
+  - name: storage
+    mountPath: "/tv"
+  - name: storage2
+    mountPath: "/tv2"
+  - name: storage-downloads
+    mountPath: "/downloads"
+
+waitForServices:
+  - qbittorrent
+  - jackett
+
+ingressRoutes:
+  websecure:
+    match: Host(`sonarr.hobroker.me`)
+    port: 8989

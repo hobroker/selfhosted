@@ -1,0 +1,24 @@
+replicaCount: 1
+
+image:
+  repository: linuxserver/ombi
+  tag: 4.43.5
+
+services:
+  - type: LoadBalancer
+    ports:
+      - port: 3579
+
+volumes:
+  - name: config
+    hostPath:
+      path: "/appdata/k3s/ombi"
+
+volumeMounts:
+  - name: config
+    mountPath: "/config"
+
+waitForServices:
+  - plex
+  - sonarr
+  - radarr

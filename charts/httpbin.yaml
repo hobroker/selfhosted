@@ -1,0 +1,11 @@
+replicaCount: 1
+
+image:
+  repository: mendhak/http-https-echo
+  tag: 31
+
+services:
+  - type: LoadBalancer
+    ports:
+      - port: 8080
+        containerPort: 80

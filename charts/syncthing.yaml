@@ -1,0 +1,41 @@
+replicaCount: 1
+
+image:
+  repository: linuxserver/syncthing
+  tag: 1.26.1
+
+services:
+  - type: LoadBalancer
+    ports:
+      - port: 8384
+  - type: NodePort
+    suffix: -discovery
+    ports:
+      - protocol: TCP
+        port: 22000
+        containerPort: 22000
+      - protocol: UDP
+        port: 22000
+        containerPort: 22000
+      - protocol: UDP
+        port: 21027
+        containerPort: 21027
+
+volumes:
+  - name: syncthing-config
+    hostPath:
+      path: "/appdata/k3s/syncthing"
+  - name: syncthing-wdata
+    hostPath:
+      path: "/mnt/wdata"
+
+volumeMounts:
+  - name: syncthing-config
+    mountPath: "/config"
+  - name: syncthing-wdata
+    mountPath: "/mnt/wdata"
+
+ingressRoutes:
+  websecure:
+    match: Host(`syncthing.hobroker.me`)
+    port: 8384

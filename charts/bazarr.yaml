@@ -1,0 +1,28 @@
+replicaCount: 1
+
+image:
+  repository: linuxserver/bazarr
+  tag: 1.4.0
+
+services:
+  - type: LoadBalancer
+    ports:
+      - port: 6767
+
+volumes:
+  - name: bazarr-config
+    hostPath:
+      path: "/appdata/k3s/bazarr"
+  - name: bazarr-storage
+    hostPath:
+      path: "/storage"
+
+volumeMounts:
+  - name: bazarr-config
+    mountPath: "/config"
+  - name: bazarr-storage
+    mountPath: "/storage"
+
+waitForServices:
+  - sonarr
+  - radarr
