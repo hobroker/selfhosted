@@ -15,6 +15,9 @@ service:
 ports:
   traefik:
     expose: true
+  metrics:
+    expose: true
+    exposedPort: 9101
 
 deployment:
   additionalVolumes:
