@@ -1,6 +1,8 @@
 prometheus:
   prometheusSpec:
     retention: 3660d
+    podMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
     storageSpec:
       volumeClaimTemplate:
         spec:
