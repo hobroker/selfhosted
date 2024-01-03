@@ -1,10 +1,9 @@
 About `exporters`
 ===
-
-| Image               | Repository                                         |
-|---------------------|----------------------------------------------------|
-| `wakatime-exporter` | https://github.com/MacroPower/wakatime_exporter    |
-| `adguard-exporter`  | https://hub.docker.com/r/ebrianne/adguard-exporter |
+> | Image               | Repository                                         |
+> |---------------------|----------------------------------------------------|
+> | `wakatime-exporter` | https://github.com/MacroPower/wakatime_exporter    |
+> | `adguard-exporter`  | https://hub.docker.com/r/ebrianne/adguard-exporter |
 
 Installing/updating
 ===
@@ -25,6 +24,7 @@ Installing/updating
      adguard_password: "password"
      adguard_hostname: "hostname"
    ```
+
 </details>
 
 ```shell
@@ -47,6 +47,7 @@ helm upgrade --install wakatime-exporter ./base/ --values ./exporters/wakatime-e
    stringData:
      WAKA_API_KEY: "api_key"
    ```
+
 </details>
 
 ```shell
@@ -56,6 +57,6 @@ helm upgrade --install adguard-exporter ./base/ --values ./exporters/adguard-exp
 Helm values
 ===
 
-| chart     | values.yaml                                                                                            |
-|-----------|--------------------------------------------------------------------------------------------------------|
-| `base`    | https://github.com/hobroker/selfhosted/blob/master/charts/base/values.yaml |
+| chart  | values.yaml                                                                |
+|--------|----------------------------------------------------------------------------|
+| `base` | https://github.com/hobroker/selfhosted/blob/master/charts/base/values.yaml |
