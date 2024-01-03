@@ -21,10 +21,11 @@ spec:
       nodeName: {{ .Values.nodeName }}
       hostNetwork: {{ .Values.hostNetwork }}
       {{- end }}
+      {{- if .Values.volumes }}
       volumes:
-        {{- if .Values.volumes }}
-          {{- toYaml .Values.volumes | nindent 6}}
-        {{- end }}
+        {{- toYaml .Values.volumes | nindent 6}}
+      {{- end }}
+      {{- if .Values.waitForServices }}
       initContainers:
         {{- range .Values.waitForServices }}
         - name: wait-for-{{ . }}
@@ -38,25 +39,30 @@ spec:
                 sleep 2;
               done
         {{- end }}
+      {{- end }}
       containers:
         - name: {{ .Release.Name }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.securityContext }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- end }}
+          {{- if .Values.args }}
           args:
-            {{- if .Values.args }}
-              {{- toYaml .Values.args | nindent 12 }}
-            {{- end }}
+            {{- toYaml .Values.args | nindent 12 }}
+          {{- end }}
+          {{- if .Values.command }}
           command:
-            {{- if .Values.command }}
-              {{- toYaml .Values.command | nindent 12 }}
-            {{- end }}
+            {{- toYaml .Values.command | nindent 12 }}
+          {{- end }}
           ports:
             {{- range .Values.services }}
             {{- range .ports }}
+            {{- $protocol := .protocol | default "TCP" }}
             - containerPort: {{ .containerPort | default .port }}
               protocol: {{ .protocol | default "TCP" | quote }}
+              name: {{ .name }}
             {{- end }}
             {{- end }}
           env:
@@ -66,7 +72,7 @@ spec:
             {{- if .Values.env }}
               {{- toYaml .Values.env | nindent 12 }}
             {{- end }}
+          {{- if .Values.volumeMounts }}
           volumeMounts:
-            {{- if .Values.volumeMounts }}
-              {{- toYaml .Values.volumeMounts | nindent 12 }}
-            {{- end }}
+            {{- toYaml .Values.volumeMounts | nindent 12 }}
+          {{- end }}

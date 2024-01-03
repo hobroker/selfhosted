@@ -1,5 +1,7 @@
 replicaCount: 1
 
+namespace: self
+
 image:
   repository:
   tag:
@@ -12,10 +14,18 @@ restartOnConfigChange: true
 services:
 #  - type: LoadBalancer
 #    suffix:
+#    metadata:
 #    ports:
 #      - protocol: TCP
 #        port: 80
 #        containerPort: 80
+#        name: http
+
+serviceMonitor:
+  enabled: false
+#  endpoints:
+#  - port: http
+#    interval: 10s
 
 labels:
 
@@ -47,5 +57,3 @@ ingressRoutes:
 #    port: 80
 #    middlewares:
 #      - traefik-sso
-
-hostNetwork:

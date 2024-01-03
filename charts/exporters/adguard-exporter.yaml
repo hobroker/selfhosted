@@ -5,9 +5,16 @@ image:
   tag: v1.14
 
 services:
-  - type: LoadBalancer
+  - type: ClusterIP
     ports:
       - port: 9617
+        name: metrics
+
+serviceMonitor:
+  enabled: true
+  endpoints:
+    - port: metrics
+      interval: 30s
 
 env:
   - name: adguard_protocol
@@ -32,6 +39,6 @@ env:
   - name: server_port
     value: "9617"
   - name: interval
-    value: "15s"
+    value: "30s"
   - name: log_limit
     value: "10000"

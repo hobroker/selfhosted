@@ -5,9 +5,16 @@ image:
   tag: 0.1.0
 
 services:
-  - type: LoadBalancer
+  - type: ClusterIP
     ports:
-      - port: 9212
+      - name: metrics
+        port: 9212
+
+serviceMonitor:
+  enabled: true
+  endpoints:
+    - port: metrics
+      interval: 1m
 
 env:
   - name: WAKA_API_KEY
