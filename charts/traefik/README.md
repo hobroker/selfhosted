@@ -15,4 +15,3 @@ Helm values
 | chart     | values.yaml                                                                   |
 |-----------|-------------------------------------------------------------------------------|
 | `traefik` | https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml |
-

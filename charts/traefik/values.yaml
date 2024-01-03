@@ -20,7 +20,12 @@ ports:
     exposedPort: 9101
 
 metrics:
-  prometheus: null
+  prometheus:
+    disableAPICheck: true
+    service:
+      enabled: true
+    serviceMonitor:
+      jobLabel: traefik
 
 deployment:
   additionalVolumes:
