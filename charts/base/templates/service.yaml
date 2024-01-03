@@ -7,6 +7,11 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ $serviceName }}
+  labels:
+    app: {{ $releaseName }}
+  {{- if .metadata }}
+  {{- toYaml .metadata | nindent 2 }}
+  {{- end }}
 spec:
   type: {{ .type }}
   selector:
