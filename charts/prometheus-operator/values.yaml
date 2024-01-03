@@ -33,3 +33,9 @@ grafana:
 
 alertmanager:
   enabled: false
+
+defaultRules:
+  create: true
+  rules:
+    alertmanager: false
+    windows: false
