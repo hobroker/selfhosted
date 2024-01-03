@@ -62,7 +62,7 @@ spec:
             {{- $protocol := .protocol | default "TCP" }}
             - containerPort: {{ .containerPort | default .port }}
               protocol: {{ .protocol | default "TCP" | quote }}
-              name: {{ $protocol | lower }}-{{ .containerPort | default .port }}
+              name: {{ .name }}
             {{- end }}
             {{- end }}
           env:

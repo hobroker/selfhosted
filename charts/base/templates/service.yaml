@@ -19,11 +19,9 @@ spec:
   ports:
     {{- $serviceType := .type }}
     {{- range .ports }}
-    {{- $containerPort := .containerPort | default .port }}
-    {{- $protocol := .protocol | default "TCP" }}
-    - name: {{ $protocol | lower }}-{{ $containerPort }}
-      protocol: {{ $protocol | quote }}
-      targetPort: {{ $containerPort }}
+    - name: {{ .name  }}
+      protocol: {{ .protocol | default "TCP" | quote }}
+      targetPort: {{ .containerPort | default .port }}
       port: {{ .port }}
       {{- if eq $serviceType "NodePort" }}
       nodePort: {{ .port }}

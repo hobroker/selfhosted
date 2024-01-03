@@ -22,8 +22,7 @@ services:
 #        name: http
 
 serviceMonitor:
-  release: prometheus-operator
-#  enabled: true
+  enabled: false
 #  endpoints:
 #  - port: http
 #    interval: 10s
