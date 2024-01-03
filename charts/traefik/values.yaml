@@ -19,6 +19,9 @@ ports:
     expose: true
     exposedPort: 9101
 
+metrics:
+  prometheus: null
+
 deployment:
   additionalVolumes:
     - name: traefik-acme
