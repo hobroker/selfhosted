@@ -5,9 +5,15 @@ image:
   tag: v1.14
 
 services:
-  - type: LoadBalancer
+  - type: ClusterIP
     ports:
       - port: 9617
+        name: http
+
+serviceMonitor:
+  enabled: true
+  endpoints:
+    - port: http
 
 env:
   - name: adguard_protocol
