@@ -8,13 +8,16 @@ services:
   - type: LoadBalancer
     ports:
       - port: 8096
+        name: web
   - type: NodePort
     suffix: -discovery
     ports:
       - protocol: UDP
         port: 7359
+        name: udp-7359
       - protocol: UDP
         port: 1900
+        name: udp-1900
 
 volumes:
   - name: jellyfin-config
