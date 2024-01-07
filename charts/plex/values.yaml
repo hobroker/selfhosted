@@ -8,17 +8,22 @@ services:
   - type: LoadBalancer
     ports:
       - port: 32400
+        name: http
         containerPort: 32400
   - type: NodePort
     suffix: -discovery
     ports:
       - protocol: UDP
+        name: udp-32410
         port: 32410
       - protocol: UDP
+        name: udp-32412
         port: 32412
       - protocol: UDP
+        name: udp-32413
         port: 32413
       - protocol: UDP
+        name: udp-32414
         port: 32414
 
 volumes:
