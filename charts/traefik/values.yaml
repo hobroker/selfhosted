@@ -18,6 +18,9 @@ ports:
   metrics:
     expose: true
     exposedPort: 9101
+  websecure:
+    http3:
+      enabled: true
 
 metrics:
   prometheus:
@@ -59,3 +62,7 @@ env:
 logs:
   general:
     level: INFO
+
+providers:
+  kubernetesCRD:
+    allowCrossNamespace: true
