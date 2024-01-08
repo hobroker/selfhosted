@@ -33,7 +33,7 @@ persistence:
   source-downloads:
     enabled: true
     type: hostPath
-    hostPath: /appdata
+    hostPath: /storage/downloads
     globalMounts:
       - path: /downloads
   source-storage-ww:

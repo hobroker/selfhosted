@@ -10,7 +10,10 @@ Installing/updating
 helm upgrade --install radarr bjw-s/app-template -f media/radarr/values.yaml
 ```
 
-### Assumptions
-- folder `/config` will be mounted as `hostPath` to `/appdata/k3s/radarr`
-- folder `/movies` will be mounted as `hostPath` to `/storage/movies`
-- folder `/downloads` will be mounted as `hostPath` to `/storage/downloads`
+### Host Volumes
+
+| hostPath              | containerPath |
+|-----------------------|---------------|
+| `/appdata/k3s/radarr` | `/config`     |
+| `/storage/movies`     | `/movies`     |
+| `/storage/downloads`  | `/downloads`  |

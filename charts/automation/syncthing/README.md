@@ -10,6 +10,9 @@ Installing/updating
 helm upgrade --install syncthing bjw-s/app-template -f automation/syncthing/values.yaml
 ```
 
-### Assumptions
-- folder `/config` will be mounted as `hostPath` to `/appdata/k3s/syncthing`
-- folder `/mnt/wdata` will be mounted as `hostPath` to `/mnt/wdata`
+### Host Volumes
+
+| hostPath                 | containerPath |
+|--------------------------|---------------|
+| `/appdata/k3s/syncthing` | `/config`     |
+| `/mnt/wdata`             | `/mnt/wdata`  |

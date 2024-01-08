@@ -22,5 +22,5 @@ Installing/updating
 > </details>
 
 ```shell
-helm upgrade --install wakatime-exporter ./base/ --values monitoring/wakatime-exporter/values.yaml
+helm upgrade --install wakatime-exporter bjw-s/app-template -f monitoring/wakatime-exporter/values.yaml
 ```

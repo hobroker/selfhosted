@@ -10,7 +10,10 @@ Installing/updating
 helm upgrade --install bazarr bjw-s/app-template -f media/bazarr/values.yaml
 ```
 
-### Assumptions
-- folder `/config` will be mounted as `hostPath` to `/appdata/k3s/bazarr`
-- folder `/storage` will be mounted as `hostPath` to `/storage`
-- folder `/storage2` will be mounted as `hostPath` to `/mnt/onetb`
+### Host Volumes
+
+| hostPath              | containerPath |
+|-----------------------|---------------|
+| `/appdata/k3s/bazarr` | `/config`     |
+| `/storage`            | `/storage`    |
+| `/mnt/onetb`          | `/storage2`   |

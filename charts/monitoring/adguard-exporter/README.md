@@ -25,5 +25,5 @@ Installing/updating
 > </details>
 
 ```shell
-helm upgrade --install adguard-exporter ./base/ --values monitoring/adguard-exporter/values.yaml
+helm upgrade --install adguard-exporter bjw-s/app-template -f monitoring/adguard-exporter/values.yaml
 ```

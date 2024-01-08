@@ -10,6 +10,9 @@ Installing/updating
 helm upgrade --install jackett bjw-s/app-template -f downloads/jackett/values.yaml
 ```
 
-### Assumptions
-- folder `/config/Jackett` will be mounted as `hostPath` to `/appdata/k3s/jackett`
-- folder `/blackhole` will be mounted as `hostPath` to `/storage/downloads/torrents`
+### Host Volumes
+
+| hostPath                      | containerPath     |
+|-------------------------------|-------------------|
+| `/appdata/k3s/jackett`        | `/config/Jackett` |
+| `/storage/downloads/torrents` | `/blackhole`      |

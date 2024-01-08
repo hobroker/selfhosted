@@ -10,7 +10,10 @@ Installing/updating
 helm upgrade --install qbittorrent bjw-s/app-template -f downloads/qbittorrent/values.yaml
 ```
 
-### Assumptions
-- folder `/config` will be mounted as `hostPath` to `/appdata/k3s/qbittorrent`
-- folder `/blackhole` will be mounted as `hostPath` to `/storage/downloads/torrents`
-- folder `/downloads` will be mounted as `hostPath` to `/storage/downloads`
+### Host Volumes
+
+| hostPath                      | containerPath |
+|-------------------------------|---------------|
+| `/appdata/k3s/qbittorrent`    | `/config`     |
+| `/storage/downloads/torrents` | `/blackhole`  |
+| `/storage/downloads`          | `/downloads`  |

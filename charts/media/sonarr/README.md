@@ -10,8 +10,11 @@ Installing/updating
 helm upgrade --install sonarr bjw-s/app-template -f media/sonarr/values.yaml
 ```
 
-### Assumptions
-- folder `/config` will be mounted as `hostPath` to `/appdata/k3s/sonarr`
-- folder `/tv` will be mounted as `hostPath` to `/storage/tv-shows`
-- folder `/tv2` will be mounted as `hostPath` to `/mnt/onetb/tv-shows`
-- folder `/downloads` will be mounted as `hostPath` to `/storage/downloads`
+### Host Volumes
+
+| hostPath              | containerPath |
+|-----------------------|---------------|
+| `/appdata/k3s/sonarr` | `/config`     |
+| `/storage/tv-shows`   | `/tv`         |
+| `/mnt/onetb/tv-shows` | `/tv2`        |
+| `/storage/downloads`  | `/downloads`  |
