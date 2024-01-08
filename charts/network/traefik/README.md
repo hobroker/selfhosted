@@ -13,12 +13,12 @@ kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.10/docs/co
 kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.10/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml
 
 $ Install Traefik
-helm upgrade --install traefik traefik/traefik --values traefik/values.yaml --namespace=kube-system
+helm upgrade --install traefik traefik/traefik --values network/traefik/values.yaml --namespace=kube-system
 ```
 
 ### Middlewares
 ```shell
-kubectl apply -f ./traefik/gzip-middleware.yaml
+kubectl apply -f network/traefik/middlewares/gzip-middleware.yaml
 ```
 
 Helm values

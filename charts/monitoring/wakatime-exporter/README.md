@@ -22,5 +22,5 @@ Installing/updating
 > </details>
 
 ```shell
-helm upgrade --install wakatime-exporter ./base/ --values monitoring/wakatime-exporter.yaml
+helm upgrade --install wakatime-exporter ./base/ --values monitoring/wakatime-exporter/values.yaml
 ```

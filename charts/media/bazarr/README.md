@@ -11,6 +11,6 @@ helm upgrade --install bazarr bjw-s/app-template -f media/bazarr/values.yaml
 ```
 
 ### Assumptions
-- folder `/config/Jackett` will be mounted as `hostPath` to `/appdata/k3s/bazarr`
+- folder `/config` will be mounted as `hostPath` to `/appdata/k3s/bazarr`
 - folder `/storage` will be mounted as `hostPath` to `/storage`
 - folder `/storage2` will be mounted as `hostPath` to `/mnt/onetb`

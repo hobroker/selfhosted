@@ -1,0 +1,147 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: linuxserver/rsnapshot
+          tag: 1.4.3
+          pullPolicy: IfNotPresent
+        env:
+          - name: TZ
+            value: "Europe/Chisinau"
+          - name: MESSENGER_BASE_URL
+            value: "http://messenger:8182"
+
+service:
+  main:
+    enabled: false
+
+persistence:
+  config:
+    enabled: true
+    type: hostPath
+    hostPath: /appdata/rsnapshot
+    globalMounts:
+      - path: /config
+  data:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/wdata
+    globalMounts:
+      - path: /data
+  snapshots:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/wdata/rsnapshots
+    globalMounts:
+      - path: /.snapshots
+  configmap:
+    type: configMap
+    name: |-
+      {{- (include "bjw-s.common.lib.chart.names.fullname" $) -}}-config
+    advancedMounts:
+      main:
+        main:
+          - path: /config/crontabs/root
+            subPath: crontab
+          - path: /config/rsnapshot.conf
+            subPath: rsnapshot.conf
+          - path: /config/snap.sh
+            subPath: snap.sh
+          - path: /config/custom-cont-init.d/31-add-curl
+            subPath: add-curl
+
+configMaps:
+  config:
+    enabled: true
+    data:
+      crontab: |
+        # do daily/weekly/monthly maintenance
+        # min   hour    day     month   weekday command
+        */15    *       *       *       *       run-parts /etc/periodic/15min
+        0       *       *       *       *       run-parts /etc/periodic/hourly
+        0       2       *       *       *       run-parts /etc/periodic/daily
+        0       3       *       *       6       run-parts /etc/periodic/weekly
+        0       5       1       *       *       run-parts /etc/periodic/monthly
+        
+        # rsnapshot examples
+        # run every 4 hours
+        0      */4      *       *       *       bash /config/snap.sh >> /config/.snap.log
+
+      rsnapshot.conf: |
+        config_version	1.2
+        
+        snapshot_root	/.snapshots/
+        cmd_cp		/bin/cp
+        cmd_rm		/bin/rm
+        cmd_rsync	/usr/bin/rsync
+        cmd_ssh	/usr/bin/ssh
+        cmd_logger	/usr/bin/logger
+        cmd_du		/usr/bin/du
+        cmd_rsnapshot_diff	/usr/bin/rsnapshot-diff
+        
+        retain	hourly	6
+        retain	daily	7
+        retain	weekly	4
+        retain	monthly	12
+        
+        verbose	2
+        loglevel	3
+        logfile	/config/rsnapshot.log
+        lockfile	/var/run/rsnapshot.pid
+        link_dest	0
+        
+        backup	/data/photos/camera/		wdata/
+        backup	/data/photos/pictures		wdata/
+        backup	/data/photos/snapseed		wdata/
+
+      snap.sh: |
+        #!/usr/bin/env bash
+        
+        set -e
+        
+        EVERY=6
+        
+        # locals
+        _count=$(curl -s "$MESSENGER_BASE_URL/gcs/rsnapshot/1/increment")
+        
+        log() {
+          echo "> $1"
+          curl -s -G "$MESSENGER_BASE_URL/telegram/rsnapshot" --data-urlencode "data=running backup: $1"
+        }
+        
+        echo "$(date) - $_count"
+        
+        if [ "$(( _count % (EVERY*7*30*12) ))" -eq 0 ]; then
+          log yearly
+          rsnapshot yearly
+        fi
+        
+        if [ "$(( _count % (EVERY*7*30) ))" -eq 0 ]; then
+          log monthly
+          rsnapshot monthly
+        fi
+        
+        if [ "$(( _count % (EVERY*7) ))" -eq 0 ]; then
+          log weekly
+          rsnapshot weekly
+        fi
+        
+        if [ "$(( _count % EVERY ))" -eq 0 ]; then
+          log daily
+          rsnapshot daily
+        fi
+        
+        log hourly
+        rsnapshot hourly
+        
+        echo "$(date) - done"
+
+      add-curl: |
+        #!/usr/bin/with-contenv bash
+        apk add curl
+        echo $MESSENGER_BASE_URL
+        curl -s -G "$MESSENGER_BASE_URL/telegram/rsnapshot" --data-urlencode "data=started"
