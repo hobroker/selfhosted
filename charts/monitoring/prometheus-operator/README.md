@@ -7,7 +7,7 @@ Installing/updating
 ===
 
 ```shell
-helm upgrade --install prometheus-operator prometheus-community/kube-prometheus-stack --values prometheus-operator/values.yaml --namespace monitoring
+helm upgrade --install prometheus-operator prometheus-community/kube-prometheus-stack --values metrics/prometheus-operator/values.yaml --namespace monitoring
 ```
 
 Helm values

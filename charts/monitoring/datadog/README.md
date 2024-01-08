@@ -11,7 +11,7 @@ helm upgrade --install datadog-operator datadog/datadog-operator --namespace mon
 kubectl create secret generic datadog-secret --from-literal api-key=<DATADOG_API_KEY> --from-literal app-key=<DATADOG_APP_KEY> --namespace monitoring
 
 # configure the agent
-kubectl apply -f charts/datadog/datadog-agent.yaml --namespace monitoring
+kubectl apply -f metrics/datadog/datadog-agent.yaml --namespace monitoring
 ```
 
 Extra configmap
