@@ -1,0 +1,53 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: linuxserver/qbittorrent
+          tag: 4.6.2
+          pullPolicy: IfNotPresent
+        env:
+          - name: WEBUI_PORT
+            value: "8112"
+
+service:
+  main:
+    type: LoadBalancer
+    ports:
+      http:
+        port: 8112
+
+persistence:
+  config:
+    enabled: true
+    type: hostPath
+    hostPath: /appdata/k3s/qbittorrent
+    globalMounts:
+      - path: /config
+  blackhole:
+    enabled: true
+    type: hostPath
+    hostPath: /storage/downloads/torrents
+    globalMounts:
+      - path: /blackhole
+  downloads:
+    enabled: true
+    type: hostPath
+    hostPath: /storage/downloads
+    globalMounts:
+      - path: /downloads
+
+ingress:
+  main:
+    enabled: true
+    ingressClassName: "traefik"
+    hosts:
+      - host: qbittorrent.hobroker.me
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              name: main
