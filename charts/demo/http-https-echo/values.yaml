@@ -1,0 +1,19 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: mendhak/http-https-echo
+          tag: 31
+          pullPolicy: IfNotPresent
+
+service:
+  main:
+    type: LoadBalancer
+    ports:
+      http:
+        port: 8080
+        targetPort: 80
