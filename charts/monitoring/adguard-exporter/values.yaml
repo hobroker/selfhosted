@@ -1,44 +1,33 @@
-replicaCount: 1
+defaultPodOptions:
+  automountServiceAccountToken: false
 
-image:
-  repository: ebrianne/adguard-exporter
-  tag: v1.14
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ebrianne/adguard-exporter
+          tag: v1.14
+          pullPolicy: IfNotPresent
+        env:
+          adguard_protocol: "http"
+          adguard_port: "3000"
+          server_port: "9617"
+          interval: "30s"
+          log_limit: "10000"
+        envFrom:
+          - secretRef:
+              name: adguard-exporter-secrets
 
-services:
-  - type: ClusterIP
+service:
+  main:
+    type: ClusterIP
     ports:
-      - port: 9617
-        name: metrics
+      http:
+        port: 9617
 
 serviceMonitor:
-  enabled: true
-  endpoints:
-    - port: metrics
-      interval: 30s
-
-env:
-  - name: adguard_protocol
-    value: "http"
-  - name: adguard_hostname
-    valueFrom:
-      secretKeyRef:
-        name: adguard-exporter-secrets
-        key: adguard_hostname
-  - name: adguard_port
-    value: "3000"
-  - name: adguard_username
-    valueFrom:
-      secretKeyRef:
-        name: adguard-exporter-secrets
-        key: adguard_username
-  - name: adguard_password
-    valueFrom:
-      secretKeyRef:
-        name: adguard-exporter-secrets
-        key: adguard_password
-  - name: server_port
-    value: "9617"
-  - name: interval
-    value: "30s"
-  - name: log_limit
-    value: "10000"
+  main:
+    enabled: true
+    endpoints:
+      - port: http

@@ -1,6 +1,9 @@
 About `adguard-exporter`
 ===
-Docs: https://hub.docker.com/r/ebrianne/adguard-exporter
+| Docs                 | URL                                                    |
+|----------------------|--------------------------------------------------------|
+| `bjw-s/app-template` | https://bjw-s.github.io/helm-charts/docs/app-template/ |
+| `adguard-exporter`   | https://hub.docker.com/r/ebrianne/adguard-exporter     |
 
 Installing/updating
 ===

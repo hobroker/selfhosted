@@ -32,7 +32,20 @@ grafana:
     size: 5Gi
 
 alertmanager:
-  enabled: false
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - alertmanager.hobroker.me
+  alertmanagerSpec:
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: local-path
+          accessModes: [ "ReadWriteOnce" ]
+          resources:
+            requests:
+              storage: 5G
 
 defaultRules:
   create: true
