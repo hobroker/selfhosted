@@ -6,19 +6,7 @@ Installing/updating
 ===
 
 ```shell
-# Install Traefik Resource Definitions
-kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.10/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
-
-# Install RBAC for Traefik
-kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.10/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml
-
-$ Install Traefik
-helm upgrade --install traefik traefik/traefik -f network/traefik/values.yaml --namespace=kube-system
-```
-
-### Middlewares
-```shell
-kubectl apply -f network/traefik/middlewares/gzip-middleware.yaml
+helmfile -f network/traefik/helmfile.yaml
 ```
 
 Helm values
