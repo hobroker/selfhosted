@@ -10,7 +10,7 @@ Installing/updating
 helm upgrade --install prowlarr bjw-s/app-template -f downloads/prowlarr/values.yaml
 ```
 
-### Host Volumes
+### Assumptions
 
 | hostPath                      | containerPath |
 |-------------------------------|---------------|
