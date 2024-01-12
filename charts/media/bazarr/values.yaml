@@ -1,0 +1,38 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: linuxserver/bazarr
+          tag: 1.4.0
+          pullPolicy: IfNotPresent
+
+service:
+  main:
+    type: LoadBalancer
+    ports:
+      http:
+        port: 6767
+
+persistence:
+  config:
+    enabled: true
+    type: hostPath
+    hostPath: /appdata/k3s/bazarr
+    globalMounts:
+      - path: /config
+  storage:
+    enabled: true
+    type: hostPath
+    hostPath: /storage
+    globalMounts:
+      - path: /storage
+  storage2:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/onetb
+    globalMounts:
+      - path: /storage2

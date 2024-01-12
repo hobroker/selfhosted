@@ -1,0 +1,33 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ebrianne/adguard-exporter
+          tag: v1.14
+          pullPolicy: IfNotPresent
+        env:
+          adguard_protocol: "http"
+          adguard_port: "3000"
+          server_port: "9617"
+          interval: "30s"
+          log_limit: "10000"
+        envFrom:
+          - secretRef:
+              name: adguard-exporter-secrets
+
+service:
+  main:
+    type: ClusterIP
+    ports:
+      http:
+        port: 9617
+
+serviceMonitor:
+  main:
+    enabled: true
+    endpoints:
+      - port: http

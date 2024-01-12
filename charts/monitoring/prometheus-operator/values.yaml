@@ -1,0 +1,54 @@
+prometheus:
+  prometheusSpec:
+    retention: 3660d
+    podMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: local-path
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 5G
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - prometheus.hobroker.me
+
+grafana:
+  adminUser: admin
+  adminPassword: admin
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - grafana.hobroker.me
+  persistence:
+    enabled: true
+    type: pvc
+    storageClassName: local-path
+    size: 5Gi
+
+alertmanager:
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - alertmanager.hobroker.me
+  alertmanagerSpec:
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: local-path
+          accessModes: [ "ReadWriteOnce" ]
+          resources:
+            requests:
+              storage: 5G
+
+defaultRules:
+  create: true
+  rules:
+    alertmanager: false
+    windows: false

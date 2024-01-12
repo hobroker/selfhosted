@@ -1,0 +1,56 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: linuxserver/code-server
+          tag: 4.19.1
+          pullPolicy: IfNotPresent
+
+service:
+  main:
+    type: LoadBalancer
+    ports:
+      http:
+        port: 8443
+
+persistence:
+  config:
+    enabled: true
+    type: hostPath
+    hostPath: /appdata/k3s/code-server
+    globalMounts:
+      - path: /config
+  source-appdata:
+    enabled: true
+    type: hostPath
+    hostPath: /appdata
+    globalMounts:
+      - path: /appdata
+  source-downloads:
+    enabled: true
+    type: hostPath
+    hostPath: /storage/downloads
+    globalMounts:
+      - path: /downloads
+  source-storage-ww:
+    enabled: true
+    type: hostPath
+    hostPath: /storage/ww
+    globalMounts:
+      - path: /storage/ww
+
+ingress:
+  main:
+    enabled: true
+    ingressClassName: "traefik"
+    hosts:
+      - host: code.hobroker.me
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              name: main

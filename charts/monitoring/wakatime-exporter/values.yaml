@@ -1,0 +1,28 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: macropower/wakatime-exporter
+          tag: 0.1.0
+          pullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+              name: wakatime-exporter-secrets
+
+service:
+  main:
+    type: ClusterIP
+    ports:
+      http:
+        port: 9212
+
+serviceMonitor:
+  main:
+    enabled: true
+    endpoints:
+      - port: http
+        interval: 1m

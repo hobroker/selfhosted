@@ -1,0 +1,53 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: linuxserver/plex
+          tag: 1.32.8
+          pullPolicy: IfNotPresent
+        env:
+          PGID: "1000"
+          PUID: "1000"
+
+service:
+  main:
+    type: LoadBalancer
+    ports:
+      http:
+        port: 32400
+
+persistence:
+  config:
+    enabled: true
+    type: hostPath
+    hostPath: /appdata/k3s/plex
+    globalMounts:
+      - path: /config
+  storage:
+    enabled: true
+    type: hostPath
+    hostPath: /storage
+    globalMounts:
+      - path: /storage
+  storage2:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/onetb
+    globalMounts:
+      - path: /storage2
+
+ingress:
+  main:
+    enabled: true
+    ingressClassName: "traefik"
+    hosts:
+      - host: plex.hobroker.me
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              name: main
