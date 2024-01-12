@@ -10,8 +10,9 @@ controllers:
           tag: 4.6.2
           pullPolicy: IfNotPresent
         env:
-          - name: WEBUI_PORT
-            value: "8112"
+          PGID: "1000"
+          PUID: "1000"
+          WEBUI_PORT: "8112"
 
 service:
   main:

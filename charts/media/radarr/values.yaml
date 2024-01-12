@@ -9,6 +9,31 @@ controllers:
           repository: linuxserver/radarr
           tag: 5.2.6
           pullPolicy: IfNotPresent
+        env:
+          PGID: "1000"
+          PUID: "1000"
+    initContainers:
+      wait-for-service:
+        image:
+          repository: ghcr.io/hobroker/wait-for-service
+          tag: latest
+        args: [ "qbittorrent", "prowlarr" ]
+  metrics:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/onedr0p/exportarr
+          tag: v1.5.3
+          pullPolicy: IfNotPresent
+        args: [ "radarr" ]
+        env:
+          - name: URL
+            value: "http://radarr:7878"
+          - name: APIKEY
+            valueFrom:
+              secretKeyRef:
+                name: exportarr-radarr-secret
+                key: APIKEY
 
 service:
   main:
@@ -16,6 +41,20 @@ service:
     ports:
       http:
         port: 7878
+  metrics:
+    controller: metrics
+    type: ClusterIP
+    ports:
+      http:
+        port: 9707
+
+
+serviceMonitor:
+  metrics:
+    serviceName: '{{ include "bjw-s.common.lib.chart.names.fullname" $ }}-metrics'
+    enabled: true
+    endpoints:
+      - port: http
 
 persistence:
   config:

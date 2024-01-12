@@ -1,6 +1,6 @@
 About `qbittorrent`
 ===
-Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
+Chart docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 
 Installing/updating

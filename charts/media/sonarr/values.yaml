@@ -7,8 +7,27 @@ controllers:
       main:
         image:
           repository: linuxserver/sonarr
-          tag: version-4.0.0.748
+          tag: 4.0.0-develop
           pullPolicy: IfNotPresent
+        env:
+          PGID: "1000"
+          PUID: "1000"
+  metrics:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/onedr0p/exportarr
+          tag: v1.5.3
+          pullPolicy: IfNotPresent
+        args: [ "sonarr" ]
+        env:
+          - name: URL
+            value: "http://sonarr:8989"
+          - name: APIKEY
+            valueFrom:
+              secretKeyRef:
+                name: exportarr-sonarr-secret
+                key: APIKEY
 
 service:
   main:
@@ -16,6 +35,20 @@ service:
     ports:
       http:
         port: 8989
+  metrics:
+    controller: metrics
+    type: ClusterIP
+    ports:
+      http:
+        port: 9707
+
+
+serviceMonitor:
+  metrics:
+    serviceName: '{{ include "bjw-s.common.lib.chart.names.fullname" $ }}-metrics'
+    enabled: true
+    endpoints:
+      - port: http
 
 persistence:
   config:
