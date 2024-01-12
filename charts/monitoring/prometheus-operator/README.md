@@ -3,11 +3,11 @@ About `prometheus-operator`
 > Repository: https://github.com/prometheus-operator/prometheus-operator  
 > Chart repository: https://github.com/prometheus-operator/prometheus-operator
 
-Installing/updating
+Installing/upgrading
 ===
 
 ```shell
-helm upgrade --install prometheus-operator prometheus-community/kube-prometheus-stack --values monitoring/prometheus-operator/values.yaml --namespace monitoring
+helmfile apply -f metrics/prometheus-operator/helmfile.yaml
 ```
 
 Helm values

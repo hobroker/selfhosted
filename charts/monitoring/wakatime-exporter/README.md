@@ -2,7 +2,7 @@ About `wakatime-exporter`
 ===
 Docs: https://github.com/MacroPower/wakatime_exporter
 
-Installing/updating
+Installing/upgrading
 ===
 ---
 > <details>
@@ -22,5 +22,5 @@ Installing/updating
 > </details>
 
 ```shell
-helm upgrade --install wakatime-exporter bjw-s/app-template -f monitoring/wakatime-exporter/values.yaml
+helmfile apply -f monitoring/wakatime-exporter/helmfile.yaml
 ```

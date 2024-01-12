@@ -3,9 +3,9 @@ About `http-https-echo`
 Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 
-Installing/updating
+Installing/upgrading
 ---
 
 ```shell
-helm upgrade --install http-https-echo bjw-s/app-template -f demo/http-https-echo/values.yaml
+helmfile apply -f demo/http-https-echo/helmfile.yaml
 ```

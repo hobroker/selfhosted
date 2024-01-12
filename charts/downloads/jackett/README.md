@@ -3,11 +3,11 @@ About `jackett`
 Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 
-Installing/updating
+Installing/upgrading
 ---
 
 ```shell
-helm upgrade --install jackett bjw-s/app-template -f downloads/jackett/values.yaml
+helmfile apply -f downloads/jackett/helmfile.yaml
 ```
 
 ### Host Volumes

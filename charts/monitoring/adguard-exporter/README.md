@@ -5,7 +5,7 @@ About `adguard-exporter`
 | `bjw-s/app-template` | https://bjw-s.github.io/helm-charts/docs/app-template/ |
 | `adguard-exporter`   | https://hub.docker.com/r/ebrianne/adguard-exporter     |
 
-Installing/updating
+Installing/upgrading
 ===
 
 ---
@@ -28,5 +28,5 @@ Installing/updating
 > </details>
 
 ```shell
-helm upgrade --install adguard-exporter bjw-s/app-template -f monitoring/adguard-exporter/values.yaml
+helmfile apply -f monitoring/adguard-exporter/helmfile.yaml
 ```

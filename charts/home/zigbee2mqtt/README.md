@@ -1,11 +1,11 @@
 About `zigbee2mqtt`
 ===
 
-Installing/updating
+Installing/upgrading
 ---
 
 ```shell
-helm upgrade --install zigbee2mqtt ./base/ -f zigbee2mqtt/values.yaml
+helmfile apply -f home/zigbee2mqtt/helmfile.yaml
 ```
 
 ### Host mounts

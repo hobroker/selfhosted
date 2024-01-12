@@ -3,9 +3,9 @@ About `messenger`
 Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 
-Installing/updating
+Installing/upgrading
 ---
 
 ```shell
-helm upgrade --install messenger bjw-s/app-template -f automation/messenger/values.yaml
+helmfile apply -f automation/messenger/helmfile.yaml
 ```

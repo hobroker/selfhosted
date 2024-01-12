@@ -3,11 +3,11 @@ About `tautulli`
 Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 
-Installing/updating
+Installing/upgrading
 ---
 
 ```shell
-helm upgrade --install tautulli bjw-s/app-template -f media/tautulli/values.yaml
+helmfile apply -f media/tautulli/helmfile.yaml
 ```
 
 ### Host Volumes

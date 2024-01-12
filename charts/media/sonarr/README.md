@@ -3,11 +3,11 @@ About `sonarr`
 Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 
-Installing/updating
+Installing/upgrading
 ---
 
 ```shell
-helm upgrade --install sonarr bjw-s/app-template -f media/sonarr/values.yaml
+helmfile apply -f media/sonarr/helmfile.yaml
 ```
 
 ### Host Volumes

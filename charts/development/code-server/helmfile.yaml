@@ -1,0 +1,12 @@
+repositories:
+  - name: bjw-s
+    url: https://bjw-s.github.io/helm-charts
+
+releases:
+  - name: code-server
+    version: 2.4.0
+    atomic: true
+    namespace: self
+    chart: bjw-s/app-template
+    values:
+      - values.yaml
