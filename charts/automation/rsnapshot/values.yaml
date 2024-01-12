@@ -3,6 +3,9 @@ defaultPodOptions:
 
 controllers:
   main:
+    type: cronjob
+    labels:
+      cronjob: rsnapshot
     containers:
       main:
         image:
@@ -10,22 +13,24 @@ controllers:
           tag: 1.4.3
           pullPolicy: IfNotPresent
         env:
-          - name: TZ
-            value: "Europe/Chisinau"
-          - name: MESSENGER_BASE_URL
-            value: "http://messenger:8182"
+          PGID: "1000"
+          PUID: "1000"
+          TZ: "Europe/Chisinau"
+          MESSENGER_BASE_URL: "http://messenger:3000"
+    cronjob:
+      concurrencyPolicy: Forbid
+      timeZone: Europe/Chisinau
+      schedule: "0 */4 * * *"
+      startingDeadlineSeconds: 30
+      successfulJobsHistory: 3
+      failedJobsHistory: 3
+      backoffLimit: 3
 
 service:
   main:
     enabled: false
 
 persistence:
-  config:
-    enabled: true
-    type: hostPath
-    hostPath: /appdata/rsnapshot
-    globalMounts:
-      - path: /config
   data:
     enabled: true
     type: hostPath
@@ -45,32 +50,17 @@ persistence:
     advancedMounts:
       main:
         main:
-          - path: /config/crontabs/root
-            subPath: crontab
           - path: /config/rsnapshot.conf
             subPath: rsnapshot.conf
-          - path: /config/snap.sh
-            subPath: snap.sh
-          - path: /config/custom-cont-init.d/31-add-curl
+          - path: /custom-cont-init.d/31-add-curl
             subPath: add-curl
+          - path: /custom-cont-init.d/32-snap
+            subPath: snap
 
 configMaps:
   config:
     enabled: true
     data:
-      crontab: |
-        # do daily/weekly/monthly maintenance
-        # min   hour    day     month   weekday command
-        */15    *       *       *       *       run-parts /etc/periodic/15min
-        0       *       *       *       *       run-parts /etc/periodic/hourly
-        0       2       *       *       *       run-parts /etc/periodic/daily
-        0       3       *       *       6       run-parts /etc/periodic/weekly
-        0       5       1       *       *       run-parts /etc/periodic/monthly
-        
-        # rsnapshot examples
-        # run every 4 hours
-        0      */4      *       *       *       bash /config/snap.sh >> /config/.snap.log
-
       rsnapshot.conf: |
         config_version	1.2
         
@@ -88,8 +78,8 @@ configMaps:
         retain	weekly	4
         retain	monthly	12
         
-        verbose	2
-        loglevel	3
+        verbose	5
+        loglevel	5
         logfile	/config/rsnapshot.log
         lockfile	/var/run/rsnapshot.pid
         link_dest	0
@@ -98,8 +88,8 @@ configMaps:
         backup	/data/photos/pictures		wdata/
         backup	/data/photos/snapseed		wdata/
 
-      snap.sh: |
-        #!/usr/bin/env bash
+      snap: |
+        #!/usr/bin/with-contenv bash
         
         set -e
         
@@ -109,11 +99,11 @@ configMaps:
         _count=$(curl -s "$MESSENGER_BASE_URL/gcs/rsnapshot/1/increment")
         
         log() {
-          echo "> $1"
+          echo "-->(snap) $1"
           curl -s -G "$MESSENGER_BASE_URL/telegram/rsnapshot" --data-urlencode "data=running backup: $1"
         }
         
-        echo "$(date) - $_count"
+        echo "-->(snap) $(date) - $_count"
         
         if [ "$(( _count % (EVERY*7*30*12) ))" -eq 0 ]; then
           log yearly
@@ -138,10 +128,12 @@ configMaps:
         log hourly
         rsnapshot hourly
         
-        echo "$(date) - done"
+        echo "-->(snap) $(date) - done"
+        
+        kill -SIGTERM 1
 
       add-curl: |
         #!/usr/bin/with-contenv bash
         apk add curl
-        echo $MESSENGER_BASE_URL
+        touch /config/rsnapshot.log
         curl -s -G "$MESSENGER_BASE_URL/telegram/rsnapshot" --data-urlencode "data=started"
