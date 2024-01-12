@@ -1,8 +1,8 @@
 # `messenger`
 
-> Tool for sending messages to Telegram
+> A tool for sending messages to Telegram
 
-App: https://github.com/hobroker/messenger
+App: https://github.com/hobroker/messenger  
 Chart: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 ## Installing/upgrading

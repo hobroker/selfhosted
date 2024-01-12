@@ -1,6 +1,8 @@
 # `http-https-echo`
+> Docker image that echoes request data as JSON (useful for debugging)
 
-Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
+App: https://github.com/mendhak/docker-http-https-echo  
+Chart: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 ## Installing/upgrading
 

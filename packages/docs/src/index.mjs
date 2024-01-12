@@ -1,10 +1,13 @@
 #!/usr/bin/env node
 
-import { generateMarkdown } from "./lib/generateMarkdown.mjs";
 import { parseCharts } from "./lib/parseCharts.mjs";
 import { insertMarkdown } from "./lib/insertMarkdown.mjs";
+import { generateMarkdownTable } from "./lib/generateMarkdownTable.mjs";
+import chalk from "chalk";
 
 const data = await parseCharts("charts");
-const markdown = generateMarkdown(data);
+const markdown = generateMarkdownTable(data);
 
 await insertMarkdown(markdown);
+
+console.log(chalk.green(chalk.bold("✅ Finished generating")));

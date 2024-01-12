@@ -2,8 +2,8 @@
 
 > A tool for backing up your data using rsync
 
-App: https://github.com/rsnapshot/rsnapshot
-Chart: https://bjw-s.github.io/helm-charts/docs/app-template/  
+App: https://github.com/rsnapshot/rsnapshot  
+Chart: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 ## Installing/upgrading
 
