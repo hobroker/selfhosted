@@ -1,6 +1,6 @@
 # `traefik`
 
-> Repository: https://github.com/traefik/traefik-helm-chart
+Repository: https://github.com/traefik/traefik-helm-chart
 
 # Installing/upgrading
 

@@ -1,6 +1,6 @@
 # `datadog`
 
-> Docs: https://docs.datadoghq.com/containers/kubernetes/installation/?tab=operator
+Chart: https://docs.datadoghq.com/containers/kubernetes/installation/?tab=operator
 
 ## Installing/upgrading
 

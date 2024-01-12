@@ -1,7 +1,7 @@
 # `prometheus-operator`
 
-> Repository: https://github.com/prometheus-operator/prometheus-operator  
-> Chart repository: https://github.com/prometheus-operator/prometheus-operator
+Repository: https://github.com/prometheus-operator/prometheus-operator  
+Chart repository: https://github.com/prometheus-operator/prometheus-operator
 
 # Installing/upgrading
 
