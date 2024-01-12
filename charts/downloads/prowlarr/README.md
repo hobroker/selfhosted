@@ -1,10 +1,8 @@
-About `prowlarr`
-===
+# `prowlarr`
+
 Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 
-
-Installing/upgrading
----
+## Installing/upgrading
 
 ```shell
 helmfile apply -f downloads/prowlarr/helmfile.yaml
@@ -12,6 +10,6 @@ helmfile apply -f downloads/prowlarr/helmfile.yaml
 
 ### Assumptions
 
-| hostPath                      | containerPath |
-|-------------------------------|---------------|
-| `/appdata/k3s/prowlarr`       | `/config`     |
+| hostPath                | containerPath |
+| ----------------------- | ------------- |
+| `/appdata/k3s/prowlarr` | `/config`     |

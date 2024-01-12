@@ -1,20 +1,17 @@
-Selfhosted
-[![Latest GitHub release (including pre-releases)](https://img.shields.io/github/v/release/hobroker/selfhosted?include_prereleases)](https://github.com/hobroker/selfhosted/releases/latest)
-===
+# Selfhosted
 
-Self-hosted services
+My selfhosted services
 
-Setup
----
-_TODO_
+## Setup
 
----
+1. Install k3s https://docs.k3s.io/installation
 
-References
----
- - [Docker](https://www.docker.com/) - Containerization platform
- - [K3s](https://k3s.io/) - Lightweight Kubernetes
- - [Pomerium](https://www.pomerium.com/) - Identity-aware access proxy.
+## Apps
+
+
+## References
+
+- [K3s](https://k3s.io/) - Lightweight Kubernetes
 
 ---
 

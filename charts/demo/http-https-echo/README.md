@@ -1,10 +1,8 @@
-About `http-https-echo`
-===
+# `http-https-echo`
+
 Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 
-
-Installing/upgrading
----
+## Installing/upgrading
 
 ```shell
 helmfile apply -f demo/http-https-echo/helmfile.yaml

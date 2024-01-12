@@ -16,7 +16,7 @@ controllers:
           repository: ghcr.io/onedr0p/exportarr
           tag: v1.5.3
           pullPolicy: IfNotPresent
-        args: [ "prowlarr" ]
+        args: ["prowlarr"]
         env:
           - name: URL
             value: "http://prowlarr:9696"

@@ -1,10 +1,8 @@
-About `code-server`
-===
+# `code-server`
+
 Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 
-
-Installing/upgrading
----
+## Installing/upgrading
 
 ```shell
 helmfile apply -f development/code-server/helmfile.yaml
@@ -13,7 +11,7 @@ helmfile apply -f development/code-server/helmfile.yaml
 ### Host Volumes
 
 | hostPath      | containerPath              |
-|---------------|----------------------------|
+| ------------- | -------------------------- |
 | `/config`     | `/appdata/k3s/code-server` |
 | `/appdata`    | `/appdata`                 |
 | `/downloads`  | `/storage/downloads`       |

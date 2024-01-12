@@ -17,7 +17,7 @@ controllers:
         image:
           repository: ghcr.io/hobroker/wait-for-service
           tag: latest
-        args: [ "qbittorrent", "prowlarr" ]
+        args: ["qbittorrent", "prowlarr"]
   metrics:
     containers:
       main:
@@ -25,7 +25,7 @@ controllers:
           repository: ghcr.io/onedr0p/exportarr
           tag: v1.5.3
           pullPolicy: IfNotPresent
-        args: [ "radarr" ]
+        args: ["radarr"]
         env:
           - name: URL
             value: "http://radarr:7878"
@@ -47,7 +47,6 @@ service:
     ports:
       http:
         port: 9707
-
 
 serviceMonitor:
   metrics:

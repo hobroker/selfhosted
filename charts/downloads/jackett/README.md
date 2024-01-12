@@ -1,10 +1,8 @@
-About `jackett`
-===
+# `jackett`
+
 Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 
-
-Installing/upgrading
----
+## Installing/upgrading
 
 ```shell
 helmfile apply -f downloads/jackett/helmfile.yaml
@@ -13,6 +11,6 @@ helmfile apply -f downloads/jackett/helmfile.yaml
 ### Host Volumes
 
 | hostPath                      | containerPath     |
-|-------------------------------|-------------------|
+| ----------------------------- | ----------------- |
 | `/appdata/k3s/jackett`        | `/config/Jackett` |
 | `/storage/downloads/torrents` | `/blackhole`      |

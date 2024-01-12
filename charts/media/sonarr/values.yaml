@@ -19,7 +19,7 @@ controllers:
           repository: ghcr.io/onedr0p/exportarr
           tag: v1.5.3
           pullPolicy: IfNotPresent
-        args: [ "sonarr" ]
+        args: ["sonarr"]
         env:
           - name: URL
             value: "http://sonarr:8989"
@@ -41,7 +41,6 @@ service:
     ports:
       http:
         port: 9707
-
 
 serviceMonitor:
   metrics:
