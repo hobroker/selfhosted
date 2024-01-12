@@ -3,11 +3,11 @@ About `qbittorrent`
 Chart docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 
-Installing/updating
+Installing/upgrading
 ---
 
 ```shell
-helm upgrade --install qbittorrent bjw-s/app-template -f downloads/qbittorrent/values.yaml
+helmfile apply -f downloads/qbittorrent/helmfile.yaml
 ```
 
 ### Host Volumes

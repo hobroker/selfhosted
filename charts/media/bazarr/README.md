@@ -3,11 +3,11 @@ About `bazarr`
 Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 
-Installing/updating
+Installing/upgrading
 ---
 
 ```shell
-helm upgrade --install bazarr bjw-s/app-template -f media/bazarr/values.yaml
+helmfile apply -f media/bazarr/helmfile.yaml
 ```
 
 ### Host Volumes

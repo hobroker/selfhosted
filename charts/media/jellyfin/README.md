@@ -3,11 +3,11 @@ About `jellyfin`
 Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 
-Installing/updating
+Installing/upgrading
 ---
 
 ```shell
-helm upgrade --install jellyfin bjw-s/app-template -f media/jellyfin/values.yaml
+helmfile apply -f media/jellyfin/helmfile.yaml
 ```
 
 ### Host Volumes

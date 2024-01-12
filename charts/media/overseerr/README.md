@@ -3,11 +3,11 @@ About `overseerr`
 Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 
-Installing/updating
+Installing/upgrading
 ---
 
 ```shell
-helm upgrade --install overseerr bjw-s/app-template -f media/overseerr/values.yaml
+helmfile apply -f media/overseerr/helmfile.yaml
 ```
 
 ### Host Volumes

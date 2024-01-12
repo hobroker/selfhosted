@@ -2,7 +2,7 @@ About `traefik`
 ===
 > Repository: https://github.com/traefik/traefik-helm-chart
 
-Installing/updating
+Installing/upgrading
 ===
 
 ```shell

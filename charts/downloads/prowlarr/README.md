@@ -3,11 +3,11 @@ About `prowlarr`
 Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 
-Installing/updating
+Installing/upgrading
 ---
 
 ```shell
-helm upgrade --install prowlarr bjw-s/app-template -f downloads/prowlarr/values.yaml
+helmfile apply -f downloads/prowlarr/helmfile.yaml
 ```
 
 ### Assumptions

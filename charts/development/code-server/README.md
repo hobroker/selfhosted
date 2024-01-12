@@ -3,11 +3,11 @@ About `code-server`
 Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 
-Installing/updating
+Installing/upgrading
 ---
 
 ```shell
-helm upgrade --install code-server bjw-s/app-template -f development/code-server/values.yaml
+helmfile apply -f development/code-server/helmfile.yaml
 ```
 
 ### Host Volumes

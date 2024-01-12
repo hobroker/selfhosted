@@ -3,11 +3,11 @@ About `syncthing`
 Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 
-Installing/updating
+Installing/upgrading
 ---
 
 ```shell
-helm upgrade --install syncthing bjw-s/app-template -f automation/syncthing/values.yaml
+helmfile apply -f automation/syncthing/helmfile.yaml
 ```
 
 ### Host Volumes

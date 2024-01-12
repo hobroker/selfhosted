@@ -3,11 +3,11 @@ About `rsnapshot`
 Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 
-Installing/updating
+Installing/upgrading
 ---
 
 ```shell
-helm upgrade --install rsnapshot bjw-s/app-template -f automation/rsnapshot/values.yaml
+helmfile apply -f automation/rsnapshot/helmfile.yaml
 ```
 
 ### Host Volumes

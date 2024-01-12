@@ -1,7 +1,7 @@
 About `home-assistant`
 ===
 
-Installing/updating
+Installing/upgrading
 ---
 
 ```shell

@@ -2,7 +2,7 @@ About `datadog`
 ===
 > Docs: https://docs.datadoghq.com/containers/kubernetes/installation/?tab=operator
 
-Installing/updating
+Installing/upgrading
 ---
 
 ```shell
