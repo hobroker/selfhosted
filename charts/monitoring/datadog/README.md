@@ -1,9 +1,8 @@
-About `datadog`
-===
-> Docs: https://docs.datadoghq.com/containers/kubernetes/installation/?tab=operator
+# `datadog`
 
-Installing/upgrading
----
+Chart: https://docs.datadoghq.com/containers/kubernetes/installation/?tab=operator
+
+## Installing/upgrading
 
 ```shell
 # install the agent
@@ -14,8 +13,7 @@ kubectl create secret generic datadog-secret --from-literal api-key=<DATADOG_API
 kubectl apply -f monitoring/datadog/datadog-agent.yaml --namespace monitoring
 ```
 
-Extra configmap
----
+## Extra configmap
 
 ```yaml
 apiVersion: v1

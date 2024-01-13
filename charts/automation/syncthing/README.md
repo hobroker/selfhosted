@@ -1,10 +1,11 @@
-About `syncthing`
-===
-Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
+# `syncthing`
 
+> Open Source Continuous File Synchronization
 
-Installing/upgrading
----
+Source Code: https://github.com/syncthing/syncthing  
+Chart: https://bjw-s.github.io/helm-charts/docs/app-template/
+
+## Installing/upgrading
 
 ```shell
 helmfile apply -f automation/syncthing/helmfile.yaml

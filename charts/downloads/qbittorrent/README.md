@@ -1,10 +1,11 @@
-About `qbittorrent`
-===
-Chart docs: https://bjw-s.github.io/helm-charts/docs/app-template/
+# `qbittorrent`
 
+> Free cross-platform bittorrent client with a feature rich Web UI for remote access.
 
-Installing/upgrading
----
+Source Code: https://github.com/qbittorrent/qBittorrent  
+Chart: https://bjw-s.github.io/helm-charts/docs/app-template/
+
+## Installing/upgrading
 
 ```shell
 helmfile apply -f downloads/qbittorrent/helmfile.yaml
@@ -13,7 +14,7 @@ helmfile apply -f downloads/qbittorrent/helmfile.yaml
 ### Host Volumes
 
 | hostPath                      | containerPath |
-|-------------------------------|---------------|
+| ----------------------------- | ------------- |
 | `/appdata/k3s/qbittorrent`    | `/config`     |
 | `/storage/downloads/torrents` | `/blackhole`  |
 | `/storage/downloads`          | `/downloads`  |

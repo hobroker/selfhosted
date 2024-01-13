@@ -1,8 +1,6 @@
-About `home-assistant`
-===
+# `home-assistant`
 
-Installing/upgrading
----
+## Installing/upgrading
 
 ```shell
 helm upgrade --install home-assistant ./base/ -f home-assistant/values.yaml

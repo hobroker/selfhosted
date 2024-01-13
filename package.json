@@ -1,0 +1,20 @@
+{
+  "name": "@hobroker/selfhosted",
+  "version": "1.0.0",
+  "description": "Generate docs from charts to the main README.md",
+  "author": "Igor Leahu <igor.leahu24@gmail.com>",
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "generate": "npx tsx packages/docs/src/index.ts"
+  },
+  "lint-staged": {
+    "*.md": "npm run generate"
+  },
+  "workspaces": [
+    "packages/docs"
+  ]
+}

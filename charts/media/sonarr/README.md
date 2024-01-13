@@ -1,10 +1,8 @@
-About `sonarr`
-===
+# `sonarr`
+
 Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 
-
-Installing/upgrading
----
+## Installing/upgrading
 
 ```shell
 helmfile apply -f media/sonarr/helmfile.yaml
@@ -13,7 +11,7 @@ helmfile apply -f media/sonarr/helmfile.yaml
 ### Host Volumes
 
 | hostPath              | containerPath |
-|-----------------------|---------------|
+| --------------------- | ------------- |
 | `/appdata/k3s/sonarr` | `/config`     |
 | `/storage/tv-shows`   | `/tv`         |
 | `/mnt/onetb/tv-shows` | `/tv2`        |

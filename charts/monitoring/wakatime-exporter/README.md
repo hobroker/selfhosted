@@ -1,23 +1,24 @@
-About `wakatime-exporter`
-===
+# `wakatime-exporter`
+
 Docs: https://github.com/MacroPower/wakatime_exporter
 
-Installing/upgrading
-===
+# Installing/upgrading
+
 ---
+
 > <details>
 >   <summary>Secrets</summary>
 >
->    ```yaml
->    apiVersion: v1
->    kind: Secret
->    metadata:
->      name: wakatime-exporter-secrets
->      namespace: self
->    type: Opaque
->    stringData:
->      WAKA_API_KEY: "api_key"
->    ```
+> ```yaml
+> apiVersion: v1
+> kind: Secret
+> metadata:
+>   name: wakatime-exporter-secrets
+>   namespace: self
+> type: Opaque
+> stringData:
+>   WAKA_API_KEY: "api_key"
+> ```
 >
 > </details>
 
