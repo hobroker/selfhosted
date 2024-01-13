@@ -5,9 +5,11 @@ export interface ChartSource {
 
 export interface ChartService {
   name: string;
-  path: string;
   description: string;
-  appUrl: string;
+  url: {
+    local: string;
+    sourceCode: string;
+  };
 }
 
 export interface ChartData {

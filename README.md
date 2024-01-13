@@ -71,6 +71,7 @@ My selfhosted services
 | [traefik](./charts/network/traefik) |             |                  |
 
 ---
+
 ## References
 
 - [K3s](https://k3s.io/) - Lightweight Kubernetes

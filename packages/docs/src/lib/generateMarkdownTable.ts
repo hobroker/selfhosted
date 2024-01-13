@@ -5,10 +5,14 @@ import { ChartData } from "./types";
 export const generateMarkdownTable = (data: ChartData[]) => {
   const content = data.map(({ category, services }) => {
     const heading = `### ${capitalize(category)}`;
-    const rows = [["Chart", "Description", "Official website"]];
-    services.forEach(({ name, path, description, appUrl }) => {
-      rows.push([`[${name}](${path})`, description, appUrl]);
-    });
+    const rows = [
+      ["Chart", "Description", "Official website"],
+      ...services.map(({ name, url, description }) => [
+        `[${name}](${url.local})`,
+        description,
+        url.sourceCode,
+      ]),
+    ];
 
     return heading + "\n\n" + markdownTable(rows);
   });

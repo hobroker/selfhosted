@@ -2,7 +2,7 @@ import chalk from "chalk";
 import { readFileSync } from "fs";
 import { join } from "path";
 import {
-  extractAppUrl,
+  extractSourceCodeUrl,
   extractDescription,
   extractName,
   extractReadmeLocation,
@@ -23,17 +23,19 @@ export const parseCharts = async (
           chalk.italic(service),
         ),
       );
-      const content = readFileSync(join(path, "README.md"), "utf-8");
-      const name = extractName(content, { name: service });
-      const description = extractDescription(content);
+      const markdown = readFileSync(join(path, "README.md"), "utf-8");
+      const name = extractName(markdown, { name: service });
+      const description = extractDescription(markdown);
       const readmePath = extractReadmeLocation(category, service);
-      const appUrl = extractAppUrl(content);
+      const sourceCodeUrl = extractSourceCodeUrl(markdown);
 
       return {
         name,
-        path: readmePath,
         description,
-        appUrl,
+        url: {
+          local: readmePath,
+          sourceCode: sourceCodeUrl,
+        },
       };
     });
     console.log();

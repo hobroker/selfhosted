@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { parseCharts } from "./lib/parseCharts";
 import { insertMarkdown } from "./lib/insertMarkdown";
 import { generateMarkdownTable } from "./lib/generateMarkdownTable";

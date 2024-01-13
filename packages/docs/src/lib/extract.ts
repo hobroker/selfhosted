@@ -8,10 +8,10 @@ const logSuccess = (key: string, message: string) =>
   console.log(chalk.greenBright(chalk.bold(`    ${key}: `), message));
 
 export const extractName = (
-  readme: string,
+  markdown: string,
   { name }: Pick<ChartService, "name">,
 ) => {
-  const value = readme
+  const value = markdown
     .split("\n")[0]
     .replaceAll("`", "")
     .replaceAll("#", "")
@@ -33,9 +33,9 @@ export const extractName = (
   return value;
 };
 
-export const extractDescription = (readme: string) => {
-  const rows = readme
-    .substring(readme.indexOf("\n") + 1)
+export const extractDescription = (markdown: string) => {
+  const rows = markdown
+    .substring(markdown.indexOf("\n") + 1)
     .trim()
     .split("\n");
   if (!rows[0].startsWith("> ")) {
@@ -59,8 +59,8 @@ export const extractDescription = (readme: string) => {
 export const extractReadmeLocation = (category: string, serviceName: string) =>
   `./charts/${category}/${serviceName}`;
 
-export const extractAppUrl = (readme: string) => {
-  const value = readme
+export const extractSourceCodeUrl = (markdown: string) => {
+  const value = markdown
     .split("\n")
     .find((row) => row.startsWith("Source Code: "))
     ?.split("Source Code: ")[1]
