@@ -6,7 +6,7 @@ export const generateMarkdownTable = (data: ChartData[]) => {
   const content = data.map(({ category, services }) => {
     const heading = `### ${capitalize(category)}`;
     const rows = [
-      ["Chart", "Description", "Official website"],
+      ["Chart", "Description", "Source Code"],
       ...services.map(({ name, url, description }) => [
         `[${name}](${url.local})`,
         description,
