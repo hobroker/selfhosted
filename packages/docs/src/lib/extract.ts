@@ -57,7 +57,7 @@ export const extractDescription = (markdown: string) => {
 };
 
 export const extractReadmeLocation = (category: string, serviceName: string) =>
-  `./charts/${category}/${serviceName}`;
+  `charts/${category}/${serviceName}`;
 
 export const extractSourceCodeUrl = (markdown: string) => {
   const value = markdown
@@ -66,11 +66,11 @@ export const extractSourceCodeUrl = (markdown: string) => {
     ?.split("Source Code: ")[1]
     ?.trim();
   if (!value) {
-    logError("App URL", "missing");
+    logError("Source Code URL", "missing");
     return "";
   }
 
-  logSuccess("App URL", value);
+  logSuccess("Source Code URL", value);
 
   return value;
 };
