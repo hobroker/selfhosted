@@ -1,4 +1,3 @@
-import { getCharts } from "./getCharts.mjs";
 import chalk from "chalk";
 import { readFileSync } from "fs";
 import { join } from "path";
@@ -7,12 +6,13 @@ import {
   extractDescription,
   extractName,
   extractReadmeLocation,
-} from "./extract.mjs";
+} from "./extract";
+import { ChartData, ChartSource } from "./types";
 
-export const parseCharts = async (path = "charts") => {
-  const charts = await getCharts("charts");
-
-  return charts.map(({ category, services: _services }) => {
+export const parseCharts = async (
+  sources: ChartSource[],
+): Promise<ChartData[]> =>
+  sources.map(({ category, services: _services }) => {
     console.log(
       chalk.blue(chalk.bold("Parsing category:"), chalk.italic(category)),
     );
@@ -24,14 +24,14 @@ export const parseCharts = async (path = "charts") => {
         ),
       );
       const content = readFileSync(join(path, "README.md"), "utf-8");
-      const name = extractName(content, { serviceName: service });
+      const name = extractName(content, { name: service });
       const description = extractDescription(content);
-      const readmePath = extractReadmeLocation(path);
+      const readmePath = extractReadmeLocation(category, service);
       const appUrl = extractAppUrl(content);
 
       return {
         name,
-        readmePath,
+        path: readmePath,
         description,
         appUrl,
       };
@@ -42,4 +42,3 @@ export const parseCharts = async (path = "charts") => {
       services,
     };
   });
-};

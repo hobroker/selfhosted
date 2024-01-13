@@ -8,10 +8,11 @@
     "lint-staged": "^15.2.0"
   },
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "generate": "npx tsx packages/docs/src/index.ts"
   },
   "lint-staged": {
-    "*.md": "selfhosted-docs"
+    "*.md": "npm run generate"
   },
   "workspaces": [
     "packages/docs"

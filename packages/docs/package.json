@@ -4,11 +4,11 @@
   "description": "Generate docs from charts to the main README.md",
   "author": "Igor Leahu <igor.leahu24@gmail.com>",
   "type": "module",
-  "bin": {
-    "selfhosted-docs": "src/index.mjs"
-  },
   "dependencies": {
     "chalk": "^5.3.0",
     "markdown-table": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0"
   }
 }

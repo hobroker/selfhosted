@@ -1,6 +1,6 @@
 import { readFile, writeFile } from "fs/promises";
 
-export const insertMarkdown = async (markdown) => {
+export const insertMarkdown = async (markdown: string) => {
   const originalMarkdown = await readFile("README.md", "utf-8");
   const existingMarkdown = originalMarkdown.replace(
     /## Apps([\S\s]*)---\n## References/m,
