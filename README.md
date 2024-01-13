@@ -30,11 +30,11 @@ My selfhosted services
 
 ### Downloads
 
-| Chart                                         | Description | Official website |
-| --------------------------------------------- | ----------- | ---------------- |
-| [jackett](./charts/downloads/jackett)         |             |                  |
-| [prowlarr](./charts/downloads/prowlarr)       |             |                  |
-| [qbittorrent](./charts/downloads/qbittorrent) |             |                  |
+| Chart                                         | Description                                                                              | Official website                           |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------ |
+| [jackett](./charts/downloads/jackett)         | API Support for torrent trackers                                                         | https://github.com/Jackett/Jackett         |
+| [prowlarr](./charts/downloads/prowlarr)       | Indexer manager/proxy built on the popular *arr stack to integrate with various PVR apps | https://github.com/Prowlarr/Prowlarr       |
+| [qbittorrent](./charts/downloads/qbittorrent) | Free cross-platform bittorrent client with a feature rich Web UI for remote access.      | https://github.com/qbittorrent/qBittorrent |
 
 ### Home
 

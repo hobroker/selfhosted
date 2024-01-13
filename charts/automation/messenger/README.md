@@ -2,7 +2,7 @@
 
 > A tool for sending messages to Telegram
 
-App: https://github.com/hobroker/messenger  
+Source Code: https://github.com/hobroker/messenger  
 Chart: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 ## Installing/upgrading

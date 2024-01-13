@@ -1,6 +1,12 @@
 import chalk from "chalk";
 import { ChartService } from "./types";
 
+const logError = (key: string, message: string) =>
+  console.log(chalk.redBright(chalk.bold(`    ❌ ${key}: `), message));
+
+const logSuccess = (key: string, message: string) =>
+  console.log(chalk.greenBright(chalk.bold(`    ${key}: `), message));
+
 export const extractName = (
   readme: string,
   { name }: Pick<ChartService, "name">,
@@ -12,19 +18,17 @@ export const extractName = (
     .trim();
 
   if (!value) {
-    console.log(chalk.red(chalk.bold("    ❌ Name: "), "missing"));
+    logError("Name", "missing");
   }
 
   if (value !== name) {
-    console.log(
-      chalk.red(
-        chalk.bold("    ❌ Name: "),
-        `mismatch between directory name and README.md name: ${name} !== ${value}`,
-      ),
+    logError(
+      "Name",
+      `mismatch between directory name and README.md name: ${name} !== ${value}`,
     );
   }
 
-  console.log(chalk.greenBright(chalk.bold("    Name: "), value));
+  logSuccess("Name", value);
 
   return value;
 };
@@ -35,7 +39,7 @@ export const extractDescription = (readme: string) => {
     .trim()
     .split("\n");
   if (!rows[0].startsWith("> ")) {
-    console.log(chalk.red(chalk.bold("    ❌ Description: "), "Missing"));
+    logError("Description", "missing");
     return "";
   }
   let value = "";
@@ -47,7 +51,7 @@ export const extractDescription = (readme: string) => {
   }
   value = value.trim();
 
-  console.log(chalk.greenBright(chalk.bold("    Description: "), value));
+  logSuccess("Description", value);
 
   return value;
 };
@@ -56,14 +60,17 @@ export const extractReadmeLocation = (category: string, serviceName: string) =>
   `./charts/${category}/${serviceName}`;
 
 export const extractAppUrl = (readme: string) => {
-  const row = readme.split("\n").find((row) => row.startsWith("App: "));
-  if (!row) {
-    console.log(chalk.red(chalk.bold("    ❌ App URL: "), "Missing"));
+  const value = readme
+    .split("\n")
+    .find((row) => row.startsWith("Source Code: "))
+    ?.split("Source Code: ")[1]
+    ?.trim();
+  if (!value) {
+    logError("App URL", "missing");
     return "";
   }
-  const value = row.split("App: ")[1].trim();
 
-  console.log(chalk.greenBright(chalk.bold("    App URL: "), value));
+  logSuccess("App URL", value);
 
   return value;
 };

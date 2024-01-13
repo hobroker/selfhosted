@@ -1,6 +1,9 @@
 # `jackett`
 
-Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
+> API Support for torrent trackers
+
+Source Code: https://github.com/Jackett/Jackett  
+Chart: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 ## Installing/upgrading
 
