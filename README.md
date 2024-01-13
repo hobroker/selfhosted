@@ -64,13 +64,11 @@ My selfhosted services
 | [prometheus-operator](./charts/monitoring/prometheus-operator) |             |                  |
 | [wakatime-exporter](./charts/monitoring/wakatime-exporter)     |             |                  |
 
-### Network
+### System
 
-| Chart                               | Description | Official website |
-| ----------------------------------- | ----------- | ---------------- |
-| [traefik](./charts/network/traefik) |             |                  |
-
----
+| Chart                              | Description | Official website |
+| ---------------------------------- | ----------- | ---------------- |
+| [traefik](./charts/system/traefik) |             |                  |---
 
 ## References
 
