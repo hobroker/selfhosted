@@ -1,0 +1,59 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommitTypeAll(chore)",
+    "schedule:weekly"
+  ],
+  "assignees": ["hobroker"],
+  "platformAutomerge": false,
+  "separateMajorMinor": false,
+  "separateMultipleMajor": false,
+  "packageRules": [
+    {
+      "matchManagers": ["npm"],
+      "groupName": "NPM packages"
+    },
+    {
+      "matchManagers": ["helm-values", "helmfile", "helmv3"],
+      "groupName": "Services"
+    },
+    {
+      "matchFileNames": ["charts/automation/**"],
+      "groupName": "automation"
+    },
+    {
+      "matchFileNames": ["charts/media/**"],
+      "groupName": "media"
+    },
+    {
+      "matchFileNames": ["charts/monitoring/**"],
+      "groupName": "monitoring"
+    },
+    {
+      "matchFileNames": ["charts/secrets/**"],
+      "groupName": "secrets"
+    },
+    {
+      "matchFileNames": ["charts/downloads/**"],
+      "groupName": "downloads"
+    },
+    {
+      "matchFileNames": ["charts/development/**"],
+      "groupName": "development"
+    },
+    {
+      "matchFileNames": ["charts/storage/**"],
+      "groupName": "storage"
+    },
+    {
+      "matchFileNames": ["charts/system/**"],
+      "groupName": "system"
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions"
+    }
+  ],
+  "ignoreDeps": ["gzip-size", "ghcr.io/gamurar/biomarkly"]
+}
