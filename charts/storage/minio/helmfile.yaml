@@ -1,0 +1,12 @@
+repositories:
+  - name: minio
+    url: https://charts.min.io/
+
+releases:
+  - name: minio
+    version: 5.0.15
+    atomic: true
+    namespace: kube-system
+    chart: minio/minio
+    values:
+      - values.yaml

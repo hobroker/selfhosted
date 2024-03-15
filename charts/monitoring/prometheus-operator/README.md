@@ -1,7 +1,7 @@
 # `prometheus-operator`
 
 Repository: https://github.com/prometheus-operator/prometheus-operator  
-Chart repository: https://github.com/prometheus-operator/prometheus-operator
+Chart repository: https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
 
 # Installing/upgrading
 

@@ -1,0 +1,20 @@
+ingester:
+  replicas: 2
+
+traces:
+  otlp:
+    http:
+      enabled: true
+    grpc:
+      enabled: true
+
+storage:
+  trace:
+    backend: s3
+    s3:
+      bucket: tempo
+      endpoint: minio.kube-system:9000
+      region: us-west-1
+      access_key: RZH93PPeQg9RfBRnE8MD
+      secret_key: 3LI1rbWsV3T1gq7PBLFwo1Mm1Zxbl4HtCdaTREqk
+      insecure: true

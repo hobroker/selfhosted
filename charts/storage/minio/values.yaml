@@ -1,0 +1,15 @@
+mode: standalone
+
+consoleIngress:
+  enabled: true
+  path: /
+  hosts:
+    - minio.hobroker.me
+
+persistence:
+  size: 10Gi
+  storageClass: "local-path"
+
+metrics:
+  serviceMonitor:
+    enabled: true
