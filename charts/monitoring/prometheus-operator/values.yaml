@@ -1,13 +1,12 @@
 prometheus:
   prometheusSpec:
-    retention: 3660d
+    retention: 60d
+    scrapeInterval: 1m
     podMonitorSelectorNilUsesHelmValues: false
     serviceMonitorSelectorNilUsesHelmValues: false
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: local-path
-          accessModes: ["ReadWriteOnce"]
           resources:
             requests:
               storage: 5G
@@ -18,8 +17,16 @@ prometheus:
       - prometheus.hobroker.me
 
 grafana:
-  adminUser: admin
-  adminPassword: admin
+  grafana.ini:
+    users:
+      auto_assign_org: true
+      auto_assign_org_role: Viewer
+    auth.proxy:
+      enabled: true
+      header_name: cf-access-authenticated-user-email
+      header_property: email
+      auto_sign_up: true
+      enable_login_token: false
   ingress:
     enabled: true
     ingressClassName: traefik
@@ -27,8 +34,6 @@ grafana:
       - grafana.hobroker.me
   persistence:
     enabled: true
-    type: pvc
-    storageClassName: local-path
     size: 5Gi
 
 alertmanager:
@@ -41,11 +46,12 @@ alertmanager:
     storage:
       volumeClaimTemplate:
         spec:
-          storageClassName: local-path
-          accessModes: ["ReadWriteOnce"]
           resources:
             requests:
               storage: 5G
+
+kubeScheduler:
+  enabled: false
 
 defaultRules:
   create: true

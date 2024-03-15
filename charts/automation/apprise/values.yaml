@@ -1,0 +1,26 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: caronc/apprise
+          tag: 0.9
+          pullPolicy: IfNotPresent
+
+service:
+  main:
+    type: ClusterIP
+    ports:
+      http:
+        port: 8000
+
+persistence:
+  config:
+    enabled: true
+    type: hostPath
+    hostPath: /appdata/k3s/apprise
+    globalMounts:
+      - path: /config

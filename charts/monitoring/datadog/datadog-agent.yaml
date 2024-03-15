@@ -24,6 +24,20 @@ spec:
         configMap:
           name: datadog-extra-configmap
   features:
+    otlp:
+      receiver:
+        protocols:
+          grpc:
+            enabled: true
+          http:
+            enabled: true
+    apm:
+      enabled: true
     logCollection:
       enabled: true
-      containerCollectAll: false
+    liveProcessCollection:
+      enabled: true
+    sbom:
+      enabled: true
+      containerImage:
+        enabled: true

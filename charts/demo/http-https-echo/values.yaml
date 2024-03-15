@@ -16,4 +16,15 @@ service:
     ports:
       http:
         port: 8080
-        targetPort: 80
+
+ingress:
+  main:
+    enabled: true
+    ingressClassName: "traefik"
+    hosts:
+      - host: demo.hobroker.me
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              name: main

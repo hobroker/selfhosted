@@ -1,0 +1,12 @@
+repositories:
+  - name: stakater
+    url: https://stakater.github.io/stakater-charts
+
+releases:
+  - name: stakater
+    version: 1.0.67
+    atomic: true
+    namespace: kube-system
+    chart: stakater/reloader
+    values:
+      - values.yaml

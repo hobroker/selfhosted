@@ -1,0 +1,7 @@
+loki:
+  gateway:
+    verboseLogging: false
+  serviceMonitor:
+    enabled: true
+    additionalLabels:
+      release: "prometheus"

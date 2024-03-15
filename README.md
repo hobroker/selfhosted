@@ -10,11 +10,12 @@ My selfhosted services
 
 ### Automation
 
-| Chart                                    | Description                                 | Source Code                            |
-| ---------------------------------------- | ------------------------------------------- | -------------------------------------- |
-| [messenger](charts/automation/messenger) | A tool for sending messages to Telegram     | https://github.com/hobroker/messenger  |
-| [rsnapshot](charts/automation/rsnapshot) | A tool for backing up your data using rsync | https://github.com/rsnapshot/rsnapshot |
-| [syncthing](charts/automation/syncthing) | Open Source Continuous File Synchronization | https://github.com/syncthing/syncthing |
+| Chart                                    | Description                                                 | Source Code                            |
+| ---------------------------------------- | ----------------------------------------------------------- | -------------------------------------- |
+| [apprise](charts/automation/apprise)     | Push Notifications that work with just about every platform | https://github.com/caronc/apprise      |
+| [messenger](charts/automation/messenger) | A tool for sending messages to Telegram                     | https://github.com/hobroker/messenger  |
+| [rsnapshot](charts/automation/rsnapshot) | A tool for backing up your data using rsync                 | https://github.com/rsnapshot/rsnapshot |
+| [syncthing](charts/automation/syncthing) | Open Source Continuous File Synchronization                 | https://github.com/syncthing/syncthing |
 
 ### Demo
 
@@ -61,14 +62,31 @@ My selfhosted services
 | ------------------------------------------------------------ | ----------- | ----------- |
 | [adguard-exporter](charts/monitoring/adguard-exporter)       |             |             |
 | [datadog](charts/monitoring/datadog)                         |             |             |
+| [prometheus-operator](charts/monitoring/loki)                |             |             |
+| [open-telemetry](charts/monitoring/open-telemetry)           |             |             |
 | [prometheus-operator](charts/monitoring/prometheus-operator) |             |             |
+| [tempo](charts/monitoring/tempo)                             |             |             |
 | [wakatime-exporter](charts/monitoring/wakatime-exporter)     |             |             |
+
+### Secrets
+
+| Chart                         | Description                                                                              | Source Code                        |
+| ----------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------- |
+| [vault](charts/secrets/vault) | A tool for secrets management, encryption as a service, and privileged access management | https://github.com/hashicorp/vault |
+
+### Storage
+
+| Chart                         | Description                                                                              | Source Code                    |
+| ----------------------------- | ---------------------------------------------------------------------------------------- | ------------------------------ |
+| [minio](charts/storage/minio) | A tool for secrets management, encryption as a service, and privileged access management | https://github.com/minio/minio |
 
 ### System
 
-| Chart                            | Description | Source Code |
-| -------------------------------- | ----------- | ----------- |
-| [traefik](charts/system/traefik) |             |             |---
+| Chart                            | Description                                                                              | Source Code                         |
+| -------------------------------- | ---------------------------------------------------------------------------------------- | ----------------------------------- |
+| [argo-cd](charts/system/argocd)  | A declarative, GitOps continuous delivery tool for Kubernetes.                           | https://github.com/argoproj/argo-cd |
+| [vault](charts/system/stakater)  | A tool for secrets management, encryption as a service, and privileged access management | https://github.com/hashicorp/vault  |
+| [traefik](charts/system/traefik) |                                                                                          |                                     |---
 
 ## References
 

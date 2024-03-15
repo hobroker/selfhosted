@@ -1,0 +1,10 @@
+admissionWebhooks:
+  certManager:
+    enabled: false
+  autoGenerateCert:
+    enabled: true
+manager:
+  serviceMonitor:
+    enabled: true
+  prometheusRule:
+    enabled: true
