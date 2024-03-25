@@ -4,7 +4,7 @@ repositories:
 
 releases:
   - name: stakater
-    version: 1.0.67
+    version: 1.0.71
     atomic: true
     namespace: kube-system
     chart: stakater/reloader
