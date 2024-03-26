@@ -4,7 +4,7 @@ repositories:
 
 releases:
   - name: minio
-    version: 5.0.15
+    version: 5.1.0
     atomic: true
     namespace: kube-system
     chart: minio/minio
