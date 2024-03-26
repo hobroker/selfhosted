@@ -1,5 +1,6 @@
 prometheus:
   prometheusSpec:
+    enableAdminAPI: true
     retention: 60d
     scrapeInterval: 1m
     podMonitorSelectorNilUsesHelmValues: false
@@ -53,8 +54,32 @@ alertmanager:
 kubeScheduler:
   enabled: false
 
+kubeApiServer:
+  enabled: false
+
+kubeProxy:
+  enabled: false
+
+kubeEtcd:
+  enabled: false
+
+kubeControllerManager:
+  enabled: false
+
+# too many metrics being scraped
+kubelet:
+  serviceMonitor:
+    metricRelabelings:
+     - regex: apiserver_request_duration_seconds_bucket
+       action: drop
+
 defaultRules:
   create: true
   rules:
     alertmanager: false
+    etcd: false
     windows: false
+    kubeApiserverAvailability: false
+    kubeApiserverBurnrate: false
+    kubeApiserverHistogram: false
+    kubeApiserverSlos: false
