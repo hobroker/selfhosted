@@ -15,6 +15,7 @@ controllers:
 
 service:
   main:
+    controller: main
     type: ClusterIP
     ports:
       http:
@@ -23,6 +24,7 @@ service:
 serviceMonitor:
   main:
     enabled: true
+    serviceName: '{{ include "bjw-s.common.lib.chart.names.fullname" $ }}-metrics'
     endpoints:
       - port: http
         interval: 1m
