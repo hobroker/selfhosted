@@ -8,3 +8,5 @@ manager:
     enabled: true
   prometheusRule:
     enabled: true
+  collectorImage:
+    repository: "otel/opentelemetry-collector-contrib"
