@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: linuxserver/sonarr
-          tag: 4.0.4-develop
+          tag: 4.0.5-develop
           pullPolicy: IfNotPresent
         env:
           PGID: "1000"
@@ -17,7 +17,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/onedr0p/exportarr
-          tag: v1.5.3
+          tag: v2.0.1
           pullPolicy: IfNotPresent
         args: ["sonarr"]
         env:
