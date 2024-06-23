@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: linuxserver/qbittorrent
-          tag: 4.6.4
+          tag: 4.6.5
           pullPolicy: IfNotPresent
         env:
           PGID: "1000"
@@ -16,6 +16,7 @@ controllers:
 
 service:
   main:
+    controller: main
     type: LoadBalancer
     ports:
       http:
@@ -44,11 +45,10 @@ persistence:
 ingress:
   main:
     enabled: true
-    ingressClassName: "traefik"
     hosts:
       - host: qbittorrent.hobroker.me
         paths:
           - path: /
             pathType: Prefix
             service:
-              name: main
+              identifier: main
