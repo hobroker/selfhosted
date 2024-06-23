@@ -12,12 +12,6 @@ controllers:
         env:
           PGID: "1000"
           PUID: "1000"
-    initContainers:
-      wait-for-service:
-        image:
-          repository: ghcr.io/hobroker/wait-for-service
-          tag: latest
-        args: ["qbittorrent", "prowlarr"]
   metrics:
     containers:
       main:
@@ -37,6 +31,7 @@ controllers:
 
 service:
   main:
+    controller: main
     type: LoadBalancer
     ports:
       http:
@@ -78,11 +73,10 @@ persistence:
 ingress:
   main:
     enabled: true
-    ingressClassName: "traefik"
     hosts:
       - host: radarr.hobroker.me
         paths:
           - path: /
             pathType: Prefix
             service:
-              name: main
+              identifier: main

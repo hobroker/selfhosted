@@ -12,6 +12,7 @@ controllers:
 
 service:
   main:
+    controller: main
     type: LoadBalancer
     ports:
       http:
@@ -30,11 +31,10 @@ persistence:
 ingress:
   main:
     enabled: true
-    ingressClassName: "traefik"
     hosts:
       - host: tautulli.hobroker.me
         paths:
           - path: /
             pathType: Prefix
             service:
-              name: main
+              identifier: main

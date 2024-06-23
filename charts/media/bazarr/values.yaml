@@ -12,6 +12,7 @@ controllers:
 
 service:
   main:
+    controller: main
     type: LoadBalancer
     ports:
       http:
