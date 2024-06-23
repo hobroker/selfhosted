@@ -4,7 +4,7 @@ repositories:
 
 releases:
   - name: qbittorrent
-    version: 2.4.0
+    version: 3.2.1
     atomic: true
     namespace: self
     chart: bjw-s/app-template

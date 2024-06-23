@@ -7,14 +7,14 @@ controllers:
       main:
         image:
           repository: linuxserver/prowlarr
-          tag: 1.15.0
+          tag: 1.19.0
           pullPolicy: IfNotPresent
   metrics:
     containers:
       main:
         image:
           repository: ghcr.io/onedr0p/exportarr
-          tag: v1.5.3
+          tag: v2.0.1
           pullPolicy: IfNotPresent
         args: ["prowlarr"]
         env:
@@ -28,6 +28,7 @@ controllers:
 
 service:
   main:
+    controller: main
     type: LoadBalancer
     ports:
       http:
@@ -57,7 +58,6 @@ persistence:
 ingress:
   main:
     enabled: true
-    ingressClassName: "traefik"
     annotations:
       traefik.ingress.kubernetes.io/router.entrypoints: websecure
     hosts:
@@ -66,4 +66,4 @@ ingress:
           - path: /
             pathType: Prefix
             service:
-              name: main
+              identifier: main
