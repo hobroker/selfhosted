@@ -7,11 +7,12 @@ controllers:
       main:
         image:
           repository: linuxserver/code-server
-          tag: 4.23.1
+          tag: 4.90.3
           pullPolicy: IfNotPresent
 
 service:
   main:
+    controller: main
     type: LoadBalancer
     ports:
       http:
@@ -46,11 +47,10 @@ persistence:
 ingress:
   main:
     enabled: true
-    ingressClassName: "traefik"
     hosts:
       - host: code.hobroker.me
         paths:
           - path: /
             pathType: Prefix
             service:
-              name: main
+              identifier: main
