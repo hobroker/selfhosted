@@ -3,7 +3,7 @@
   "extends": [
     "config:recommended",
     ":semanticCommitTypeAll(chore)",
-    "schedule:weekly"
+    "schedule:monthly"
   ],
   "assignees": ["hobroker"],
   "platformAutomerge": false,
@@ -53,7 +53,18 @@
     {
       "matchManagers": ["github-actions"],
       "groupName": "GitHub Actions"
+    },
+    {
+      "matchPackageNames": ["qbittorrent"],
+      "allowedVersions": "<=9"
+    },
+    {
+      "matchPackageNames": ["jellyfin"],
+      "allowedVersions": "<=19"
+    },
+    {
+      "matchPackageNames": ["overseerr"],
+      "allowedVersions": "<=9"
     }
-  ],
-  "ignoreDeps": ["gzip-size", "ghcr.io/gamurar/biomarkly"]
+  ]
 }
