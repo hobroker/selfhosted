@@ -55,15 +55,15 @@
       "groupName": "GitHub Actions"
     },
     {
-      "matchPackageNames": ["qbittorrent"],
+      "matchPackageNames": ["linuxserver/qbittorrent"],
       "allowedVersions": "<=9"
     },
     {
-      "matchPackageNames": ["jellyfin"],
+      "matchPackageNames": ["linuxserver/jellyfin"],
       "allowedVersions": "<=19"
     },
     {
-      "matchPackageNames": ["overseerr"],
+      "matchPackageNames": ["linuxserver/overseerr"],
       "allowedVersions": "<=9"
     }
   ]
