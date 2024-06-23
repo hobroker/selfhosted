@@ -26,10 +26,6 @@ controllers:
       failedJobsHistory: 3
       backoffLimit: 3
 
-service:
-  main:
-    enabled: false
-
 persistence:
   data:
     enabled: true
