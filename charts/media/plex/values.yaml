@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: linuxserver/plex
-          tag: 1.40.1
+          tag: 1.40.3
           pullPolicy: IfNotPresent
         env:
           PGID: "1000"
@@ -15,6 +15,7 @@ controllers:
 
 service:
   main:
+    controller: main
     type: LoadBalancer
     ports:
       http:
@@ -43,11 +44,10 @@ persistence:
 ingress:
   main:
     enabled: true
-    ingressClassName: "traefik"
     hosts:
       - host: plex.hobroker.me
         paths:
           - path: /
             pathType: Prefix
             service:
-              name: main
+              identifier: main

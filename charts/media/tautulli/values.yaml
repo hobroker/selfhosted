@@ -7,11 +7,12 @@ controllers:
       main:
         image:
           repository: tautulli/tautulli
-          tag: v2.13.4
+          tag: v2.14.3
           pullPolicy: IfNotPresent
 
 service:
   main:
+    controller: main
     type: LoadBalancer
     ports:
       http:
@@ -30,11 +31,10 @@ persistence:
 ingress:
   main:
     enabled: true
-    ingressClassName: "traefik"
     hosts:
       - host: tautulli.hobroker.me
         paths:
           - path: /
             pathType: Prefix
             service:
-              name: main
+              identifier: main
