@@ -12,7 +12,6 @@ controllers:
 
 service:
   main:
-    controller: main
     type: LoadBalancer
     ports:
       http:
@@ -41,10 +40,11 @@ persistence:
 ingress:
   main:
     enabled: true
+    ingressClassName: "traefik"
     hosts:
       - host: jellyfin.hobroker.me
         paths:
           - path: /
             pathType: Prefix
             service:
-              identifier: main
+              name: main
