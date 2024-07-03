@@ -7,12 +7,11 @@ controllers:
       main:
         image:
           repository: linuxserver/jellyfin
-          tag: 10.9.6
+          tag: 10.9.7
           pullPolicy: IfNotPresent
 
 service:
   main:
-    controller: main
     type: LoadBalancer
     ports:
       http:
@@ -41,10 +40,11 @@ persistence:
 ingress:
   main:
     enabled: true
+    ingressClassName: "traefik"
     hosts:
       - host: jellyfin.hobroker.me
         paths:
           - path: /
             pathType: Prefix
             service:
-              identifier: main
+              name: main
