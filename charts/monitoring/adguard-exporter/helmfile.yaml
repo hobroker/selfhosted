@@ -4,7 +4,7 @@ repositories:
 
 releases:
   - name: adguard-exporter
-    version: 3.1.0
+    version: 3.2.1
     atomic: true
     namespace: monitoring
     chart: bjw-s/app-template
