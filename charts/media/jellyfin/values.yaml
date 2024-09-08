@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: linuxserver/jellyfin
-          tag: 10.9.7
+          tag: 10.9.11
           pullPolicy: IfNotPresent
 
 service:
