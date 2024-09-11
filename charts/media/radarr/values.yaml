@@ -1,6 +1,3 @@
-defaultPodOptions:
-  automountServiceAccountToken: false
-
 controllers:
   main:
     containers:
@@ -17,7 +14,7 @@ controllers:
         image:
           repository: ghcr.io/hobroker/wait-for-service
           tag: latest
-        args: ["qbittorrent", "prowlarr"]
+        args: ["qbittorrent", "prowlarr-main"]
   metrics:
     containers:
       main:
@@ -37,6 +34,7 @@ controllers:
 
 service:
   main:
+    controller: main
     type: LoadBalancer
     ports:
       http:
@@ -78,11 +76,10 @@ persistence:
 ingress:
   main:
     enabled: true
-    ingressClassName: "traefik"
     hosts:
       - host: radarr.hobroker.me
         paths:
           - path: /
             pathType: Prefix
             service:
-              name: main
+              identifier: main
