@@ -10,3 +10,5 @@ manager:
     enabled: true
   collectorImage:
     repository: "otel/opentelemetry-collector-contrib"
+crds:
+  create: true
