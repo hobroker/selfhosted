@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: linuxserver/qbittorrent
-          tag: 4.6.5
+          tag: 4.6.6
           pullPolicy: IfNotPresent
         env:
           PGID: "1000"
@@ -45,6 +45,8 @@ persistence:
 ingress:
   main:
     enabled: true
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
     hosts:
       - host: qbittorrent.hobroker.me
         paths:
