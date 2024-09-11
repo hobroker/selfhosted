@@ -1,0 +1,18 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: flaresolverr/flaresolverr
+          tag: v3.3.21
+          pullPolicy: IfNotPresent
+        env:
+          CAPTCHA_SOLVER: hcaptcha-solver
+
+service:
+  main:
+    controller: main
+    type: LoadBalancer
+    ports:
+      http:
+        port: 8191
