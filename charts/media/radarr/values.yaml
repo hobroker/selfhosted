@@ -1,13 +1,10 @@
-defaultPodOptions:
-  automountServiceAccountToken: false
-
 controllers:
   main:
     containers:
       main:
         image:
           repository: linuxserver/radarr
-          tag: 5.8.0-develop
+          tag: 5.10.2-develop
           pullPolicy: IfNotPresent
         env:
           PGID: "1000"
@@ -17,7 +14,7 @@ controllers:
         image:
           repository: ghcr.io/hobroker/wait-for-service
           tag: latest
-        args: ["qbittorrent", "prowlarr"]
+        args: ["qbittorrent", "prowlarr-main"]
   metrics:
     containers:
       main:
@@ -37,6 +34,7 @@ controllers:
 
 service:
   main:
+    controller: main
     type: LoadBalancer
     ports:
       http:
@@ -78,11 +76,10 @@ persistence:
 ingress:
   main:
     enabled: true
-    ingressClassName: "traefik"
     hosts:
       - host: radarr.hobroker.me
         paths:
           - path: /
             pathType: Prefix
             service:
-              name: main
+              identifier: main
