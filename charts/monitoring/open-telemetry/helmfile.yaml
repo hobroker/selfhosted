@@ -4,7 +4,7 @@ repositories:
 
 releases:
   - name: open-telemetry
-    version: 0.64.1
+    version: 0.69.0
     atomic: true
     namespace: monitoring
     chart: open-telemetry/opentelemetry-operator

@@ -4,7 +4,7 @@ repositories:
 
 releases:
   - name: prometheus-operator
-    version: 61.1.1
+    version: 62.6.0
     atomic: true
     namespace: monitoring
     chart: prometheus-community/kube-prometheus-stack
