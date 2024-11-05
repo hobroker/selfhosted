@@ -9,7 +9,7 @@ controllers:
       main:
         image:
           repository: koenkk/zigbee2mqtt
-          tag: 1.33.2
+          tag: 1.41.0
           pullPolicy: IfNotPresent
 
 service:

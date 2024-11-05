@@ -4,7 +4,7 @@ repositories:
 
 releases:
   - name: http-https-echo
-    version: 2.4.0
+    version: 3.5.1
     atomic: true
     namespace: self
     chart: bjw-s/app-template
