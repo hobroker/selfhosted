@@ -62,7 +62,7 @@ My selfhosted services
 | ------------------------------------------------------------ | ----------- | ----------- |
 | [adguard-exporter](charts/monitoring/adguard-exporter)       |             |             |
 | [datadog](charts/monitoring/datadog)                         |             |             |
-| [prometheus-operator](charts/monitoring/loki)                |             |             |
+| [loki](charts/monitoring/loki)                               |             |             |
 | [open-telemetry](charts/monitoring/open-telemetry)           |             |             |
 | [prometheus-operator](charts/monitoring/prometheus-operator) |             |             |
 | [tempo](charts/monitoring/tempo)                             |             |             |
