@@ -1,0 +1,30 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: fyb3roptik/threadfin
+          tag: 1.2.20
+          pullPolicy: IfNotPresent
+
+service:
+  main:
+    controller: main
+    type: LoadBalancer
+    ports:
+      http:
+        port: 34400
+
+persistence:
+  root:
+    enabled: true
+    type: hostPath
+    hostPath: /appdata/k3s/threadfin/conf
+    globalMounts:
+      - path: /home/threadfin/conf
+  config:
+    enabled: true
+    type: hostPath
+    hostPath: /appdata/k3s/threadfin/temp
+    globalMounts:
+      - path: /tmp/threadfin
