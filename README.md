@@ -46,15 +46,16 @@ My selfhosted services
 
 ### Media
 
-| Chart                               | Description | Source Code |
-| ----------------------------------- | ----------- | ----------- |
-| [bazarr](charts/media/bazarr)       |             |             |
-| [jellyfin](charts/media/jellyfin)   |             |             |
-| [overseerr](charts/media/overseerr) |             |             |
-| [plex](charts/media/plex)           |             |             |
-| [radarr](charts/media/radarr)       |             |             |
-| [sonarr](charts/media/sonarr)       |             |             |
-| [tautulli](charts/media/tautulli)   |             |             |
+| Chart                               | Description                                               | Source Code |
+| ----------------------------------- | --------------------------------------------------------- | ----------- |
+| [bazarr](charts/media/bazarr)       |                                                           |             |
+| [jellyfin](charts/media/jellyfin)   |                                                           |             |
+| [overseerr](charts/media/overseerr) |                                                           |             |
+| [plex](charts/media/plex)           |                                                           |             |
+| [radarr](charts/media/radarr)       |                                                           |             |
+| [sonarr](charts/media/sonarr)       |                                                           |             |
+| [tautulli](charts/media/tautulli)   |                                                           |             |
+| [threadfin](charts/media/threadfin) | An M3U proxy for Kernel/Plex/Jellyfin/Emby based on xTeVe |             |
 
 ### Monitoring
 
