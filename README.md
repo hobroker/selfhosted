@@ -39,16 +39,16 @@ My selfhosted services
 
 ### Media
 
-| Chart                               | Description                                               | Source Code |
-| ----------------------------------- | --------------------------------------------------------- | ----------- |
-| [bazarr](charts/media/bazarr)       |                                                           |             |
-| [jellyfin](charts/media/jellyfin)   |                                                           |             |
-| [overseerr](charts/media/overseerr) |                                                           |             |
-| [plex](charts/media/plex)           |                                                           |             |
-| [radarr](charts/media/radarr)       |                                                           |             |
-| [sonarr](charts/media/sonarr)       |                                                           |             |
-| [tautulli](charts/media/tautulli)   |                                                           |             |
-| [threadfin](charts/media/threadfin) | An M3U proxy for Kernel/Plex/Jellyfin/Emby based on xTeVe |             |
+| Chart                               | Description                                                                                           | Source Code                                            |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| [bazarr](charts/media/bazarr)       | Companion application to Sonarr and Radarr that manages and downloads subtitles                       | https://github.com/morpheus65535/bazarr                |
+| [jellyfin](charts/media/jellyfin)   | Software Media System                                                                                 | https://bjw-s.github.io/helm-charts/docs/app-template/ |
+| [overseerr](charts/media/overseerr) | A management tool for browsing and requesting new media content.                                      | https://github.com/sct/overseerr                       |
+| [plex](charts/media/plex)           | A comprehensive media server that organizes and streams video and audio content across devices.       |                                                        |
+| [radarr](charts/media/radarr)       | A movie tracking and automation tool that downloads movies as they become available.                  | https://github.com/Radarr/Radarr                       |
+| [sonarr](charts/media/sonarr)       | A TV series tracking and automation tool for downloading episodes as they air.                        | https://github.com/Sonarr/Sonarr                       |
+| [tautulli](charts/media/tautulli)   | A monitoring and analytics tool for Plex Media Servers, providing detailed usage statistics and logs. | https://github.com/Tautulli/Tautulli                   |
+| [threadfin](charts/media/threadfin) | An M3U proxy for Kernel/Plex/Jellyfin/Emby based on xTeVe                                             | https://github.com/Threadfin/Threadfin                 |
 
 ### Monitoring
 

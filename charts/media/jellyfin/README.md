@@ -1,6 +1,8 @@
 # `jellyfin`
 
-Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
+> Software Media System
+
+Source Code: https://bjw-s.github.io/helm-charts/docs/app-template/
 
 ## Installing/upgrading
 
