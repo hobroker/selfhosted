@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: linuxserver/code-server
-          tag: 4.95.3
+          tag: 4.96.2
           pullPolicy: IfNotPresent
 
 service:
