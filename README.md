@@ -10,12 +10,13 @@ My selfhosted services
 
 ### Automation
 
-| Chart                                    | Description                                                 | Source Code                            |
-| ---------------------------------------- | ----------------------------------------------------------- | -------------------------------------- |
-| [apprise](charts/automation/apprise)     | Push Notifications that work with just about every platform | https://github.com/caronc/apprise      |
-| [messenger](charts/automation/messenger) | A tool for sending messages to Telegram                     | https://github.com/hobroker/messenger  |
-| [rsnapshot](charts/automation/rsnapshot) | A tool for backing up your data using rsync                 | https://github.com/rsnapshot/rsnapshot |
-| [syncthing](charts/automation/syncthing) | Open Source Continuous File Synchronization                 | https://github.com/syncthing/syncthing |
+| Chart                                    | Description                                                               | Source Code                            |
+| ---------------------------------------- | ------------------------------------------------------------------------- | -------------------------------------- |
+| [apprise](charts/automation/apprise)     | Push Notifications that work with just about every platform               | https://github.com/caronc/apprise      |
+| [messenger](charts/automation/messenger) | A tool for sending messages to Telegram                                   | https://github.com/hobroker/messenger  |
+| [olivetin](charts/automation/olivetin)   | Safe and simple access to predefined shell commands from a web interface. | https://github.com/OliveTin/OliveTin   |
+| [rsnapshot](charts/automation/rsnapshot) | A tool for backing up your data using rsync                               | https://github.com/rsnapshot/rsnapshot |
+| [syncthing](charts/automation/syncthing) | Open Source Continuous File Synchronization                               | https://github.com/syncthing/syncthing |
 
 ### Demo
 
