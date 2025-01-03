@@ -4,7 +4,7 @@ repositories:
 
 releases:
   - name: apprise
-    version: 3.5.1
+    version: 3.6.0
     atomic: true
     namespace: self
     chart: bjw-s/app-template
