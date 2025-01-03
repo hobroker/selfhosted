@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: fyb3roptik/threadfin
-          tag: 1.2.20
+          tag: 1.2.21
           pullPolicy: IfNotPresent
 
 service:
