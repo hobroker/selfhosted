@@ -1,6 +1,8 @@
 # `overseerr`
 
-Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
+> A management tool for browsing and requesting new media content.
+
+Source Code: https://github.com/sct/overseerr
 
 ## Installing/upgrading
 

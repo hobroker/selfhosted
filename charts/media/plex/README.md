@@ -1,6 +1,8 @@
 # `plex`
 
-Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
+> A comprehensive media server that organizes and streams video and audio content across devices.
+
+Docs: https://www.plex.tv/
 
 ## Installing/upgrading
 

@@ -1,5 +1,9 @@
 # `zigbee2mqtt`
 
+> A bridge software enabling Zigbee devices to communicate with MQTT servers for smart home integration.
+
+Source Code: https://github.com/Koenkk/zigbee2mqtt
+
 ## Installing/upgrading
 
 ```shell
