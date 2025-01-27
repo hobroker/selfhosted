@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: linuxserver/radarr
-          tag: 5.17.0-develop
+          tag: 5.18.1-develop
           pullPolicy: IfNotPresent
         env:
           PGID: "1000"
