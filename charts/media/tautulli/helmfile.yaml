@@ -4,7 +4,7 @@ repositories:
 
 releases:
   - name: tautulli
-    version: 3.6.1
+    version: 3.7.0
     atomic: true
     namespace: self
     chart: bjw-s/app-template
