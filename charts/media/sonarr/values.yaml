@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: linuxserver/sonarr
-          tag: 4.0.13-develop
+          tag: develop-version-4.0.13.2933
           pullPolicy: IfNotPresent
         env:
           PGID: "1000"
