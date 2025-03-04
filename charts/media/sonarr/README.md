@@ -1,6 +1,8 @@
 # `sonarr`
 
-Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
+> A TV series tracking and automation tool for downloading episodes as they air.
+
+Source Code: https://github.com/Sonarr/Sonarr
 
 ## Installing/upgrading
 

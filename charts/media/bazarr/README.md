@@ -1,6 +1,8 @@
 # `bazarr`
 
-Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
+> Companion application to Sonarr and Radarr that manages and downloads subtitles
+
+Source Code: https://github.com/morpheus65535/bazarr
 
 ## Installing/upgrading
 
