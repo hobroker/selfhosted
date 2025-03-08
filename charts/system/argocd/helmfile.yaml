@@ -4,7 +4,7 @@ repositories:
 
 releases:
   - name: argocd
-    version: 6.7.3
+    version: 7.8.9
     atomic: true
     namespace: argo
     createNamespace: true
