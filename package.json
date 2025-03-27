@@ -4,8 +4,8 @@
   "description": "Generate docs from charts to the main README.md",
   "author": "Igor Leahu <igor.leahu24@gmail.com>",
   "devDependencies": {
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.2"
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0"
   },
   "scripts": {
     "prepare": "husky",
