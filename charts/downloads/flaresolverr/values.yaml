@@ -1,3 +1,6 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
 controllers:
   main:
     containers:
@@ -12,7 +15,7 @@ controllers:
 service:
   main:
     controller: main
-    type: LoadBalancer
+    type: ClusterIP
     ports:
       http:
         port: 8191
