@@ -14,17 +14,18 @@ service:
 
 ports:
   traefik:
-    expose: true
-  metrics:
-    expose: true
-    exposedPort: 9101
+    expose: 
+      default: true
+  web:
+    expose: 
+      default: false
   websecure:
     http3:
       enabled: true
 
 metrics:
   prometheus:
-    disableAPICheck: true
+    # disableAPICheck: true
     service:
       enabled: true
     serviceMonitor:
