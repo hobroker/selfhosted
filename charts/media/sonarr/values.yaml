@@ -9,12 +9,6 @@ controllers:
         env:
           PGID: "1000"
           PUID: "1000"
-    initContainers:
-      wait-for-service:
-        image:
-          repository: ghcr.io/hobroker/wait-for-service
-          tag: latest
-        args: ["qbittorrent", "prowlarr-main"]
   metrics:
     containers:
       main:
