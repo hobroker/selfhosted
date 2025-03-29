@@ -31,10 +31,6 @@
       "groupName": "monitoring"
     },
     {
-      "matchFileNames": ["charts/secrets/**"],
-      "groupName": "secrets"
-    },
-    {
       "matchFileNames": ["charts/downloads/**"],
       "groupName": "downloads"
     },
@@ -43,16 +39,8 @@
       "groupName": "development"
     },
     {
-      "matchFileNames": ["charts/storage/**"],
-      "groupName": "storage"
-    },
-    {
       "matchFileNames": ["charts/system/**"],
       "groupName": "system"
-    },
-    {
-      "matchManagers": ["github-actions"],
-      "groupName": "GitHub Actions"
     },
     {
       "matchPackageNames": ["linuxserver/qbittorrent"],
