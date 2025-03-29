@@ -4,7 +4,7 @@ repositories:
 
 releases:
   - name: wakatime-exporter
-    version: 3.4.0
+    version: 3.7.3
     atomic: true
     namespace: monitoring
     chart: bjw-s/app-template
