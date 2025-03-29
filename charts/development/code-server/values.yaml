@@ -47,6 +47,8 @@ persistence:
 ingress:
   main:
     enabled: true
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
     hosts:
       - host: code.hobroker.me
         paths:

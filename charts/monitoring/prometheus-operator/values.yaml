@@ -14,6 +14,8 @@ prometheus:
   ingress:
     enabled: true
     ingressClassName: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
     hosts:
       - prometheus.hobroker.me
 
@@ -31,6 +33,8 @@ grafana:
   ingress:
     enabled: true
     ingressClassName: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
     hosts:
       - grafana.hobroker.me
   persistence:
@@ -39,17 +43,7 @@ grafana:
 
 alertmanager:
   ingress:
-    enabled: true
-    ingressClassName: traefik
-    hosts:
-      - alertmanager.hobroker.me
-  alertmanagerSpec:
-    storage:
-      volumeClaimTemplate:
-        spec:
-          resources:
-            requests:
-              storage: 5G
+    enabled: false
 
 kubeScheduler:
   enabled: false

@@ -41,6 +41,8 @@ persistence:
 ingress:
   main:
     enabled: true
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
     className: "traefik"
     hosts:
       - host: jellyfin.hobroker.me

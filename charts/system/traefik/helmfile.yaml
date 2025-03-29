@@ -3,29 +3,16 @@ repositories:
     url: https://helm.traefik.io/traefik
 
 releases:
+  - name: traefik-crds
+    version: 1.5.0
+    atomic: true
+    namespace: kube-system
+    chart: traefik/traefik-crds
+
   - name: traefik
-    version: 26.1.0
+    version: 34.4.1
     atomic: true
     namespace: kube-system
     chart: traefik/traefik
     values:
       - values.yaml
-    hooks:
-      - events:
-          - presync
-        showlogs: true
-        command: kubectl
-        args:
-          - apply
-          - -f
-          - https://raw.githubusercontent.com/traefik/traefik/v2.10/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
-          - -f
-          - https://raw.githubusercontent.com/traefik/traefik/v2.10/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml
-      - events:
-          - postsync
-        showlogs: true
-        command: kubectl
-        args:
-          - apply
-          - -f
-          - middlewares/gzip-middleware.yaml

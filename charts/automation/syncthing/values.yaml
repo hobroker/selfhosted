@@ -52,6 +52,8 @@ persistence:
 ingress:
   main:
     enabled: true
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
     hosts:
       - host: syncthing.hobroker.me
         paths:
