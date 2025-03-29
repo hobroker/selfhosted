@@ -1,6 +1,6 @@
 # `bazarr`
 
-> Companion application to Sonarr and Radarr that manages and downloads subtitles
+> Companion application to Sonarr and Radarr that manages and downloads subtitles.
 
 Source Code: https://github.com/morpheus65535/bazarr
 

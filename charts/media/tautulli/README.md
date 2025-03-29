@@ -1,6 +1,6 @@
 # `tautulli`
 
-> A monitoring and analytics tool for Plex Media Servers, providing detailed usage statistics and logs.
+> A monitoring and analytics tool for Plex
 
 Source Code: https://github.com/Tautulli/Tautulli
 

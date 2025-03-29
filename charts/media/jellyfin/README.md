@@ -1,6 +1,6 @@
 # `jellyfin`
 
-> Software Media System
+> An open-source media server
 
 Source Code: https://bjw-s.github.io/helm-charts/docs/app-template/
 

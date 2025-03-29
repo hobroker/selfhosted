@@ -1,6 +1,6 @@
 # `syncthing`
 
-> Open Source Continuous File Synchronization
+> Continuous file synchronization
 
 Source Code: https://github.com/syncthing/syncthing  
 Chart: https://bjw-s.github.io/helm-charts/docs/app-template/

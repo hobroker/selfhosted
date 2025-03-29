@@ -1,12 +1,14 @@
 # `prometheus-operator`
 
-Repository: https://github.com/prometheus-operator/prometheus-operator  
-Chart repository: https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
+> Operator that manages Prometheus, Grafana, and related monitoring components in K8s
+
+Source Code: https://github.com/prometheus-operator/prometheus-operator  
+Chart: https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
 
 # Installing/upgrading
 
 ```shell
-helmfile apply -f metrics/prometheus-operator/helmfile.yaml
+helmfile apply
 ```
 
 ## Helm values
