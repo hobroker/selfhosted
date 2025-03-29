@@ -1,11 +1,13 @@
 # `plex`
 
-Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
+> A media server that organizes and streams video and audio content across devices.
+
+Source Code: https://www.plex.tv/
 
 ## Installing/upgrading
 
 ```shell
-helmfile apply -f media/plex/helmfile.yaml
+helmfile apply
 ```
 
 ### Host Volumes

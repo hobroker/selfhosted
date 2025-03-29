@@ -1,6 +1,8 @@
 # `tautulli`
 
-Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
+> A monitoring and analytics tool for Plex
+
+Source Code: https://github.com/Tautulli/Tautulli
 
 ## Installing/upgrading
 

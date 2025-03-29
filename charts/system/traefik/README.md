@@ -1,11 +1,14 @@
 # `traefik`
 
-Repository: https://github.com/traefik/traefik-helm-chart
+> HTTP reverse proxy and load balancer
+
+Source Code: https://github.com/traefik/traefik
+Chart: https://github.com/traefik/traefik-helm-chart
 
 # Installing/upgrading
 
 ```shell
-helmfile apply -f network/traefik/helmfile.yaml
+helmfile apply
 ```
 
 ## Helm values

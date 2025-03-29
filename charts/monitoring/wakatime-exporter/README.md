@@ -1,6 +1,8 @@
 # `wakatime-exporter`
 
-Docs: https://github.com/MacroPower/wakatime_exporter
+> Exports Prometheus metrics from Wakatime.
+
+Source Code: https://github.com/MacroPower/wakatime_exporter
 
 # Installing/upgrading
 
@@ -23,5 +25,5 @@ Docs: https://github.com/MacroPower/wakatime_exporter
 > </details>
 
 ```shell
-helmfile apply -f monitoring/wakatime-exporter/helmfile.yaml
+helmfile apply
 ```
