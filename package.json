@@ -4,15 +4,11 @@
   "description": "Generate docs from charts to the main README.md",
   "author": "Igor Leahu <igor.leahu24@gmail.com>",
   "devDependencies": {
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.2"
+    "husky": "^9.1.7"
   },
   "scripts": {
     "prepare": "husky",
     "generate": "npx tsx packages/docs/src/index.ts"
-  },
-  "lint-staged": {
-    "*.md": "npm run generate"
   },
   "workspaces": [
     "packages/docs"
