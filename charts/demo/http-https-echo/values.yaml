@@ -7,11 +7,12 @@ controllers:
       main:
         image:
           repository: mendhak/http-https-echo
-          tag: 35
+          tag: 36
           pullPolicy: IfNotPresent
 
 service:
   main:
+    controller: main
     type: LoadBalancer
     ports:
       http:
@@ -20,11 +21,12 @@ service:
 ingress:
   main:
     enabled: true
-    ingressClassName: "traefik"
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
     hosts:
       - host: demo.hobroker.me
         paths:
           - path: /
             pathType: Prefix
             service:
-              name: main
+              identifier: main
