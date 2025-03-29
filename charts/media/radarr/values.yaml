@@ -22,7 +22,7 @@ controllers:
         args: ["radarr"]
         env:
           - name: URL
-            value: "http://radarr:7878"
+            value: "http://radarr-main:7878"
           - name: APIKEY
             valueFrom:
               secretKeyRef:
