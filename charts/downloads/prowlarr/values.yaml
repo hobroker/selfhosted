@@ -19,7 +19,7 @@ controllers:
         args: ["prowlarr"]
         env:
           - name: URL
-            value: "http://prowlarr:9696"
+            value: "http://prowlarr-main:9696"
           - name: APIKEY
             valueFrom:
               secretKeyRef:

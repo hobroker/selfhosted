@@ -22,7 +22,7 @@ controllers:
         args: ["sonarr"]
         env:
           - name: URL
-            value: "http://sonarr:8989"
+            value: "http://sonarr-main:8989"
           - name: APIKEY
             valueFrom:
               secretKeyRef:
