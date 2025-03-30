@@ -10,6 +10,9 @@ controllers:
           tag: 1.30.2
           pullPolicy: IfNotPresent
   metrics:
+    pod:
+      annotations:
+        secret.reloader.stakater.com/reload: "infisical-exportarr-prowlarr-secret"
     containers:
       main:
         image:
@@ -23,7 +26,7 @@ controllers:
           - name: APIKEY
             valueFrom:
               secretKeyRef:
-                name: exportarr-prowlarr-secret
+                name: infisical-exportarr-prowlarr-secret
                 key: APIKEY
 
 service:

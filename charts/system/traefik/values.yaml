@@ -25,7 +25,6 @@ ports:
 
 metrics:
   prometheus:
-    # disableAPICheck: true
     service:
       enabled: true
     serviceMonitor:
@@ -36,6 +35,8 @@ deployment:
     - name: traefik-acme
       hostPath:
         path: "/appdata/k3s/traefik/acme"
+  podAnnotations:
+    secret.reloader.stakater.com/reload: "infisical-traefik-secret"
 
 additionalVolumeMounts:
   - name: traefik-acme
@@ -52,13 +53,13 @@ env:
   - name: CF_API_EMAIL
     valueFrom:
       secretKeyRef:
-        name: traefik-secret
+        name: infisical-traefik-secret
         key: CF_API_EMAIL
   - name: CF_DNS_API_TOKEN
     valueFrom:
       secretKeyRef:
         key: CF_DNS_API_TOKEN
-        name: traefik-secret
+        name: infisical-traefik-secret
 
 logs:
   general:

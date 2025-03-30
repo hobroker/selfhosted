@@ -13,6 +13,9 @@ controllers:
           PGID: "1000"
           PUID: "1000"
   metrics:
+    pod:
+      annotations:
+        secret.reloader.stakater.com/reload: "infisical-exportarr-sonarr-secret"
     containers:
       main:
         image:
@@ -26,7 +29,7 @@ controllers:
           - name: APIKEY
             valueFrom:
               secretKeyRef:
-                name: exportarr-sonarr-secret
+                name: infisical-exportarr-sonarr-secret
                 key: APIKEY
 
 service:
