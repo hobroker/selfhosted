@@ -1,2 +1,9 @@
+image:
+  name: stakater/reloader
+  repository: stakater/reloader
+
 reloader:
   reloadOnCreate: true
+
+serviceMonitor:
+  enabled: true
