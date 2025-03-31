@@ -7,7 +7,9 @@ Source Code: https://github.com/Radarr/Radarr
 ## Installing/upgrading
 
 ```shell
-helmfile apply -f media/radarr/helmfile.yaml
+kubectl apply -f config
+
+helmfile apply
 ```
 
 ### Host Volumes

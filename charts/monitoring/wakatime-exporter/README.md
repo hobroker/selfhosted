@@ -8,21 +8,7 @@ Source Code: https://github.com/MacroPower/wakatime_exporter
 
 ---
 
-> <details>
->   <summary>Secrets</summary>
->
-> ```yaml
-> apiVersion: v1
-> kind: Secret
-> metadata:
->   name: wakatime-exporter-secrets
->   namespace: self
-> type: Opaque
-> stringData:
->   WAKA_API_KEY: "api_key"
-> ```
->
-> </details>
+kubectl apply -f config
 
 ```shell
 helmfile apply

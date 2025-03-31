@@ -8,7 +8,9 @@ Chart: https://bjw-s.github.io/helm-charts/docs/app-template/
 ## Installing/upgrading
 
 ```shell
-helmfile apply -f downloads/prowlarr/helmfile.yaml
+kubectl apply -f config
+
+helmfile apply
 ```
 
 ### Assumptions

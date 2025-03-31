@@ -8,5 +8,5 @@ Chart: https://bjw-s.github.io/helm-charts/docs/app-template/
 ## Installing/upgrading
 
 ```shell
-helmfile apply -f downloads/flaresolverr/helmfile.yaml
+helmfile apply
 ```

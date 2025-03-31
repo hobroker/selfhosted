@@ -8,6 +8,8 @@ Chart: https://github.com/traefik/traefik-helm-chart
 # Installing/upgrading
 
 ```shell
+kubectl apply -f config
+
 helmfile apply
 ```
 

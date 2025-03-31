@@ -7,7 +7,7 @@ Source Code: https://github.com/sct/overseerr
 ## Installing/upgrading
 
 ```shell
-helmfile apply -f media/overseerr/helmfile.yaml
+helmfile apply
 ```
 
 ### Host Volumes
