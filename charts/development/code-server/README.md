@@ -7,7 +7,7 @@ Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
 ## Installing/upgrading
 
 ```shell
-helmfile apply -f development/code-server/helmfile.yaml
+helmfile apply
 ```
 
 ### Host Volumes

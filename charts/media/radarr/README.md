@@ -7,7 +7,9 @@ Source Code: https://github.com/Radarr/Radarr
 ## Installing/upgrading
 
 ```shell
-helmfile apply -f media/radarr/helmfile.yaml
+kubectl apply -f config
+
+helmfile apply
 ```
 
 ### Host Volumes
@@ -17,3 +19,9 @@ helmfile apply -f media/radarr/helmfile.yaml
 | `/appdata/k3s/radarr` | `/config`     |
 | `/storage/movies`     | `/movies`     |
 | `/storage/downloads`  | `/downloads`  |
+
+### Secrets
+
+| name     | description           |
+| -------- | --------------------- |
+| `APIKEY` | API key for exportarr |

@@ -7,7 +7,9 @@ Source Code: https://github.com/Sonarr/Sonarr
 ## Installing/upgrading
 
 ```shell
-helmfile apply -f media/sonarr/helmfile.yaml
+kubectl apply -f config
+
+helmfile apply
 ```
 
 ### Host Volumes
@@ -18,3 +20,9 @@ helmfile apply -f media/sonarr/helmfile.yaml
 | `/storage/tv-shows`   | `/tv`         |
 | `/mnt/onetb/tv-shows` | `/tv2`        |
 | `/storage/downloads`  | `/downloads`  |
+
+### Secrets
+
+| name     | description           |
+| -------- | --------------------- |
+| `APIKEY` | API key for exportarr |

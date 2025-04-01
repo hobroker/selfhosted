@@ -7,7 +7,7 @@ Source Code: https://github.com/morpheus65535/bazarr
 ## Installing/upgrading
 
 ```shell
-helmfile apply -f media/bazarr/helmfile.yaml
+helmfile apply
 ```
 
 ### Host Volumes

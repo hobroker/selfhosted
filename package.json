@@ -12,5 +12,11 @@
   },
   "workspaces": [
     "packages/docs"
-  ]
+  ],
+  "dependencies": {
+    "lint-staged": "^15.5.0"
+  },
+  "lint-staged": {
+    "*.md": "prettier --write"
+  }
 }

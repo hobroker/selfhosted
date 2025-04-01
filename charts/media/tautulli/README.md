@@ -7,7 +7,7 @@ Source Code: https://github.com/Tautulli/Tautulli
 ## Installing/upgrading
 
 ```shell
-helmfile apply -f media/tautulli/helmfile.yaml
+helmfile apply
 ```
 
 ### Host Volumes

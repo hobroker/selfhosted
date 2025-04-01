@@ -8,7 +8,7 @@ Chart: https://bjw-s.github.io/helm-charts/docs/app-template/
 ## Installing/upgrading
 
 ```shell
-helmfile apply -f automation/rsnapshot/helmfile.yaml
+helmfile apply
 ```
 
 ### Host Volumes

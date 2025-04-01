@@ -1,0 +1,20 @@
+repositories:
+  - name: infisical-helm-charts
+    url: https://dl.cloudsmith.io/public/infisical/helm-charts/helm/charts/
+
+releases:
+  - name: infisical
+    version: 0.8.15
+    namespace: infisical-operator-system
+    chart: infisical-helm-charts/secrets-operator
+    values:
+      - values.yaml
+    hooks:
+      - events: ["presync"]
+        showlogs: true
+        command: kubectl
+        args: ["apply", "-f", "config"]
+      - events: ["postuninstall"]
+        showlogs: true
+        command: kubectl
+        args: ["delete", "-f", "config"]

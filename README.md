@@ -30,11 +30,11 @@ My selfhosted services
 
 ### Downloads
 
-| Chart                                         | Description                                                                              | Source Code                                  |
-| --------------------------------------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------- |
-| [flaresolverr](charts/downloads/flaresolverr) | Proxy server to bypass Cloudflare protection                                             | https://github.com/FlareSolverr/FlareSolverr |
-| [prowlarr](charts/downloads/prowlarr)         | Indexer manager/proxy built on the popular *arr stack to integrate with various PVR apps | https://github.com/Prowlarr/Prowlarr         |
-| [qbittorrent](charts/downloads/qbittorrent)   | Bittorrent client with a feature rich Web UI for remote access                           | https://github.com/qbittorrent/qBittorrent   |
+| Chart                                         | Description                                                                               | Source Code                                  |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------- |
+| [flaresolverr](charts/downloads/flaresolverr) | Proxy server to bypass Cloudflare protection                                              | https://github.com/FlareSolverr/FlareSolverr |
+| [prowlarr](charts/downloads/prowlarr)         | Indexer manager/proxy built on the popular \*arr stack to integrate with various PVR apps | https://github.com/Prowlarr/Prowlarr         |
+| [qbittorrent](charts/downloads/qbittorrent)   | Bittorrent client with a feature rich Web UI for remote access                            | https://github.com/qbittorrent/qBittorrent   |
 
 ### Media
 
@@ -58,10 +58,11 @@ My selfhosted services
 
 ### System
 
-| Chart                              | Description                                                              | Source Code                          |
-| ---------------------------------- | ------------------------------------------------------------------------ | ------------------------------------ |
-| [reloader](charts/system/reloader) | K8s controller to that des rolling upgrades on ConfigMap/Secrets changes | https://github.com/stakater/Reloader |
-| [traefik](charts/system/traefik)   | HTTP reverse proxy and load balancer                                     | https://github.com/traefik/traefik   |---
+| Chart                                                  | Description                                                              | Source Code                            |
+| ------------------------------------------------------ | ------------------------------------------------------------------------ | -------------------------------------- |
+| [infisical-operator](charts/system/infisical-operator) | Operator to fetch secrets from Infisical.                                | https://github.com/Infisical/infisical |
+| [reloader](charts/system/reloader)                     | K8s controller to that des rolling upgrades on ConfigMap/Secrets changes | https://github.com/stakater/Reloader   |
+| [traefik](charts/system/traefik)                       | HTTP reverse proxy and load balancer                                     | https://github.com/traefik/traefik     |---
 
 ## References
 

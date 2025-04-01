@@ -3,6 +3,9 @@ defaultPodOptions:
 
 controllers:
   main:
+    pod:
+      annotations:
+        secret.reloader.stakater.com/reload: "infisical-wakatime-secret"
     containers:
       main:
         image:
@@ -11,7 +14,7 @@ controllers:
           pullPolicy: IfNotPresent
         envFrom:
           - secretRef:
-              name: wakatime-exporter-secrets
+              name: infisical-wakatime-secret
 
 service:
   main:
@@ -24,7 +27,7 @@ service:
 serviceMonitor:
   main:
     enabled: true
-    serviceName: '{{ include "bjw-s.common.lib.chart.names.fullname" $ }}-metrics'
+    serviceName: '{{ include "bjw-s.common.lib.chart.names.fullname" $ }}'
     endpoints:
       - port: http
         interval: 1m
