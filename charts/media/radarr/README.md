@@ -19,3 +19,9 @@ helmfile apply
 | `/appdata/k3s/radarr` | `/config`     |
 | `/storage/movies`     | `/movies`     |
 | `/storage/downloads`  | `/downloads`  |
+
+### Secrets
+
+| name     | description           |
+| -------- | --------------------- |
+| `APIKEY` | API key for exportarr |

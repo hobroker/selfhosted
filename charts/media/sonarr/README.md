@@ -20,3 +20,9 @@ helmfile apply
 | `/storage/tv-shows`   | `/tv`         |
 | `/mnt/onetb/tv-shows` | `/tv2`        |
 | `/storage/downloads`  | `/downloads`  |
+
+### Secrets
+
+| name     | description           |
+| -------- | --------------------- |
+| `APIKEY` | API key for exportarr |

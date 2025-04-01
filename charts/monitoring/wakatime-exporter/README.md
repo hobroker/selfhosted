@@ -4,12 +4,16 @@
 
 Source Code: https://github.com/MacroPower/wakatime_exporter
 
-# Installing/upgrading
-
----
-
-kubectl apply -f config
+## Installing/upgrading
 
 ```shell
+kubectl apply -f config
+
 helmfile apply
 ```
+
+### Secrets
+
+| name           | description               |
+| -------------- | ------------------------- |
+| `WAKA_API_KEY` | API key from wakatime.com |

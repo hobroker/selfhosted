@@ -5,13 +5,13 @@
 Source Code: https://github.com/prometheus-operator/prometheus-operator  
 Chart: https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
 
-# Installing/upgrading
+## Installing/upgrading
 
 ```shell
 helmfile apply
 ```
 
-## Helm values
+### Helm values
 
 | chart                 | values.yaml                                                                                            |
 | --------------------- | ------------------------------------------------------------------------------------------------------ |
