@@ -30,11 +30,11 @@ My selfhosted services
 
 ### Downloads
 
-| Chart                                         | Description                                                                              | Source Code                                  |
-| --------------------------------------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------- |
-| [flaresolverr](charts/downloads/flaresolverr) | Proxy server to bypass Cloudflare protection                                             | https://github.com/FlareSolverr/FlareSolverr |
-| [prowlarr](charts/downloads/prowlarr)         | Indexer manager/proxy built on the popular *arr stack to integrate with various PVR apps | https://github.com/Prowlarr/Prowlarr         |
-| [qbittorrent](charts/downloads/qbittorrent)   | Bittorrent client with a feature rich Web UI for remote access                           | https://github.com/qbittorrent/qBittorrent   |
+| Chart                                         | Description                                                                               | Source Code                                  |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------- |
+| [flaresolverr](charts/downloads/flaresolverr) | Proxy server to bypass Cloudflare protection                                              | https://github.com/FlareSolverr/FlareSolverr |
+| [prowlarr](charts/downloads/prowlarr)         | Indexer manager/proxy built on the popular \*arr stack to integrate with various PVR apps | https://github.com/Prowlarr/Prowlarr         |
+| [qbittorrent](charts/downloads/qbittorrent)   | Bittorrent client with a feature rich Web UI for remote access                            | https://github.com/qbittorrent/qBittorrent   |
 
 ### Media
 
