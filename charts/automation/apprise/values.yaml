@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: caronc/apprise
-          tag: 1.1
+          tag: 1.2
           pullPolicy: IfNotPresent
 
 service:
