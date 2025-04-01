@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: linuxserver/syncthing
-          tag: 1.29.2
+          tag: 1.29.4
           pullPolicy: IfNotPresent
 
 service:
