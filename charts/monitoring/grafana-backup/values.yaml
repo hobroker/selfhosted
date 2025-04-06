@@ -1,0 +1,29 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  main:
+    type: cronjob
+    labels:
+      cronjob: biomarkly-database-backup
+    strategy: RollingUpdate
+    containers:
+      main:
+        image:
+          repository: ysde/docker-grafana-backup-tool
+          tag: 1.4.2
+          pullPolicy: IfNotPresent
+        env:
+          - name: GRAFANA_URL
+            value: "http://prometheus-operator-grafana"
+        envFrom:
+          - secretRef:
+              name: infisical-grafana-backup-secret
+    cronjob:
+      concurrencyPolicy: Forbid
+      timeZone: Europe/Chisinau
+      schedule: "0 0 * * *"
+      startingDeadlineSeconds: 30
+      successfulJobsHistory: 1
+      failedJobsHistory: 2
+      backoffLimit: 3
