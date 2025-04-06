@@ -53,6 +53,7 @@ My selfhosted services
 
 | Chart                                                        | Description                                                                         | Source Code                                                |
 | ------------------------------------------------------------ | ----------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| [grafana-backup](charts/monitoring/grafana-backup)           | Cron job to backup Grafana settings by using the Grafana API                        | https://github.com/ysde/grafana-backup-tool                |
 | [prometheus-operator](charts/monitoring/prometheus-operator) | Operator that manages Prometheus, Grafana, and related monitoring components in K8s | https://github.com/prometheus-operator/prometheus-operator |
 | [wakatime-exporter](charts/monitoring/wakatime-exporter)     | Exports Prometheus metrics from Wakatime.                                           | https://github.com/MacroPower/wakatime_exporter            |
 
