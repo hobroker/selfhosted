@@ -1,0 +1,61 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: revenz/fileflows
+          tag: 25.04
+          pullPolicy: IfNotPresent
+        env:
+          TempPathHost: "/transcode_cache"
+          TZ: "Europe/Chisinau"
+          PUID: "1000"
+          PGID: "1000"
+        resources:
+          limits:
+            cpu: 9600m
+            memory: 20Gi
+
+service:
+  main:
+    controller: main
+    type: LoadBalancer
+    ports:
+      web:
+        port: 19200
+        targetPort: 5000
+
+persistence:
+  common:
+    enabled: true
+    type: hostPath
+    hostPath: /appdata/k3s/fileflows/common
+    globalMounts:
+      - path: /app/common
+  data:
+    enabled: true
+    type: hostPath
+    hostPath: /appdata/k3s/fileflows/Data
+    globalMounts:
+      - path: /app/Data
+  logs:
+    enabled: true
+    type: hostPath
+    hostPath: /appdata/k3s/fileflows/Logs
+    globalMounts:
+      - path: /app/Logs
+  tmp:
+    enabled: true
+    type: hostPath
+    hostPath: /transcode_cache
+    globalMounts:
+      - path: /temp
+  storage2:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/onetb
+    globalMounts:
+      - path: /media/onetb
