@@ -13,14 +13,40 @@ controllers:
           PGID: "1000"
           PUID: "1000"
           WEBUI_PORT: "8112"
+  metrics:
+    containers:
+      main:
+        image:
+          repository: esanchezm/prometheus-qbittorrent-exporter
+          tag: sha-c6100e5
+          pullPolicy: IfNotPresent
+        env:
+          - name: QBITTORRENT_PORT
+            value: "8112"
+          - name: QBITTORRENT_HOST
+            value: "qbittorrent"
 
 service:
   main:
+    nameOverride: '{{ include "bjw-s.common.lib.chart.names.fullname" $ }}'
     controller: main
     type: LoadBalancer
     ports:
       http:
         port: 8112
+  metrics:
+    controller: metrics
+    type: ClusterIP
+    ports:
+      http:
+        port: 8000
+
+serviceMonitor:
+  metrics:
+    serviceName: '{{ include "bjw-s.common.lib.chart.names.fullname" $ }}-metrics'
+    enabled: true
+    endpoints:
+      - port: http
 
 persistence:
   config:
