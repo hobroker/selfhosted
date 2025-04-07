@@ -65,8 +65,8 @@ kubeControllerManager:
 kubelet:
   serviceMonitor:
     metricRelabelings:
-     - regex: apiserver_request_duration_seconds_bucket
-       action: drop
+      - regex: apiserver_request_duration_seconds_bucket
+        action: drop
 
 defaultRules:
   create: true

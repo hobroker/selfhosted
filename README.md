@@ -59,11 +59,11 @@ My selfhosted services
 
 ### System
 
-| Chart                                                  | Description                                                              | Source Code                            |
-| ------------------------------------------------------ | ------------------------------------------------------------------------ | -------------------------------------- |
-| [infisical-operator](charts/system/infisical-operator) | Operator to fetch secrets from Infisical.                                | https://github.com/Infisical/infisical |
-| [reloader](charts/system/reloader)                     | K8s controller to that des rolling upgrades on ConfigMap/Secrets changes | https://github.com/stakater/Reloader   |
-| [traefik](charts/system/traefik)                       | HTTP reverse proxy and load balancer                                     | https://github.com/traefik/traefik     |---
+| Chart                                                  | Description                                                               | Source Code                            |
+| ------------------------------------------------------ | ------------------------------------------------------------------------- | -------------------------------------- |
+| [infisical-operator](charts/system/infisical-operator) | Operator to fetch secrets from Infisical.                                 | https://github.com/Infisical/infisical |
+| [reloader](charts/system/reloader)                     | K8s controller to that does rolling upgrades on ConfigMap/Secrets changes | https://github.com/stakater/Reloader   |
+| [traefik](charts/system/traefik)                       | HTTP reverse proxy and load balancer                                      | https://github.com/traefik/traefik     |---
 
 ## References
 

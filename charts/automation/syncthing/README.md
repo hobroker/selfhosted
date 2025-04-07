@@ -14,6 +14,6 @@ helmfile apply
 ### Host Volumes
 
 | hostPath                 | containerPath |
-|--------------------------|---------------|
+| ------------------------ | ------------- |
 | `/appdata/k3s/syncthing` | `/config`     |
 | `/mnt/wdata`             | `/mnt/wdata`  |

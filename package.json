@@ -4,7 +4,9 @@
   "description": "Generate docs from charts to the main README.md",
   "author": "Igor Leahu <igor.leahu24@gmail.com>",
   "devDependencies": {
-    "husky": "^9.1.7"
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0",
+    "prettier": "^3.5.3"
   },
   "scripts": {
     "prepare": "husky",
@@ -13,10 +15,7 @@
   "workspaces": [
     "packages/docs"
   ],
-  "dependencies": {
-    "lint-staged": "^15.5.0"
-  },
   "lint-staged": {
-    "*.md": "prettier --write"
+    "*.{md,yaml}": "prettier --write"
   }
 }
