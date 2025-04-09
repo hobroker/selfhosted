@@ -54,7 +54,7 @@ persistence:
     type: hostPath
     hostPath: /appdata/k3s/qbittorrent
     globalMounts:
-      - path: /config
+      - path: /config/qBittorrent
   blackhole:
     enabled: true
     type: hostPath
