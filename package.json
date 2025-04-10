@@ -3,19 +3,20 @@
   "version": "1.0.0",
   "description": "Generate docs from charts to the main README.md",
   "author": "Igor Leahu <igor.leahu24@gmail.com>",
+  "workspaces": [
+    "packages/docs"
+  ],
+  "scripts": {
+    "prepare": "husky",
+    "generate": "npx tsx packages/docs/src/index.ts"
+  },
   "devDependencies": {
     "husky": "^9.1.7",
     "lint-staged": "^15.5.0",
     "prettier": "^3.5.3"
   },
-  "scripts": {
-    "prepare": "husky",
-    "generate": "npx tsx packages/docs/src/index.ts"
-  },
-  "workspaces": [
-    "packages/docs"
-  ],
   "lint-staged": {
-    "*.{md,yaml}": "prettier --write"
+    "*.{md,yaml}": "prettier --write",
+    "charts/**/README.md": "npm run generate"
   }
 }
