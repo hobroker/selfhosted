@@ -59,7 +59,7 @@ configMaps:
     data:
       rsnapshot.conf: |
         config_version	1.2
-        
+
         snapshot_root	/.snapshots/
         cmd_cp		/bin/cp
         cmd_rm		/bin/rm
@@ -68,64 +68,64 @@ configMaps:
         cmd_logger	/usr/bin/logger
         cmd_du		/usr/bin/du
         cmd_rsnapshot_diff	/usr/bin/rsnapshot-diff
-        
+
         retain	hourly	6
         retain	daily	7
         retain	weekly	4
         retain	monthly	12
-        
+
         verbose	5
         loglevel	5
         logfile	/config/rsnapshot.log
         lockfile	/var/run/rsnapshot.pid
         link_dest	0
-        
+
         backup	/data/photos/camera/		wdata/
         backup	/data/photos/pictures		wdata/
         backup	/data/photos/snapseed		wdata/
 
       snap: |
         #!/usr/bin/with-contenv bash
-        
+
         set -e
-        
+
         EVERY=6
-        
+
         # locals
         _count=$(curl -s "$MESSENGER_BASE_URL/gcs/rsnapshot/1/increment")
-        
+
         log() {
           echo "-->(snap) $1"
           curl -s -G "$MESSENGER_BASE_URL/telegram/rsnapshot" --data-urlencode "data=running backup: $1"
         }
-        
+
         echo "-->(snap) $(date) - $_count"
-        
+
         if [ "$(( _count % (EVERY*7*30*12) ))" -eq 0 ]; then
           log yearly
           rsnapshot yearly
         fi
-        
+
         if [ "$(( _count % (EVERY*7*30) ))" -eq 0 ]; then
           log monthly
           rsnapshot monthly
         fi
-        
+
         if [ "$(( _count % (EVERY*7) ))" -eq 0 ]; then
           log weekly
           rsnapshot weekly
         fi
-        
+
         if [ "$(( _count % EVERY ))" -eq 0 ]; then
           log daily
           rsnapshot daily
         fi
-        
+
         log hourly
         rsnapshot hourly
-        
+
         echo "-->(snap) $(date) - done"
-        
+
         kill -SIGTERM 1
 
       add-curl: |

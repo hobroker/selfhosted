@@ -1,2 +1,2 @@
-npm run generate
+npx lint-staged
 git add README.md

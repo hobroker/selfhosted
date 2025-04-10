@@ -14,10 +14,10 @@ service:
 
 ports:
   traefik:
-    expose: 
+    expose:
       default: true
   web:
-    expose: 
+    expose:
       default: false
   websecure:
     http3:
