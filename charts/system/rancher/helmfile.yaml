@@ -1,0 +1,12 @@
+repositories:
+  - name: rancher-latest
+    url: https://releases.rancher.com/server-charts/latest
+
+releases:
+  - name: rancher
+    version: 2.11.0
+    atomic: true
+    namespace: cattle-system
+    chart: rancher-latest/rancher
+    values:
+      - values.yaml

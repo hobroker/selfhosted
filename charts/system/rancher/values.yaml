@@ -1,0 +1,3 @@
+hostname: rancher.hobroker.me
+bootstrapPassword: "rancher"
+replicas: 1
