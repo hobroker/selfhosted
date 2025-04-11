@@ -11,6 +11,8 @@ service:
   type: LoadBalancer
   externalIPs:
     - 192.168.50.7
+  spec:
+    externalTrafficPolicy: Local
 
 ports:
   traefik:
@@ -28,6 +30,7 @@ metrics:
     service:
       enabled: true
     serviceMonitor:
+      enabled: true
       jobLabel: traefik
 
 deployment:
@@ -49,17 +52,9 @@ securityContext:
   runAsNonRoot: true
   runAsUser: 1000
 
-env:
-  - name: CF_API_EMAIL
-    valueFrom:
-      secretKeyRef:
-        name: infisical-traefik-secret
-        key: CF_API_EMAIL
-  - name: CF_DNS_API_TOKEN
-    valueFrom:
-      secretKeyRef:
-        key: CF_DNS_API_TOKEN
-        name: infisical-traefik-secret
+envFrom:
+  - secretRef:
+      name: infisical-traefik-secret
 
 logs:
   general:
