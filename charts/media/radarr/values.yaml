@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: linuxserver/radarr
-          tag: 5.22.1-develop
+          tag: 5.22.4-develop
           pullPolicy: IfNotPresent
         env:
           PGID: "1000"
@@ -20,7 +20,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/onedr0p/exportarr
-          tag: v2.1.0
+          tag: v2.2.0
           pullPolicy: IfNotPresent
         args: ["radarr"]
         env:
