@@ -4,7 +4,7 @@ repositories:
 
 releases:
   - name: cert-manager
-    version: v1.17.1
+    version: v1.17.2
     atomic: true
     namespace: cert-manager
     chart: jetstack/cert-manager

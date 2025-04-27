@@ -4,7 +4,7 @@ repositories:
 
 releases:
   - name: rancher
-    version: 2.11.0
+    version: 2.11.1
     atomic: true
     namespace: cattle-system
     chart: rancher-latest/rancher
