@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "fs/promises";
 
 const start = "## Apps\n\n";
-const end = "---\n\n## References";
+const end = "\n\n---\n\n## References";
 const placeholder = "___placeholder___";
 const contentPattern = new RegExp(`${start}([\\S\\s]*)${end}`, "m");
 

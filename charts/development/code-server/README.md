@@ -3,7 +3,7 @@
 > VS Code running on a remote server, accessible through the browser
 
 Source Code: https://github.com/linuxserver/docker-code-server
-Docs: https://bjw-s.github.io/helm-charts/docs/app-template/
+Docs: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 
 ## Installing/upgrading
 
