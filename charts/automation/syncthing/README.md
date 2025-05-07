@@ -3,7 +3,7 @@
 > Continuous file synchronization
 
 Source Code: https://github.com/syncthing/syncthing  
-Chart: https://bjw-s.github.io/helm-charts/docs/app-template/
+Chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 
 ## Installing/upgrading
 
