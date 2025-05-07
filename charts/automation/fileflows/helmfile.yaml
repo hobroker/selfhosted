@@ -1,0 +1,12 @@
+repositories:
+  - name: bjw-s
+    url: https://bjw-s-labs.github.io/helm-charts
+
+releases:
+  - name: fileflows
+    version: 3.7.3
+    atomic: true
+    namespace: self
+    chart: bjw-s/app-template
+    values:
+      - values.yaml
