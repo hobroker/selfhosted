@@ -8,7 +8,9 @@
   ],
   "scripts": {
     "prepare": "husky",
-    "generate": "npx tsx packages/docs/src/index.ts"
+    "generate": "npx tsx packages/docs/src/index.ts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
     "husky": "^9.1.7",
