@@ -43,6 +43,10 @@
       "groupName": "system"
     },
     {
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions"
+    },
+    {
       "matchPackageNames": ["linuxserver/qbittorrent"],
       "allowedVersions": "<=9"
     },
