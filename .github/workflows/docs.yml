@@ -1,0 +1,23 @@
+name: Docs
+
+on: [push]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm ci
+      - name: Run docs generation
+        run: npm run generate
+      - name: Check if README.md has changed
+        run: |
+          if ! git diff --quiet --exit-code README.md; then
+            echo "::error file=README.md::README.md is not up to date. Please run \`npm run generate\` and commit the updated file."
+            exit 1
+          fi
