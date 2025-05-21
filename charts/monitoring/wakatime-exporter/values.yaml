@@ -27,7 +27,7 @@ service:
 serviceMonitor:
   main:
     enabled: true
-    serviceName: '{{ include "bjw-s.common.lib.chart.names.fullname" $ }}'
+    serviceName: '{{ include "bjw-s.common.lib.chart.names.name" $ }}'
     endpoints:
       - port: http
         interval: 1m
