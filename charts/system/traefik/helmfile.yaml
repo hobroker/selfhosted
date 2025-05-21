@@ -4,13 +4,13 @@ repositories:
 
 releases:
   - name: traefik-crds
-    version: 1.7.0
+    version: 1.8.0
     atomic: true
     namespace: kube-system
     chart: traefik/traefik-crds
 
   - name: traefik
-    version: 35.2.0
+    version: 35.3.0
     atomic: true
     namespace: kube-system
     chart: traefik/traefik
