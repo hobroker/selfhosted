@@ -4,7 +4,7 @@ repositories:
 
 releases:
   - name: plex
-    version: 3.7.3
+    version: 4.0.1
     atomic: true
     namespace: self
     chart: bjw-s/app-template
