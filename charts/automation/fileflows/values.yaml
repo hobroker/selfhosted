@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: revenz/fileflows
-          tag: 25.04
+          tag: 25.05
           pullPolicy: IfNotPresent
         env:
           TempPathHost: "/transcode_cache"
