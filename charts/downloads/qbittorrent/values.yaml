@@ -28,7 +28,6 @@ controllers:
 
 service:
   main:
-    nameOverride: '{{ include "bjw-s.common.lib.chart.names.fullname" $ }}'
     controller: main
     type: LoadBalancer
     ports:
@@ -43,7 +42,7 @@ service:
 
 serviceMonitor:
   metrics:
-    serviceName: '{{ include "bjw-s.common.lib.chart.names.fullname" $ }}-metrics'
+    serviceName: '{{ include "bjw-s.common.lib.chart.names.name" $ }}-metrics'
     enabled: true
     endpoints:
       - port: http
