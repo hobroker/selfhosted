@@ -24,7 +24,7 @@ controllers:
           - name: QBITTORRENT_PORT
             value: "8112"
           - name: QBITTORRENT_HOST
-            value: "qbittorrent"
+            value: "qbittorrent-main"
 
 service:
   main:
