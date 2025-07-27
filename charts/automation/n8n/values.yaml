@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: n8nio/n8n
-          tag: 1.94.0
+          tag: 1.104.1
           pullPolicy: IfNotPresent
         env:
           GENERIC_TIMEZONE: "Europe/Chisinau"
