@@ -13,9 +13,9 @@ helmfile apply
 
 ### Host Volumes
 
-| hostPath      | containerPath              |
-| ------------- | -------------------------- |
-| `/config`     | `/appdata/k3s/code-server` |
-| `/appdata`    | `/appdata`                 |
-| `/downloads`  | `/storage/downloads`       |
-| `/storage/ww` | `/storage/ww`              |
+| hostPath                | containerPath              |
+| ----------------------- | -------------------------- |
+| `/config`               | `/appdata/k3s/code-server` |
+| `/appdata`              | `/appdata`                 |
+| `/mnt/nebula/downloads` | `/mnt/nebula/downloads`    |
+| `/storage/ww`           | `/storage/ww`              |

@@ -57,13 +57,13 @@ persistence:
   blackhole:
     enabled: true
     type: hostPath
-    hostPath: /storage/downloads/torrents
+    hostPath: /mnt/nebula/downloads/blackhole
     globalMounts:
       - path: /blackhole
   downloads:
     enabled: true
     type: hostPath
-    hostPath: /storage/downloads
+    hostPath: /mnt/nebula/downloads
     globalMounts:
       - path: /downloads
 

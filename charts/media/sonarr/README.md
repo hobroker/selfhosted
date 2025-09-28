@@ -14,12 +14,11 @@ helmfile apply
 
 ### Host Volumes
 
-| hostPath              | containerPath |
-| --------------------- | ------------- |
-| `/appdata/k3s/sonarr` | `/config`     |
-| `/storage/tv-shows`   | `/tv`         |
-| `/mnt/onetb/tv-shows` | `/tv2`        |
-| `/storage/downloads`  | `/downloads`  |
+| hostPath                | containerPath |
+| ----------------------- | ------------- |
+| `/appdata/k3s/sonarr`   | `/config`     |
+| `/mnt/nebula/tv-shows`  | `/tvshows`    |
+| `/mnt/nebula/downloads` | `/downloads`  |
 
 ### Secrets
 

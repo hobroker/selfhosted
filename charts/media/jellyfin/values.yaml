@@ -25,18 +25,12 @@ persistence:
     hostPath: /appdata/k3s/jellyfin
     globalMounts:
       - path: /config
-  storage:
+  nebula:
     enabled: true
     type: hostPath
-    hostPath: /storage
+    hostPath: /mnt/nebula
     globalMounts:
-      - path: /storage
-  storage2:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/onetb
-    globalMounts:
-      - path: /storage2
+      - path: /mnt/nebula
 
 ingress:
   main:

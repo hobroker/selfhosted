@@ -25,19 +25,19 @@ persistence:
     hostPath: /appdata/k3s/code-server
     globalMounts:
       - path: /config
-  source-appdata:
+  appdata:
     enabled: true
     type: hostPath
     hostPath: /appdata
     globalMounts:
       - path: /appdata
-  source-downloads:
+  nebula-downloads:
     enabled: true
     type: hostPath
-    hostPath: /storage/downloads
+    hostPath: /mnt/nebula/downloads
     globalMounts:
-      - path: /downloads
-  source-storage-ww:
+      - path: /mnt/nebula/downloads
+  storage-ww:
     enabled: true
     type: hostPath
     hostPath: /storage/ww

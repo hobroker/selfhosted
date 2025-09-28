@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: linuxserver/plex
-          tag: 1.41.9
+          tag: 1.42.1
           pullPolicy: IfNotPresent
         env:
           PGID: "1000"
@@ -34,12 +34,12 @@ persistence:
     hostPath: /storage
     globalMounts:
       - path: /storage
-  storage2:
+  nebula:
     enabled: true
     type: hostPath
-    hostPath: /mnt/onetb
+    hostPath: /mnt/nebula
     globalMounts:
-      - path: /storage2
+      - path: /nebula
 
 ingress:
   main:

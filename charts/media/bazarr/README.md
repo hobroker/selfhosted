@@ -15,5 +15,4 @@ helmfile apply
 | hostPath              | containerPath |
 | --------------------- | ------------- |
 | `/appdata/k3s/bazarr` | `/config`     |
-| `/storage`            | `/storage`    |
-| `/mnt/onetb`          | `/storage2`   |
+| `/mnt/nebula`         | `/mnt/nebula` |

@@ -16,5 +16,5 @@ helmfile apply
 | hostPath                      | containerPath |
 | ----------------------------- | ------------- |
 | `/appdata/k3s/qbittorrent`    | `/config`     |
-| `/storage/downloads/torrents` | `/blackhole`  |
-| `/storage/downloads`          | `/downloads`  |
+| `/nebula/downloads/blackhole` | `/blackhole`  |
+| `/nebula/downloads`           | `/downloads`  |

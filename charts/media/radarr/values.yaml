@@ -63,13 +63,13 @@ persistence:
   storage:
     enabled: true
     type: hostPath
-    hostPath: /storage/movies
+    hostPath: /mnt/nebula/movies
     globalMounts:
-      - path: /movies
+      - path: /mnt/nebula/movies
   downloads:
     enabled: true
     type: hostPath
-    hostPath: /storage/downloads
+    hostPath: /mnt/nebula/downloads
     globalMounts:
       - path: /downloads
 

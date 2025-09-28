@@ -17,4 +17,4 @@ helmfile apply
 | `/appdata/k3s/fileflows/common` | `/app/common` |
 | `/appdata/k3s/fileflows/logs`   | `/app/logs`   |
 | `/transcode_cache`              | `/temp`       |
-| `/mnt/onetb`                    | `/mnt/onetb`  |
+| `/mnt/nebula`                   | `/mnt/nebula` |
