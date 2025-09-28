@@ -56,6 +56,6 @@ persistence:
   storage2:
     enabled: true
     type: hostPath
-    hostPath: /mnt/onetb
+    hostPath: /mnt/nebula
     globalMounts:
-      - path: /media/onetb
+      - path: /media/nebula

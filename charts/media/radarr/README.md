@@ -14,11 +14,11 @@ helmfile apply
 
 ### Host Volumes
 
-| hostPath              | containerPath |
-| --------------------- | ------------- |
-| `/appdata/k3s/radarr` | `/config`     |
-| `/storage/movies`     | `/movies`     |
-| `/storage/downloads`  | `/downloads`  |
+| hostPath                | containerPath        |
+| ----------------------- | -------------------- |
+| `/appdata/k3s/radarr`   | `/config`            |
+| `/mnt/nebula/movies`    | `/mnt/nebula/movies` |
+| `/mnt/nebula/downloads` | `/downloads`         |
 
 ### Secrets
 

@@ -12,7 +12,6 @@ helmfile apply
 
 ### Host Volumes
 
-| hostPath                      | containerPath |
-| ----------------------------- | ------------- |
-| `/appdata/k3s/overseerr`      | `/config`     |
-| `/storage/downloads/torrents` | `/blackhole`  |
+| hostPath                 | containerPath |
+| ------------------------ | ------------- |
+| `/appdata/k3s/overseerr` | `/config`     |

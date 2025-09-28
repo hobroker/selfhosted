@@ -60,22 +60,16 @@ persistence:
     hostPath: /appdata/k3s/sonarr
     globalMounts:
       - path: /config
-  storage:
+  nebula:
     enabled: true
     type: hostPath
-    hostPath: /storage/tv-shows
+    hostPath: /mnt/nebula/tvshows
     globalMounts:
-      - path: /tv
-  storage2:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/onetb/tv-shows
-    globalMounts:
-      - path: /tv2
+      - path: /nebula/tvshows
   downloads:
     enabled: true
     type: hostPath
-    hostPath: /storage/downloads
+    hostPath: /mnt/nebula/downloads
     globalMounts:
       - path: /downloads
 

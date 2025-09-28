@@ -16,4 +16,4 @@ helmfile apply
 | ------------------- | ------------- |
 | `/appdata/k3s/plex` | `/config`     |
 | `/storage`          | `/storage`    |
-| `/mnt/onetb`        | `/storage2`   |
+| `/mnt/nebula`       | `/mnt/nebula` |
