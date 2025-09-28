@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: flaresolverr/flaresolverr
-          tag: v3.3.25
+          tag: v3.4.1
           pullPolicy: IfNotPresent
         env:
           CAPTCHA_SOLVER: hcaptcha-solver
