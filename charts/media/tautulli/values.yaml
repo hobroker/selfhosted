@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: tautulli/tautulli
-          tag: v2.15.2
+          tag: v2.16.0
           pullPolicy: IfNotPresent
 
 service:
