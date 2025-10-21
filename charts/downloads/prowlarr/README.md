@@ -8,8 +8,6 @@ Chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 ## Installing/upgrading
 
 ```shell
-kubectl apply -f config
-
 helmfile apply
 ```
 
@@ -18,9 +16,3 @@ helmfile apply
 | hostPath                | containerPath |
 | ----------------------- | ------------- |
 | `/appdata/k3s/prowlarr` | `/config`     |
-
-### Secrets
-
-| name     | description           |
-| -------- | --------------------- |
-| `APIKEY` | API key for exportarr |

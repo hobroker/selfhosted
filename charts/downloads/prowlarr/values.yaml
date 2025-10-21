@@ -9,25 +9,6 @@ controllers:
           repository: linuxserver/prowlarr
           tag: 2.0.5
           pullPolicy: IfNotPresent
-  metrics:
-    pod:
-      annotations:
-        secret.reloader.stakater.com/reload: "infisical-exportarr-prowlarr-secret"
-    containers:
-      main:
-        image:
-          repository: ghcr.io/onedr0p/exportarr
-          tag: v2.3.0
-          pullPolicy: IfNotPresent
-        args: ["prowlarr"]
-        env:
-          - name: URL
-            value: "http://prowlarr-main:9696"
-          - name: APIKEY
-            valueFrom:
-              secretKeyRef:
-                name: infisical-exportarr-prowlarr-secret
-                key: APIKEY
 
 service:
   main:
@@ -36,19 +17,6 @@ service:
     ports:
       http:
         port: 9696
-  metrics:
-    controller: metrics
-    type: ClusterIP
-    ports:
-      http:
-        port: 9707
-
-serviceMonitor:
-  metrics:
-    serviceName: '{{ include "bjw-s.common.lib.chart.names.fullname" $ }}-metrics'
-    enabled: true
-    endpoints:
-      - port: http
 
 persistence:
   config:

@@ -19,9 +19,3 @@ helmfile apply
 | `/appdata/k3s/radarr`   | `/config`            |
 | `/mnt/nebula/movies`    | `/mnt/nebula/movies` |
 | `/mnt/nebula/downloads` | `/downloads`         |
-
-### Secrets
-
-| name     | description           |
-| -------- | --------------------- |
-| `APIKEY` | API key for exportarr |
