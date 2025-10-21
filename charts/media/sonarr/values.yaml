@@ -12,25 +12,6 @@ controllers:
         env:
           PGID: "1000"
           PUID: "1000"
-  metrics:
-    pod:
-      annotations:
-        secret.reloader.stakater.com/reload: "infisical-exportarr-sonarr-secret"
-    containers:
-      main:
-        image:
-          repository: ghcr.io/onedr0p/exportarr
-          tag: v2.3.0
-          pullPolicy: IfNotPresent
-        args: ["sonarr"]
-        env:
-          - name: URL
-            value: "http://sonarr-main:8989"
-          - name: APIKEY
-            valueFrom:
-              secretKeyRef:
-                name: infisical-exportarr-sonarr-secret
-                key: APIKEY
 
 service:
   main:
@@ -39,19 +20,6 @@ service:
     ports:
       http:
         port: 8989
-  metrics:
-    controller: metrics
-    type: ClusterIP
-    ports:
-      http:
-        port: 9707
-
-serviceMonitor:
-  metrics:
-    serviceName: '{{ include "bjw-s.common.lib.chart.names.fullname" $ }}-metrics'
-    enabled: true
-    endpoints:
-      - port: http
 
 persistence:
   config:

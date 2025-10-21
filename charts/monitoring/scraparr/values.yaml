@@ -1,0 +1,59 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  main:
+    pod:
+      annotations:
+        secret.reloader.stakater.com/reload: "infisical-scraparr-secret"
+    containers:
+      main:
+        image:
+          repository: thegameprofi/scraparr
+          tag: 2.2.5
+          pullPolicy: IfNotPresent
+        env:
+          - name: SONARR_URL
+            value: "http://sonarr.self.svc.cluster.local:8989"
+          - name: SONARR_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: infisical-scraparr-secret
+                key: SONARR_API_KEY
+          - name: RADARR_URL
+            value: "http://radarr.self.svc.cluster.local:7878"
+          - name: RADARR_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: infisical-scraparr-secret
+                key: RADARR_API_KEY
+          - name: PROWLARR_URL
+            value: "http://prowlarr.self.svc.cluster.local:9696"
+          - name: PROWLARR_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: infisical-scraparr-secret
+                key: PROWLARR_API_KEY
+          - name: BAZARR_URL
+            value: "http://bazarr.self.svc.cluster.local:6767"
+          - name: BAZARR_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: infisical-scraparr-secret
+                key: BAZARR_API_KEY
+
+service:
+  main:
+    controller: main
+    type: ClusterIP
+    ports:
+      http:
+        port: 7100
+
+serviceMonitor:
+  main:
+    enabled: true
+    serviceName: '{{ include "bjw-s.common.lib.chart.names.name" $ }}'
+    endpoints:
+      - port: http
+        interval: 1m

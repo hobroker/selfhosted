@@ -19,9 +19,3 @@ helmfile apply
 | `/appdata/k3s/sonarr`   | `/config`     |
 | `/mnt/nebula/tv-shows`  | `/tvshows`    |
 | `/mnt/nebula/downloads` | `/downloads`  |
-
-### Secrets
-
-| name     | description           |
-| -------- | --------------------- |
-| `APIKEY` | API key for exportarr |
