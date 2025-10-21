@@ -16,7 +16,6 @@ helmfile apply
 
 | name                     | description                                                                                   |
 | ------------------------ | --------------------------------------------------------------------------------------------- |
-| `APIKEY`                 | API key for exportarr                                                                         |
 | `AWS_ACCESS_KEY_ID`      | AWS access key ID                                                                             |
 | `AWS_ENDPOINT_URL`       | AWS endpoint URL                                                                              |
 | `AWS_S3_BUCKET_KEY`      | AWS S3 bucket key (folder)                                                                    |
