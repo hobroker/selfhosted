@@ -4,7 +4,7 @@ repositories:
 
 releases:
   - name: infisical
-    version: 0.9.3
+    version: 0.10.9
     namespace: infisical-operator-system
     chart: infisical-helm-charts/secrets-operator
     values:
