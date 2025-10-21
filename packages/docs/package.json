@@ -5,10 +5,10 @@
   "author": "Igor Leahu <igor.leahu24@gmail.com>",
   "type": "module",
   "dependencies": {
-    "chalk": "^5.4.1",
+    "chalk": "^5.6.2",
     "markdown-table": "^3.0.4"
   },
   "devDependencies": {
-    "@types/node": "^24.1.0"
+    "@types/node": "^24.9.1"
   }
 }
