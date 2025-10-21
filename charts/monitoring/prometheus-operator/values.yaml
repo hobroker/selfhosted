@@ -8,9 +8,10 @@ prometheus:
     storageSpec:
       volumeClaimTemplate:
         spec:
+          storageClassName: "local-path-retain"
           resources:
             requests:
-              storage: 5G
+              storage: 5Gi
   ingress:
     enabled: true
     ingressClassName: traefik
@@ -40,26 +41,26 @@ grafana:
   persistence:
     enabled: true
     size: 5Gi
-    storageClassName: "longhorn-retain"
+    storageClassName: "local-path-retain"
 
-alertmanager:
-  ingress:
-    enabled: false
+# alertmanager:
+#   ingress:
+#     enabled: true
 
-kubeScheduler:
-  enabled: false
+# kubeScheduler:
+#   enabled: false
 
-kubeApiServer:
-  enabled: false
+# kubeApiServer:
+#   enabled: false
 
-kubeProxy:
-  enabled: false
+# kubeProxy:
+#   enabled: false
 
-kubeEtcd:
-  enabled: false
+# kubeEtcd:
+#   enabled: false
 
-kubeControllerManager:
-  enabled: false
+# kubeControllerManager:
+#   enabled: false
 
 # too many metrics being scraped
 kubelet:
@@ -70,11 +71,11 @@ kubelet:
 
 defaultRules:
   create: true
-  rules:
-    alertmanager: false
-    etcd: false
-    windows: false
-    kubeApiserverAvailability: false
-    kubeApiserverBurnrate: false
-    kubeApiserverHistogram: false
-    kubeApiserverSlos: false
+  # rules:
+  # alertmanager: false
+  # etcd: false
+  # windows: false
+  # kubeApiserverAvailability: false
+  # kubeApiserverBurnrate: false
+  # kubeApiserverHistogram: false
+  # kubeApiserverSlos: false
