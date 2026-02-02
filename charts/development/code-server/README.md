@@ -19,3 +19,4 @@ helmfile apply
 | `/appdata`              | `/appdata`                 |
 | `/mnt/nebula/downloads` | `/mnt/nebula/downloads`    |
 | `/storage/ww`           | `/storage/ww`              |
+| `/home/kira/.openclaw`  | `/home/kira/.openclaw`     |
