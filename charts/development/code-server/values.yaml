@@ -43,6 +43,12 @@ persistence:
     hostPath: /storage/ww
     globalMounts:
       - path: /storage/ww
+  openclaw:
+    enabled: true
+    type: hostPath
+    hostPath: /home/kira/.openclaw
+    globalMounts:
+      - path: /home/kira/.openclaw
 
 ingress:
   main:
