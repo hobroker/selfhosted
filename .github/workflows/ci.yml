@@ -20,28 +20,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-
       - name: Install Helm
-        uses: azure/setup-helm@v4
-        with:
-          version: v3.15.2
-
-      - name: Install helmfile
-        run: |
-          set -euo pipefail
-          HELMFILE_VERSION="1.2.3"
-          curl -L "https://github.com/helmfile/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_${HELMFILE_VERSION}_linux_amd64.tar.gz" \
-            -o helmfile.tar.gz
-          tar -xzf helmfile.tar.gz
-          mkdir -p "$HOME/bin"
-          mv helmfile "$HOME/bin/helmfile"
-          echo "$HOME/bin" >> "$GITHUB_PATH"
-
+        uses: azure/setup-helm@v4.3.1
+      - name: Install Helmfile
+        uses: helmfile/helmfile-action@v2.2.0
       - name: Helmfile lint
         run: |
-          set -euo pipefail
-          find charts -maxdepth 3 -type f -name 'helmfile.yaml' | while read -r f; do
-            echo "::group::Linting $f"
-            (cd "$(dirname "$f")" && helmfile lint)
-            echo "::endgroup::"
+          set -e
+          helmfile_files=$(find charts -maxdepth 3 -type f -name 'helmfile.yaml')
+          for helmfile_file in $helmfile_files; do
+            helmfile --file $helmfile_file lint
           done
