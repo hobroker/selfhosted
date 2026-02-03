@@ -4,15 +4,17 @@ repositories:
 
 releases:
   - name: traefik-crds
-    version: 1.11.1
+    version: 1.14.0
     atomic: true
     namespace: kube-system
     chart: traefik/traefik-crds
 
   - name: traefik
-    version: 37.1.2
+    version: 39.0.0
     atomic: true
     namespace: kube-system
     chart: traefik/traefik
+    apiVersions:
+      - "monitoring.coreos.com/v1"
     values:
       - values.yaml
