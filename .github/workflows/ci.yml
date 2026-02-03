@@ -15,3 +15,19 @@ jobs:
         run: npm ci
       - name: Run Prettier
         run: npm run format:check
+
+  helmfile-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install Helm
+        uses: azure/setup-helm@v4.3.1
+      - name: Install Helmfile
+        uses: helmfile/helmfile-action@v2.2.0
+      - name: Helmfile lint
+        run: |
+          set -e
+          helmfile_files=$(find charts -maxdepth 3 -type f -name 'helmfile.yaml')
+          for helmfile_file in $helmfile_files; do
+            helmfile --file $helmfile_file lint
+          done
