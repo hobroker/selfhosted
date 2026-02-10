@@ -10,7 +10,7 @@ controllers:
       main:
         image:
           repository: linuxserver/rsnapshot
-          tag: 1.4.5
+          tag: 1.5.1
           pullPolicy: IfNotPresent
         env:
           PGID: "1000"
