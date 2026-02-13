@@ -3,6 +3,7 @@
 > Cron job to backup Grafana settings by using the Grafana API
 
 Source Code: https://github.com/ysde/grafana-backup-tool
+Chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 
 ## Installing/upgrading
 
@@ -13,6 +14,8 @@ helmfile apply
 ```
 
 ### Secrets
+
+The following environment variables are required and sourced from the `infisical-grafana-backup-secret`:
 
 | name                     | description                                                                                   |
 | ------------------------ | --------------------------------------------------------------------------------------------- |

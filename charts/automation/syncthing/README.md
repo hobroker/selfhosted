@@ -2,7 +2,7 @@
 
 > Continuous file synchronization
 
-Source Code: https://github.com/syncthing/syncthing  
+Source Code: https://github.com/syncthing/syncthing
 Chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 
 ## Installing/upgrading
@@ -13,7 +13,7 @@ helmfile apply
 
 ### Host Volumes
 
-| hostPath                 | containerPath |
-| ------------------------ | ------------- |
-| `/appdata/k3s/syncthing` | `/config`     |
-| `/mnt/wdata`             | `/mnt/wdata`  |
+| hostPath                 | containerPath | description                            |
+| ------------------------ | ------------- | -------------------------------------- |
+| `/appdata/k3s/syncthing` | `/config`     | Application configuration and database |
+| `/mnt/wdata`             | `/mnt/wdata`  | Main data synchronization directory    |

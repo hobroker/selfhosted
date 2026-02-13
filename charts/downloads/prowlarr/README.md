@@ -2,7 +2,7 @@
 
 > Indexer manager/proxy built on the popular \*arr stack to integrate with various PVR apps
 
-Source Code: https://github.com/Prowlarr/Prowlarr  
+Source Code: https://github.com/Prowlarr/Prowlarr
 Chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 
 ## Installing/upgrading
@@ -13,6 +13,6 @@ helmfile apply
 
 ### Host Volumes
 
-| hostPath                | containerPath |
-| ----------------------- | ------------- |
-| `/appdata/k3s/prowlarr` | `/config`     |
+| hostPath                | containerPath | description                            |
+| ----------------------- | ------------- | -------------------------------------- |
+| `/appdata/k3s/prowlarr` | `/config`     | Application configuration and database |

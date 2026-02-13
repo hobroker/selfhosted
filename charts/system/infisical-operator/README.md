@@ -12,3 +12,9 @@ kubectl create secret generic universal-auth-credentials --from-literal=clientId
 
 helmfile apply
 ```
+
+### Secrets
+
+| name                         | description                                                             |
+| ---------------------------- | ----------------------------------------------------------------------- |
+| `universal-auth-credentials` | Credentials used by the operator to authenticate with the Infisical API |
