@@ -10,9 +10,3 @@ Chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 ```shell
 helmfile apply
 ```
-
-### Helm values
-
-| chart             | values.yaml                                                                           |
-| ----------------- | ------------------------------------------------------------------------------------- |
-| `http-https-echo` | https://github.com/bjw-s-labs/helm-charts/blob/main/charts/library/common/values.yaml |

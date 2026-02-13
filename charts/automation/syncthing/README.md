@@ -16,4 +16,4 @@ helmfile apply
 | hostPath                 | containerPath | description                            |
 | ------------------------ | ------------- | -------------------------------------- |
 | `/appdata/k3s/syncthing` | `/config`     | Application configuration and database |
-| `/mnt/wdata`             | `/mnt/wdata`  | Main data synchronization directory    |
+| `/mnt/wdata`             | `/mnt/wdata`  | Folder to share with the node          |
