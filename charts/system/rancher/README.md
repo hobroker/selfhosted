@@ -10,3 +10,9 @@ Chart: https://github.com/rancher/rancher/tree/main/chart
 ```shell
 helmfile apply
 ```
+
+### Helm values
+
+| chart     | values.yaml                                                    |
+| --------- | -------------------------------------------------------------- |
+| `rancher` | https://github.com/rancher/rancher/blob/main/chart/values.yaml |

@@ -3,6 +3,7 @@
 > File processing application
 
 Source Code: https://github.com/revenz/FileFlows
+Chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 
 ## Installing/upgrading
 

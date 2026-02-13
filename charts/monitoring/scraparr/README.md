@@ -3,6 +3,7 @@
 > Prometheus Exporter for various components of the \*arr Suite.
 
 Source Code: https://github.com/thecfu/scraparr
+Chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 
 ## Installing/upgrading
 

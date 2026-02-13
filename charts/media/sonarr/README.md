@@ -3,6 +3,7 @@
 > A TV series tracking and automation tool for downloading episodes as they air.
 
 Source Code: https://github.com/Sonarr/Sonarr
+Chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 
 ## Installing/upgrading
 

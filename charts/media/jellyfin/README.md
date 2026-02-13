@@ -3,6 +3,7 @@
 > An open-source media server
 
 Source Code: https://github.com/jellyfin/jellyfin
+Chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 
 ## Installing/upgrading
 

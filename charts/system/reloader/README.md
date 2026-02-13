@@ -10,3 +10,9 @@ Chart: https://github.com/stakater/Reloader/tree/master/deployments/kubernetes/c
 ```shell
 helmfile apply
 ```
+
+### Helm values
+
+| chart      | values.yaml                                                                                        |
+| ---------- | -------------------------------------------------------------------------------------------------- |
+| `reloader` | https://github.com/stakater/Reloader/blob/master/deployments/kubernetes/chart/reloader/values.yaml |
