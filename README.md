@@ -53,12 +53,13 @@ My selfhosted services
 
 ### Monitoring
 
-| Chart                                                        | Description                                                                         | Source Code                                                |
-| ------------------------------------------------------------ | ----------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| [grafana-backup](charts/monitoring/grafana-backup)           | Cron job to backup Grafana settings by using the Grafana API                        | https://github.com/ysde/grafana-backup-tool                |
-| [prometheus-operator](charts/monitoring/prometheus-operator) | Operator that manages Prometheus, Grafana, and related monitoring components in K8s | https://github.com/prometheus-operator/prometheus-operator |
-| [scraparr](charts/monitoring/scraparr)                       | Prometheus Exporter for various components of the \*arr Suite.                      | https://github.com/thecfu/scraparr                         |
-| [wakatime-exporter](charts/monitoring/wakatime-exporter)     | Exports Prometheus metrics from Wakatime.                                           | https://github.com/MacroPower/wakatime_exporter            |
+| Chart                                                        | Description                                                                                                         | Source Code                                                |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| [grafana-backup](charts/monitoring/grafana-backup)           | Cron job to backup Grafana settings by using the Grafana API                                                        | https://github.com/ysde/grafana-backup-tool                |
+| [prometheus-operator](charts/monitoring/prometheus-operator) | Operator that manages Prometheus, Grafana, and related monitoring components in K8s                                 | https://github.com/prometheus-operator/prometheus-operator |
+| [scraparr](charts/monitoring/scraparr)                       | Prometheus Exporter for various components of the \*arr Suite.                                                      | https://github.com/thecfu/scraparr                         |
+| [signoz](charts/monitoring/signoz)                           | SigNoz is an open-source observability platform that helps you monitor your applications and troubleshoot problems. | https://github.com/SigNoz/signoz                           |
+| [wakatime-exporter](charts/monitoring/wakatime-exporter)     | Exports Prometheus metrics from Wakatime.                                                                           | https://github.com/MacroPower/wakatime_exporter            |
 
 ### System
 
