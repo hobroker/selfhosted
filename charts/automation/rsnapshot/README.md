@@ -15,5 +15,5 @@ helmfile apply
 
 | hostPath                | containerPath | description                       |
 | ----------------------- | ------------- | --------------------------------- |
-| `/mnt/wdata`            | `/data`       | Source data to be backed up       |
+| `/mnt/wdata`            | `/data`       | Folder to share with the node     |
 | `/mnt/wdata/rsnapshots` | `/.snapshots` | Destination for rsnapshot backups |
