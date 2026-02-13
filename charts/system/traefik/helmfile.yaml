@@ -3,12 +3,6 @@ repositories:
     url: https://helm.traefik.io/traefik
 
 releases:
-  - name: traefik-crds
-    version: 1.14.0
-    atomic: true
-    namespace: kube-system
-    chart: traefik/traefik-crds
-
   - name: traefik
     version: 39.0.0
     atomic: true
