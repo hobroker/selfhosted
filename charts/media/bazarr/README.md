@@ -13,7 +13,7 @@ helmfile apply
 
 ### Host Volumes
 
-| hostPath              | containerPath |
-| --------------------- | ------------- |
-| `/appdata/k3s/bazarr` | `/config`     |
-| `/mnt/nebula`         | `/mnt/nebula` |
+| hostPath              | containerPath | description                                     |
+| --------------------- | ------------- | ----------------------------------------------- |
+| `/appdata/k3s/bazarr` | `/config`     | Application configuration and database          |
+| `/mnt/nebula`         | `/mnt/nebula` | Access to media library for subtitle management |

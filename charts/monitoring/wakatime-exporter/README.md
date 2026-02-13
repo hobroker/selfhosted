@@ -15,6 +15,8 @@ helmfile apply
 
 ### Secrets
 
+The following environment variable is required and sourced from the `infisical-wakatime-secret`:
+
 | name           | description               |
 | -------------- | ------------------------- |
 | `WAKA_API_KEY` | API key from wakatime.com |

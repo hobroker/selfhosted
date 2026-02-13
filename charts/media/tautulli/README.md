@@ -13,6 +13,6 @@ helmfile apply
 
 ### Host Volumes
 
-| hostPath                | containerPath |
-| ----------------------- | ------------- |
-| `/appdata/k3s/tautulli` | `/config`     |
+| hostPath                | containerPath | description                            |
+| ----------------------- | ------------- | -------------------------------------- |
+| `/appdata/k3s/tautulli` | `/config`     | Application configuration and database |

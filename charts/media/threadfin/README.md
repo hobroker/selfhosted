@@ -10,3 +10,10 @@ Chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 ```shell
 helmfile apply
 ```
+
+### Host Volumes
+
+| hostPath                      | containerPath          | description               |
+| ----------------------------- | ---------------------- | ------------------------- |
+| `/appdata/k3s/threadfin/conf` | `/home/threadfin/conf` | Application configuration |
+| `/appdata/k3s/threadfin/temp` | `/tmp/threadfin`       | Temporary files directory |

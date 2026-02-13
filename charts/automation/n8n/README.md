@@ -10,3 +10,9 @@ Chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 ```shell
 helmfile apply
 ```
+
+### Host Volumes
+
+| hostPath           | containerPath     | description                            |
+| ------------------ | ----------------- | -------------------------------------- |
+| `/appdata/k3s/n8n` | `/home/node/.n8n` | Application configuration and database |

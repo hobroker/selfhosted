@@ -15,6 +15,8 @@ helmfile apply
 
 ### Secrets
 
+The following environment variables are required and sourced from the `infisical-grafana-backup-secret`:
+
 | name                     | description                                                                                   |
 | ------------------------ | --------------------------------------------------------------------------------------------- |
 | `AWS_ACCESS_KEY_ID`      | AWS access key ID                                                                             |

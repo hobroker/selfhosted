@@ -13,10 +13,16 @@ kubectl apply -f config
 helmfile apply
 ```
 
+### Secrets
+
+| name                        | description                                |
+| --------------------------- | ------------------------------------------ |
+| `infisical-scraparr-secret` | (Used by scraparr) Contains Radarr API key |
+
 ### Host Volumes
 
-| hostPath                | containerPath        |
-| ----------------------- | -------------------- |
-| `/appdata/k3s/radarr`   | `/config`            |
-| `/mnt/nebula/movies`    | `/mnt/nebula/movies` |
-| `/mnt/nebula/downloads` | `/downloads`         |
+| hostPath                | containerPath        | description                            |
+| ----------------------- | -------------------- | -------------------------------------- |
+| `/appdata/k3s/radarr`   | `/config`            | Application configuration and database |
+| `/mnt/nebula/movies`    | `/mnt/nebula/movies` | Movie library directory                |
+| `/mnt/nebula/downloads` | `/downloads`         | Downloads directory for processing     |

@@ -13,9 +13,10 @@ helmfile apply
 
 ### Host Volumes
 
-| hostPath                        | containerPath |
-| ------------------------------- | ------------- |
-| `/appdata/k3s/fileflows/common` | `/app/common` |
-| `/appdata/k3s/fileflows/logs`   | `/app/logs`   |
-| `/transcode_cache`              | `/temp`       |
-| `/mnt/nebula`                   | `/mnt/nebula` |
+| hostPath                        | containerPath   | description                            |
+| ------------------------------- | --------------- | -------------------------------------- |
+| `/appdata/k3s/fileflows/common` | `/app/common`   | Shared application data                |
+| `/appdata/k3s/fileflows/Data`   | `/app/Data`     | Application database and state         |
+| `/appdata/k3s/fileflows/Logs`   | `/app/Logs`     | Application logs                       |
+| `/transcode_cache`              | `/temp`         | Temporary directory for transcoding    |
+| `/mnt/nebula`                   | `/media/nebula` | Access to media library for processing |
