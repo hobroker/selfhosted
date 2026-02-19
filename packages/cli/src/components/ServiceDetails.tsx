@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const ServiceDetails = ({ service }: Props) => (
-  <Box width="55%" flexDirection="column" paddingX={2} borderStyle="single" borderColor="white">
+  <Box flexGrow={1} flexDirection="column" paddingX={2} borderStyle="single" borderColor="white">
     {service ? (
       <Box flexDirection="column">
         <Text bold color="green" underline>

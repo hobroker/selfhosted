@@ -53,7 +53,7 @@ export const Sidebar = ({ services, listLimit, onSelect }: Props) => {
   const visibleServices = services.slice(scrollOffset, scrollOffset + listLimit);
 
   return (
-    <Box width="45%" flexDirection="column" borderStyle="single" borderColor="white">
+    <Box width="20%" minWidth={30} flexDirection="column" borderStyle="single" borderColor="white">
       {visibleServices.map((service, index) => {
         const actualIndex = index + scrollOffset;
         const isSelected = actualIndex === selectedIndex;
