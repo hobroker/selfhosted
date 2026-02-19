@@ -1,5 +1,5 @@
 import { Box, Text } from "ink";
-import { useServiceStatus } from "./hooks/useServiceStatus.js";
+import { useServiceStatus } from "./hooks/useServiceStatus.ts";
 import type { ServiceInfo } from "../../types.d.ts";
 
 export interface ServiceItemProps {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Box, Text, useInput } from "ink";
 import type { ServiceInfo } from "../types.d.ts";
-import { ServiceItem } from "./ServiceItem/index.js";
+import { ServiceItem } from "./ServiceItem/index.ts";
 
 interface Props {
   services: ServiceInfo[];

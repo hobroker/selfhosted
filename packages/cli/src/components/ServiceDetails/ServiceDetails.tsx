@@ -1,6 +1,7 @@
 import { Box, Text } from "ink";
 import { StatusMessage } from "@inkjs/ui";
-import type { ServiceInfo } from "../types.d.ts";
+import type { ServiceInfo } from "../../types.d.ts";
+import { isServiceUpToDate } from "../../util/isServiceUpToDate.ts";
 
 interface Props {
   service?: ServiceInfo;
@@ -22,8 +23,7 @@ export const ServiceDetails = ({ service }: Props) => (
           <Box>
             {!service.installedChartVersion ? (
               <Text>❌ Not Installed</Text>
-            ) : service.localChartVersion === service.installedChartVersion &&
-              service.localAppVersion === service.installedAppVersion ? (
+            ) : isServiceUpToDate(service) ? (
               <Text>✅ Deployed</Text>
             ) : (
               <Text>⚠️ Update Available</Text>
