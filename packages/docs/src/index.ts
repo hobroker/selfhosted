@@ -1,8 +1,8 @@
-import { parseCharts } from "./lib/parseCharts";
-import { insertMarkdown } from "./lib/insertMarkdown";
-import { generateMarkdownTable } from "./lib/generateMarkdownTable";
+import { parseCharts } from "./lib/parseCharts.js";
+import { insertMarkdown } from "./lib/insertMarkdown.js";
+import { generateMarkdownTable } from "./lib/generateMarkdownTable.js";
 import chalk from "chalk";
-import { getCharts } from "./lib/getCharts";
+import { getCharts } from "./lib/getCharts.js";
 
 const sources = await getCharts("charts");
 const data = await parseCharts(sources);

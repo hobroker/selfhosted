@@ -7,10 +7,7 @@ const contentPattern = new RegExp(`${start}([\\S\\s]*)${end}`, "m");
 
 export const insertMarkdown = async (markdown: string) => {
   const originalMarkdown = await readFile("README.md", "utf-8");
-  const existingMarkdown = originalMarkdown.replace(
-    contentPattern,
-    `${start}${placeholder}${end}`,
-  );
+  const existingMarkdown = originalMarkdown.replace(contentPattern, `${start}${placeholder}${end}`);
 
   const newMarkdown = existingMarkdown.replace(placeholder, markdown);
 
