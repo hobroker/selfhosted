@@ -1,1 +1,1 @@
-export { ServiceItem, type ServiceItemProps } from "./ServiceItem.js";
+export { ServiceItem } from "./ServiceItem.js";

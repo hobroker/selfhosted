@@ -2,7 +2,7 @@ import { Box, Text } from "ink";
 import { useServiceStatus } from "./hooks/useServiceStatus.js";
 import type { ServiceInfo } from "../../types.d.ts";
 
-export interface ServiceItemProps {
+interface ServiceItemProps {
   service: ServiceInfo;
   isSelected?: boolean;
 }

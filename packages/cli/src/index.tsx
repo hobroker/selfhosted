@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { useEffect, useState } from "react";
 import { render, Box, Text, useInput, useApp } from "ink";
 import { fetchAllData } from "./services/data.service.js";
