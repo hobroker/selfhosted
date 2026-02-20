@@ -1,5 +1,6 @@
 import React, { Component, ErrorInfo, ReactNode } from "react";
 import { Box, Text } from "ink";
+import { colors } from "../constants";
 
 interface Props {
   children: ReactNode;
@@ -32,32 +33,32 @@ export class ErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <Box flexDirection="column" padding={1} borderStyle="double" borderColor="red">
+        <Box flexDirection="column" padding={1} borderStyle="double" borderColor={colors.error}>
           <Box marginBottom={1}>
-            <Text backgroundColor="red" color="white" bold>
+            <Text backgroundColor={colors.error} color="white" bold>
               {" "}
               FATAL ERROR{" "}
             </Text>
           </Box>
           <Box marginBottom={1}>
-            <Text color="red" bold>
+            <Text color={colors.error} bold>
               {this.state.error?.name}: {this.state.error?.message}
             </Text>
           </Box>
           {this.state.error?.stack && (
             <Box flexDirection="column">
-              <Text dimColor>Stack trace:</Text>
-              <Text color="gray">{this.state.error.stack}</Text>
+              <Text color={colors.dim}>Stack trace:</Text>
+              <Text color={colors.muted}>{this.state.error.stack}</Text>
             </Box>
           )}
           {this.state.errorInfo?.componentStack && (
             <Box flexDirection="column" marginTop={1}>
-              <Text dimColor>Component stack:</Text>
-              <Text color="gray">{this.state.errorInfo.componentStack}</Text>
+              <Text color={colors.dim}>Component stack:</Text>
+              <Text color={colors.muted}>{this.state.errorInfo.componentStack}</Text>
             </Box>
           )}
           <Box marginTop={1}>
-            <Text dimColor>Press q to quit</Text>
+            <Text color={colors.dim}>Press q to quit</Text>
           </Box>
         </Box>
       );

@@ -5,6 +5,8 @@ import type { ServiceInfo } from "../types";
 import { ServiceItem } from "./ServiceItem/index";
 import { ErrorBoundary } from "./ErrorBoundary";
 
+import { colors } from "../constants";
+
 interface Props {
   services: ServiceInfo[];
   listLimit: number;
@@ -80,10 +82,10 @@ export const Sidebar = ({ services, listLimit, onSelect, isFocused, onFocus }: P
         width="20%"
         minWidth={30}
         borderStyle="single"
-        borderColor={isFocused ? "blue" : "white"}
+        borderColor={isFocused ? colors.borderActive : colors.border}
         padding={1}
       >
-        <Text italic dimColor>
+        <Text italic color={colors.dim}>
           No services found
         </Text>
       </Box>
@@ -99,7 +101,7 @@ export const Sidebar = ({ services, listLimit, onSelect, isFocused, onFocus }: P
       minWidth={30}
       flexDirection="column"
       borderStyle="single"
-      borderColor={isFocused ? "blue" : "gray"}
+      borderColor={isFocused ? colors.borderActive : colors.border}
     >
       <ErrorBoundary>
         {visibleServices.map((service, index) => {

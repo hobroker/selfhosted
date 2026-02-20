@@ -5,7 +5,7 @@ import { ScrollView, ScrollViewRef } from "ink-scroll-view";
 import { useOnMouseEnter, useOnWheel } from "@ink-tools/ink-mouse";
 import type { ServiceInfo } from "../types";
 import { ErrorBoundary } from "./ErrorBoundary";
-import { serviceStateLabelsMap } from "../constants";
+import { serviceStateLabelsMap, colors } from "../constants";
 import { marked } from "marked";
 import TerminalRenderer from "marked-terminal";
 
@@ -71,29 +71,33 @@ export const ServiceDetails = ({ service, isFocused, onFocus }: Props) => {
       flexDirection="column"
       paddingX={2}
       borderStyle="single"
-      borderColor={isFocused ? "blue" : "gray"}
+      borderColor={isFocused ? colors.borderActive : colors.border}
     >
       <ErrorBoundary>
         {service ? (
           <ScrollView ref={scrollViewRef} flexGrow={1}>
             <Box flexDirection="column">
-              <Text bold color="green" underline>
+              <Text bold color={colors.primary} underline>
                 {service.name.toUpperCase()}
               </Text>
               <Box marginTop={1}>
-                <Text bold>Category: </Text>
-                <Text>{service.category}</Text>
+                <Text bold color={colors.muted}>
+                  Category:{" "}
+                </Text>
+                <Text color={colors.text}>{service.category}</Text>
               </Box>
               <Box marginTop={1} width="100%">
-                <Text bold>Status: </Text>
-                <Text>
+                <Text bold color={colors.muted}>
+                  Status:{" "}
+                </Text>
+                <Text color={colors.text}>
                   {serviceStateLabelsMap[service.state].icon}{" "}
                   {serviceStateLabelsMap[service.state].label}
                 </Text>
               </Box>
 
               <Box marginTop={1} flexDirection="column">
-                <Text bold color="yellow">
+                <Text bold color={colors.warning}>
                   Versions Comparison
                 </Text>
                 <Box marginLeft={2} flexDirection="column" marginTop={1}>
@@ -105,8 +109,10 @@ export const ServiceDetails = ({ service, isFocused, onFocus }: Props) => {
                           : "warning"
                       }
                     >
-                      Chart: {service.localChartVersion} (Local) vs{" "}
-                      {service.installedChartVersion || "N/A"} (Installed)
+                      <Text color={colors.text}>
+                        Chart: {service.localChartVersion} (Local) vs{" "}
+                        {service.installedChartVersion || "N/A"} (Installed)
+                      </Text>
                     </StatusMessage>
                   </Box>
                   <Box flexDirection="column">
@@ -117,34 +123,40 @@ export const ServiceDetails = ({ service, isFocused, onFocus }: Props) => {
                           : "warning"
                       }
                     >
-                      App: {service.localAppVersion} (Local) vs{" "}
-                      {service.installedAppVersion || "N/A"} (Installed)
+                      <Text color={colors.text}>
+                        App: {service.localAppVersion} (Local) vs {service.installedAppVersion || "N/A"}{" "}
+                        (Installed)
+                      </Text>
                     </StatusMessage>
                   </Box>
                 </Box>
               </Box>
 
               <Box marginTop={1} marginBottom={1}>
-                <Text bold>Path: </Text>
-                <Text dimColor>{service.path}</Text>
+                <Text bold color={colors.muted}>
+                  Path:{" "}
+                </Text>
+                <Text color={colors.dim}>{service.path}</Text>
               </Box>
 
               {service.readme ? (
                 <ErrorBoundary>
                   <Box flexDirection="column" marginTop={1} borderStyle="round" paddingX={1}>
                     <Box marginBottom={1} justifyContent="space-between">
-                      <Text bold color="cyan">
+                      <Text bold color={colors.accent}>
                         README.md
                       </Text>
                     </Box>
-                    <Text>{marked.parse(service.readme) as string}</Text>
+                    <Text color={colors.text}>{marked.parse(service.readme) as string}</Text>
                   </Box>
                 </ErrorBoundary>
               ) : null}
             </Box>
           </ScrollView>
         ) : (
-          <Text italic>Select a service to see details</Text>
+          <Text italic color={colors.dim}>
+            Select a service to see details
+          </Text>
         )}
       </ErrorBoundary>
     </Box>

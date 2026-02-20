@@ -1,6 +1,6 @@
 import { Box, Text } from "ink";
 import type { ServiceInfo } from "../../types";
-import { serviceStateLabelsMap } from "../../constants";
+import { serviceStateLabelsMap, colors } from "../../constants";
 
 interface ServiceItemProps {
   service: ServiceInfo;
@@ -10,8 +10,8 @@ interface ServiceItemProps {
 export const ServiceItem = ({ service, isSelected }: ServiceItemProps) => {
   return (
     <Box key={service.id} paddingRight={1} justifyContent="space-between">
-      <Box backgroundColor={isSelected ? "blue" : undefined} flexGrow={1}>
-        <Text color="white" bold={isSelected} wrap="truncate-end">
+      <Box backgroundColor={isSelected ? colors.primary : undefined} flexGrow={1}>
+        <Text color={isSelected ? "black" : colors.text} bold={isSelected} wrap="truncate-end">
           {isSelected ? "> " : "  "}
           {service.name}
         </Text>

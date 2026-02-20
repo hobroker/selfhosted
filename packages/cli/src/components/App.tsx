@@ -7,6 +7,7 @@ import { Sidebar } from "./Sidebar";
 import { ServiceDetails } from "./ServiceDetails";
 import { fetchAllData } from "../services/data.service";
 import { Footer } from "./Footer";
+import { colors } from "../constants";
 
 export const App = () => {
   const [services, setServices] = useState<ServiceInfo[]>([]);
@@ -64,7 +65,7 @@ export const App = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <Text color="yellow">Loading charts and cluster data...</Text>
+        <Text color={colors.warning}>Loading charts and cluster data...</Text>
       </Box>
     );
   }
