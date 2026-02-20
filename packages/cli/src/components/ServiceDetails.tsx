@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
-import { Box, Text, useInput } from "ink";
+import { Box, Text, useInput, DOMElement } from "ink";
 import { StatusMessage } from "@inkjs/ui";
-import { ScrollView } from "ink-scroll-view";
+import { ScrollView, ScrollViewRef } from "ink-scroll-view";
+import { useOnMouseEnter, useOnWheel } from "@ink-tools/ink-mouse";
 import type { ServiceInfo } from "../types";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { serviceStateLabelsMap } from "../constants";
@@ -15,11 +16,25 @@ marked.setOptions({
 interface Props {
   service?: ServiceInfo;
   isFocused?: boolean;
-  height?: number;
+  onFocus?: () => void;
 }
 
-export const ServiceDetails = ({ service, isFocused, height = 20 }: Props) => {
-  const scrollViewRef = useRef<any>(null);
+export const ServiceDetails = ({ service, isFocused, onFocus }: Props) => {
+  const scrollViewRef = useRef<ScrollViewRef>(null);
+  const ref = useRef<DOMElement>(null);
+
+  useOnMouseEnter(ref, () => {
+    onFocus?.();
+  });
+
+  useOnWheel(ref, (event) => {
+    if (!service) return;
+    if (event.button === "wheel-up") {
+      scrollViewRef.current?.scrollBy(-2);
+    } else if (event.button === "wheel-down") {
+      scrollViewRef.current?.scrollBy(2);
+    }
+  });
 
   // Reset scroll when service changes
   useEffect(() => {
@@ -51,6 +66,7 @@ export const ServiceDetails = ({ service, isFocused, height = 20 }: Props) => {
 
   return (
     <Box
+      ref={ref}
       flexGrow={1}
       flexDirection="column"
       paddingX={2}

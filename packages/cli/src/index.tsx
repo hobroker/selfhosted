@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { useEffect, useState } from "react";
 import { render, Box, Text, useInput, useApp } from "ink";
+import { MouseProvider } from "@ink-tools/ink-mouse";
 import { fetchAllData } from "./services/data.service";
 import type { ServiceInfo } from "./types";
 import { useDimensions } from "./hooks/useDimensions";
@@ -85,11 +86,12 @@ const App = () => {
           listLimit={listLimit}
           onSelect={setSelectedId}
           isFocused={focus === "sidebar"}
+          onFocus={() => setFocus("sidebar")}
         />
         <ServiceDetails
           service={selectedService}
           isFocused={focus === "details"}
-          height={listLimit}
+          onFocus={() => setFocus("details")}
         />
       </Box>
     </Box>
@@ -98,6 +100,8 @@ const App = () => {
 
 render(
   <ErrorBoundary>
-    <App />
+    <MouseProvider>
+      <App />
+    </MouseProvider>
   </ErrorBoundary>,
 );

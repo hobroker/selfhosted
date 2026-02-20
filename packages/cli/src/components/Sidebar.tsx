@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { Box, Text, useInput } from "ink";
+import React, { useState, useEffect, useRef } from "react";
+import { Box, Text, useInput, DOMElement } from "ink";
+import { useOnMouseEnter, useOnWheel } from "@ink-tools/ink-mouse";
 import type { ServiceInfo } from "../types";
 import { ServiceItem } from "./ServiceItem/index";
 import { ErrorBoundary } from "./ErrorBoundary";
@@ -9,11 +10,39 @@ interface Props {
   listLimit: number;
   onSelect: (id: string) => void;
   isFocused?: boolean;
+  onFocus?: () => void;
 }
 
-export const Sidebar = ({ services, listLimit, onSelect, isFocused }: Props) => {
+export const Sidebar = ({ services, listLimit, onSelect, isFocused, onFocus }: Props) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollOffset, setScrollOffset] = useState(0);
+  const ref = useRef<DOMElement>(null);
+
+  useOnMouseEnter(ref, () => {
+    onFocus?.();
+  });
+
+  useOnWheel(ref, (event) => {
+    if (services.length === 0) return;
+
+    if (event.button === "wheel-up") {
+      setSelectedIndex((prev) => {
+        const next = Math.max(0, prev - 1);
+        if (next < scrollOffset) {
+          setScrollOffset(next);
+        }
+        return next;
+      });
+    } else if (event.button === "wheel-down") {
+      setSelectedIndex((prev) => {
+        const next = Math.min(services.length - 1, prev + 1);
+        if (next >= scrollOffset + listLimit) {
+          setScrollOffset(next - listLimit + 1);
+        }
+        return next;
+      });
+    }
+  });
 
   useEffect(() => {
     if (services.length > 0) {
@@ -47,6 +76,7 @@ export const Sidebar = ({ services, listLimit, onSelect, isFocused }: Props) => 
   if (services.length === 0) {
     return (
       <Box
+        ref={ref}
         width="20%"
         minWidth={30}
         borderStyle="single"
@@ -64,6 +94,7 @@ export const Sidebar = ({ services, listLimit, onSelect, isFocused }: Props) => 
 
   return (
     <Box
+      ref={ref}
       width="20%"
       minWidth={30}
       flexDirection="column"
