@@ -1,5 +1,7 @@
-import { Box, Text } from "ink";
+import React, { useEffect, useRef } from "react";
+import { Box, Text, useInput } from "ink";
 import { StatusMessage } from "@inkjs/ui";
+import { ScrollView } from "ink-scroll-view";
 import type { ServiceInfo } from "../types";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { serviceStateLabelsMap } from "../constants";
@@ -12,74 +14,124 @@ marked.setOptions({
 
 interface Props {
   service?: ServiceInfo;
+  isFocused?: boolean;
+  height?: number;
 }
 
-export const ServiceDetails = ({ service }: Props) => (
-  <Box flexGrow={1} flexDirection="column" paddingX={2} borderStyle="single" borderColor="white">
-    <ErrorBoundary>
-      {service ? (
-        <Box flexDirection="column">
-          <Text bold color="green" underline>
-            {service.name.toUpperCase()}
-          </Text>
-          <Box marginTop={1}>
-            <Text bold>Category: </Text>
-            <Text>{service.category}</Text>
-          </Box>
-          <Box marginTop={1} width="100%">
-            <Text bold>Status: </Text>
-            <Text>
-              {serviceStateLabelsMap[service.state].icon}{" "}
-              {serviceStateLabelsMap[service.state].label}
-            </Text>
-          </Box>
+export const ServiceDetails = ({ service, isFocused, height = 20 }: Props) => {
+  const scrollViewRef = useRef<any>(null);
 
-          <Box marginTop={1} flexDirection="column">
-            <Text bold color="yellow">
-              Versions Comparison
-            </Text>
-            <Box marginLeft={2} flexDirection="column" marginTop={1}>
-              <Box flexDirection="column" marginBottom={1}>
-                <StatusMessage
-                  variant={
-                    service.localChartVersion === service.installedChartVersion
-                      ? "success"
-                      : "warning"
-                  }
-                >
-                  Chart: {service.localChartVersion} (Local) vs{" "}
-                  {service.installedChartVersion || "N/A"} (Installed)
-                </StatusMessage>
-              </Box>
-              <Box flexDirection="column">
-                <StatusMessage
-                  variant={
-                    service.localAppVersion === service.installedAppVersion ? "success" : "warning"
-                  }
-                >
-                  App: {service.localAppVersion} (Local) vs {service.installedAppVersion || "N/A"}{" "}
-                  (Installed)
-                </StatusMessage>
-              </Box>
-            </Box>
-          </Box>
+  // Reset scroll when service changes
+  useEffect(() => {
+    scrollViewRef.current?.scrollTo(0);
+  }, [service?.id]);
 
-          {service.readme ? (
-            <ErrorBoundary>
-              <Box flexDirection="column" marginTop={1} borderStyle="round" paddingX={1}>
-                <Box marginBottom={1}>
-                  <Text bold color="cyan">
-                    README.md
-                  </Text>
+  useInput((_, key) => {
+    if (!isFocused || !service) return;
+
+    if (key.upArrow) {
+      scrollViewRef.current?.scrollBy(-1);
+    }
+    if (key.downArrow) {
+      scrollViewRef.current?.scrollBy(1);
+    }
+    if (key.pageUp) {
+      scrollViewRef.current?.scrollBy(-10);
+    }
+    if (key.pageDown) {
+      scrollViewRef.current?.scrollBy(10);
+    }
+    if (key.home) {
+      scrollViewRef.current?.scrollTo(0);
+    }
+    if (key.end) {
+      scrollViewRef.current?.scrollToBottom();
+    }
+  });
+
+  return (
+    <Box
+      flexGrow={1}
+      flexDirection="column"
+      paddingX={2}
+      borderStyle="single"
+      borderColor={isFocused ? "blue" : "gray"}
+      height={height}
+    >
+      <ErrorBoundary>
+        {service ? (
+          <ScrollView ref={scrollViewRef} flexGrow={1}>
+            <Box flexDirection="column">
+              <Text bold color="green" underline>
+                {service.name.toUpperCase()}
+              </Text>
+              <Box marginTop={1}>
+                <Text bold>Category: </Text>
+                <Text>{service.category}</Text>
+              </Box>
+              <Box marginTop={1} width="100%">
+                <Text bold>Status: </Text>
+                <Text>
+                  {serviceStateLabelsMap[service.state].icon}{" "}
+                  {serviceStateLabelsMap[service.state].label}
+                </Text>
+              </Box>
+
+              <Box marginTop={1} flexDirection="column">
+                <Text bold color="yellow">
+                  Versions Comparison
+                </Text>
+                <Box marginLeft={2} flexDirection="column" marginTop={1}>
+                  <Box flexDirection="column" marginBottom={1}>
+                    <StatusMessage
+                      variant={
+                        service.localChartVersion === service.installedChartVersion
+                          ? "success"
+                          : "warning"
+                      }
+                    >
+                      Chart: {service.localChartVersion} (Local) vs{" "}
+                      {service.installedChartVersion || "N/A"} (Installed)
+                    </StatusMessage>
+                  </Box>
+                  <Box flexDirection="column">
+                    <StatusMessage
+                      variant={
+                        service.localAppVersion === service.installedAppVersion
+                          ? "success"
+                          : "warning"
+                      }
+                    >
+                      App: {service.localAppVersion} (Local) vs{" "}
+                      {service.installedAppVersion || "N/A"} (Installed)
+                    </StatusMessage>
+                  </Box>
                 </Box>
-                <Text>{marked.parse(service.readme) as string}</Text>
               </Box>
-            </ErrorBoundary>
-          ) : null}
-        </Box>
-      ) : (
-        <Text italic>Select a service to see details</Text>
-      )}
-    </ErrorBoundary>
-  </Box>
-);
+
+              <Box marginTop={1} marginBottom={1}>
+                <Text bold>Path: </Text>
+                <Text dimColor>{service.path}</Text>
+              </Box>
+
+              {service.readme ? (
+                <ErrorBoundary>
+                  <Box flexDirection="column" marginTop={1} borderStyle="round" paddingX={1}>
+                    <Box marginBottom={1} justifyContent="space-between">
+                      <Text bold color="cyan">
+                        README.md
+                      </Text>
+                    </Box>
+                    <Text>{marked.parse(service.readme) as string}</Text>
+                  </Box>
+                </ErrorBoundary>
+              ) : null}
+            </Box>
+          </ScrollView>
+        ) : (
+          <Text italic>Select a service to see details</Text>
+        )}
+      </ErrorBoundary>
+    </Box>
+  );
+};

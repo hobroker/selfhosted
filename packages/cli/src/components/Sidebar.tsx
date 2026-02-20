@@ -8,9 +8,10 @@ interface Props {
   services: ServiceInfo[];
   listLimit: number;
   onSelect: (id: string) => void;
+  isFocused?: boolean;
 }
 
-export const Sidebar = ({ services, listLimit, onSelect }: Props) => {
+export const Sidebar = ({ services, listLimit, onSelect, isFocused }: Props) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollOffset, setScrollOffset] = useState(0);
 
@@ -21,6 +22,8 @@ export const Sidebar = ({ services, listLimit, onSelect }: Props) => {
   }, [selectedIndex, services, onSelect]);
 
   useInput((_, key) => {
+    if (!isFocused) return;
+
     if (key.upArrow) {
       setSelectedIndex((prev) => {
         const next = Math.max(0, prev - 1);
@@ -43,7 +46,13 @@ export const Sidebar = ({ services, listLimit, onSelect }: Props) => {
 
   if (services.length === 0) {
     return (
-      <Box width="45%" borderStyle="single" borderColor="white" padding={1}>
+      <Box
+        width="20%"
+        minWidth={30}
+        borderStyle="single"
+        borderColor={isFocused ? "blue" : "white"}
+        padding={1}
+      >
         <Text italic dimColor>
           No services found
         </Text>
@@ -54,7 +63,13 @@ export const Sidebar = ({ services, listLimit, onSelect }: Props) => {
   const visibleServices = services.slice(scrollOffset, scrollOffset + listLimit);
 
   return (
-    <Box width="20%" minWidth={30} flexDirection="column" borderStyle="single" borderColor="white">
+    <Box
+      width="20%"
+      minWidth={30}
+      flexDirection="column"
+      borderStyle="single"
+      borderColor={isFocused ? "blue" : "gray"}
+    >
       <ErrorBoundary>
         {visibleServices.map((service, index) => {
           const actualIndex = index + scrollOffset;

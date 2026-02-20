@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { useEffect, useState } from "react";
 import { render, Box, Text, useInput, useApp } from "ink";
 import { fetchAllData } from "./services/data.service";
@@ -12,6 +13,7 @@ const App = () => {
   const [services, setServices] = useState<ServiceInfo[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [focus, setFocus] = useState<"sidebar" | "details">("sidebar");
   const { exit } = useApp();
   const dimensions = useDimensions();
 
@@ -44,9 +46,13 @@ const App = () => {
     };
   }, []);
 
-  useInput((input) => {
+  useInput((input, key) => {
     if (input === "q") {
       exit();
+    }
+
+    if (key.tab || key.rightArrow || key.leftArrow) {
+      setFocus((prev) => (prev === "sidebar" ? "details" : "sidebar"));
     }
   });
 
@@ -72,8 +78,17 @@ const App = () => {
       <Header />
 
       <Box flexGrow={1}>
-        <Sidebar services={services} listLimit={listLimit} onSelect={setSelectedId} />
-        <ServiceDetails service={selectedService} />
+        <Sidebar
+          services={services}
+          listLimit={listLimit}
+          onSelect={setSelectedId}
+          isFocused={focus === "sidebar"}
+        />
+        <ServiceDetails
+          service={selectedService}
+          isFocused={focus === "details"}
+          height={listLimit}
+        />
       </Box>
     </Box>
   );

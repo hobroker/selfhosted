@@ -10,9 +10,7 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "dist",
     "jsx": "react-jsx",
-    "allowImportingTsExtensions": true,
     "allowSyntheticDefaultImports": true,
-    "noEmit": true,
     "resolveJsonModule": true
   },
   "include": ["src/**/*"]
