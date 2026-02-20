@@ -1,8 +1,8 @@
 import { Box, Text } from "ink";
 import { StatusMessage } from "@inkjs/ui";
-import type { ServiceInfo } from "../types.d.ts";
-import { ErrorBoundary } from "./ErrorBoundary.tsx";
-import { serviceStateLabelsMap } from "../constants.ts";
+import type { ServiceInfo } from "../types";
+import { ErrorBoundary } from "./ErrorBoundary";
+import { serviceStateLabelsMap } from "../constants";
 import { marked } from "marked";
 import TerminalRenderer from "marked-terminal";
 

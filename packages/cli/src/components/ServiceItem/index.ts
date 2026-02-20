@@ -1,1 +1,1 @@
-export { ServiceItem } from "./ServiceItem.tsx";
+export { ServiceItem } from "./ServiceItem";

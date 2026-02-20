@@ -1,6 +1,6 @@
 import { Box, Text } from "ink";
-import type { ServiceInfo } from "../../types.d.ts";
-import { serviceStateLabelsMap } from "../../constants.ts";
+import type { ServiceInfo } from "../../types";
+import { serviceStateLabelsMap } from "../../constants";
 
 interface ServiceItemProps {
   service: ServiceInfo;

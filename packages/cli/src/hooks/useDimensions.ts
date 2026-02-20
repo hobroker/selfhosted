@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useStdout } from "ink";
-import type { Dimensions } from "../types.d.ts";
+import type { Dimensions } from "../types";
 
 export function useDimensions(): Dimensions {
   const { stdout } = useStdout();

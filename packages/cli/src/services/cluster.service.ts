@@ -1,5 +1,5 @@
 import { execa } from "execa";
-import type { HelmRelease } from "../types.d.ts";
+import type { HelmRelease } from "../types";
 
 export async function fetchHelmReleases(): Promise<HelmRelease[]> {
   try {

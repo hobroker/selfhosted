@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { render, Box, Text, useInput, useApp } from "ink";
-import { fetchAllData } from "./services/data.service.ts";
-import type { ServiceInfo } from "./types.d.ts";
-import { useDimensions } from "./hooks/useDimensions.ts";
-import { Header } from "./components/Header.tsx";
-import { Sidebar } from "./components/Sidebar.tsx";
-import { ServiceDetails } from "./components/ServiceDetails.tsx";
-import { ErrorBoundary } from "./components/ErrorBoundary.tsx";
+import { fetchAllData } from "./services/data.service";
+import type { ServiceInfo } from "./types";
+import { useDimensions } from "./hooks/useDimensions";
+import { Header } from "./components/Header";
+import { Sidebar } from "./components/Sidebar";
+import { ServiceDetails } from "./components/ServiceDetails";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 
 const App = () => {
   const [services, setServices] = useState<ServiceInfo[]>([]);

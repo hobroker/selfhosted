@@ -4,10 +4,8 @@
   "type": "module",
   "bin": "./dist/index.js",
   "scripts": {
-    "dev": "TSX_FORMAT=esm node --import tsx src/index.tsx",
-    "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "cli": "TSX_FORMAT=esm node --import tsx src/index.tsx",
+    "cli": "tsx src/index.tsx",
     "lint": "eslint .",
     "format": "prettier --write .",
     "start": "node dist/index.js"

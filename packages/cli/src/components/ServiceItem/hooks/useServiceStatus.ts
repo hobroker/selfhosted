@@ -1,6 +1,6 @@
-import { ServiceState } from "../../../constants.ts";
-import type { ServiceInfo } from "../../../types.d.ts";
-import { isServiceUpToDate } from "../../../utils/isServiceUpToDate.ts";
+import { ServiceState } from "../../../constants";
+import type { ServiceInfo } from "../../../types";
+import { isServiceUpToDate } from "../../../utils/isServiceUpToDate";
 
 interface Props {
   service: ServiceInfo;

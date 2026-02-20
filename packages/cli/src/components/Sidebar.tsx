@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Box, Text, useInput } from "ink";
-import type { ServiceInfo } from "../types.d.ts";
-import { ServiceItem } from "./ServiceItem/index.ts";
-import { ErrorBoundary } from "./ErrorBoundary.tsx";
+import type { ServiceInfo } from "../types";
+import { ServiceItem } from "./ServiceItem/index";
+import { ErrorBoundary } from "./ErrorBoundary";
 
 interface Props {
   services: ServiceInfo[];
