@@ -56,7 +56,6 @@ export const ServiceDetails = ({ service, isFocused, height = 20 }: Props) => {
       paddingX={2}
       borderStyle="single"
       borderColor={isFocused ? "blue" : "gray"}
-      height={height}
     >
       <ErrorBoundary>
         {service ? (

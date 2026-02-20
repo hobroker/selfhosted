@@ -1,7 +1,7 @@
 import { Box, Text } from "ink";
 
 export const Header = () => (
-  <Box paddingX={1} borderStyle="single" borderColor="blue">
+  <Box paddingX={1} borderStyle="single" borderColor="blue" width="100%">
     <Box flexGrow={1}>
       <Text bold color="cyan">
         Selfhosted Services Manager

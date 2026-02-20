@@ -75,9 +75,11 @@ const App = () => {
 
   return (
     <Box flexDirection="column" height={dimensions.rows} width={dimensions.columns}>
-      <Header />
+      <Box height={3}>
+        <Header />
+      </Box>
 
-      <Box flexGrow={1}>
+      <Box height={dimensions.rows - 3}>
         <Sidebar
           services={services}
           listLimit={listLimit}
