@@ -10,6 +10,7 @@ export interface ServiceInfo {
   installedChartVersion?: string;
   installedAppVersion?: string;
   state: ServiceState;
+  readme?: string;
 }
 
 export interface HelmRelease {

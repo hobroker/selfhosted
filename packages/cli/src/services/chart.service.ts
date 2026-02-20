@@ -49,6 +49,13 @@ export async function fetchLocalCharts(): Promise<ServiceInfo[]> {
         // Ignore if values.yaml doesn't exist
       }
 
+      let readme = "";
+      try {
+        readme = await readFile(join(path, "README.md"), "utf-8");
+      } catch {
+        // Ignore if README.md doesn't exist
+      }
+
       return {
         id: name,
         name,
@@ -57,6 +64,7 @@ export async function fetchLocalCharts(): Promise<ServiceInfo[]> {
         localChartVersion: release?.version || "unknown",
         localAppVersion: String(localAppVersion),
         state: ServiceState.NotInstalled,
+        readme,
       };
     }),
   );
