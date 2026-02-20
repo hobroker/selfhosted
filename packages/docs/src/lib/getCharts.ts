@@ -1,6 +1,6 @@
 import { readdir, stat } from "fs/promises";
 import { dirname, resolve } from "path";
-import { ChartSource } from "./types";
+import { ChartSource } from "./types.js";
 
 const getFiles = async (dir: string): Promise<string[]> => {
   const subdirs = await readdir(dir);

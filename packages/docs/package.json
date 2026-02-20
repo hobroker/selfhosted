@@ -4,6 +4,12 @@
   "description": "Generate docs from charts to the main README.md",
   "author": "Igor Leahu <igor.leahu24@gmail.com>",
   "type": "module",
+  "scripts": {
+    "generate": "npx tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
   "dependencies": {
     "chalk": "^5.6.2",
     "markdown-table": "^3.0.4"
