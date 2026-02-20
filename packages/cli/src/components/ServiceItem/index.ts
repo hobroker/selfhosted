@@ -1,1 +1,1 @@
-export { ServiceItem } from "./ServiceItem.js";
+export { ServiceItem } from "./ServiceItem.tsx";

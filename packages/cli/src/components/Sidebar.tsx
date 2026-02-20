@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Box, Text, useInput } from "ink";
 import type { ServiceInfo } from "../types.d.ts";
-import { ServiceItem } from "./ServiceItem/index.js";
+import { ServiceItem } from "./ServiceItem/index.ts";
+import { ErrorBoundary } from "./ErrorBoundary.tsx";
 
 interface Props {
   services: ServiceInfo[];
@@ -54,12 +55,14 @@ export const Sidebar = ({ services, listLimit, onSelect }: Props) => {
 
   return (
     <Box width="20%" minWidth={30} flexDirection="column" borderStyle="single" borderColor="white">
-      {visibleServices.map((service, index) => {
-        const actualIndex = index + scrollOffset;
-        const isSelected = actualIndex === selectedIndex;
+      <ErrorBoundary>
+        {visibleServices.map((service, index) => {
+          const actualIndex = index + scrollOffset;
+          const isSelected = actualIndex === selectedIndex;
 
-        return <ServiceItem key={service.id} service={service} isSelected={isSelected} />;
-      })}
+          return <ServiceItem key={service.id} service={service} isSelected={isSelected} />;
+        })}
+      </ErrorBoundary>
     </Box>
   );
 };

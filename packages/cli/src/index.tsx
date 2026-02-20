@@ -1,12 +1,12 @@
-#!/usr/bin/env node
 import { useEffect, useState } from "react";
 import { render, Box, Text, useInput, useApp } from "ink";
-import { fetchAllData } from "./services/data.service.js";
+import { fetchAllData } from "./services/data.service.ts";
 import type { ServiceInfo } from "./types.d.ts";
-import { useDimensions } from "./hooks/useDimensions.js";
-import { Header } from "./components/Header.js";
-import { Sidebar } from "./components/Sidebar.js";
-import { ServiceDetails } from "./components/ServiceDetails.js";
+import { useDimensions } from "./hooks/useDimensions.ts";
+import { Header } from "./components/Header.tsx";
+import { Sidebar } from "./components/Sidebar.tsx";
+import { ServiceDetails } from "./components/ServiceDetails.tsx";
+import { ErrorBoundary } from "./components/ErrorBoundary.tsx";
 
 const App = () => {
   const [services, setServices] = useState<ServiceInfo[]>([]);
@@ -19,19 +19,24 @@ const App = () => {
     // Enter alternate buffer (fullscreen)
     process.stdout.write("\x1b[?1049h");
 
-    fetchAllData().then((data) => {
-      const sorted = data.sort((a, b) => {
-        if (a.category !== b.category) {
-          return a.category.localeCompare(b.category);
+    fetchAllData()
+      .then((data) => {
+        const sorted = data.sort((a, b) => {
+          if (a.category !== b.category) {
+            return a.category.localeCompare(b.category);
+          }
+          return a.name.localeCompare(b.name);
+        });
+        setServices(sorted);
+        setLoading(false);
+        if (sorted.length > 0) {
+          setSelectedId(sorted[0].id);
         }
-        return a.name.localeCompare(b.name);
+      })
+      .catch((err) => {
+        // Fallback for async errors during initial load
+        console.error("Failed to load initial data:", err);
       });
-      setServices(sorted);
-      setLoading(false);
-      if (sorted.length > 0) {
-        setSelectedId(sorted[0].id);
-      }
-    });
 
     return () => {
       // Exit alternate buffer
@@ -74,4 +79,8 @@ const App = () => {
   );
 };
 
-render(<App />);
+render(
+  <ErrorBoundary>
+    <App />
+  </ErrorBoundary>,
+);

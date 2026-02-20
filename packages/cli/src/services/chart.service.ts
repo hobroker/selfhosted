@@ -2,6 +2,7 @@ import { readdir, readFile, stat } from "fs/promises";
 import { resolve, join, dirname } from "path";
 import YAML from "yaml";
 import type { ServiceInfo } from "../types.d.ts";
+import { ServiceState } from "../constants.js";
 
 async function getFiles(dir: string): Promise<string[]> {
   const subdirs = await readdir(dir);
@@ -55,6 +56,7 @@ export async function fetchLocalCharts(): Promise<ServiceInfo[]> {
         path,
         localChartVersion: release?.version || "unknown",
         localAppVersion: String(localAppVersion),
+        state: ServiceState.NotInstalled,
       };
     }),
   );

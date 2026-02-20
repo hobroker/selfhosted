@@ -1,7 +1,7 @@
 import type { ServiceInfo } from "../types.d.ts";
-import { getServiceState } from "../utils/getServiceState.js";
-import { fetchLocalCharts } from "./chart.service.js";
-import { fetchHelmReleases, fetchPodImages } from "./cluster.service.js";
+import { getServiceState } from "../utils/getServiceState.ts";
+import { fetchLocalCharts } from "./chart.service.ts";
+import { fetchHelmReleases, fetchPodImages } from "./cluster.service.ts";
 
 export async function fetchAllData(): Promise<ServiceInfo[]> {
   try {

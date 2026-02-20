@@ -1,4 +1,4 @@
-import { ServiceState } from "./constants.js";
+import { ServiceState } from "./constants.ts";
 
 export interface ServiceInfo {
   id: string;

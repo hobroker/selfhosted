@@ -1,5 +1,5 @@
-import { ServiceState } from "../constants.js";
-import type { ServiceInfo } from "../types.js";
+import { ServiceState } from "../constants.ts";
+import type { ServiceInfo } from "../types.d.ts";
 
 export const getServiceState = (service: ServiceInfo): ServiceState => {
   if (!service.installedChartVersion) {
