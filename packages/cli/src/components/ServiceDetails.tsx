@@ -1,6 +1,7 @@
 import { Box, Text } from "ink";
 import { StatusMessage } from "@inkjs/ui";
 import type { ServiceInfo } from "../types.d.ts";
+import { serviceStateLabelsMap } from "../constants.js";
 
 interface Props {
   service?: ServiceInfo;
@@ -20,14 +21,16 @@ export const ServiceDetails = ({ service }: Props) => (
         <Box marginTop={1} width="100%">
           <Text bold>Status: </Text>
           <Box>
-            {!service.installedChartVersion ? (
+            {service.state}
+            {/* {serviceStateLabelsMap[service.state].label} */}
+            {/* {!service.installedChartVersion ? (
               <Text>❌ Not Installed</Text>
             ) : service.localChartVersion === service.installedChartVersion &&
               service.localAppVersion === service.installedAppVersion ? (
               <Text>✅ Deployed</Text>
             ) : (
               <Text>⚠️ Update Available</Text>
-            )}
+            )} */}
           </Box>
         </Box>
 

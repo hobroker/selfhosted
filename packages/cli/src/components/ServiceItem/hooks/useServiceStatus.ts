@@ -1,4 +1,4 @@
-import { ServiceStatus } from "../../../constants.ts";
+import { ServiceState } from "../../../constants.ts";
 import type { ServiceInfo } from "../../../types.d.ts";
 import { isServiceUpToDate } from "../../../utils/isServiceUpToDate.ts";
 
@@ -11,19 +11,19 @@ export function useServiceStatus({ service }: Props) {
   if (!service.installedChartVersion) {
     return {
       statusLabel: "❌",
-      status: ServiceStatus.NotInstalled,
+      status: ServiceState.NotInstalled,
     };
   }
 
   if (!isUpToDate) {
     return {
       statusLabel: "⚠️",
-      status: ServiceStatus.UpdateAvailable,
+      status: ServiceState.UpdateAvailable,
     };
   }
 
   return {
     statusLabel: "✅",
-    status: ServiceStatus.Installed,
+    status: ServiceState.Installed,
   };
 }

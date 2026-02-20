@@ -1,3 +1,5 @@
+import { ServiceState } from "./constants.js";
+
 export interface ServiceInfo {
   id: string;
   name: string;
@@ -7,7 +9,7 @@ export interface ServiceInfo {
   localAppVersion: string;
   installedChartVersion?: string;
   installedAppVersion?: string;
-  status?: string;
+  state: ServiceState;
 }
 
 export interface HelmRelease {
