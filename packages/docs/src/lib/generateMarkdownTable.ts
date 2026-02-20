@@ -1,6 +1,6 @@
 import { markdownTable } from "markdown-table";
-import { capitalize } from "./capitalize.js";
-import { ChartData } from "./types.js";
+import { capitalize } from "./capitalize";
+import { ChartData } from "./types";
 
 export const generateMarkdownTable = (data: ChartData[]) => {
   const content = data.map(({ category, services }) => {

@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "prepare": "husky",
-    "generate": "turbo generate",
+    "generate": "npm run generate --workspace @hobroker/selfhosted-docs",
     "cli": "npm run cli --workspace @hobroker/selfhosted-cli",
     "build": "turbo build",
     "typecheck": "turbo typecheck",

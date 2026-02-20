@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { ChartService } from "./types.js";
+import { ChartService } from "./types";
 
 const logError = (key: string, message: string) =>
   console.log(chalk.redBright(chalk.bold(`    ❌ ${key}: `), message));

@@ -6,8 +6,8 @@ import {
   extractDescription,
   extractName,
   extractReadmeLocation,
-} from "./extract.js";
-import { ChartData, ChartSource } from "./types.js";
+} from "./extract";
+import { ChartData, ChartSource } from "./types";
 
 export const parseCharts = async (sources: ChartSource[]): Promise<ChartData[]> =>
   sources.map(({ category, services: _services }) => {

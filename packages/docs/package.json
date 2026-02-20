@@ -5,7 +5,7 @@
   "author": "Igor Leahu <igor.leahu24@gmail.com>",
   "type": "module",
   "scripts": {
-    "generate": "npx tsx src/index.ts",
+    "generate": "tsx src/index.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "format": "prettier --write ."
@@ -15,6 +15,7 @@
     "markdown-table": "^3.0.4"
   },
   "devDependencies": {
-    "@types/node": "^25.2.0"
+    "@types/node": "^25.2.0",
+    "tsx": "^4.21.0"
   }
 }
