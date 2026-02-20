@@ -1,8 +1,14 @@
 import { Box, Text } from "ink";
 import { StatusMessage } from "@inkjs/ui";
 import type { ServiceInfo } from "../types.d.ts";
-import { ErrorBoundary } from "./ErrorBoundary.js";
-import { serviceStateLabelsMap } from "../constants.js";
+import { ErrorBoundary } from "./ErrorBoundary.tsx";
+import { serviceStateLabelsMap } from "../constants.ts";
+import { marked } from "marked";
+import TerminalRenderer from "marked-terminal";
+
+marked.setOptions({
+  renderer: new (TerminalRenderer as any)(),
+});
 
 interface Props {
   service?: ServiceInfo;
@@ -58,10 +64,18 @@ export const ServiceDetails = ({ service }: Props) => (
             </Box>
           </Box>
 
-          <Box marginTop={1}>
-            <Text bold>Path: </Text>
-            <Text dimColor>{service.path}</Text>
-          </Box>
+          {service.readme ? (
+            <ErrorBoundary>
+              <Box flexDirection="column" marginTop={1} borderStyle="round" paddingX={1}>
+                <Box marginBottom={1}>
+                  <Text bold color="cyan">
+                    README.md
+                  </Text>
+                </Box>
+                <Text>{marked.parse(service.readme) as string}</Text>
+              </Box>
+            </ErrorBoundary>
+          ) : null}
         </Box>
       ) : (
         <Text italic>Select a service to see details</Text>

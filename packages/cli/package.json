@@ -4,23 +4,26 @@
   "type": "module",
   "bin": "./dist/index.js",
   "scripts": {
-    "dev": "tsx src/index.tsx",
+    "dev": "TSX_FORMAT=esm node --import tsx src/index.tsx",
     "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "cli": "tsx src/index.tsx",
+    "cli": "TSX_FORMAT=esm node --import tsx src/index.tsx",
     "lint": "eslint .",
     "format": "prettier --write .",
     "start": "node dist/index.js"
   },
   "dependencies": {
     "@inkjs/ui": "^2.0.0",
+    "dedent": "^1.7.1",
     "execa": "^9.6.1",
     "ink": "^6.8.0",
-    "ink-markdown": "^1.0.4",
+    "marked": "^9.1.6",
+    "marked-terminal": "^6.2.0",
     "react": "^19.2.4",
     "yaml": "^2.8.2"
   },
   "devDependencies": {
+    "@types/marked-terminal": "^3.1.7",
     "@types/react": "^19.0.10",
     "tsx": "^4.19.3",
     "typescript": "^5.7.3"

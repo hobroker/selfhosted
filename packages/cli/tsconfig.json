@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "lib": ["ESNext"],
     "strict": true,
     "esModuleInterop": true,
@@ -11,6 +11,7 @@
     "outDir": "dist",
     "jsx": "react-jsx",
     "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
     "noEmit": true,
     "resolveJsonModule": true
   },

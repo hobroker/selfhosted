@@ -3,6 +3,7 @@ import { resolve, join, dirname } from "path";
 import YAML from "yaml";
 import type { ServiceInfo } from "../types.d.ts";
 import { ServiceState } from "../constants.js";
+import dedent from "dedent";
 
 async function getFiles(dir: string): Promise<string[]> {
   const subdirs = await readdir(dir);
@@ -27,7 +28,7 @@ export async function fetchLocalCharts(): Promise<ServiceInfo[]> {
   const files = await getFiles(rootDir);
   const helmfiles = files.filter((f) => f.endsWith("helmfile.yaml"));
 
-  return await Promise.all(
+  return await Promise.all<ServiceInfo>(
     helmfiles.map(async (hf) => {
       const content = await readFile(hf, "utf-8");
       const parsed = YAML.parse(content);
@@ -64,7 +65,7 @@ export async function fetchLocalCharts(): Promise<ServiceInfo[]> {
         localChartVersion: release?.version || "unknown",
         localAppVersion: String(localAppVersion),
         state: ServiceState.NotInstalled,
-        readme,
+        readme: dedent(readme),
       };
     }),
   );
