@@ -18,38 +18,7 @@ export const HelpModal = () => (
   <Modal title="Help / Shortcuts" width="40%" minWidth={70}>
     <ShortcutEntry name="q" description="Quit application" />
     <ShortcutEntry name="?" description="Toggle this help menu" />
-    <ShortcutEntry name="tab" description="Switch focus between Sidebar and Details" />
-    <ShortcutEntry name="arrows" description="Navigate list or scroll details" />
-    <ShortcutEntry name="pgup/pgdn" description="Scroll details quickly" />
-    <ShortcutEntry name="home/end" description="Jump to top/bottom of details" />
-    <ShortcutEntry name="mouse wheel" description="Scroll focused section" />
-    <ShortcutEntry name="mouse hover" description="Change focus automatically" />
-    <ShortcutEntry name="q" description="Quit application" />
-    <ShortcutEntry name="?" description="Toggle this help menu" />
-    <ShortcutEntry name="tab" description="Switch focus between Sidebar and Details" />
-    <ShortcutEntry name="arrows" description="Navigate list or scroll details" />
-    <ShortcutEntry name="pgup/pgdn" description="Scroll details quickly" />
-    <ShortcutEntry name="home/end" description="Jump to top/bottom of details" />
-    <ShortcutEntry name="mouse wheel" description="Scroll focused section" />
-    <ShortcutEntry name="mouse hover" description="Change focus automatically" />
-    <ShortcutEntry name="q" description="Quit application" />
-    <ShortcutEntry name="?" description="Toggle this help menu" />
-    <ShortcutEntry name="tab" description="Switch focus between Sidebar and Details" />
-    <ShortcutEntry name="arrows" description="Navigate list or scroll details" />
-    <ShortcutEntry name="pgup/pgdn" description="Scroll details quickly" />
-    <ShortcutEntry name="home/end" description="Jump to top/bottom of details" />
-    <ShortcutEntry name="mouse wheel" description="Scroll focused section" />
-    <ShortcutEntry name="mouse hover" description="Change focus automatically" />
-    <ShortcutEntry name="q" description="Quit application" />
-    <ShortcutEntry name="?" description="Toggle this help menu" />
-    <ShortcutEntry name="tab" description="Switch focus between Sidebar and Details" />
-    <ShortcutEntry name="arrows" description="Navigate list or scroll details" />
-    <ShortcutEntry name="pgup/pgdn" description="Scroll details quickly" />
-    <ShortcutEntry name="home/end" description="Jump to top/bottom of details" />
-    <ShortcutEntry name="mouse wheel" description="Scroll focused section" />
-    <ShortcutEntry name="mouse hover" description="Change focus automatically" />
-    <ShortcutEntry name="q" description="Quit application" />
-    <ShortcutEntry name="?" description="Toggle this help menu" />
+    <ShortcutEntry name="h" description="Show help history" />
     <ShortcutEntry name="tab" description="Switch focus between Sidebar and Details" />
     <ShortcutEntry name="arrows" description="Navigate list or scroll details" />
     <ShortcutEntry name="pgup/pgdn" description="Scroll details quickly" />

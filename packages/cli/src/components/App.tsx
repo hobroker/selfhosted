@@ -7,6 +7,7 @@ import { ServiceDetails } from "./ServiceDetails";
 import { Footer } from "./Footer";
 import { colors } from "../constants";
 import { HelpModal } from "./HelpModal";
+import { HistoryModal } from "./HistoryModal";
 import { useServices } from "../hooks/useServices";
 import { useGlobalInput } from "../hooks/useGlobalInput";
 import { FocusState } from "../types";
@@ -17,6 +18,9 @@ export const App = () => {
   const dimensions = useDimensions();
   const onShowHelp = () => {
     setFocus("help");
+  };
+  const onShowHistory = () => {
+    setFocus("history");
   };
 
   useEffect(() => {
@@ -68,10 +72,11 @@ export const App = () => {
         />
       </Box>
       <Box height={3}>
-        <Footer onShowHelp={onShowHelp} />
+        <Footer onShowHelp={onShowHelp} onShowHistory={onShowHistory} />
       </Box>
 
       {focus === "help" && <HelpModal />}
+      {focus === "history" && <HistoryModal service={selectedService} />}
     </Box>
   );
 };

@@ -25,9 +25,18 @@ const Shortcut = ({
   );
 };
 
-export const Footer = ({ onShowHelp }: { onShowHelp?: () => void }) => (
+export const Footer = ({
+  onShowHelp,
+  onShowHistory,
+}: {
+  onShowHelp?: () => void;
+  onShowHistory?: () => void;
+}) => (
   <Box paddingX={1} borderStyle="single" borderColor={colors.primary} width="100%">
     <Shortcut name="q" description="quit" />
+    <Shortcut name="tab" description="focus" />
+    <Shortcut name="arrows" description="navigate" />
+    <Shortcut name="h" description="history" onClick={onShowHistory} />
     <Shortcut name="?" description="help" onClick={onShowHelp} />
   </Box>
 );

@@ -20,6 +20,7 @@
     "execa": "^9.6.1",
     "ink": "^6.8.0",
     "ink-scroll-view": "^0.3.6",
+    "ink-spawn": "^0.1.4",
     "ink-text-input": "^6.0.0",
     "ink-use-stdout-dimensions": "^1.0.5",
     "marked": "^9.0.3",
