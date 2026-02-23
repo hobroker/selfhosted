@@ -29,18 +29,19 @@ export const CommandOutput = ({
       setError(null);
       setOutput("");
       try {
-        const { stdout } = await execa(command, args, {
+        const { all } = await execa(command, args, {
           cwd,
           env: { ...process.env, FORCE_COLOR: "3" },
+          all: true,
         });
         // Replace tabs with spaces but preserve other characters
-        const sanitizedOutput = stdout.replace(/\t/g, "    ").trim();
+        const sanitizedOutput = (all || "").replace(/\t/g, "    ").trim();
         setOutput(sanitizedOutput);
-      } catch (e) {
-        if (e instanceof Error) {
-          setError(e.message || `Failed to run ${command}`);
+      } catch (e: any) {
+        if (e.all) {
+          setOutput(e.all.replace(/\t/g, "    ").trim());
         } else {
-          setError(`Failed to run ${command}`);
+          setError(e.message || `Failed to run ${command}`);
         }
       } finally {
         setLoading(false);
