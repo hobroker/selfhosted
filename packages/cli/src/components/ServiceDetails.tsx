@@ -11,6 +11,7 @@ import TerminalRenderer from "marked-terminal";
 import { TitledBox } from "./TitledBox";
 
 marked.setOptions({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   renderer: new (TerminalRenderer as any)(),
 });
 
