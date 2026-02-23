@@ -10,7 +10,7 @@ import { TitledBox } from "./TitledBox";
 interface Props {
   services: ServiceInfo[];
   listLimit: number;
-  onSelect: (id: string) => void;
+  onSelect: (service: ServiceInfo) => void;
   isFocused?: boolean;
   onFocus?: () => void;
 }
@@ -48,7 +48,7 @@ export const Sidebar = ({ services, listLimit, onSelect, isFocused, onFocus }: P
 
   useEffect(() => {
     if (services.length > 0) {
-      onSelect(services[selectedIndex].id);
+      onSelect(services[selectedIndex]);
     }
   }, [selectedIndex, services, onSelect]);
 

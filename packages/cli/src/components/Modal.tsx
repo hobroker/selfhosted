@@ -30,6 +30,12 @@ export const Modal = ({ title, children, height = 20, ...boxProps }: Props) => {
     if (key.pageDown) {
       scrollViewRef.current?.scrollBy(10);
     }
+    if (key.home) {
+      scrollViewRef.current?.scrollTo(0);
+    }
+    if (key.end) {
+      scrollViewRef.current?.scrollToBottom();
+    }
   });
 
   useOnWheel(ref, (event) => {

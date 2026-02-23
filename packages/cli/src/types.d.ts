@@ -24,3 +24,5 @@ export interface Dimensions {
   columns: number;
   rows: number;
 }
+
+export type FocusState = "sidebar" | "details" | "help";
