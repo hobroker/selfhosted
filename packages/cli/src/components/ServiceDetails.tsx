@@ -1,14 +1,15 @@
 import React, { useEffect, useRef } from "react";
-import { Box, Text, useInput, DOMElement } from "ink";
+import { Box, Text, DOMElement } from "ink";
 import { StatusMessage } from "@inkjs/ui";
-import { ScrollView, ScrollViewRef } from "ink-scroll-view";
-import { useOnMouseEnter, useOnWheel } from "@ink-tools/ink-mouse";
+import { ScrollView } from "ink-scroll-view";
+import { useOnMouseEnter, useOn } from "@ink-tools/ink-mouse";
 import type { ServiceInfo } from "../types";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { serviceStateLabelsMap, colors } from "../constants";
 import { marked } from "marked";
 import TerminalRenderer from "marked-terminal";
 import { TitledBox } from "./TitledBox";
+import { useScrollViewRef } from "../hooks/useScrollViewRef";
 
 marked.setOptions({
   renderer: new (TerminalRenderer as any)(),
@@ -21,49 +22,17 @@ interface Props {
 }
 
 export const ServiceDetails = ({ service, isFocused, onFocus }: Props) => {
-  const scrollViewRef = useRef<ScrollViewRef>(null);
   const ref = useRef<DOMElement>(null);
+  const scrollViewRef = useScrollViewRef({ ref, isActive: isFocused && !!service });
 
   useOnMouseEnter(ref, () => {
     onFocus?.(true);
   });
 
-  useOnWheel(ref, (event) => {
-    if (!service || !isFocused) return;
-    if (event.button === "wheel-up") {
-      scrollViewRef.current?.scrollBy(-2);
-    } else if (event.button === "wheel-down") {
-      scrollViewRef.current?.scrollBy(2);
-    }
-  });
-
   // Reset scroll when service changes
   useEffect(() => {
     scrollViewRef.current?.scrollTo(0);
-  }, [service?.id]);
-
-  useInput((_, key) => {
-    if (!isFocused || !service) return;
-
-    if (key.upArrow) {
-      scrollViewRef.current?.scrollBy(-1);
-    }
-    if (key.downArrow) {
-      scrollViewRef.current?.scrollBy(1);
-    }
-    if (key.pageUp) {
-      scrollViewRef.current?.scrollBy(-10);
-    }
-    if (key.pageDown) {
-      scrollViewRef.current?.scrollBy(10);
-    }
-    if (key.home) {
-      scrollViewRef.current?.scrollTo(0);
-    }
-    if (key.end) {
-      scrollViewRef.current?.scrollToBottom();
-    }
-  });
+  }, [scrollViewRef, service]);
 
   return (
     <TitledBox
@@ -125,8 +94,8 @@ export const ServiceDetails = ({ service, isFocused, onFocus }: Props) => {
                       }
                     >
                       <Text color={colors.text}>
-                        App: {service.localAppVersion} (Local) vs {service.installedAppVersion || "N/A"}{" "}
-                        (Installed)
+                        App: {service.localAppVersion} (Local) vs{" "}
+                        {service.installedAppVersion || "N/A"} (Installed)
                       </Text>
                     </StatusMessage>
                   </Box>

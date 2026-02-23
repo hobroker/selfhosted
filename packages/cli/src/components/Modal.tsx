@@ -1,11 +1,11 @@
-import { ReactNode, useRef, useState } from "react";
-import { Box, BoxProps, type DOMElement, useInput } from "ink";
-import { ScrollView, ScrollViewRef } from "ink-scroll-view";
+import { ReactNode, useRef } from "react";
+import { Box, BoxProps, type DOMElement } from "ink";
+import { ScrollView } from "ink-scroll-view";
 import { colors } from "../constants";
 import { TitledBox } from "./TitledBox";
 import { useDimensions } from "../hooks/useDimensions";
-import { useOnWheel } from "@ink-tools/ink-mouse";
 import { ErrorBoundary } from "./ErrorBoundary";
+import { useScrollViewRef } from "../hooks/useScrollViewRef";
 
 interface Props extends BoxProps {
   title: string;
@@ -15,39 +15,8 @@ interface Props extends BoxProps {
 
 export const Modal = ({ title, children, height, ...boxProps }: Props) => {
   const dimensions = useDimensions();
-  const scrollViewRef = useRef<ScrollViewRef>(null);
   const ref = useRef<DOMElement>(null);
-  const [, setScrollOffset] = useState<number>();
-
-  useInput((_, key) => {
-    if (key.upArrow) {
-      scrollViewRef.current?.scrollBy(-1);
-    }
-    if (key.downArrow) {
-      scrollViewRef.current?.scrollBy(1);
-    }
-    if (key.pageUp) {
-      scrollViewRef.current?.scrollBy(-10);
-    }
-    if (key.pageDown) {
-      scrollViewRef.current?.scrollBy(10);
-    }
-    if (key.home) {
-      scrollViewRef.current?.scrollTo(0);
-    }
-    if (key.end) {
-      scrollViewRef.current?.scrollToBottom();
-    }
-    setScrollOffset(scrollViewRef.current?.getScrollOffset());
-  });
-
-  useOnWheel(ref, (event) => {
-    if (event.button === "wheel-up") {
-      scrollViewRef.current?.scrollBy(-2);
-    } else if (event.button === "wheel-down") {
-      scrollViewRef.current?.scrollBy(2);
-    }
-  });
+  const scrollViewRef = useScrollViewRef({ ref });
 
   return (
     <Box
