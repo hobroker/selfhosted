@@ -18,6 +18,7 @@ export const HelpModal = () => (
     <ShortcutEntry name="q" description="Quit application" />
     <ShortcutEntry name="?" description="Toggle this help menu" />
     <ShortcutEntry name="h" description="Show help history" />
+    <ShortcutEntry name="d" description="Show helmfile diff" />
     <ShortcutEntry name="tab" description="Switch focus between Sidebar and Details" />
     <ShortcutEntry name="arrows" description="Navigate list or scroll details" />
     <ShortcutEntry name="pgup/pgdn" description="Scroll details quickly" />

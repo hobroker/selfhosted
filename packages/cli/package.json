@@ -4,7 +4,6 @@
   "type": "module",
   "bin": "./dist/index.js",
   "scripts": {
-    "dev": "tsx src/index.tsx",
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "cli": "tsx src/index.tsx",
@@ -15,6 +14,8 @@
   "dependencies": {
     "@ink-tools/ink-mouse": "^2.1.0",
     "@inkjs/ui": "^2.0.0",
+    "ansi-regex": "^6.2.2",
+    "ansi-styles": "^4.3.0",
     "chalk": "^5.6.2",
     "dedent": "^1.7.1",
     "execa": "^9.6.1",

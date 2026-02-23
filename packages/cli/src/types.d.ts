@@ -25,4 +25,4 @@ export interface Dimensions {
   rows: number;
 }
 
-export type FocusState = "sidebar" | "details" | "help" | "history";
+export type FocusState = "sidebar" | "details" | "help" | "history" | "diff";

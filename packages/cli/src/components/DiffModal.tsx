@@ -1,3 +1,4 @@
+import React from "react";
 import { Text } from "ink";
 import { Modal } from "./Modal";
 import { colors } from "../constants";
@@ -8,22 +9,23 @@ interface Props {
   service: ServiceInfo | null | undefined;
 }
 
-export const HistoryModal = ({ service }: Props) => {
+export const DiffModal = ({ service }: Props) => {
   if (!service) {
     return (
-      <Modal title="Helm History" width="40%" minWidth={70}>
+      <Modal title="Helmfile Diff" width="40%" minWidth={70}>
         <Text color={colors.error}>No service selected</Text>
       </Modal>
     );
   }
 
   return (
-    <Modal title={`Helm History: ${service.name}`} width="80%" height="80%">
+    <Modal title={`Helmfile Diff: ${service.name}`} width="80%" height="80%">
       <CommandOutput
-        command="helm"
-        args={["history", service.name, "-n", "self"]}
-        loadingText="Fetching history..."
-        emptyText="No history found"
+        command="helmfile"
+        args={["diff", "--diff-args", "--color"]}
+        cwd={service.path}
+        loadingText="Generating diff..."
+        emptyText="No changes found"
       />
     </Modal>
   );

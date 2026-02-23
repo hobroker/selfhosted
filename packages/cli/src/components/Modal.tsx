@@ -9,7 +9,7 @@ import { useOnWheel } from "@ink-tools/ink-mouse";
 interface Props extends BoxProps {
   title: string;
   children: ReactNode;
-  height?: number;
+  height?: number | string;
 }
 
 export const Modal = ({ title, children, height = 20, ...boxProps }: Props) => {

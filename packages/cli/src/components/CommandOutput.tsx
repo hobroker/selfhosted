@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Text } from "ink";
 import { execa } from "execa";
 import { colors } from "../constants";
+import { AnsiText } from "./AnsiText";
 
 interface Props {
   command: string;
   args: string[];
+  cwd?: string;
   loadingText?: string;
   emptyText?: string;
 }
@@ -13,6 +15,7 @@ interface Props {
 export const CommandOutput = ({
   command,
   args,
+  cwd,
   loadingText = "Running command...",
   emptyText = "No output found",
 }: Props) => {
@@ -26,14 +29,12 @@ export const CommandOutput = ({
       setError(null);
       setOutput("");
       try {
-        const { stdout } = await execa(command, args);
-        // Replace tabs with spaces and trim each line
-        const sanitizedOutput = stdout
-          .replace(/\t/g, "    ")
-          .split("\n")
-          .map((line) => line.trimEnd())
-          .join("\n")
-          .trim();
+        const { stdout } = await execa(command, args, {
+          cwd,
+          env: { ...process.env, FORCE_COLOR: "3" },
+        });
+        // Replace tabs with spaces but preserve other characters
+        const sanitizedOutput = stdout.replace(/\t/g, "    ").trim();
         setOutput(sanitizedOutput);
       } catch (e) {
         if (e instanceof Error) {
@@ -47,28 +48,34 @@ export const CommandOutput = ({
     };
 
     runCommand();
-  }, [args, command]);
+  }, [args, command, cwd]);
 
   if (loading) {
     return <Text color={colors.warning}>{loadingText}</Text>;
   }
 
   if (error) {
-    return <Text color={colors.error}>{error}</Text>;
+    return (
+      <Box flexDirection="column">
+        <Text color={colors.error}>Error executing command:</Text>
+        <AnsiText>{error}</AnsiText>
+      </Box>
+    );
   }
 
-  const lines = output.split("\n").map((line) => line.trimEnd());
-
-  if (lines.length === 0 || (lines.length === 1 && lines[0] === "")) {
+  if (!output) {
     return <Text color={colors.dim}>{emptyText}</Text>;
   }
+
+  // Split into lines to render within Box/Ansi properly
+  const lines = output.split("\n").map((line) => line.trimEnd());
 
   return (
     <Box flexDirection="column">
       {lines.map((line, index) => (
-        <Text key={index} color={colors.text} wrap="truncate-end">
-          {line}
-        </Text>
+        <Box key={index}>
+          <AnsiText>{line}</AnsiText>
+        </Box>
       ))}
     </Box>
   );
