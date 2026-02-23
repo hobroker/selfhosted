@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Box, Text, useInput, DOMElement } from "ink";
 import { useOnMouseEnter, useOnWheel } from "@ink-tools/ink-mouse";
 import type { ServiceInfo } from "../types";
 import { ServiceItem } from "./ServiceItem/index";
 import { ErrorBoundary } from "./ErrorBoundary";
-
 import { colors } from "../constants";
+import { TitledBox } from "./TitledBox";
 
 interface Props {
   services: ServiceInfo[];
@@ -75,42 +75,33 @@ export const Sidebar = ({ services, listLimit, onSelect, isFocused, onFocus }: P
     }
   });
 
-  if (services.length === 0) {
-    return (
-      <Box
-        ref={ref}
-        width="20%"
-        minWidth={30}
-        borderStyle="single"
-        borderColor={isFocused ? colors.borderActive : colors.border}
-        padding={1}
-      >
-        <Text italic color={colors.dim}>
-          No services found
-        </Text>
-      </Box>
-    );
-  }
-
   const visibleServices = services.slice(scrollOffset, scrollOffset + listLimit);
 
   return (
-    <Box
+    <TitledBox
       ref={ref}
+      title="Services"
+      isFocused={isFocused}
       width="20%"
       minWidth={30}
       flexDirection="column"
-      borderStyle="single"
-      borderColor={isFocused ? colors.borderActive : colors.border}
     >
       <ErrorBoundary>
-        {visibleServices.map((service, index) => {
-          const actualIndex = index + scrollOffset;
-          const isSelected = actualIndex === selectedIndex;
+        {services.length === 0 ? (
+          <Box padding={1}>
+            <Text italic color={colors.dim}>
+              No services found
+            </Text>
+          </Box>
+        ) : (
+          visibleServices.map((service, index) => {
+            const actualIndex = index + scrollOffset;
+            const isSelected = actualIndex === selectedIndex;
 
-          return <ServiceItem key={service.id} service={service} isSelected={isSelected} />;
-        })}
+            return <ServiceItem key={service.id} service={service} isSelected={isSelected} />;
+          })
+        )}
       </ErrorBoundary>
-    </Box>
+    </TitledBox>
   );
 };

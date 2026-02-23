@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Box, Text, useInput, DOMElement } from "ink";
 import { StatusMessage } from "@inkjs/ui";
 import { ScrollView, ScrollViewRef } from "ink-scroll-view";
@@ -8,6 +8,7 @@ import { ErrorBoundary } from "./ErrorBoundary";
 import { serviceStateLabelsMap, colors } from "../constants";
 import { marked } from "marked";
 import TerminalRenderer from "marked-terminal";
+import { TitledBox } from "./TitledBox";
 
 marked.setOptions({
   renderer: new (TerminalRenderer as any)(),
@@ -65,13 +66,13 @@ export const ServiceDetails = ({ service, isFocused, onFocus }: Props) => {
   });
 
   return (
-    <Box
+    <TitledBox
       ref={ref}
+      title="Details"
+      isFocused={isFocused}
       flexGrow={1}
       flexDirection="column"
       paddingX={2}
-      borderStyle="single"
-      borderColor={isFocused ? colors.borderActive : colors.border}
     >
       <ErrorBoundary>
         {service ? (
@@ -159,6 +160,6 @@ export const ServiceDetails = ({ service, isFocused, onFocus }: Props) => {
           </Text>
         )}
       </ErrorBoundary>
-    </Box>
+    </TitledBox>
   );
 };

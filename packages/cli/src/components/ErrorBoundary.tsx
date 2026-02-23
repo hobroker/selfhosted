@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode } from "react";
+import  { Component, ErrorInfo, ReactNode } from "react";
 import { Box, Text } from "ink";
 import { colors } from "../constants";
 
