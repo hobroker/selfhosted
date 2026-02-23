@@ -12,7 +12,7 @@ interface Props extends BoxProps {
   height?: number | string;
 }
 
-export const Modal = ({ title, children, height = 20, ...boxProps }: Props) => {
+export const Modal = ({ title, children, height, ...boxProps }: Props) => {
   const dimensions = useDimensions();
   const scrollViewRef = useRef<ScrollViewRef>(null);
   const ref = useRef<DOMElement>(null);

@@ -11,11 +11,19 @@ export const useGlobalInput = ({ focus, setFocus }: Props) => {
   const { exit } = useApp();
 
   useInput((input, key) => {
-    if (focus === "help" || focus === "history" || focus === "diff") {
+    if (
+      focus === "help" ||
+      focus === "history" ||
+      focus === "diff" ||
+      focus === "apply-confirm" ||
+      focus === "apply"
+    ) {
       if (
         (focus === "help" && input === "?") ||
         (focus === "history" && (input === "h" || input === "H")) ||
         (focus === "diff" && (input === "d" || input === "D")) ||
+        (focus === "apply-confirm" && (input === "a" || input === "A")) ||
+        (focus === "apply" && (input === "a" || input === "A")) ||
         key.escape ||
         input === "q"
       ) {
@@ -38,6 +46,10 @@ export const useGlobalInput = ({ focus, setFocus }: Props) => {
 
     if (input === "d" || input === "D") {
       setFocus("diff");
+    }
+
+    if (input === "a" || input === "A") {
+      setFocus("apply-confirm");
     }
 
     if (key.tab || key.rightArrow || key.leftArrow) {

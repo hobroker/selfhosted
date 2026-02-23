@@ -9,23 +9,23 @@ interface Props {
   service: ServiceInfo | null | undefined;
 }
 
-export const DiffModal = ({ service }: Props) => {
+export const ApplyModal = ({ service }: Props) => {
   if (!service) {
     return (
-      <Modal title="Helmfile Diff" width="40%" minWidth={70}>
+      <Modal title="Helmfile Apply" width="40%" minWidth={70}>
         <Text color={colors.error}>No service selected</Text>
       </Modal>
     );
   }
 
   return (
-    <Modal title={`Helmfile Diff: ${service.name}`} width="80%" height="80%">
+    <Modal title={`Helmfile Apply: ${service.name}`} width="95%" height={30}>
       <CommandOutput
         command="helmfile"
-        args={["--color", "diff"]}
+        args={["--color", "apply"]}
         cwd={service.path}
-        loadingText="Generating diff..."
-        emptyText="No changes found"
+        loadingText="Applying changes..."
+        emptyText="No output from apply"
       />
     </Modal>
   );

@@ -9,6 +9,8 @@ import { colors } from "../constants";
 import { HelpModal } from "./HelpModal";
 import { HistoryModal } from "./HistoryModal";
 import { DiffModal } from "./DiffModal";
+import { ApplyConfirmModal } from "./ApplyConfirmModal";
+import { ApplyModal } from "./ApplyModal";
 import { useServices } from "../hooks/useServices";
 import { useGlobalInput } from "../hooks/useGlobalInput";
 import { FocusState } from "../types";
@@ -25,6 +27,9 @@ export const App = () => {
   };
   const onShowDiff = () => {
     setFocus("diff");
+  };
+  const onShowApply = () => {
+    setFocus("apply-confirm");
   };
 
   useEffect(() => {
@@ -76,12 +81,25 @@ export const App = () => {
         />
       </Box>
       <Box height={3}>
-        <Footer onShowHelp={onShowHelp} onShowHistory={onShowHistory} onShowDiff={onShowDiff} />
+        <Footer
+          onShowHelp={onShowHelp}
+          onShowHistory={onShowHistory}
+          onShowDiff={onShowDiff}
+          onShowApply={onShowApply}
+        />
       </Box>
 
       {focus === "help" && <HelpModal />}
       {focus === "history" && <HistoryModal service={selectedService} />}
       {focus === "diff" && <DiffModal service={selectedService} />}
+      {focus === "apply-confirm" && (
+        <ApplyConfirmModal
+          service={selectedService}
+          onConfirm={() => setFocus("apply")}
+          onCancel={() => setFocus("sidebar")}
+        />
+      )}
+      {focus === "apply" && <ApplyModal service={selectedService} />}
     </Box>
   );
 };

@@ -29,10 +29,12 @@ export const Footer = ({
   onShowHelp,
   onShowHistory,
   onShowDiff,
+  onShowApply,
 }: {
   onShowHelp?: () => void;
   onShowHistory?: () => void;
   onShowDiff?: () => void;
+  onShowApply?: () => void;
 }) => (
   <Box paddingX={1} borderStyle="single" borderColor={colors.primary} width="100%">
     <Shortcut name="q" description="quit" />
@@ -40,6 +42,7 @@ export const Footer = ({
     <Shortcut name="arrows" description="navigate" />
     <Shortcut name="h" description="history" onClick={onShowHistory} />
     <Shortcut name="d" description="diff" onClick={onShowDiff} />
+    <Shortcut name="a" description="apply" onClick={onShowApply} />
     <Shortcut name="?" description="help" onClick={onShowHelp} />
   </Box>
 );
