@@ -31,4 +31,5 @@ export const colors = {
   success: "#22c55e", // Green 500
   border: "#334155", // Slate 700
   borderActive: "#4ade80", // Green 400
+  background: "#000000", // Black
 };

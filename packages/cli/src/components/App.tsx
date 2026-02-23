@@ -8,12 +8,14 @@ import { ServiceDetails } from "./ServiceDetails";
 import { fetchAllData } from "../services/data.service";
 import { Footer } from "./Footer";
 import { colors } from "../constants";
+import { HelpModal } from "./HelpModal";
 
 export const App = () => {
   const [services, setServices] = useState<ServiceInfo[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [focus, setFocus] = useState<"sidebar" | "details">("sidebar");
+  const [showHelp, setShowHelp] = useState(false);
   const { exit } = useApp();
   const dimensions = useDimensions();
 
@@ -47,8 +49,17 @@ export const App = () => {
   }, []);
 
   useInput((input, key) => {
+    if (showHelp) {
+      setShowHelp(false);
+      return;
+    }
+
     if (input === "q") {
       exit();
+    }
+
+    if (input === "?") {
+      setShowHelp(true);
     }
 
     if (key.tab || key.rightArrow || key.leftArrow) {
@@ -94,8 +105,10 @@ export const App = () => {
         />
       </Box>
       <Box height={3}>
-        <Footer />
+        <Footer onShowHelp={() => setShowHelp(true)} />
       </Box>
+
+      {showHelp && <HelpModal />}
     </Box>
   );
 };
