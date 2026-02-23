@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, forwardRef } from "react";
+import { PropsWithChildren, forwardRef } from "react";
 import { Box, Text, BoxProps, DOMElement } from "ink";
 import { colors } from "../constants";
 

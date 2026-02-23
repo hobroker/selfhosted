@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { Box, Text, DOMElement } from "ink";
 import { useOnClick } from "@ink-tools/ink-mouse";
 import { colors } from "../constants";
