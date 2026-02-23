@@ -1,4 +1,4 @@
-import { PropsWithChildren, forwardRef } from "react";
+import React, { PropsWithChildren, forwardRef } from "react";
 import { Box, Text, BoxProps, DOMElement } from "ink";
 import { colors } from "../constants";
 
@@ -17,8 +17,12 @@ export const TitledBox = forwardRef<DOMElement, Props>(
         borderColor={isFocused ? colors.borderActive : colors.border}
       >
         <Box position="absolute" marginTop={-1} marginLeft={1} paddingX={1}>
-          <Text color={isFocused ? colors.primary : colors.dim} bold={isFocused}>
-            {` ${title} `}
+          <Text
+            color={isFocused ? colors.primary : colors.dim}
+            bold={isFocused}
+            backgroundColor={colors.background}
+          >
+            {` ${title.toUpperCase()} `}
           </Text>
         </Box>
         {children}

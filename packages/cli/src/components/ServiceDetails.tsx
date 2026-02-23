@@ -29,7 +29,7 @@ export const ServiceDetails = ({ service, isFocused, onFocus }: Props) => {
   });
 
   useOnWheel(ref, (event) => {
-    if (!service) return;
+    if (!service || !isFocused) return;
     if (event.button === "wheel-up") {
       scrollViewRef.current?.scrollBy(-2);
     } else if (event.button === "wheel-down") {
@@ -125,8 +125,8 @@ export const ServiceDetails = ({ service, isFocused, onFocus }: Props) => {
                       }
                     >
                       <Text color={colors.text}>
-                        App: {service.localAppVersion} (Local) vs {service.installedAppVersion || "N/A"}{" "}
-                        (Installed)
+                        App: {service.localAppVersion} (Local) vs{" "}
+                        {service.installedAppVersion || "N/A"} (Installed)
                       </Text>
                     </StatusMessage>
                   </Box>

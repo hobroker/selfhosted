@@ -14,10 +14,12 @@ export const App = () => {
   const [services, setServices] = useState<ServiceInfo[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [focus, setFocus] = useState<"sidebar" | "details">("sidebar");
-  const [showHelp, setShowHelp] = useState(false);
+  const [focus, setFocus] = useState<"sidebar" | "details" | "help">("sidebar");
   const { exit } = useApp();
   const dimensions = useDimensions();
+  const onShowHelp = () => {
+    setFocus("help");
+  };
 
   useEffect(() => {
     // Enter alternate buffer (fullscreen)
@@ -49,8 +51,10 @@ export const App = () => {
   }, []);
 
   useInput((input, key) => {
-    if (showHelp) {
-      setShowHelp(false);
+    if (focus === "help") {
+      if (input === "?" || key.escape || input === "q") {
+        setFocus("sidebar");
+      }
       return;
     }
 
@@ -59,7 +63,7 @@ export const App = () => {
     }
 
     if (input === "?") {
-      setShowHelp(true);
+      setFocus("help");
     }
 
     if (key.tab || key.rightArrow || key.leftArrow) {
@@ -105,10 +109,10 @@ export const App = () => {
         />
       </Box>
       <Box height={3}>
-        <Footer onShowHelp={() => setShowHelp(true)} />
+        <Footer onShowHelp={onShowHelp} />
       </Box>
 
-      {showHelp && <HelpModal />}
+      {focus === "help" && <HelpModal />}
     </Box>
   );
 };

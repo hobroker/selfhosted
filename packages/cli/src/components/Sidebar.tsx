@@ -25,7 +25,7 @@ export const Sidebar = ({ services, listLimit, onSelect, isFocused, onFocus }: P
   });
 
   useOnWheel(ref, (event) => {
-    if (services.length === 0) return;
+    if (services.length === 0 || !isFocused) return;
 
     if (event.button === "wheel-up") {
       setSelectedIndex((prev) => {

@@ -1,3 +1,4 @@
+import React from "react";
 import { Box, Text } from "ink";
 import { colors } from "../constants";
 import { Modal } from "./Modal";
@@ -23,13 +24,49 @@ export const HelpModal = () => (
     <ShortcutEntry name="home/end" description="Jump to top/bottom of details" />
     <ShortcutEntry name="mouse wheel" description="Scroll focused section" />
     <ShortcutEntry name="mouse hover" description="Change focus automatically" />
+    <ShortcutEntry name="q" description="Quit application" />
+    <ShortcutEntry name="?" description="Toggle this help menu" />
+    <ShortcutEntry name="tab" description="Switch focus between Sidebar and Details" />
+    <ShortcutEntry name="arrows" description="Navigate list or scroll details" />
+    <ShortcutEntry name="pgup/pgdn" description="Scroll details quickly" />
+    <ShortcutEntry name="home/end" description="Jump to top/bottom of details" />
+    <ShortcutEntry name="mouse wheel" description="Scroll focused section" />
+    <ShortcutEntry name="mouse hover" description="Change focus automatically" />
+    <ShortcutEntry name="q" description="Quit application" />
+    <ShortcutEntry name="?" description="Toggle this help menu" />
+    <ShortcutEntry name="tab" description="Switch focus between Sidebar and Details" />
+    <ShortcutEntry name="arrows" description="Navigate list or scroll details" />
+    <ShortcutEntry name="pgup/pgdn" description="Scroll details quickly" />
+    <ShortcutEntry name="home/end" description="Jump to top/bottom of details" />
+    <ShortcutEntry name="mouse wheel" description="Scroll focused section" />
+    <ShortcutEntry name="mouse hover" description="Change focus automatically" />
+    <ShortcutEntry name="q" description="Quit application" />
+    <ShortcutEntry name="?" description="Toggle this help menu" />
+    <ShortcutEntry name="tab" description="Switch focus between Sidebar and Details" />
+    <ShortcutEntry name="arrows" description="Navigate list or scroll details" />
+    <ShortcutEntry name="pgup/pgdn" description="Scroll details quickly" />
+    <ShortcutEntry name="home/end" description="Jump to top/bottom of details" />
+    <ShortcutEntry name="mouse wheel" description="Scroll focused section" />
+    <ShortcutEntry name="mouse hover" description="Change focus automatically" />
+    <ShortcutEntry name="q" description="Quit application" />
+    <ShortcutEntry name="?" description="Toggle this help menu" />
+    <ShortcutEntry name="tab" description="Switch focus between Sidebar and Details" />
+    <ShortcutEntry name="arrows" description="Navigate list or scroll details" />
+    <ShortcutEntry name="pgup/pgdn" description="Scroll details quickly" />
+    <ShortcutEntry name="home/end" description="Jump to top/bottom of details" />
+    <ShortcutEntry name="mouse wheel" description="Scroll focused section" />
+    <ShortcutEntry name="mouse hover" description="Change focus automatically" />
 
     <Box marginTop={1} alignSelf="center">
       <Text color={colors.dim}>Press </Text>
       <Text color={colors.primary} bold>
         ?
       </Text>
-      <Text color={colors.dim}> or any key to close</Text>
+      <Text color={colors.dim}> or </Text>
+      <Text color={colors.primary} bold>
+        Esc
+      </Text>
+      <Text color={colors.dim}> to close</Text>
     </Box>
   </Modal>
 );
