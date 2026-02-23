@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Box, Text, useInput, DOMElement } from "ink";
 import { StatusMessage } from "@inkjs/ui";
 import { ScrollView, ScrollViewRef } from "ink-scroll-view";
@@ -11,13 +11,13 @@ import TerminalRenderer from "marked-terminal";
 import { TitledBox } from "./TitledBox";
 
 marked.setOptions({
-  renderer: new TerminalRenderer(),
+  renderer: new (TerminalRenderer as any)(),
 });
 
 interface Props {
   service?: ServiceInfo;
   isFocused?: boolean;
-  onFocus?: () => void;
+  onFocus?: (isMouseAction?: boolean) => void;
 }
 
 export const ServiceDetails = ({ service, isFocused, onFocus }: Props) => {
@@ -25,7 +25,7 @@ export const ServiceDetails = ({ service, isFocused, onFocus }: Props) => {
   const ref = useRef<DOMElement>(null);
 
   useOnMouseEnter(ref, () => {
-    onFocus?.();
+    onFocus?.(true);
   });
 
   useOnWheel(ref, (event) => {
@@ -125,8 +125,8 @@ export const ServiceDetails = ({ service, isFocused, onFocus }: Props) => {
                       }
                     >
                       <Text color={colors.text}>
-                        App: {service.localAppVersion} (Local) vs{" "}
-                        {service.installedAppVersion || "N/A"} (Installed)
+                        App: {service.localAppVersion} (Local) vs {service.installedAppVersion || "N/A"}{" "}
+                        (Installed)
                       </Text>
                     </StatusMessage>
                   </Box>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Box, Text } from "ink";
 import { useDimensions } from "../hooks/useDimensions";
 import { Header } from "./Header";
@@ -13,24 +13,13 @@ import { ApplyConfirmModal } from "./ApplyConfirmModal";
 import { ApplyModal } from "./ApplyModal";
 import { useServices } from "../hooks/useServices";
 import { useGlobalInput } from "../hooks/useGlobalInput";
-import { FocusState } from "../types";
+import { useFocusManager } from "../hooks/useFocusManager";
 
 export const App = () => {
   const { services, loading, selectedService, selectService } = useServices();
-  const [focus, setFocus] = useState<FocusState>("sidebar");
+  const focusManager = useFocusManager();
+  const { focus, setFocus, closeModals } = focusManager;
   const dimensions = useDimensions();
-  const onShowHelp = () => {
-    setFocus("help");
-  };
-  const onShowHistory = () => {
-    setFocus("history");
-  };
-  const onShowDiff = () => {
-    setFocus("diff");
-  };
-  const onShowApply = () => {
-    setFocus("apply-confirm");
-  };
 
   useEffect(() => {
     // Enter alternate buffer (fullscreen)
@@ -42,7 +31,7 @@ export const App = () => {
     };
   }, []);
 
-  useGlobalInput({ focus, setFocus });
+  useGlobalInput({ focusManager });
 
   if (loading) {
     return (
@@ -72,20 +61,20 @@ export const App = () => {
           listLimit={listLimit}
           onSelect={selectService}
           isFocused={focus === "sidebar"}
-          onFocus={() => setFocus("sidebar")}
+          onFocus={() => setFocus("sidebar", true)}
         />
         <ServiceDetails
           service={selectedService}
           isFocused={focus === "details"}
-          onFocus={() => setFocus("details")}
+          onFocus={() => setFocus("details", true)}
         />
       </Box>
       <Box height={3}>
         <Footer
-          onShowHelp={onShowHelp}
-          onShowHistory={onShowHistory}
-          onShowDiff={onShowDiff}
-          onShowApply={onShowApply}
+          onShowHelp={() => setFocus("help")}
+          onShowHistory={() => setFocus("history")}
+          onShowDiff={() => setFocus("diff")}
+          onShowApply={() => setFocus("apply-confirm")}
         />
       </Box>
 
@@ -96,7 +85,7 @@ export const App = () => {
         <ApplyConfirmModal
           service={selectedService}
           onConfirm={() => setFocus("apply")}
-          onCancel={() => setFocus("sidebar")}
+          onCancel={closeModals}
         />
       )}
       {focus === "apply" && <ApplyModal service={selectedService} />}

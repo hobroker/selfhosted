@@ -1,23 +1,16 @@
 import { useApp, useInput } from "ink";
-import { FocusState } from "../types";
-import { Dispatch, SetStateAction } from "react";
+import { FocusManager } from "./useFocusManager";
 
 interface Props {
-  focus: FocusState;
-  setFocus: Dispatch<SetStateAction<FocusState>>;
+  focusManager: FocusManager;
 }
 
-export const useGlobalInput = ({ focus, setFocus }: Props) => {
+export const useGlobalInput = ({ focusManager }: Props) => {
   const { exit } = useApp();
+  const { focus, setFocus, isModalOpen } = focusManager;
 
   useInput((input, key) => {
-    if (
-      focus === "help" ||
-      focus === "history" ||
-      focus === "diff" ||
-      focus === "apply-confirm" ||
-      focus === "apply"
-    ) {
+    if (isModalOpen) {
       if (
         (focus === "help" && input === "?") ||
         (focus === "history" && (input === "h" || input === "H")) ||

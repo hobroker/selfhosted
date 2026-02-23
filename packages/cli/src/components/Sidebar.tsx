@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, Text, useInput, DOMElement } from "ink";
 import { useOnMouseEnter, useOnWheel } from "@ink-tools/ink-mouse";
 import type { ServiceInfo } from "../types";
@@ -12,7 +12,7 @@ interface Props {
   listLimit: number;
   onSelect: (service: ServiceInfo) => void;
   isFocused?: boolean;
-  onFocus?: () => void;
+  onFocus?: (isMouseAction?: boolean) => void;
 }
 
 export const Sidebar = ({ services, listLimit, onSelect, isFocused, onFocus }: Props) => {
@@ -21,7 +21,7 @@ export const Sidebar = ({ services, listLimit, onSelect, isFocused, onFocus }: P
   const ref = useRef<DOMElement>(null);
 
   useOnMouseEnter(ref, () => {
-    onFocus?.();
+    onFocus?.(true);
   });
 
   useOnWheel(ref, (event) => {
