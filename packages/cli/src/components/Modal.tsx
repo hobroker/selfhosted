@@ -1,10 +1,11 @@
-import { ReactNode, useRef } from "react";
+import { ReactNode, useRef, useState } from "react";
 import { Box, BoxProps, type DOMElement, useInput } from "ink";
 import { ScrollView, ScrollViewRef } from "ink-scroll-view";
 import { colors } from "../constants";
 import { TitledBox } from "./TitledBox";
 import { useDimensions } from "../hooks/useDimensions";
 import { useOnWheel } from "@ink-tools/ink-mouse";
+import { ErrorBoundary } from "./ErrorBoundary";
 
 interface Props extends BoxProps {
   title: string;
@@ -16,6 +17,7 @@ export const Modal = ({ title, children, height, ...boxProps }: Props) => {
   const dimensions = useDimensions();
   const scrollViewRef = useRef<ScrollViewRef>(null);
   const ref = useRef<DOMElement>(null);
+  const [, setScrollOffset] = useState<number>();
 
   useInput((_, key) => {
     if (key.upArrow) {
@@ -36,6 +38,7 @@ export const Modal = ({ title, children, height, ...boxProps }: Props) => {
     if (key.end) {
       scrollViewRef.current?.scrollToBottom();
     }
+    setScrollOffset(scrollViewRef.current?.getScrollOffset());
   });
 
   useOnWheel(ref, (event) => {
@@ -62,11 +65,13 @@ export const Modal = ({ title, children, height, ...boxProps }: Props) => {
         ref={ref}
         {...boxProps}
       >
-        <ScrollView ref={scrollViewRef} flexGrow={1}>
-          <Box paddingX={2} paddingY={1} flexDirection="column">
-            {children}
-          </Box>
-        </ScrollView>
+        <ErrorBoundary>
+          <ScrollView ref={scrollViewRef} flexGrow={1}>
+            <Box paddingX={2} paddingY={1} flexDirection="column">
+              {children}
+            </Box>
+          </ScrollView>
+        </ErrorBoundary>
       </TitledBox>
     </Box>
   );
