@@ -1,4 +1,4 @@
-import { Action, Section } from "./types";
+import { Action } from "./types";
 
 export enum ServiceState {
   Installed = "installed",

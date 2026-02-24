@@ -5,8 +5,10 @@ import { useOnMouseEnter, useOnMouseMove, useOnWheel } from "@ink-tools/ink-mous
 import { ScrollBar } from "@byteland/ink-scroll-bar";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { colors } from "../../constants";
+import { FocusState } from "../../types";
 
 interface Props extends BoxProps, PropsWithChildren {
+  id: FocusState;
   ref: RefObject<DOMElement | null>;
   scrollViewRef?: RefObject<ScrollViewRef | null>;
   isFocused?: boolean;
@@ -23,7 +25,11 @@ export const ScrollContainer = ({
   onFocus,
   ...props
 }: Props) => {
-  const [scrollInfo, setScrollInfo] = useState({ offset: 0, contentHeight: 0, viewportHeight: 0 });
+  const [scrollInfo, setScrollInfo] = useState({
+    scrollOffset: 0,
+    contentHeight: 0,
+    viewportHeight: 0,
+  });
   const scrollViewRef = useRef<ScrollViewRef>(null);
 
   useEffect(() => {
@@ -84,10 +90,8 @@ export const ScrollContainer = ({
         <ScrollView
           ref={scrollViewRef}
           flexGrow={1}
-          onScroll={(offset) => setScrollInfo((s) => ({ ...s, offset }))}
-          onContentHeightChange={(height) =>
-            setScrollInfo((s) => ({ ...s, contentHeight: height }))
-          }
+          onScroll={(scrollOffset) => setScrollInfo((s) => ({ ...s, scrollOffset }))}
+          onContentHeightChange={(contentHeight) => setScrollInfo((s) => ({ ...s, contentHeight }))}
           onViewportSizeChange={(size) =>
             setScrollInfo((s) => ({ ...s, viewportHeight: size.height }))
           }
@@ -104,7 +108,7 @@ export const ScrollContainer = ({
           color={isFocused ? colors.text : colors.dim}
           contentHeight={scrollInfo.contentHeight}
           viewportHeight={scrollInfo.viewportHeight}
-          scrollOffset={scrollInfo.offset}
+          scrollOffset={scrollInfo.scrollOffset}
         />
       </Box>
     </ErrorBoundary>

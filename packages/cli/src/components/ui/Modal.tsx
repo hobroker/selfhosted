@@ -8,13 +8,13 @@ import { FocusState } from "../../types";
 import { ScrollContainer } from "./ScrollContainer";
 
 interface Props extends BoxProps {
-  id: FocusState
+  id: FocusState;
   title: string;
   children: ReactNode;
   height?: number | string;
 }
 
-export const Modal = ({ title, children, height, ...boxProps }: Props) => {
+export const Modal = ({ title, children, height, id, ...boxProps }: Props) => {
   const dimensions = useDimensions();
   const ref = useRef<DOMElement>(null);
 
@@ -35,7 +35,7 @@ export const Modal = ({ title, children, height, ...boxProps }: Props) => {
         {...boxProps}
       >
         <ErrorBoundary>
-          <ScrollContainer ref={ref}>
+          <ScrollContainer ref={ref} id={id}>
             <Box paddingX={2} paddingY={1} flexDirection="column">
               {children}
             </Box>

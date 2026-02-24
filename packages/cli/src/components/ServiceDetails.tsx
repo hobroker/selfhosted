@@ -36,6 +36,7 @@ export const ServiceDetails = ({ service }: Props) => {
       {service ? (
         <ScrollContainer
           ref={ref}
+          id="details"
           scrollViewRef={scrollViewRef}
           isFocused={isFocused && !!service}
           isHidden={isModalOpen}
