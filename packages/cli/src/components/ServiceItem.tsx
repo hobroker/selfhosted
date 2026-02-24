@@ -1,6 +1,6 @@
 import { Box, Text } from "ink";
-import type { ServiceInfo } from "../../types";
-import { serviceStateLabelsMap, colors } from "../../constants";
+import type { ServiceInfo } from "../types";
+import { serviceStateLabelsMap, colors } from "../constants";
 
 interface ServiceItemProps {
   service: ServiceInfo;

@@ -1,8 +1,7 @@
-import React from "react";
 import { Box, Text } from "ink";
 import { ConfirmModal } from "./ConfirmModal";
-import { colors } from "../constants";
-import type { ServiceInfo } from "../types";
+import { colors } from "../../constants";
+import type { ServiceInfo } from "../../types";
 
 interface Props {
   service: ServiceInfo | null | undefined;

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Text } from "ink";
 import { execa } from "execa";
-import { colors } from "../constants";
+import { colors } from "../../constants";
 import { AnsiText } from "./AnsiText";
 
 interface Props {

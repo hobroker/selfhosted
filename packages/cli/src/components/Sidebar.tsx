@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Box, Text, useInput, DOMElement } from "ink";
 import { useOnMouseEnter, useOnWheel } from "@ink-tools/ink-mouse";
 import type { ServiceInfo } from "../types";
-import { ServiceItem } from "./ServiceItem/index";
-import { ErrorBoundary } from "./ErrorBoundary";
+import { ServiceItem } from "./ServiceItem";
+import { ErrorBoundary } from "./ui/ErrorBoundary";
 import { colors } from "../constants";
-import { TitledBox } from "./TitledBox";
+import { TitledBox } from "./ui/TitledBox";
 
 interface Props {
   services: ServiceInfo[];

@@ -1,6 +1,6 @@
 import { PropsWithChildren, forwardRef } from "react";
 import { Box, Text, BoxProps, DOMElement } from "ink";
-import { colors } from "../constants";
+import { colors } from "../../constants";
 
 interface Props extends PropsWithChildren, BoxProps {
   title: string;

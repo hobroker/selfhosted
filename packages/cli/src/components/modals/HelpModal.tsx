@@ -1,6 +1,6 @@
 import { Box, Text } from "ink";
-import { colors } from "../constants";
-import { Modal } from "./Modal";
+import { colors } from "../../constants";
+import { Modal } from "../ui/Modal";
 
 const ShortcutEntry = ({ name, description }: { name: string; description: string }) => (
   <Box marginBottom={1}>

@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Box, Text, DOMElement } from "ink";
 import { StatusMessage } from "@inkjs/ui";
 import { ScrollView } from "ink-scroll-view";
 
 import type { ServiceInfo } from "../types";
-import { ErrorBoundary } from "./ErrorBoundary";
+import { ErrorBoundary } from "./ui/ErrorBoundary";
 import { serviceStateLabelsMap, colors } from "../constants";
 import { marked } from "marked";
 import TerminalRenderer from "marked-terminal";
-import { TitledBox } from "./TitledBox";
+import { TitledBox } from "./ui/TitledBox";
 import { useScrollViewRef } from "../hooks/useScrollViewRef";
 
 marked.setOptions({

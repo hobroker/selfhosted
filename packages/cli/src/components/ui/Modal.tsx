@@ -1,11 +1,11 @@
 import { ReactNode, useRef } from "react";
 import { Box, BoxProps, type DOMElement } from "ink";
 import { ScrollView } from "ink-scroll-view";
-import { colors } from "../constants";
+import { colors } from "../../constants";
 import { TitledBox } from "./TitledBox";
-import { useDimensions } from "../hooks/useDimensions";
+import { useDimensions } from "../../hooks/useDimensions";
 import { ErrorBoundary } from "./ErrorBoundary";
-import { useScrollViewRef } from "../hooks/useScrollViewRef";
+import { useScrollViewRef } from "../../hooks/useScrollViewRef";
 
 interface Props extends BoxProps {
   title: string;

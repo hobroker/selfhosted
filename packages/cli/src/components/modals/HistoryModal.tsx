@@ -1,8 +1,8 @@
 import { Text } from "ink";
-import { Modal } from "./Modal";
-import { colors } from "../constants";
-import type { ServiceInfo } from "../types";
-import { CommandOutput } from "./CommandOutput";
+import { Modal } from "../ui/Modal";
+import { colors } from "../../constants";
+import type { ServiceInfo } from "../../types";
+import { CommandOutput } from "../ui/CommandOutput";
 
 interface Props {
   service: ServiceInfo | null | undefined;

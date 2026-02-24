@@ -1,7 +1,6 @@
-import React from "react";
 import { Box, Text, useInput } from "ink";
-import { Modal } from "./Modal";
-import { colors } from "../constants";
+import { Modal } from "../ui/Modal";
+import { colors } from "../../constants";
 
 interface Props {
   title: string;
