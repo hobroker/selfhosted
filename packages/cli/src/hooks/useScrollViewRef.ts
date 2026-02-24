@@ -1,19 +1,23 @@
-import { useOnWheel } from "@ink-tools/ink-mouse";
+import { useOnMouseEnter, useOnMouseMove, useOnWheel } from "@ink-tools/ink-mouse";
 import { DOMElement, useInput } from "ink";
 import { ScrollViewRef } from "ink-scroll-view";
 import { useRef, useState } from "react";
 
 interface Props {
   ref: React.RefObject<DOMElement | null>;
-  isActive?: boolean;
+  isFocused?: boolean;
+  onFocus?: () => void;
 }
 
-export const useScrollViewRef = ({ ref, isActive = true }: Props) => {
+export const useScrollViewRef = ({ ref, isFocused = true, onFocus }: Props) => {
   const scrollViewRef = useRef<ScrollViewRef>(null);
   const [, setScrollOffset] = useState<number>();
 
+  useOnMouseEnter(ref, onFocus);
+  useOnMouseMove(ref, onFocus);
+
   useInput((_, key) => {
-    if (!isActive) return;
+    if (!isFocused) return;
     if (key.upArrow) {
       scrollViewRef.current?.scrollBy(-1);
     }
@@ -36,7 +40,7 @@ export const useScrollViewRef = ({ ref, isActive = true }: Props) => {
   });
 
   useOnWheel(ref, (event) => {
-    if (!isActive) return;
+    if (!isFocused) return;
     if (event.button === "wheel-up") {
       scrollViewRef.current?.scrollBy(-2);
     } else if (event.button === "wheel-down") {

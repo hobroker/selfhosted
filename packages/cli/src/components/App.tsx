@@ -21,6 +21,8 @@ export const App = () => {
   const { focus, setFocus, closeModals } = focusManager;
   const dimensions = useDimensions();
 
+  useGlobalInput({ focusManager });
+
   useEffect(() => {
     // Enter alternate buffer (fullscreen)
     process.stdout.write("\x1b[?1049h");
@@ -30,8 +32,6 @@ export const App = () => {
       process.stdout.write("\x1b[?1049l");
     };
   }, []);
-
-  useGlobalInput({ focusManager });
 
   if (loading) {
     return (

@@ -12,7 +12,7 @@ interface Props {
   listLimit: number;
   onSelect: (service: ServiceInfo) => void;
   isFocused?: boolean;
-  onFocus?: (isMouseAction?: boolean) => void;
+  onFocus?: () => void;
 }
 
 export const Sidebar = ({ services, listLimit, onSelect, isFocused, onFocus }: Props) => {
@@ -20,9 +20,7 @@ export const Sidebar = ({ services, listLimit, onSelect, isFocused, onFocus }: P
   const [scrollOffset, setScrollOffset] = useState(0);
   const ref = useRef<DOMElement>(null);
 
-  useOnMouseEnter(ref, () => {
-    onFocus?.(true);
-  });
+  useOnMouseEnter(ref, onFocus);
 
   useOnWheel(ref, (event) => {
     if (services.length === 0 || !isFocused) return;
