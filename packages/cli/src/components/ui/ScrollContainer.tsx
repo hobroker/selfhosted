@@ -2,6 +2,9 @@ import { Box, BoxProps, DOMElement, useInput } from "ink";
 import { ScrollView, ScrollViewRef } from "ink-scroll-view";
 import { PropsWithChildren, RefObject, useRef, useEffect, useState } from "react";
 import { useOnMouseEnter, useOnMouseMove, useOnWheel } from "@ink-tools/ink-mouse";
+import { ScrollBar } from "@byteland/ink-scroll-bar";
+import { ErrorBoundary } from "./ErrorBoundary";
+import { colors } from "../../constants";
 
 interface Props extends BoxProps, PropsWithChildren {
   ref: RefObject<DOMElement | null>;
@@ -18,13 +21,17 @@ export const ScrollContainer = ({
   onFocus,
   ...props
 }: Props) => {
-  const [, setScrollInfo] = useState({ offset: 0, contentHeight: 0, viewportHeight: 0 });
+  const [scrollInfo, setScrollInfo] = useState({ offset: 0, contentHeight: 0, viewportHeight: 0 });
   const scrollViewRef = useRef<ScrollViewRef>(null);
 
   useEffect(() => {
     if (!_scrollViewRef) return;
     _scrollViewRef.current = scrollViewRef.current;
   }, [_scrollViewRef]);
+
+  useEffect(() => {
+    scrollViewRef.current?.scrollTo(0);
+  }, [scrollViewRef]);
 
   useOnMouseEnter(ref, onFocus);
   useOnMouseMove(ref, onFocus);
@@ -70,18 +77,34 @@ export const ScrollContainer = ({
   });
 
   return (
-    <ScrollView
-      ref={scrollViewRef}
-      flexGrow={1}
-      onScroll={(offset) => setScrollInfo((s) => ({ ...s, offset }))}
-      onContentHeightChange={(height) => setScrollInfo((s) => ({ ...s, contentHeight: height }))}
-      onViewportSizeChange={(size) => setScrollInfo((s) => ({ ...s, viewportHeight: size.height }))}
-      {...props}
-    >
-      <Box flexDirection="column">
-        {children}
-        <Box height={2} />
+    <ErrorBoundary>
+      <Box flexDirection="row">
+        <ScrollView
+          ref={scrollViewRef}
+          flexGrow={1}
+          onScroll={(offset) => setScrollInfo((s) => ({ ...s, offset }))}
+          onContentHeightChange={(height) =>
+            setScrollInfo((s) => ({ ...s, contentHeight: height }))
+          }
+          onViewportSizeChange={(size) =>
+            setScrollInfo((s) => ({ ...s, viewportHeight: size.height }))
+          }
+          {...props}
+        >
+          <Box flexDirection="column">
+            {children}
+            <Box height={2} />
+          </Box>
+        </ScrollView>
+        <ScrollBar
+          placement="inset"
+          style="block"
+          color={isFocused ? colors.text : colors.dim}
+          contentHeight={scrollInfo.contentHeight}
+          viewportHeight={scrollInfo.viewportHeight}
+          scrollOffset={scrollInfo.offset}
+        />
       </Box>
-    </ScrollView>
+    </ErrorBoundary>
   );
 };

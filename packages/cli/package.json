@@ -12,6 +12,7 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
+    "@byteland/ink-scroll-bar": "^1.0.0",
     "@ink-tools/ink-mouse": "^2.1.0",
     "@inkjs/ui": "^2.0.0",
     "ansi-regex": "^6.2.2",
