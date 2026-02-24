@@ -1,12 +1,11 @@
 import { ReactNode, useRef } from "react";
 import { Box, BoxProps, type DOMElement } from "ink";
-import { ScrollView } from "ink-scroll-view";
 import { colors } from "../../constants";
 import { TitledBox } from "./TitledBox";
 import { useDimensions } from "../../hooks/useDimensions";
 import { ErrorBoundary } from "./ErrorBoundary";
-import { useScrollViewRef } from "../../hooks/useScrollViewRef";
 import { FocusState } from "../../types";
+import { ScrollContainer } from "./ScrollContainer";
 
 interface Props extends BoxProps {
   id: FocusState
@@ -18,7 +17,6 @@ interface Props extends BoxProps {
 export const Modal = ({ title, children, height, ...boxProps }: Props) => {
   const dimensions = useDimensions();
   const ref = useRef<DOMElement>(null);
-  const scrollViewRef = useScrollViewRef({ ref });
 
   return (
     <Box
@@ -37,11 +35,11 @@ export const Modal = ({ title, children, height, ...boxProps }: Props) => {
         {...boxProps}
       >
         <ErrorBoundary>
-          <ScrollView ref={scrollViewRef} flexGrow={1}>
+          <ScrollContainer ref={ref}>
             <Box paddingX={2} paddingY={1} flexDirection="column">
               {children}
             </Box>
-          </ScrollView>
+          </ScrollContainer>
         </ErrorBoundary>
       </TitledBox>
     </Box>
