@@ -1,4 +1,5 @@
 import { useApp, useInput } from "ink";
+import { ACTIONS } from "../constants";
 import { useFocusManagerContext } from "../contexts/FocusManagerContext";
 
 export const useGlobalInput = () => {
@@ -7,15 +8,8 @@ export const useGlobalInput = () => {
 
   useInput((input, key) => {
     if (isModalOpen) {
-      if (
-        (focus === "help" && input === "?") ||
-        (focus === "history" && (input === "h" || input === "H")) ||
-        (focus === "diff" && (input === "d" || input === "D")) ||
-        (focus === "apply-confirm" && (input === "a" || input === "A")) ||
-        (focus === "apply" && (input === "a" || input === "A")) ||
-        key.escape ||
-        input === "q"
-      ) {
+      const currentModalShortcut = ACTIONS[focus as keyof typeof ACTIONS]?.shortcut;
+      if (currentModalShortcut.includes(input) || key.escape || input === "q") {
         closeModals();
       }
       return;
@@ -25,19 +19,19 @@ export const useGlobalInput = () => {
       exit();
     }
 
-    if (input === "?") {
+    if (ACTIONS.help.shortcut.includes(input)) {
       setFocus("help");
     }
 
-    if (input === "h" || input === "H") {
+    if (ACTIONS.history.shortcut.includes(input)) {
       setFocus("history");
     }
 
-    if (input === "d" || input === "D") {
+    if (ACTIONS.diff.shortcut.includes(input)) {
       setFocus("diff");
     }
 
-    if (input === "a" || input === "A") {
+    if (ACTIONS["apply-confirm"].shortcut.includes(input)) {
       setFocus("apply-confirm");
     }
 

@@ -1,4 +1,4 @@
-import { ServiceState, MODAL_STATES, MAIN_VIEW_STATES } from "./constants";
+import { ServiceState, ACTIONS, SECTIONS } from "./constants";
 
 export interface ServiceInfo {
   id: string;
@@ -25,4 +25,11 @@ export interface Dimensions {
   rows: number;
 }
 
-export type FocusState = (typeof MODAL_STATES)[number] | (typeof MAIN_VIEW_STATES)[number];
+export type FocusState = keyof typeof ACTIONS | keyof typeof SECTIONS;
+
+export interface Action {
+  label: string;
+  description: string;
+  shortcut: string[];
+  hidden?: boolean;
+}

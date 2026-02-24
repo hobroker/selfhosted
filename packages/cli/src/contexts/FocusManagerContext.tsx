@@ -8,7 +8,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { MODAL_STATES } from "../constants";
+import { ACTIONS } from "../constants";
 import { FocusState } from "../types";
 
 interface Props {
@@ -32,7 +32,7 @@ const FocusManagerContext = createContext<FocustManagerContextType>({
 
 export const FocusManagerProvider = ({ children, initialFocus = "sidebar" }: Props) => {
   const [focus, setFocus] = useState<FocusState>(initialFocus);
-  const isModalOpen = useMemo(() => (MODAL_STATES as readonly string[]).includes(focus), [focus]);
+  const isModalOpen = useMemo(() => Object.keys(ACTIONS).includes(focus), [focus]);
   const [lastFocus, setLastFocus] = useState<FocusState>(initialFocus);
 
   const setFocusWithHistory = useCallback((nextFocus: SetStateAction<FocusState>) => {

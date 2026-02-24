@@ -1,3 +1,5 @@
+import { Action, Section } from "./types";
+
 export enum ServiceState {
   Installed = "installed",
   NotInstalled = "not-installed",
@@ -34,5 +36,36 @@ export const colors = {
   background: "#000000", // Black
 };
 
-export const MODAL_STATES = ["help", "history", "diff", "apply-confirm", "apply"] as const;
-export const MAIN_VIEW_STATES = ["sidebar", "details"] as const;
+export const SECTIONS: Record<string, object> = {
+  sidebar: {},
+  details: {},
+};
+
+export const ACTIONS: Record<string, Action> = {
+  apply: {
+    label: "Apply",
+    description: "Run helmfile apply for this service",
+    shortcut: ["a", "A"],
+  },
+  ["apply-confirm"]: {
+    label: "Confirm Apply",
+    description: "Show confirmation modal before applying",
+    shortcut: ["a", "A"],
+    hidden: true,
+  },
+  diff: {
+    label: "Diff",
+    description: "Show helmfile diff for this service",
+    shortcut: ["d", "D"],
+  },
+  help: {
+    label: "Help",
+    description: "Show help information",
+    shortcut: ["?", "/"],
+  },
+  history: {
+    label: "History",
+    description: "Show history for this service",
+    shortcut: ["h", "H"],
+  },
+};
