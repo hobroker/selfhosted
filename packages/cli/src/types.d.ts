@@ -1,4 +1,4 @@
-import { ServiceState } from "./constants";
+import { ServiceState, MODAL_STATES, MAIN_VIEW_STATES } from "./constants";
 
 export interface ServiceInfo {
   id: string;
@@ -25,11 +25,4 @@ export interface Dimensions {
   rows: number;
 }
 
-export type FocusState =
-  | "sidebar"
-  | "details"
-  | "help"
-  | "history"
-  | "diff"
-  | "apply-confirm"
-  | "apply";
+export type FocusState = (typeof MODAL_STATES)[number] | (typeof MAIN_VIEW_STATES)[number];

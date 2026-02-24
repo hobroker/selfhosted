@@ -5,7 +5,7 @@ import { MODAL_STATES } from "../constants";
 export const useFocusManager = (initialState: FocusState = "sidebar") => {
   const [focus, setFocusState] = useState<FocusState>(initialState);
 
-  const isModalOpen = useMemo(() => (MODAL_STATES as string[]).includes(focus), [focus]);
+  const isModalOpen = useMemo(() => (MODAL_STATES as readonly string[]).includes(focus), [focus]);
 
   const setFocus = useCallback(
     (nextFocus: FocusState | ((prev: FocusState) => FocusState), isMouseAction = false) => {

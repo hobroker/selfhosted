@@ -34,5 +34,5 @@ export const colors = {
   background: "#000000", // Black
 };
 
-export const MODAL_STATES = ["help", "history", "diff", "apply-confirm", "apply"];
-export const MAIN_VIEW_STATES = ["sidebar", "details"];
+export const MODAL_STATES = ["help", "history", "diff", "apply-confirm", "apply"] as const;
+export const MAIN_VIEW_STATES = ["sidebar", "details"] as const;
