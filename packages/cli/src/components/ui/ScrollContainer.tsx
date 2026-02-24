@@ -10,6 +10,7 @@ interface Props extends BoxProps, PropsWithChildren {
   ref: RefObject<DOMElement | null>;
   scrollViewRef?: RefObject<ScrollViewRef | null>;
   isFocused?: boolean;
+  isHidden?: boolean;
   onFocus?: () => void;
 }
 
@@ -18,6 +19,7 @@ export const ScrollContainer = ({
   ref,
   scrollViewRef: _scrollViewRef,
   isFocused = true,
+  isHidden = false,
   onFocus,
   ...props
 }: Props) => {
@@ -68,7 +70,7 @@ export const ScrollContainer = ({
   });
 
   useOnWheel(ref, (event) => {
-    if (!isFocused) return;
+    if (isHidden) return;
     if (event.button === "wheel-up") {
       scrollBy(-2);
     } else if (event.button === "wheel-down") {

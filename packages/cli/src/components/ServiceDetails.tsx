@@ -21,7 +21,7 @@ interface Props {
 }
 
 export const ServiceDetails = ({ service }: Props) => {
-  const { focus, setFocus } = useFocusManagerContext();
+  const { focus, setFocus, isModalOpen } = useFocusManagerContext();
   const isFocused = focus === "details";
   const ref = useRef<DOMElement>(null);
   const scrollViewRef = useRef<ScrollViewRef>(null);
@@ -38,7 +38,12 @@ export const ServiceDetails = ({ service }: Props) => {
           ref={ref}
           scrollViewRef={scrollViewRef}
           isFocused={isFocused && !!service}
-          onFocus={() => setFocus("details")}
+          isHidden={isModalOpen}
+          onFocus={() => {
+            if (!isModalOpen) {
+              setFocus("details");
+            }
+          }}
         >
           <Box flexDirection="column" paddingX={2}>
             <Text bold color={colors.primary} underline>
