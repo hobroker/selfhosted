@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Box, Text, DOMElement } from "ink";
 import { StatusMessage } from "@inkjs/ui";
-import { ScrollView } from "ink-scroll-view";
 
 import type { ServiceInfo } from "../types";
 import { ErrorBoundary } from "./ui/ErrorBoundary";
@@ -9,10 +8,11 @@ import { serviceStateLabelsMap, colors } from "../constants";
 import { marked } from "marked";
 import TerminalRenderer from "marked-terminal";
 import { TitledBox } from "./ui/TitledBox";
-import { useScrollViewRef } from "../hooks/useScrollViewRef";
+import { ScrollContainer } from "./ui/ScrollContainer";
+import { ScrollViewRef } from "ink-scroll-view";
 
 marked.setOptions({
-  renderer: new (TerminalRenderer as any)(),
+  renderer: new TerminalRenderer(),
 });
 
 interface Props {
@@ -23,16 +23,7 @@ interface Props {
 
 export const ServiceDetails = ({ service, isFocused, onFocus }: Props) => {
   const ref = useRef<DOMElement>(null);
-  const scrollViewRef = useScrollViewRef({
-    ref,
-    isFocused: isFocused && !!service,
-    onFocus,
-  });
-
-  const [scrollInfo, setScrollInfo] = useState({ offset: 0, contentHeight: 0, viewportHeight: 0 });
-  const canScrollDown =
-    scrollInfo.contentHeight > scrollInfo.viewportHeight &&
-    scrollInfo.offset < scrollInfo.contentHeight - scrollInfo.viewportHeight;
+  const scrollViewRef = useRef<ScrollViewRef>(null);
 
   // Reset scroll when service changes
   useEffect(() => {
@@ -51,16 +42,11 @@ export const ServiceDetails = ({ service, isFocused, onFocus }: Props) => {
       <ErrorBoundary>
         {service ? (
           <>
-            <ScrollView
-              ref={scrollViewRef}
-              flexGrow={1}
-              onScroll={(offset) => setScrollInfo((s) => ({ ...s, offset }))}
-              onContentHeightChange={(height) =>
-                setScrollInfo((s) => ({ ...s, contentHeight: height }))
-              }
-              onViewportSizeChange={(size) =>
-                setScrollInfo((s) => ({ ...s, viewportHeight: size.height }))
-              }
+            <ScrollContainer
+              ref={ref}
+              scrollViewRef={scrollViewRef}
+              isFocused={isFocused && !!service}
+              onFocus={onFocus}
             >
               <Box flexDirection="column">
                 <Text bold color={colors.primary} underline>
@@ -138,8 +124,7 @@ export const ServiceDetails = ({ service, isFocused, onFocus }: Props) => {
                   </ErrorBoundary>
                 ) : null}
               </Box>
-            </ScrollView>
-            {canScrollDown && <Text>More here</Text>}
+            </ScrollContainer>
           </>
         ) : (
           <Text italic color={colors.dim}>

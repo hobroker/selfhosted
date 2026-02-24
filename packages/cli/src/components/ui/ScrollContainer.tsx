@@ -1,34 +1,56 @@
 import { Box, BoxProps, DOMElement, useInput } from "ink";
 import { ScrollView, ScrollViewRef } from "ink-scroll-view";
-import { PropsWithChildren, RefObject, useRef, useState } from "react";
+import { PropsWithChildren, RefObject, useRef, useEffect, useState } from "react";
 import { useOnMouseEnter, useOnMouseMove, useOnWheel } from "@ink-tools/ink-mouse";
 
 interface Props extends BoxProps, PropsWithChildren {
   ref: RefObject<DOMElement | null>;
+  scrollViewRef?: RefObject<ScrollViewRef | null>;
   isFocused?: boolean;
   onFocus?: () => void;
 }
 
-export const ScrollContainer = ({ children, ref, isFocused = true, onFocus, ...props }: Props) => {
+export const ScrollContainer = ({
+  children,
+  ref,
+  scrollViewRef: _scrollViewRef,
+  isFocused = true,
+  onFocus,
+  ...props
+}: Props) => {
   const [, setScrollInfo] = useState({ offset: 0, contentHeight: 0, viewportHeight: 0 });
   const scrollViewRef = useRef<ScrollViewRef>(null);
+
+  useEffect(() => {
+    if (!_scrollViewRef) return;
+    _scrollViewRef.current = scrollViewRef.current;
+  }, [_scrollViewRef]);
 
   useOnMouseEnter(ref, onFocus);
   useOnMouseMove(ref, onFocus);
 
+  const scrollBy = (offset: number) => {
+    if (!scrollViewRef.current) return;
+    const newOffset = Math.min(
+      offset,
+      (scrollViewRef.current.getBottomOffset() || 100) - scrollViewRef.current.getScrollOffset(),
+    );
+    scrollViewRef.current?.scrollBy(newOffset);
+  };
+
   useInput((_, key) => {
     if (!isFocused) return;
     if (key.upArrow) {
-      scrollViewRef.current?.scrollBy(-1);
+      scrollBy(-1);
     }
     if (key.downArrow) {
-      scrollViewRef.current?.scrollBy(1);
+      scrollBy(1);
     }
     if (key.pageUp) {
-      scrollViewRef.current?.scrollBy(-10);
+      scrollBy(-10);
     }
     if (key.pageDown) {
-      scrollViewRef.current?.scrollBy(10);
+      scrollBy(10);
     }
     if (key.home) {
       scrollViewRef.current?.scrollTo(0);
@@ -41,9 +63,9 @@ export const ScrollContainer = ({ children, ref, isFocused = true, onFocus, ...p
   useOnWheel(ref, (event) => {
     if (!isFocused) return;
     if (event.button === "wheel-up") {
-      scrollViewRef.current?.scrollBy(-2);
+      scrollBy(-2);
     } else if (event.button === "wheel-down") {
-      scrollViewRef.current?.scrollBy(2);
+      scrollBy(2);
     }
   });
 
@@ -58,7 +80,7 @@ export const ScrollContainer = ({ children, ref, isFocused = true, onFocus, ...p
     >
       <Box flexDirection="column">
         {children}
-        <Box height={3} />
+        <Box height={2} />
       </Box>
     </ScrollView>
   );
