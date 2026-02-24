@@ -6,8 +6,10 @@ import { TitledBox } from "./TitledBox";
 import { useDimensions } from "../../hooks/useDimensions";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { useScrollViewRef } from "../../hooks/useScrollViewRef";
+import { FocusState } from "../../types";
 
 interface Props extends BoxProps {
+  id: FocusState
   title: string;
   children: ReactNode;
   height?: number | string;

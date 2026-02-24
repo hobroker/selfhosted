@@ -1,8 +1,10 @@
 import { Box, Text, useInput } from "ink";
-import { Modal } from "../ui/Modal";
+import { Modal } from "./Modal";
 import { colors } from "../../constants";
+import { FocusState } from "../../types";
 
 interface Props {
+  id: FocusState;
   title: string;
   message: React.ReactNode;
   onConfirm: () => void;
@@ -12,6 +14,7 @@ interface Props {
 }
 
 export const ConfirmModal = ({
+  id,
   title,
   message,
   onConfirm,
@@ -29,7 +32,7 @@ export const ConfirmModal = ({
   });
 
   return (
-    <Modal title={title} width={60}>
+    <Modal id={id} title={title} width={60}>
       <Box flexDirection="column" alignItems="center">
         <Box marginBottom={1}>{message}</Box>
 

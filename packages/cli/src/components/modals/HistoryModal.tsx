@@ -11,14 +11,14 @@ interface Props {
 export const HistoryModal = ({ service }: Props) => {
   if (!service) {
     return (
-      <Modal title="Helm History" width="40%" minWidth={70}>
+      <Modal id="history" title="Helm History" width="40%" minWidth={70}>
         <Text color={colors.error}>No service selected</Text>
       </Modal>
     );
   }
 
   return (
-    <Modal title={`Helm History: ${service.name}`} width="80%" height="80%">
+    <Modal id="history" title={`Helm History: ${service.name}`} width="80%" height="80%">
       <CommandOutput
         command="helm"
         args={["history", service.name, "-n", "self"]}

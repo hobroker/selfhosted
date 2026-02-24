@@ -11,14 +11,14 @@ interface Props {
 export const ApplyModal = ({ service }: Props) => {
   if (!service) {
     return (
-      <Modal title="Helmfile Apply" width="40%" minWidth={70}>
+      <Modal id="apply" title="Helmfile Apply" width="40%" minWidth={70}>
         <Text color={colors.error}>No service selected</Text>
       </Modal>
     );
   }
 
   return (
-    <Modal title={`Helmfile Apply: ${service.name}`} width="95%" height={30}>
+    <Modal id="apply" title={`Helmfile Apply: ${service.name}`} width="95%" height={30}>
       <CommandOutput
         command="helmfile"
         args={["--color", "apply"]}

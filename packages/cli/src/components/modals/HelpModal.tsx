@@ -14,7 +14,7 @@ const ShortcutEntry = ({ name, description }: { name: string; description: strin
 );
 
 export const HelpModal = () => (
-  <Modal title="Help / Shortcuts" width="40%" minWidth={70}>
+  <Modal id="help" title="Help / Shortcuts" width="40%" minWidth={70}>
     <ShortcutEntry name="q" description="Quit application" />
     <ShortcutEntry name="?" description="Toggle this help menu" />
     <ShortcutEntry name="h" description="Show help history" />

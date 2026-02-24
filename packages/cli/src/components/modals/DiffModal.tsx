@@ -11,14 +11,14 @@ interface Props {
 export const DiffModal = ({ service }: Props) => {
   if (!service) {
     return (
-      <Modal title="Helmfile Diff" width="40%" minWidth={70}>
+      <Modal id="diff" title="Helmfile Diff" width="40%" minWidth={70}>
         <Text color={colors.error}>No service selected</Text>
       </Modal>
     );
   }
 
   return (
-    <Modal title={`Helmfile Diff: ${service.name}`} width="80%" height="80%">
+    <Modal id="diff" title={`Helmfile Diff: ${service.name}`} width="80%" height="80%">
       <CommandOutput
         command="helmfile"
         args={["--color", "diff"]}

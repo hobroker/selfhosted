@@ -1,5 +1,5 @@
 import { Box, Text } from "ink";
-import { ConfirmModal } from "./ConfirmModal";
+import { ConfirmModal } from "../ui/ConfirmModal";
 import { colors } from "../../constants";
 import type { ServiceInfo } from "../../types";
 
@@ -14,6 +14,7 @@ export const ApplyConfirmModal = ({ service, onConfirm, onCancel }: Props) => {
 
   return (
     <ConfirmModal
+      id="apply-confirm"
       title="Confirm Apply"
       message={
         <Box flexDirection="column" alignItems="center">
