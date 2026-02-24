@@ -10,6 +10,7 @@ import TerminalRenderer from "marked-terminal";
 import { TitledBox } from "./ui/TitledBox";
 import { ScrollContainer } from "./ui/ScrollContainer";
 import { ScrollViewRef } from "ink-scroll-view";
+import { useFocusManagerContext } from "../contexts/FocusManagerContext";
 
 marked.setOptions({
   renderer: new TerminalRenderer(),
@@ -17,11 +18,11 @@ marked.setOptions({
 
 interface Props {
   service?: ServiceInfo;
-  isFocused?: boolean;
-  onFocus?: () => void;
 }
 
-export const ServiceDetails = ({ service, isFocused, onFocus }: Props) => {
+export const ServiceDetails = ({ service }: Props) => {
+  const { focus, setFocus } = useFocusManagerContext();
+  const isFocused = focus === "details";
   const ref = useRef<DOMElement>(null);
   const scrollViewRef = useRef<ScrollViewRef>(null);
 
@@ -37,7 +38,7 @@ export const ServiceDetails = ({ service, isFocused, onFocus }: Props) => {
           ref={ref}
           scrollViewRef={scrollViewRef}
           isFocused={isFocused && !!service}
-          onFocus={onFocus}
+          onFocus={() => setFocus("details")}
         >
           <Box flexDirection="column" paddingX={2}>
             <Text bold color={colors.primary} underline>

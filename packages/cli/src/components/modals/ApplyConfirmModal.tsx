@@ -2,14 +2,14 @@ import { Box, Text } from "ink";
 import { ConfirmModal } from "../ui/ConfirmModal";
 import { colors } from "../../constants";
 import type { ServiceInfo } from "../../types";
+import { useFocusManagerContext } from "../../contexts/FocusManagerContext";
 
 interface Props {
   service: ServiceInfo | null | undefined;
-  onConfirm: () => void;
-  onCancel: () => void;
 }
 
-export const ApplyConfirmModal = ({ service, onConfirm, onCancel }: Props) => {
+export const ApplyConfirmModal = ({ service }: Props) => {
+  const { setFocus, closeModals } = useFocusManagerContext();
   if (!service) return null;
 
   return (
@@ -34,8 +34,8 @@ export const ApplyConfirmModal = ({ service, onConfirm, onCancel }: Props) => {
           </Box>
         </Box>
       }
-      onConfirm={onConfirm}
-      onCancel={onCancel}
+      onConfirm={() => setFocus("apply")}
+      onCancel={closeModals}
     />
   );
 };

@@ -13,15 +13,14 @@ import { ApplyConfirmModal } from "./modals/ApplyConfirmModal";
 import { ApplyModal } from "./modals/ApplyModal";
 import { useServices } from "../hooks/useServices";
 import { useGlobalInput } from "../hooks/useGlobalInput";
-import { useFocusManager } from "../hooks/useFocusManager";
+import { FocusManagerProvider, useFocusManagerContext } from "../contexts/FocusManagerContext";
 
-export const App = () => {
+const AppContent = () => {
   const { services, loading, selectedService, selectService } = useServices();
-  const focusManager = useFocusManager();
-  const { focus, setFocus, closeModals } = focusManager;
+  const { focus } = useFocusManagerContext();
   const dimensions = useDimensions();
 
-  useGlobalInput({ focusManager });
+  useGlobalInput();
 
   useEffect(() => {
     // Enter alternate buffer (fullscreen)
@@ -56,39 +55,26 @@ export const App = () => {
       </Box>
 
       <Box height={dimensions.rows - 6}>
-        <Sidebar
-          services={services}
-          listLimit={listLimit}
-          onSelect={selectService}
-          isFocused={focus === "sidebar"}
-          onFocus={() => setFocus("sidebar", true)}
-        />
-        <ServiceDetails
-          service={selectedService}
-          isFocused={focus === "details"}
-          onFocus={() => setFocus("details", true)}
-        />
+        <Sidebar services={services} listLimit={listLimit} onSelect={selectService} />
+        <ServiceDetails service={selectedService} />
       </Box>
       <Box height={3}>
-        <Footer
-          onShowHelp={() => setFocus("help")}
-          onShowHistory={() => setFocus("history")}
-          onShowDiff={() => setFocus("diff")}
-          onShowApply={() => setFocus("apply-confirm")}
-        />
+        <Footer />
       </Box>
 
       {focus === "help" && <HelpModal />}
       {focus === "history" && <HistoryModal service={selectedService} />}
       {focus === "diff" && <DiffModal service={selectedService} />}
-      {focus === "apply-confirm" && (
-        <ApplyConfirmModal
-          service={selectedService}
-          onConfirm={() => setFocus("apply")}
-          onCancel={closeModals}
-        />
-      )}
+      {focus === "apply-confirm" && <ApplyConfirmModal service={selectedService} />}
       {focus === "apply" && <ApplyModal service={selectedService} />}
     </Box>
+  );
+};
+
+export const App = () => {
+  return (
+    <FocusManagerProvider>
+      <AppContent />
+    </FocusManagerProvider>
   );
 };

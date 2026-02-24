@@ -1,13 +1,9 @@
 import { useApp, useInput } from "ink";
-import { FocusManager } from "./useFocusManager";
+import { useFocusManagerContext } from "../contexts/FocusManagerContext";
 
-interface Props {
-  focusManager: FocusManager;
-}
-
-export const useGlobalInput = ({ focusManager }: Props) => {
+export const useGlobalInput = () => {
   const { exit } = useApp();
-  const { focus, setFocus, isModalOpen } = focusManager;
+  const { focus, setFocus, isModalOpen, closeModals } = useFocusManagerContext();
 
   useInput((input, key) => {
     if (isModalOpen) {
@@ -20,7 +16,7 @@ export const useGlobalInput = ({ focusManager }: Props) => {
         key.escape ||
         input === "q"
       ) {
-        setFocus("sidebar");
+        closeModals();
       }
       return;
     }

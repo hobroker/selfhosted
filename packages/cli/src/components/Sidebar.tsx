@@ -6,21 +6,22 @@ import { ServiceItem } from "./ServiceItem";
 import { ErrorBoundary } from "./ui/ErrorBoundary";
 import { colors } from "../constants";
 import { TitledBox } from "./ui/TitledBox";
+import { useFocusManagerContext } from "../contexts/FocusManagerContext";
 
 interface Props {
   services: ServiceInfo[];
   listLimit: number;
   onSelect: (service: ServiceInfo) => void;
-  isFocused?: boolean;
-  onFocus?: () => void;
 }
 
-export const Sidebar = ({ services, listLimit, onSelect, isFocused, onFocus }: Props) => {
+export const Sidebar = ({ services, listLimit, onSelect }: Props) => {
+  const { focus, setFocus } = useFocusManagerContext();
+  const isFocused = focus === "sidebar";
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollOffset, setScrollOffset] = useState(0);
   const ref = useRef<DOMElement>(null);
 
-  useOnMouseEnter(ref, onFocus);
+  useOnMouseEnter(ref, () => setFocus("sidebar"));
 
   useOnWheel(ref, (event) => {
     if (services.length === 0 || !isFocused) return;

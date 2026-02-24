@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { Box, Text, DOMElement } from "ink";
 import { useOnClick } from "@ink-tools/ink-mouse";
 import { colors } from "../constants";
+import { useFocusManagerContext } from "../contexts/FocusManagerContext";
 
 const Shortcut = ({
   name,
@@ -25,24 +26,17 @@ const Shortcut = ({
   );
 };
 
-export const Footer = ({
-  onShowHelp,
-  onShowHistory,
-  onShowDiff,
-  onShowApply,
-}: {
-  onShowHelp?: () => void;
-  onShowHistory?: () => void;
-  onShowDiff?: () => void;
-  onShowApply?: () => void;
-}) => (
-  <Box paddingX={1} borderStyle="single" borderColor={colors.primary} width="100%">
-    <Shortcut name="q" description="quit" />
-    <Shortcut name="tab" description="focus" />
-    <Shortcut name="arrows" description="navigate" />
-    <Shortcut name="h" description="history" onClick={onShowHistory} />
-    <Shortcut name="d" description="diff" onClick={onShowDiff} />
-    <Shortcut name="a" description="apply" onClick={onShowApply} />
-    <Shortcut name="?" description="help" onClick={onShowHelp} />
-  </Box>
-);
+export const Footer = () => {
+  const { setFocus } = useFocusManagerContext();
+  return (
+    <Box paddingX={1} borderStyle="single" borderColor={colors.primary} width="100%">
+      <Shortcut name="q" description="quit" />
+      <Shortcut name="tab" description="focus" />
+      <Shortcut name="arrows" description="navigate" />
+      <Shortcut name="h" description="history" onClick={() => setFocus("history")} />
+      <Shortcut name="d" description="diff" onClick={() => setFocus("diff")} />
+      <Shortcut name="a" description="apply" onClick={() => setFocus("apply-confirm")} />
+      <Shortcut name="?" description="help" onClick={() => setFocus("help")} />
+    </Box>
+  );
+};
