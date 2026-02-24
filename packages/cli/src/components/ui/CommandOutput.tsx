@@ -24,38 +24,56 @@ export const CommandOutput = ({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
     const runCommand = async () => {
       setLoading(true);
       setError(null);
       setOutput("");
+
       try {
-        const { all } = await execa(command, args, {
+        const subprocess = execa(command, args, {
           cwd,
           env: { ...process.env, FORCE_COLOR: "3" },
           all: true,
         });
-        // Replace tabs with spaces but preserve other characters
-        const sanitizedOutput = (all || "").replace(/\t/g, "    ").trim();
-        setOutput(sanitizedOutput);
-      } catch (e: any) {
-        if (e.all) {
-          setOutput(e.all.replace(/\t/g, "    ").trim());
-        } else {
-          setError(e.message || `Failed to run ${command}`);
+
+        // Handle real-time streaming of stdout and stderr combined
+        if (subprocess.all) {
+          subprocess.all.on("data", (data) => {
+            if (isMounted) {
+              const chunk = data.toString().replace(/\t/g, "    ");
+              setOutput((prev) => prev + chunk);
+            }
+          });
         }
+
+        await subprocess;
+      } catch (err: any) {
+        if (!err.all) {
+          setError(err.message || `Failed to run ${command}`);
+        }
+        // If there was output before the error (common for diffs),
+        // we keep it as it's already in the 'output' state via stream
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
     runCommand();
+
+    return () => {
+      isMounted = false;
+    };
   }, [args, command, cwd]);
 
-  if (loading) {
+  // Even while loading, we want to show the current output from the stream
+  if (loading && !output) {
     return <Text color={colors.warning}>{loadingText}</Text>;
   }
 
-  if (error) {
+  if (error && !output) {
     return (
       <Box flexDirection="column">
         <Text color={colors.error}>Error executing command:</Text>
@@ -64,7 +82,7 @@ export const CommandOutput = ({
     );
   }
 
-  if (!output) {
+  if (!output && !loading) {
     return <Text color={colors.dim}>{emptyText}</Text>;
   }
 
@@ -78,6 +96,11 @@ export const CommandOutput = ({
           <AnsiText>{line}</AnsiText>
         </Box>
       ))}
+      {loading && (
+        <Box marginTop={1}>
+          <Text color={colors.warning}>... {loadingText}</Text>
+        </Box>
+      )}
     </Box>
   );
 };
