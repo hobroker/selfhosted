@@ -41,16 +41,31 @@ export const ScrollContainer = ({
     scrollViewRef.current?.scrollTo(0);
   }, [scrollViewRef]);
 
+  useEffect(() => {
+    const id = setInterval(() => {
+      const sv = scrollViewRef.current;
+      if (!sv || !isFocused || isHidden) return;
+      sv.remeasure();
+      setScrollInfo({
+        scrollOffset: sv.getScrollOffset(),
+        contentHeight: sv.getContentHeight(),
+        viewportHeight: sv.getViewportHeight(),
+      });
+    }, 250);
+    return () => clearInterval(id);
+  }, [isFocused, isHidden]);
+
   useOnMouseEnter(ref, onFocus);
   useOnMouseMove(ref, onFocus);
 
   const scrollBy = (offset: number) => {
-    if (!scrollViewRef.current) return;
-    const newOffset = Math.min(
-      offset,
-      (scrollViewRef.current.getBottomOffset() || 100) - scrollViewRef.current.getScrollOffset(),
-    );
-    scrollViewRef.current?.scrollBy(newOffset);
+    const sv = scrollViewRef.current;
+    if (!sv) return;
+    if (sv.getContentHeight() <= sv.getViewportHeight()) {
+      return;
+    }
+    const newOffset = Math.min(offset, (sv.getBottomOffset() || 100) - sv.getScrollOffset());
+    sv?.scrollBy(newOffset);
   };
 
   useInput((_, key) => {
