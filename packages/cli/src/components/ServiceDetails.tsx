@@ -40,11 +40,7 @@ export const ServiceDetails = ({ service }: Props) => {
           scrollViewRef={scrollViewRef}
           isFocused={isFocused && !!service}
           isHidden={isModalOpen}
-          onFocus={() => {
-            if (!isModalOpen) {
-              setFocus("details");
-            }
-          }}
+          onFocus={() => setFocus("details")}
         >
           <Box flexDirection="column" paddingX={2}>
             <Text bold color={colors.primary} underline>

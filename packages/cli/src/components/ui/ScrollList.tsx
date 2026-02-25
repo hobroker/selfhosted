@@ -1,45 +1,41 @@
 import { Box, BoxProps, DOMElement, useInput } from "ink";
 import { ScrollView, ScrollViewRef } from "ink-scroll-view";
-import { PropsWithChildren, RefObject, useRef, useEffect, useState } from "react";
+import { ReactNode, RefObject, useEffect, useRef, useState } from "react";
 import { useOnMouseEnter, useOnMouseMove, useOnWheel } from "@ink-tools/ink-mouse";
 import { ScrollBar } from "@byteland/ink-scroll-bar";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { colors } from "../../constants";
-import { FocusState } from "../../types";
 
-interface Props extends BoxProps, PropsWithChildren {
-  id: FocusState;
+const SCROLL_BUFFER = 2;
+
+interface ScrollListProps<T> extends BoxProps {
+  items: T[];
+  renderItem: (item: T, index: number, isSelected: boolean) => ReactNode;
+  selectedIndex: number;
+  onChange: (index: number) => void;
   ref: RefObject<DOMElement | null>;
-  scrollViewRef?: RefObject<ScrollViewRef | null>;
   isFocused?: boolean;
   isHidden?: boolean;
   onFocus?: () => void;
 }
 
-export const ScrollContainer = ({
-  children,
+export const ScrollList = <T,>({
+  items,
+  renderItem,
+  selectedIndex,
+  onChange,
   ref,
-  scrollViewRef: _scrollViewRef,
   isFocused = true,
   isHidden = false,
   onFocus,
   ...props
-}: Props) => {
+}: ScrollListProps<T>) => {
   const [scrollInfo, setScrollInfo] = useState({
     scrollOffset: 0,
     contentHeight: 0,
     viewportHeight: 0,
   });
   const scrollViewRef = useRef<ScrollViewRef>(null);
-
-  useEffect(() => {
-    if (!_scrollViewRef) return;
-    _scrollViewRef.current = scrollViewRef.current;
-  }, [_scrollViewRef]);
-
-  useEffect(() => {
-    scrollViewRef.current?.scrollTo(0);
-  }, [scrollViewRef]);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -67,34 +63,10 @@ export const ScrollContainer = ({
   const scrollBy = (offset: number) => {
     const sv = scrollViewRef.current;
     if (!sv) return;
-    if (sv.getContentHeight() <= sv.getViewportHeight()) {
-      return;
-    }
-    const newOffset = Math.min(offset, (sv.getBottomOffset() || 100) - sv.getScrollOffset());
-    sv?.scrollBy(newOffset);
+    if (sv.getContentHeight() <= sv.getViewportHeight()) return;
+    const clamped = Math.min(offset, (sv.getBottomOffset() || 100) - sv.getScrollOffset());
+    sv.scrollBy(clamped);
   };
-
-  useInput((_, key) => {
-    if (!isFocused) return;
-    if (key.upArrow) {
-      scrollBy(-1);
-    }
-    if (key.downArrow) {
-      scrollBy(1);
-    }
-    if (key.pageUp) {
-      scrollBy(-10);
-    }
-    if (key.pageDown) {
-      scrollBy(10);
-    }
-    if (key.home) {
-      scrollViewRef.current?.scrollTo(0);
-    }
-    if (key.end) {
-      scrollViewRef.current?.scrollToBottom();
-    }
-  });
 
   useOnWheel(ref, (event) => {
     if (isHidden) return;
@@ -102,6 +74,32 @@ export const ScrollContainer = ({
       scrollBy(-2);
     } else if (event.button === "wheel-down") {
       scrollBy(2);
+    }
+  });
+
+  const scrollToIndex = (index: number) => {
+    const sv = scrollViewRef.current;
+    if (!sv) return;
+    const offset = sv.getScrollOffset();
+    const viewport = sv.getViewportHeight();
+    if (index < offset + SCROLL_BUFFER) {
+      sv.scrollTo(Math.max(0, index - SCROLL_BUFFER));
+    } else if (index > offset + viewport - 1 - SCROLL_BUFFER) {
+      sv.scrollTo(index - viewport + 1 + SCROLL_BUFFER);
+    }
+  };
+
+  useInput((_, key) => {
+    if (!isFocused) return;
+    if (key.upArrow) {
+      const next = Math.max(0, selectedIndex - 1);
+      onChange(next);
+      scrollToIndex(next);
+    }
+    if (key.downArrow) {
+      const next = Math.min(items.length - 1, selectedIndex + 1);
+      onChange(next);
+      scrollToIndex(next);
     }
   });
 
@@ -119,8 +117,7 @@ export const ScrollContainer = ({
           {...props}
         >
           <Box flexDirection="column">
-            {children}
-            <Box height={2} />
+            {items.map((item, index) => renderItem(item, index, index === selectedIndex))}
           </Box>
         </ScrollView>
         <ScrollBar
