@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Generate docs from charts to the main README.md",
   "author": "Igor Leahu <igor.leahu24@gmail.com>",
-  "packageManager": "npm@11.6.2",
+  "packageManager": "npm@11.11.0",
   "workspaces": [
     "packages/docs",
     "packages/cli"
@@ -21,7 +21,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
-    "@types/eslint__js": "^8.42.3",
     "@typescript-eslint/eslint-plugin": "^8.56.0",
     "@typescript-eslint/parser": "^8.56.0",
     "eslint": "^9.39.2",
@@ -34,9 +33,9 @@
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
     "react": "^19.2.4",
-    "turbo": "^2.8.10",
+    "turbo": "^2.8.11",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.56.0"
+    "typescript-eslint": "^8.56.1"
   },
   "lint-staged": {
     "*.{md,yaml}": "prettier --write",

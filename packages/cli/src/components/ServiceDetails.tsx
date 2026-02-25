@@ -13,7 +13,8 @@ import { ScrollViewRef } from "ink-scroll-view";
 import { useFocusManagerContext } from "../contexts/FocusManagerContext";
 
 marked.setOptions({
-  renderer: new TerminalRenderer(),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  renderer: new TerminalRenderer() as any,
 });
 
 interface Props {

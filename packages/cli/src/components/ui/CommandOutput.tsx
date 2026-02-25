@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Box, Text } from "ink";
-import { execa } from "execa";
+import { execa, Result } from "execa";
 import { colors } from "../../constants";
 import { AnsiText } from "./AnsiText";
 
@@ -48,6 +48,7 @@ export const CommandOutput = ({
         }
 
         await subprocess;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         if (!err.all) {
           setError(err.message || `Failed to run ${command}`);
