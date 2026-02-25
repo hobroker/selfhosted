@@ -37,6 +37,7 @@ export const Sidebar = () => {
         </Box>
       ) : (
         <ScrollList
+          id="sidebar"
           ref={ref}
           items={services}
           selectedIndex={selectedIndex}

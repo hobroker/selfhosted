@@ -1,14 +1,16 @@
 import { Box, BoxProps, DOMElement, useInput } from "ink";
-import { ScrollView, ScrollViewRef } from "ink-scroll-view";
-import { ReactNode, RefObject, useEffect, useRef, useState } from "react";
-import { useOnMouseEnter, useOnMouseMove, useOnWheel } from "@ink-tools/ink-mouse";
+import { ScrollView } from "ink-scroll-view";
+import { ReactNode, RefObject } from "react";
 import { ScrollBar } from "@byteland/ink-scroll-bar";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { colors } from "../../constants";
+import { useScrollView } from "../../hooks/useScrollView";
+import { FocusState } from "../../types";
 
 const SCROLL_BUFFER = 2;
 
 interface ScrollListProps<T> extends BoxProps {
+  id: FocusState;
   items: T[];
   renderItem: (item: T, index: number, isSelected: boolean) => ReactNode;
   selectedIndex: number;
@@ -30,51 +32,11 @@ export const ScrollList = <T,>({
   onFocus,
   ...props
 }: ScrollListProps<T>) => {
-  const [scrollInfo, setScrollInfo] = useState({
-    scrollOffset: 0,
-    contentHeight: 0,
-    viewportHeight: 0,
-  });
-  const scrollViewRef = useRef<ScrollViewRef>(null);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      const sv = scrollViewRef.current;
-      if (!sv || !isFocused || isHidden) return;
-      sv.remeasure();
-      setScrollInfo({
-        scrollOffset: sv.getScrollOffset(),
-        contentHeight: sv.getContentHeight(),
-        viewportHeight: sv.getViewportHeight(),
-      });
-    }, 250);
-    return () => clearInterval(id);
-  }, [isFocused, isHidden]);
-
-  const _onFocus = () => {
-    if (!isFocused && !isHidden) {
-      onFocus?.();
-    }
-  };
-
-  useOnMouseEnter(ref, _onFocus);
-  useOnMouseMove(ref, _onFocus);
-
-  const scrollBy = (offset: number) => {
-    const sv = scrollViewRef.current;
-    if (!sv) return;
-    if (sv.getContentHeight() <= sv.getViewportHeight()) return;
-    const clamped = Math.min(offset, (sv.getBottomOffset() || 100) - sv.getScrollOffset());
-    sv.scrollBy(clamped);
-  };
-
-  useOnWheel(ref, (event) => {
-    if (isHidden) return;
-    if (event.button === "wheel-up") {
-      scrollBy(-2);
-    } else if (event.button === "wheel-down") {
-      scrollBy(2);
-    }
+  const { scrollViewRef, scrollInfo, scrollViewCallbacks } = useScrollView({
+    ref,
+    isFocused,
+    isHidden,
+    onFocus,
   });
 
   const scrollToIndex = (index: number) => {
@@ -106,16 +68,7 @@ export const ScrollList = <T,>({
   return (
     <ErrorBoundary>
       <Box flexDirection="row">
-        <ScrollView
-          ref={scrollViewRef}
-          flexGrow={1}
-          onScroll={(scrollOffset) => setScrollInfo((s) => ({ ...s, scrollOffset }))}
-          onContentHeightChange={(contentHeight) => setScrollInfo((s) => ({ ...s, contentHeight }))}
-          onViewportSizeChange={(size) =>
-            setScrollInfo((s) => ({ ...s, viewportHeight: size.height }))
-          }
-          {...props}
-        >
+        <ScrollView ref={scrollViewRef} flexGrow={1} {...scrollViewCallbacks} {...props}>
           <Box flexDirection="column">
             {items.map((item, index) => renderItem(item, index, index === selectedIndex))}
           </Box>
