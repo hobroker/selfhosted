@@ -32,6 +32,7 @@ export const Modal = ({ title, children, height, id, ...boxProps }: Props) => {
         isFocused
         height={height}
         ref={ref}
+        borderStyle="double"
         {...boxProps}
       >
         <ErrorBoundary>

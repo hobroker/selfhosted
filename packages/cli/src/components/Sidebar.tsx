@@ -1,20 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 import { Box, Text, useInput, DOMElement } from "ink";
 import { useOnMouseEnter, useOnWheel } from "@ink-tools/ink-mouse";
-import type { ServiceInfo } from "../types";
 import { ServiceItem } from "./ServiceItem";
 import { ErrorBoundary } from "./ui/ErrorBoundary";
 import { colors } from "../constants";
 import { TitledBox } from "./ui/TitledBox";
 import { useFocusManagerContext } from "../contexts/FocusManagerContext";
+import { useServicesContext } from "../contexts/ServicesContext";
+import { useDimensions } from "../hooks/useDimensions";
 
-interface Props {
-  services: ServiceInfo[];
-  listLimit: number;
-  onSelect: (service: ServiceInfo) => void;
-}
-
-export const Sidebar = ({ services, listLimit, onSelect }: Props) => {
+export const Sidebar = () => {
+  const { services, selectService } = useServicesContext();
+  const dimensions = useDimensions();
+  const listLimit = Math.max(5, dimensions.rows - 6);
   const { focus, setFocus } = useFocusManagerContext();
   const isFocused = focus === "sidebar";
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -47,9 +45,9 @@ export const Sidebar = ({ services, listLimit, onSelect }: Props) => {
 
   useEffect(() => {
     if (services.length > 0) {
-      onSelect(services[selectedIndex]);
+      selectService(services[selectedIndex]);
     }
-  }, [selectedIndex, services, onSelect]);
+  }, [selectedIndex, services, selectService]);
 
   useInput((_, key) => {
     if (!isFocused) return;

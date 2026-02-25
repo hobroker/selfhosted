@@ -12,9 +12,9 @@ export const TitledBox = forwardRef<DOMElement, Props>(
     return (
       <Box
         ref={ref}
-        {...boxProps}
         borderStyle="single"
         borderColor={isFocused ? colors.borderActive : colors.border}
+        {...boxProps}
       >
         <Box position="absolute" marginTop={-1} marginLeft={1} paddingX={1}>
           <Text

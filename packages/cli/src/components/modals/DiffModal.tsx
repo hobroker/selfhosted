@@ -1,15 +1,13 @@
 import { Text } from "ink";
 import { Modal } from "../ui/Modal";
 import { colors } from "../../constants";
-import type { ServiceInfo } from "../../types";
 import { CommandOutput } from "../ui/CommandOutput";
+import { useServicesContext } from "../../contexts/ServicesContext";
 
-interface Props {
-  service: ServiceInfo | null | undefined;
-}
+export const DiffModal = () => {
+  const { selectedService } = useServicesContext();
 
-export const DiffModal = ({ service }: Props) => {
-  if (!service) {
+  if (!selectedService) {
     return (
       <Modal id="diff" title="Helmfile Diff" width="40%" minWidth={70}>
         <Text color={colors.error}>No service selected</Text>
@@ -18,11 +16,11 @@ export const DiffModal = ({ service }: Props) => {
   }
 
   return (
-    <Modal id="diff" title={`Helmfile Diff: ${service.name}`} width="80%" height="80%">
+    <Modal id="diff" title={`Helmfile Diff: ${selectedService.name}`} width="80%" height="80%">
       <CommandOutput
         command="helmfile"
         args={["--color", "diff"]}
-        cwd={service.path}
+        cwd={selectedService.path}
         loadingText="Generating diff..."
         emptyText="No changes found"
       />

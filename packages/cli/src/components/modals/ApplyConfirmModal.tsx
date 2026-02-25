@@ -1,16 +1,14 @@
 import { Box, Text } from "ink";
 import { ConfirmModal } from "../ui/ConfirmModal";
 import { colors } from "../../constants";
-import type { ServiceInfo } from "../../types";
 import { useFocusManagerContext } from "../../contexts/FocusManagerContext";
+import { useServicesContext } from "../../contexts/ServicesContext";
 
-interface Props {
-  service: ServiceInfo | null | undefined;
-}
-
-export const ApplyConfirmModal = ({ service }: Props) => {
+export const ApplyConfirmModal = () => {
+  const { selectedService } = useServicesContext();
   const { setFocus, closeModals } = useFocusManagerContext();
-  if (!service) return null;
+
+  if (!selectedService) return null;
 
   return (
     <ConfirmModal
@@ -21,7 +19,7 @@ export const ApplyConfirmModal = ({ service }: Props) => {
           <Box>
             <Text>Are you sure you want to apply changes to </Text>
             <Text color={colors.primary} bold>
-              {service.name}
+              {selectedService.name}
             </Text>
             <Text>?</Text>
           </Box>

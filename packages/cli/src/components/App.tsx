@@ -11,12 +11,12 @@ import { HistoryModal } from "./modals/HistoryModal";
 import { DiffModal } from "./modals/DiffModal";
 import { ApplyConfirmModal } from "./modals/ApplyConfirmModal";
 import { ApplyModal } from "./modals/ApplyModal";
-import { useServices } from "../hooks/useServices";
 import { useGlobalInput } from "../hooks/useGlobalInput";
 import { FocusManagerProvider, useFocusManagerContext } from "../contexts/FocusManagerContext";
+import { ServicesProvider, useServicesContext } from "../contexts/ServicesContext";
 
 const AppContent = () => {
-  const { services, loading, selectedService, selectService } = useServices();
+  const { loading, selectedService } = useServicesContext();
   const { focus } = useFocusManagerContext();
   const dimensions = useDimensions();
 
@@ -46,8 +46,6 @@ const AppContent = () => {
     );
   }
 
-  const listLimit = Math.max(5, dimensions.rows - 6);
-
   return (
     <Box flexDirection="column" height={dimensions.rows} width={dimensions.columns}>
       <Box height={3}>
@@ -55,7 +53,7 @@ const AppContent = () => {
       </Box>
 
       <Box height={dimensions.rows - 6}>
-        <Sidebar services={services} listLimit={listLimit} onSelect={selectService} />
+        <Sidebar />
         <ServiceDetails service={selectedService} />
       </Box>
       <Box height={3}>
@@ -63,10 +61,10 @@ const AppContent = () => {
       </Box>
 
       {focus === "help" && <HelpModal />}
-      {focus === "history" && <HistoryModal service={selectedService} />}
-      {focus === "diff" && <DiffModal service={selectedService} />}
-      {focus === "apply-confirm" && <ApplyConfirmModal service={selectedService} />}
-      {focus === "apply" && <ApplyModal service={selectedService} />}
+      {focus === "history" && <HistoryModal />}
+      {focus === "diff" && <DiffModal />}
+      {focus === "apply-confirm" && <ApplyConfirmModal />}
+      {focus === "apply" && <ApplyModal />}
     </Box>
   );
 };
@@ -74,7 +72,9 @@ const AppContent = () => {
 export const App = () => {
   return (
     <FocusManagerProvider>
-      <AppContent />
+      <ServicesProvider>
+        <AppContent />
+      </ServicesProvider>
     </FocusManagerProvider>
   );
 };
