@@ -8,6 +8,7 @@ interface ServicesContextType {
   selectedService: ServiceInfo | undefined;
   selectService: (service: ServiceInfo) => void;
   refreshService: (name: string) => Promise<void>;
+  refreshServices: () => Promise<void>;
 }
 
 const ServicesContext = createContext<ServicesContextType>({
@@ -16,6 +17,7 @@ const ServicesContext = createContext<ServicesContextType>({
   selectedService: undefined,
   selectService: () => {},
   refreshService: async () => {},
+  refreshServices: async () => {},
 });
 
 interface Props {
@@ -49,6 +51,14 @@ export const ServicesProvider = ({ children }: Props) => {
     }
   }, []);
 
+  const refreshServices = useCallback(async () => {
+    const data = await fetchAllData();
+    setServices(data);
+    if (data.length > 0) {
+      setSelectedService(data[0]);
+    }
+  }, []);
+
   return (
     <ServicesContext.Provider
       value={{
@@ -57,6 +67,7 @@ export const ServicesProvider = ({ children }: Props) => {
         selectedService,
         selectService: setSelectedService,
         refreshService,
+        refreshServices,
       }}
     >
       {children}

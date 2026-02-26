@@ -11,6 +11,7 @@ import { HistoryModal } from "./modals/HistoryModal";
 import { DiffModal } from "./modals/DiffModal";
 import { ApplyConfirmModal } from "./modals/ApplyConfirmModal";
 import { ApplyModal } from "./modals/ApplyModal";
+import { RefreshModal } from "./modals/RefreshModal";
 import { useGlobalInput } from "../hooks/useGlobalInput";
 import { FocusManagerProvider, useFocusManagerContext } from "../contexts/FocusManagerContext";
 import { ServicesProvider, useServicesContext } from "../contexts/ServicesContext";
@@ -65,6 +66,7 @@ const AppContent = () => {
       {focus === "diff" && <DiffModal />}
       {focus === "apply-confirm" && <ApplyConfirmModal />}
       {focus === "apply" && <ApplyModal />}
+      {focus === "refresh" && <RefreshModal />}
     </Box>
   );
 };

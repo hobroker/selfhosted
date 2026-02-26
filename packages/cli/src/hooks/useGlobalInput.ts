@@ -35,6 +35,10 @@ export const useGlobalInput = () => {
       setFocus("apply-confirm");
     }
 
+    if (ACTIONS.refresh.shortcut.includes(input)) {
+      setFocus("refresh");
+    }
+
     if (key.tab || key.rightArrow || key.leftArrow) {
       setFocus((prev) => (prev === "sidebar" ? "details" : "sidebar"));
     }

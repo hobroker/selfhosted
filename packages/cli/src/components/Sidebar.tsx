@@ -17,12 +17,13 @@ export const Sidebar = () => {
   const { services, selectService } = useServicesContext();
   const { focus, setFocus, isModalOpen } = useFocusManagerContext();
   const isFocused = focus === "sidebar";
-  const [selectedIndex, setSelectedIndex] = useState(1);
+  // index into `services` (no categories) — never points to a header
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const ref = useRef<DOMElement>(null);
 
   const servicesWithCategories = useMemo((): SidebarItem[] => {
     const result: SidebarItem[] = [];
-    let lastCategory = null;
+    let lastCategory: string | null = null;
     for (const service of services) {
       if (service.category !== lastCategory) {
         result.push({ _category: true, label: service.category });
@@ -32,6 +33,20 @@ export const Sidebar = () => {
     }
     return result;
   }, [services]);
+
+  // display index in servicesWithCategories, derived from services index
+  const displayIndex = useMemo(() => {
+    const service = services[selectedIndex];
+    if (!service) return 0;
+    return servicesWithCategories.findIndex((i) => !isCategoryItem(i) && (i as ServiceInfo).id === service.id);
+  }, [selectedIndex, services, servicesWithCategories]);
+
+  const handleChange = (displayIdx: number) => {
+    const item = servicesWithCategories[displayIdx];
+    if (!item || isCategoryItem(item)) return;
+    const serviceIdx = services.findIndex((s) => s.id === item.id);
+    if (serviceIdx !== -1) setSelectedIndex(serviceIdx);
+  };
 
   useEffect(() => {
     if (services.length > 0) {
@@ -59,8 +74,8 @@ export const Sidebar = () => {
           id="sidebar"
           ref={ref}
           items={servicesWithCategories}
-          selectedIndex={selectedIndex}
-          onChange={setSelectedIndex}
+          selectedIndex={displayIndex}
+          onChange={handleChange}
           isFocused={isFocused}
           isHidden={isModalOpen}
           onFocus={() => setFocus("sidebar")}
