@@ -39,6 +39,10 @@ export const useGlobalInput = () => {
       setFocus("refresh");
     }
 
+    if (ACTIONS["destroy-confirm"].shortcut.includes(input)) {
+      setFocus("destroy-confirm");
+    }
+
     if (key.tab || key.rightArrow || key.leftArrow) {
       setFocus((prev) => (prev === "sidebar" ? "details" : "sidebar"));
     }

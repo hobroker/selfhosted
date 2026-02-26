@@ -12,6 +12,8 @@ import { DiffModal } from "./modals/DiffModal";
 import { ApplyConfirmModal } from "./modals/ApplyConfirmModal";
 import { ApplyModal } from "./modals/ApplyModal";
 import { RefreshModal } from "./modals/RefreshModal";
+import { DestroyConfirmModal } from "./modals/DestroyConfirmModal";
+import { DestroyModal } from "./modals/DestroyModal";
 import { useGlobalInput } from "../hooks/useGlobalInput";
 import { FocusManagerProvider, useFocusManagerContext } from "../contexts/FocusManagerContext";
 import { ServicesProvider, useServicesContext } from "../contexts/ServicesContext";
@@ -67,6 +69,8 @@ const AppContent = () => {
       {focus === "apply-confirm" && <ApplyConfirmModal />}
       {focus === "apply" && <ApplyModal />}
       {focus === "refresh" && <RefreshModal />}
+      {focus === "destroy-confirm" && <DestroyConfirmModal />}
+      {focus === "destroy" && <DestroyModal />}
     </Box>
   );
 };

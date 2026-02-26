@@ -99,17 +99,17 @@ export const ACTIONS: Record<string, Action> = {
     description: "Refresh services",
     shortcut: ["r", "R"],
   },
-  // delete: {
-  //   label: "Delete",
-  //   description: "Delete this service",
-  //   shortcut: ["x", "X"],
-  // },
-  // ["delete-confirm"]: {
-  //   label: "Confirm Delete",
-  //   description: "Show confirmation modal before deleting",
-  //   shortcut: ["x", "X"],
-  //   hidden: true,
-  // },
+  destroy: {
+    label: "Destroy",
+    description: "Destroy this service",
+    shortcut: ["x", "X"],
+  },
+  ["destroy-confirm"]: {
+    label: "Confirm Destroy",
+    description: "Show confirmation modal before destroying",
+    shortcut: ["x", "X"],
+    hidden: true,
+  },
   // logs: {
   //   label: "Logs",
   //   description: "Show logs for this service",
