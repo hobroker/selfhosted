@@ -1,13 +1,29 @@
 import { Box, BoxProps, DOMElement, useInput } from "ink";
 import { ScrollView } from "ink-scroll-view";
-import { ReactNode, RefObject } from "react";
+import { ReactNode, RefObject, useRef } from "react";
 import { ScrollBar } from "@byteland/ink-scroll-bar";
+import { useOnClick } from "@ink-tools/ink-mouse";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { colors } from "../../constants";
 import { useScrollView } from "../../hooks/useScrollView";
 import { FocusState } from "../../types";
 
 const SCROLL_BUFFER = 2;
+
+const ItemWrapper = ({
+  index,
+  onChange,
+  children,
+}: {
+  index: number;
+  onChange: (i: number) => void;
+  children: ReactNode;
+}) => {
+  const ref = useRef<DOMElement>(null);
+  useOnClick(ref, () => onChange(index));
+
+  return <Box ref={ref}>{children}</Box>;
+};
 
 interface ScrollListProps<T> extends BoxProps {
   id: FocusState;
@@ -70,7 +86,11 @@ export const ScrollList = <T,>({
       <Box flexDirection="row">
         <ScrollView ref={scrollViewRef} flexGrow={1} {...scrollViewCallbacks} {...props}>
           <Box flexDirection="column">
-            {items.map((item, index) => renderItem(item, index, index === selectedIndex))}
+            {items.map((item, index) => (
+              <ItemWrapper key={index} index={index} onChange={onChange}>
+                {renderItem(item, index, index === selectedIndex)}
+              </ItemWrapper>
+            ))}
           </Box>
         </ScrollView>
         <ScrollBar

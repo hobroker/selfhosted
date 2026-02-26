@@ -9,7 +9,7 @@ interface ServiceItemProps {
 
 export const ServiceItem = ({ service, isSelected }: ServiceItemProps) => {
   return (
-    <Box key={service.id} paddingRight={1} justifyContent="space-between">
+    <Box key={service.id} paddingRight={1} justifyContent="space-between" width="100%">
       <Box backgroundColor={isSelected ? colors.primary : undefined} flexGrow={1}>
         <Text color={isSelected ? "black" : colors.text} bold={isSelected} wrap="truncate-end">
           {isSelected ? "> " : "  "}
