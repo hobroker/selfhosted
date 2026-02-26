@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Box, Text } from "ink";
 import { execa, Result } from "execa";
 import { colors } from "../../constants";
@@ -10,6 +10,8 @@ interface Props {
   cwd?: string;
   loadingText?: string;
   emptyText?: string;
+  onSuccess?: (result: Result) => void;
+  onError?: (error: Error) => void;
 }
 
 export const CommandOutput = ({
@@ -18,10 +20,16 @@ export const CommandOutput = ({
   cwd,
   loadingText = "Running command...",
   emptyText = "No output found",
+  onSuccess,
+  onError,
 }: Props) => {
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const onSuccessRef = useRef(onSuccess);
+  const onErrorRef = useRef(onError);
+  onSuccessRef.current = onSuccess;
+  onErrorRef.current = onError;
 
   useEffect(() => {
     let isMounted = true;
@@ -47,7 +55,8 @@ export const CommandOutput = ({
           });
         }
 
-        await subprocess;
+        const result = await subprocess;
+        if (isMounted) onSuccessRef.current?.(result);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         if (!err.all) {
@@ -55,6 +64,7 @@ export const CommandOutput = ({
         }
         // If there was output before the error (common for diffs),
         // we keep it as it's already in the 'output' state via stream
+        if (isMounted) onErrorRef.current?.(err);
       } finally {
         if (isMounted) {
           setLoading(false);
@@ -67,7 +77,8 @@ export const CommandOutput = ({
     return () => {
       isMounted = false;
     };
-  }, [args, command, cwd]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(args), command, cwd]);
 
   // Even while loading, we want to show the current output from the stream
   if (loading && !output) {

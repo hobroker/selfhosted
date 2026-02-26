@@ -33,29 +33,15 @@ const FocusManagerContext = createContext<FocustManagerContextType>({
 export const FocusManagerProvider = ({ children, initialFocus = "sidebar" }: Props) => {
   const [focus, setFocus] = useState<FocusState>(initialFocus);
   const isModalOpen = useMemo(() => Object.keys(ACTIONS).includes(focus), [focus]);
-  const [lastFocus, setLastFocus] = useState<FocusState>(initialFocus);
-
-  const setFocusWithHistory = useCallback((nextFocus: SetStateAction<FocusState>) => {
-    setFocus((prev) => {
-      const newFocus = typeof nextFocus === "function" ? nextFocus(prev) : nextFocus;
-
-      if (newFocus !== prev) {
-        setLastFocus(prev);
-      }
-
-      return newFocus;
-    });
-  }, []);
-
   const closeModals = useCallback(() => {
-    setFocus(lastFocus);
-  }, [lastFocus]);
+    setFocus(initialFocus);
+  }, [initialFocus]);
 
   return (
     <FocusManagerContext.Provider
       value={{
         focus,
-        setFocus: setFocusWithHistory,
+        setFocus,
         isModalOpen,
         closeModals,
       }}

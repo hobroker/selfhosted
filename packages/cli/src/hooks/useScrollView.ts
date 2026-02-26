@@ -1,7 +1,7 @@
 import { DOMElement, useInput } from "ink";
 import { ScrollViewRef } from "ink-scroll-view";
 import { RefObject, useEffect, useRef, useState } from "react";
-import { useOnMouseEnter, useOnMouseMove, useOnWheel } from "@ink-tools/ink-mouse";
+import { useOnMouseEnter, useOnMouseMove, useOnWheel, useOnClick } from "@ink-tools/ink-mouse";
 
 interface Options {
   ref: RefObject<DOMElement | null>;
@@ -58,6 +58,7 @@ export const useScrollView = ({
 
   useOnMouseEnter(ref, _onFocus);
   useOnMouseMove(ref, _onFocus);
+  useOnClick(ref, _onFocus);
 
   const scrollBy = (offset: number) => {
     const sv = scrollViewRef.current;

@@ -5,7 +5,7 @@ import { CommandOutput } from "../ui/CommandOutput";
 import { useServicesContext } from "../../contexts/ServicesContext";
 
 export const ApplyModal = () => {
-  const { selectedService } = useServicesContext();
+  const { selectedService, refreshService } = useServicesContext();
 
   if (!selectedService) {
     return (
@@ -23,6 +23,7 @@ export const ApplyModal = () => {
         cwd={selectedService.path}
         loadingText="Applying changes..."
         emptyText="No output from apply"
+        onSuccess={() => refreshService(selectedService.name)}
       />
     </Modal>
   );

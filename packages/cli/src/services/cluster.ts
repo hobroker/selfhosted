@@ -11,6 +11,17 @@ export async function fetchHelmReleases(): Promise<HelmRelease[]> {
   }
 }
 
+export async function fetchHelmRelease(name: string): Promise<HelmRelease | undefined> {
+  try {
+    const { stdout } = await execa("helm", ["list", "-A", "--filter", `^${name}$`, "--output", "json"]);
+    const releases = JSON.parse(stdout) as HelmRelease[];
+    return releases[0];
+  } catch (e) {
+    console.error(`Failed to fetch helm release "${name}"`, e);
+    return undefined;
+  }
+}
+
 export async function fetchPodImages(): Promise<Record<string, string>> {
   try {
     const { stdout } = await execa("kubectl", [
@@ -35,5 +46,24 @@ export async function fetchPodImages(): Promise<Record<string, string>> {
   } catch (e) {
     console.error("Failed to fetch pod images", e);
     return {};
+  }
+}
+
+export async function fetchPodImage(name: string): Promise<string | undefined> {
+  try {
+    const { stdout } = await execa("kubectl", [
+      "get",
+      "pods",
+      "-A",
+      "-l",
+      `app.kubernetes.io/instance=${name}`,
+      "-o",
+      'jsonpath={.items[0].spec.containers[0].image}',
+    ]);
+    if (!stdout) return undefined;
+    return stdout.split(":").pop() || undefined;
+  } catch (e) {
+    console.error(`Failed to fetch pod image for "${name}"`, e);
+    return undefined;
   }
 }

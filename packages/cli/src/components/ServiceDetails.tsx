@@ -62,6 +62,12 @@ export const ServiceDetails = ({ service }: Props) => {
                 {serviceStateLabelsMap[service.state].label}
               </Text>
             </Box>
+            <Box marginTop={1} marginBottom={1}>
+              <Text bold color={colors.muted}>
+                Path:{" "}
+              </Text>
+              <Text color={colors.dim}>{service.path}</Text>
+            </Box>
 
             <Box marginTop={1} flexDirection="column">
               <Text bold color={colors.warning}>
@@ -97,13 +103,6 @@ export const ServiceDetails = ({ service }: Props) => {
                   </StatusMessage>
                 </Box>
               </Box>
-            </Box>
-
-            <Box marginTop={1} marginBottom={1}>
-              <Text bold color={colors.muted}>
-                Path:{" "}
-              </Text>
-              <Text color={colors.dim}>{service.path}</Text>
             </Box>
 
             {service.readme ? (

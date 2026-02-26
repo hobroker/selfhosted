@@ -1,7 +1,7 @@
 import type { ServiceInfo } from "../types";
 import { getServiceState } from "../utils/getServiceState";
-import { fetchLocalCharts } from "./charts";
-import { fetchHelmReleases, fetchPodImages } from "./cluster";
+import { fetchLocalChart, fetchLocalCharts } from "./charts";
+import { fetchHelmRelease, fetchHelmReleases, fetchPodImage, fetchPodImages } from "./cluster";
 
 export async function fetchAllData(): Promise<ServiceInfo[]> {
   try {
@@ -35,21 +35,19 @@ export async function fetchAllData(): Promise<ServiceInfo[]> {
 
 export async function fetchServiceData(name: string): Promise<ServiceInfo | null> {
   try {
-    const [localServices, installed, podImages] = await Promise.all([
-      fetchLocalCharts(),
-      fetchHelmReleases(),
-      fetchPodImages(),
+    const [localSvc, inst, podImage] = await Promise.all([
+      fetchLocalChart(name),
+      fetchHelmRelease(name),
+      fetchPodImage(name),
     ]);
 
-    const localSvc = localServices.find((s) => s.name === name);
     if (!localSvc) return null;
 
-    const inst = installed.find((i) => i.name === name);
     const merged = inst
       ? {
           ...localSvc,
           installedChartVersion: inst.chart.split("-").pop(),
-          installedAppVersion: podImages[name] || inst.app_version || "unknown",
+          installedAppVersion: podImage || inst.app_version || "unknown",
         }
       : localSvc;
 
