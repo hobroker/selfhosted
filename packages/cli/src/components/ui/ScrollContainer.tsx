@@ -14,6 +14,7 @@ interface Props extends BoxProps, PropsWithChildren {
   isFocused?: boolean;
   isHidden?: boolean;
   onFocus?: () => void;
+  autoScrollToBottom?: boolean;
 }
 
 export const ScrollContainer = ({
@@ -23,6 +24,7 @@ export const ScrollContainer = ({
   isFocused = true,
   isHidden = false,
   onFocus,
+  autoScrollToBottom = false,
   ...props
 }: Props) => {
   const { scrollViewRef, scrollInfo, scrollViewCallbacks } = useScrollView({
@@ -31,6 +33,7 @@ export const ScrollContainer = ({
     isHidden,
     onFocus,
     keyboardScroll: true,
+    autoScrollToBottom,
   });
 
   useEffect(() => {

@@ -38,7 +38,9 @@ export const Sidebar = () => {
   const displayIndex = useMemo(() => {
     const service = services[selectedIndex];
     if (!service) return 0;
-    return servicesWithCategories.findIndex((i) => !isCategoryItem(i) && (i as ServiceInfo).id === service.id);
+    return servicesWithCategories.findIndex(
+      (i) => !isCategoryItem(i) && (i as ServiceInfo).id === service.id,
+    );
   }, [selectedIndex, services, servicesWithCategories]);
 
   const handleChange = (displayIdx: number) => {

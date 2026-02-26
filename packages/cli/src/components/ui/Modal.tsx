@@ -13,9 +13,18 @@ interface Props extends BoxProps {
   rightAdornment?: ReactNode;
   children: ReactNode;
   height?: number | string;
+  autoScrollToBottom?: boolean;
 }
 
-export const Modal = ({ title, rightAdornment, children, height, id, ...boxProps }: Props) => {
+export const Modal = ({
+  title,
+  rightAdornment,
+  children,
+  height,
+  id,
+  autoScrollToBottom = true,
+  ...boxProps
+}: Props) => {
   const dimensions = useDimensions();
   const ref = useRef<DOMElement>(null);
 
@@ -38,7 +47,7 @@ export const Modal = ({ title, rightAdornment, children, height, id, ...boxProps
         {...boxProps}
       >
         <ErrorBoundary>
-          <ScrollContainer ref={ref} id={id}>
+          <ScrollContainer ref={ref} id={id} autoScrollToBottom={autoScrollToBottom}>
             <Box paddingX={2} paddingY={1} flexDirection="column">
               {children}
             </Box>

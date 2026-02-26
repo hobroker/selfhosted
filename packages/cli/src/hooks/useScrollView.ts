@@ -9,6 +9,7 @@ interface Options {
   isHidden: boolean;
   onFocus?: () => void;
   keyboardScroll?: boolean;
+  autoScrollToBottom?: boolean;
 }
 
 interface ScrollViewCallbacks {
@@ -30,6 +31,7 @@ export const useScrollView = ({
   isHidden,
   onFocus,
   keyboardScroll = false,
+  autoScrollToBottom = false,
 }: Options): Result => {
   const [scrollInfo, setScrollInfo] = useState({
     scrollOffset: 0,
@@ -37,20 +39,32 @@ export const useScrollView = ({
     viewportHeight: 0,
   });
   const scrollViewRef = useRef<ScrollViewRef>(null);
+  const prevContentHeight = useRef(0);
+  const atBottom = useRef(true);
 
   useEffect(() => {
     const id = setInterval(() => {
       const sv = scrollViewRef.current;
       if (!sv || !isFocused || isHidden) return;
       sv.remeasure();
-      setScrollInfo({
-        scrollOffset: sv.getScrollOffset(),
-        contentHeight: sv.getContentHeight(),
-        viewportHeight: sv.getViewportHeight(),
-      });
+      const offset = sv.getScrollOffset();
+      const contentHeight = sv.getContentHeight();
+      const viewportHeight = sv.getViewportHeight();
+      const bottomOffset = sv.getBottomOffset();
+
+      setScrollInfo({ scrollOffset: offset, contentHeight, viewportHeight });
+
+      if (autoScrollToBottom) {
+        // Re-enable intent if user scrolled back to the actual bottom
+        if (bottomOffset <= 0 || offset >= bottomOffset) atBottom.current = true;
+        if (atBottom.current && contentHeight > prevContentHeight.current) {
+          sv.scrollToBottom();
+        }
+        prevContentHeight.current = contentHeight;
+      }
     }, 250);
     return () => clearInterval(id);
-  }, [isFocused, isHidden]);
+  }, [isFocused, isHidden, autoScrollToBottom]);
 
   const _onFocus = () => {
     if (!isFocused && !isHidden) onFocus?.();
@@ -65,6 +79,7 @@ export const useScrollView = ({
     if (!sv) return;
     if (sv.getContentHeight() <= sv.getViewportHeight()) return;
     const clamped = Math.min(offset, (sv.getBottomOffset() || 100) - sv.getScrollOffset());
+    if (offset < 0) atBottom.current = false;
     sv.scrollBy(clamped);
   };
 
@@ -80,8 +95,14 @@ export const useScrollView = ({
     if (key.downArrow) scrollBy(1);
     if (key.pageUp) scrollBy(-10);
     if (key.pageDown) scrollBy(10);
-    if (key.home) scrollViewRef.current?.scrollTo(0);
-    if (key.end) scrollViewRef.current?.scrollToBottom();
+    if (key.home) {
+      atBottom.current = false;
+      scrollViewRef.current?.scrollTo(0);
+    }
+    if (key.end) {
+      atBottom.current = true;
+      scrollViewRef.current?.scrollToBottom();
+    }
   });
 
   const scrollViewCallbacks: ScrollViewCallbacks = {

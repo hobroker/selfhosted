@@ -37,6 +37,12 @@ export const CommandOutput = ({
 
   useEffect(() => {
     let isMounted = true;
+    const subprocess = execa(command, args, {
+      cwd,
+      env: { ...process.env, FORCE_COLOR: "3" },
+      all: true,
+    });
+
     const runCommand = async () => {
       onStartRef.current?.();
       setLoading(true);
@@ -44,12 +50,6 @@ export const CommandOutput = ({
       setOutput("");
 
       try {
-        const subprocess = execa(command, args, {
-          cwd,
-          env: { ...process.env, FORCE_COLOR: "3" },
-          all: true,
-        });
-
         // Handle real-time streaming of stdout and stderr combined
         if (subprocess.all) {
           subprocess.all.on("data", (data) => {
@@ -81,6 +81,7 @@ export const CommandOutput = ({
 
     return () => {
       isMounted = false;
+      subprocess.kill();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(args), command, cwd]);
