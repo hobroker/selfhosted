@@ -11,14 +11,7 @@ interface ServicesContextType {
   refreshServices: () => Promise<void>;
 }
 
-const ServicesContext = createContext<ServicesContextType>({
-  services: [],
-  loading: true,
-  selectedService: undefined,
-  selectService: () => {},
-  refreshService: async () => {},
-  refreshServices: async () => {},
-});
+const ServicesContext = createContext<ServicesContextType | null>(null);
 
 interface Props {
   children: ReactNode;

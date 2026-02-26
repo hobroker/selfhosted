@@ -9,7 +9,7 @@ export const useGlobalInput = () => {
   useInput((input, key) => {
     if (isModalOpen) {
       const currentModalShortcut = ACTIONS[focus as keyof typeof ACTIONS]?.shortcut;
-      if (currentModalShortcut.includes(input) || key.escape || input === "q") {
+      if (currentModalShortcut?.includes(input) || key.escape || input === "q") {
         closeModals();
       }
       return;
@@ -41,6 +41,10 @@ export const useGlobalInput = () => {
 
     if (ACTIONS["destroy-confirm"].shortcut.includes(input)) {
       setFocus("destroy-confirm");
+    }
+
+    if (ACTIONS.logs.shortcut.includes(input)) {
+      setFocus("logs");
     }
 
     if (key.tab || key.rightArrow || key.leftArrow) {

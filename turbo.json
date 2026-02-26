@@ -2,13 +2,13 @@
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
     "typecheck": {
-      "cache": true
+      "cache": false
     },
     "lint": {
-      "cache": true
+      "cache": false
     },
     "format": {
-      "cache": true
+      "cache": false
     }
   }
 }

@@ -16,19 +16,14 @@ interface Props {
   initialFocus?: FocusState;
 }
 
-interface FocustManagerContextType {
+interface FocusManagerContextType {
   focus: FocusState;
   setFocus: Dispatch<SetStateAction<FocusState>>;
   isModalOpen: boolean;
   closeModals: () => void;
 }
 
-const FocusManagerContext = createContext<FocustManagerContextType>({
-  focus: "sidebar",
-  setFocus: () => {},
-  isModalOpen: false,
-  closeModals: () => {},
-});
+const FocusManagerContext = createContext<FocusManagerContextType | null>(null);
 
 export const FocusManagerProvider = ({ children, initialFocus = "sidebar" }: Props) => {
   const [focus, setFocus] = useState<FocusState>(initialFocus);

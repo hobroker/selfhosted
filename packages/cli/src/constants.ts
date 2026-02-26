@@ -62,10 +62,10 @@ export const colors = {
   background: "#000000", // Black
 };
 
-export const SECTIONS: Record<string, object> = {
+export const SECTIONS = {
   sidebar: {},
   details: {},
-};
+} as const;
 
 export const ACTIONS: Record<string, Action> = {
   apply: {
@@ -110,9 +110,9 @@ export const ACTIONS: Record<string, Action> = {
     shortcut: ["x", "X"],
     hidden: true,
   },
-  // logs: {
-  //   label: "Logs",
-  //   description: "Show logs for this service",
-  //   shortcut: ["l", "L"],
-  // },
-};
+  logs: {
+    label: "Logs",
+    description: "Show logs for this service",
+    shortcut: ["l", "L"],
+  },
+} as const;
