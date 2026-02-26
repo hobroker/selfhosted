@@ -33,6 +33,7 @@ export const ServicesProvider = ({ children }: Props) => {
       })
       .catch((err) => {
         console.error("Failed to load initial data:", err);
+        setLoading(false);
       });
   }, []);
 
