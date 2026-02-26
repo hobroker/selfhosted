@@ -13,14 +13,22 @@ const SCROLL_BUFFER = 2;
 const ItemWrapper = ({
   index,
   onChange,
+  isCategory,
   children,
 }: {
   index: number;
   onChange: (i: number) => void;
+  isCategory: boolean;
   children: ReactNode;
 }) => {
   const ref = useRef<DOMElement>(null);
-  useOnClick(ref, () => onChange(index));
+  useOnClick(ref, () => {
+    if (isCategory) {
+      onChange(index + 1);
+    } else {
+      onChange(index);
+    }
+  });
 
   return <Box ref={ref}>{children}</Box>;
 };
@@ -35,6 +43,7 @@ interface ScrollListProps<T> extends BoxProps {
   isFocused?: boolean;
   isHidden?: boolean;
   onFocus?: () => void;
+  isCategory?: (item: T) => boolean;
 }
 
 export const ScrollList = <T,>({
@@ -46,6 +55,7 @@ export const ScrollList = <T,>({
   isFocused = true,
   isHidden = false,
   onFocus,
+  isCategory,
   ...props
 }: ScrollListProps<T>) => {
   const { scrollViewRef, scrollInfo, scrollViewCallbacks } = useScrollView({
@@ -67,15 +77,24 @@ export const ScrollList = <T,>({
     }
   };
 
+  const findNext = (from: number, dir: 1 | -1): number => {
+    let i = from + dir;
+    while (i >= 0 && i < items.length) {
+      if (!isCategory?.(items[i])) return i;
+      i += dir;
+    }
+    return from;
+  };
+
   useInput((_, key) => {
     if (!isFocused) return;
     if (key.upArrow) {
-      const next = Math.max(0, selectedIndex - 1);
+      const next = findNext(selectedIndex, -1);
       onChange(next);
       scrollToIndex(next);
     }
     if (key.downArrow) {
-      const next = Math.min(items.length - 1, selectedIndex + 1);
+      const next = findNext(selectedIndex, 1);
       onChange(next);
       scrollToIndex(next);
     }
@@ -86,11 +105,14 @@ export const ScrollList = <T,>({
       <Box flexDirection="row" height="100%">
         <ScrollView ref={scrollViewRef} flexGrow={1} {...scrollViewCallbacks} {...props}>
           <Box flexDirection="column">
-            {items.map((item, index) => (
-              <ItemWrapper key={index} index={index} onChange={onChange}>
-                {renderItem(item, index, index === selectedIndex)}
-              </ItemWrapper>
-            ))}
+            {items.map((item, index) => {
+              const cat = isCategory?.(item) ?? false;
+              return (
+                <ItemWrapper key={index} index={index} onChange={onChange} isCategory={cat}>
+                  {renderItem(item, index, !cat && index === selectedIndex)}
+                </ItemWrapper>
+              );
+            })}
           </Box>
         </ScrollView>
         <ScrollBar
