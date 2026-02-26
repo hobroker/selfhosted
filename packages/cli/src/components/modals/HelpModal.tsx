@@ -26,6 +26,8 @@ export const HelpModal = () => (
     <ActionShortcut action={ACTIONS.diff} />
     <ActionShortcut action={ACTIONS.apply} />
     <ActionShortcut action={ACTIONS.refresh} />
+    <ActionShortcut action={ACTIONS.destroy} />
+    <ActionShortcut action={ACTIONS.logs} />
     <ShortcutEntry name="tab" description="Switch focus between Sidebar and Details" />
     <ShortcutEntry name="arrows" description="Navigate list or scroll details" />
     <ShortcutEntry name="mouse wheel" description="Scroll focused section" />

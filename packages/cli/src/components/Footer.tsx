@@ -26,33 +26,37 @@ const Shortcut = ({
   );
 };
 
-export const Footer = () => {
+const ShortcutAction = ({
+  actionKey,
+  action,
+}: {
+  actionKey: keyof typeof ACTIONS;
+  action?: (typeof ACTIONS)[keyof typeof ACTIONS];
+}) => {
   const { setFocus } = useFocusManagerContext();
+  const _action = action || ACTIONS[actionKey];
+  return (
+    <Shortcut
+      name={_action.shortcut[0]}
+      description={_action.label}
+      onClick={() => setFocus(actionKey)}
+    />
+  );
+};
+
+export const Footer = () => {
   return (
     <Box paddingX={1} borderStyle="single" borderColor={colors.primary} width="100%">
       <Shortcut name="q" description="quit" />
       <Shortcut name="tab" description="focus" />
       <Shortcut name="arrows" description="navigate" />
-      <Shortcut
-        name={ACTIONS.history.shortcut[0]}
-        description="history"
-        onClick={() => setFocus("history")}
-      />
-      <Shortcut
-        name={ACTIONS.diff.shortcut[0]}
-        description="diff"
-        onClick={() => setFocus("diff")}
-      />
-      <Shortcut
-        name={ACTIONS.apply.shortcut[0]}
-        description="apply"
-        onClick={() => setFocus("apply-confirm")}
-      />
-      <Shortcut
-        name={ACTIONS.help.shortcut[0]}
-        description="help"
-        onClick={() => setFocus("help")}
-      />
+      <ShortcutAction actionKey="refresh" />
+      <ShortcutAction actionKey="logs" />
+      <ShortcutAction actionKey="history" />
+      <ShortcutAction actionKey="diff" />
+      <ShortcutAction actionKey="apply-confirm" action={ACTIONS.apply} />
+      <ShortcutAction actionKey="destroy-confirm" action={ACTIONS.destroy} />
+      <ShortcutAction actionKey="help" />
     </Box>
   );
 };
