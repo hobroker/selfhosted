@@ -1,10 +1,81 @@
 # Selfhosted
 
-My selfhosted services
+A collection of Helm charts for self-hosted services running on [k3s](https://k3s.io/) (lightweight Kubernetes), managed with [Helmfile](https://helmfile.readthedocs.io/).
 
-## Setup
+## Prerequisites
 
-1. Install k3s https://docs.k3s.io/installation
+- [k3s](https://docs.k3s.io/installation) — lightweight Kubernetes cluster
+- [Helmfile](https://helmfile.readthedocs.io/en/latest/#installation) — declarative Helm chart management
+- [kubectl](https://kubernetes.io/docs/tasks/tools/) — Kubernetes CLI
+- [Node.js](https://nodejs.org/) + npm — optional, for the interactive CLI
+
+## Getting Started
+
+### 1. Install k3s
+
+Follow the [k3s Quick Start](https://docs.k3s.io/quick-start).
+
+### 2. Clone this repo
+
+```shell
+git clone https://github.com/hobroker/selfhosted.git
+cd selfhosted
+```
+
+### 3. Deploy a service
+
+Navigate to any chart directory and run `helmfile apply`. See [Deploying a Chart](#deploying-a-chart) for details.
+
+## Interactive CLI (optional)
+
+An interactive terminal UI is available for browsing and managing services:
+
+```shell
+npm install
+npm run cli
+```
+
+## Deploying a Chart
+
+Deploying a chart is usually just:
+
+```shell
+cd charts/<category>/<name>
+helmfile apply
+```
+
+Each chart's `values.yaml` contains a hardcoded domain (e.g. `jellyfin.hobroker.me`) — update it to your own domain before deploying. Some charts also require extra steps (config files, secrets, host volumes) — check the chart's `README.md` for details.
+
+## Deploy Order
+
+System charts must be deployed before any app charts. A typical bootstrap order:
+
+1. [cert-manager](charts/system/cert-manager) — TLS certificate management
+2. [traefik](charts/system/traefik) — ingress / reverse proxy
+3. [infisical-operator](charts/system/infisical-operator) — secret injection
+4. [reloader](charts/system/reloader) — rolling restarts on config/secret changes
+5. App charts (any order)
+
+## Host Directories
+
+Charts use host-mounted volumes for persistent data. The paths are hardcoded in each chart's `values.yaml` and must exist on the host before deploying. Common ones:
+
+- `/appdata/k3s/<service>` — per-service config and database
+- `/mnt/nebula` — media library (movies, TV shows, downloads)
+
+Create the directories you need before running `helmfile apply`, e.g.:
+
+```shell
+mkdir -p /appdata/k3s/jellyfin
+```
+
+## Secrets
+
+Secrets are managed via [Infisical](https://infisical.com/) using the [infisical-operator](charts/system/infisical-operator). Each chart's `README.md` lists the required secrets and the Infisical secret name they are sourced from.
+
+## Personal Setup
+
+This repository reflects a personal homelab setup. Domains, host paths, and secret names are all specific to this environment. If you're adapting it for your own use, expect to update `values.yaml` in each chart you deploy.
 
 ## Apps
 
@@ -74,8 +145,12 @@ My selfhosted services
 
 ## References
 
-- [K3s](https://k3s.io/) - Lightweight Kubernetes
+- [k3s](https://k3s.io/) — Lightweight Kubernetes
+- [Helmfile](https://helmfile.readthedocs.io/) — Declarative Helm chart management
+- [Infisical](https://infisical.com/) — Secret management
 
----
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 [![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-2.svg)](https://www.buymeacoffee.com/hobroker)
