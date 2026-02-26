@@ -19,7 +19,7 @@ export const HistoryModal = () => {
     <Modal id="history" title={`Helm History: ${selectedService.name}`} width="80%" height="80%">
       <CommandOutput
         command="helm"
-        args={["history", selectedService.name, "-n", "self"]}
+        args={["history", selectedService.name, "-n", selectedService.namespace]}
         loadingText="Fetching history..."
         emptyText="No history found"
       />

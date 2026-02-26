@@ -3,6 +3,7 @@ import { ServiceState, ACTIONS, SECTIONS } from "./constants";
 export interface ServiceInfo {
   id: string;
   name: string;
+  namespace: string;
   category: string;
   path: string;
   localChartVersion: string;

@@ -54,6 +54,7 @@ async function buildServiceInfo(hf: string): Promise<ServiceInfo> {
 
   return {
     id: name,
+    namespace: release?.namespace || "default",
     name,
     category,
     path,
