@@ -30,16 +30,10 @@ export const ServicesProvider = ({ children }: Props) => {
   useEffect(() => {
     fetchAllData()
       .then((data) => {
-        const sorted = data.sort((a, b) => {
-          if (a.category !== b.category) {
-            return a.category.localeCompare(b.category);
-          }
-          return a.name.localeCompare(b.name);
-        });
-        setServices(sorted);
+        setServices(data);
         setLoading(false);
-        if (sorted.length > 0) {
-          setSelectedService(sorted[0]);
+        if (data.length > 0) {
+          setSelectedService(data[0]);
         }
       })
       .catch((err) => {

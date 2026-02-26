@@ -16,7 +16,7 @@ export const ApplyModal = () => {
   }
 
   return (
-    <Modal id="apply" title={`Helmfile Apply: ${selectedService.name}`} width="95%" height={30}>
+    <Modal id="apply" title={`Helmfile Apply: ${selectedService.name}`} width="80%" height="80%">
       <CommandOutput
         command="helmfile"
         args={["--color", "apply"]}

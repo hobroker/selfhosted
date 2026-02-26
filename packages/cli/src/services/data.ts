@@ -26,7 +26,13 @@ export async function fetchAllData(): Promise<ServiceInfo[]> {
       .map((svc) => ({
         ...svc,
         state: getServiceState(svc),
-      }));
+      }))
+      .sort((a, b) => {
+        if (a.category !== b.category) {
+          return a.category.localeCompare(b.category);
+        }
+        return a.name.localeCompare(b.name);
+      });
   } catch (e) {
     console.error("Failed to fetch cluster data", e);
     return [];

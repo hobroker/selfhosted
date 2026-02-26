@@ -43,17 +43,19 @@ export const ServiceDetails = ({ service }: Props) => {
           isHidden={isModalOpen}
           onFocus={() => setFocus("details")}
         >
-          <Box flexDirection="column" paddingX={2}>
-            <Text bold color={colors.primary} underline>
-              {service.name}
-            </Text>
-            <Box marginTop={1}>
+          <Box flexDirection="column" paddingX={2} gap={1}>
+            <Box>
+              <Text bold color={colors.primary} underline>
+                {service.name}
+              </Text>
+            </Box>
+            <Box>
               <Text bold color={colors.muted}>
                 Category:{" "}
               </Text>
               <Text color={colors.text}>{service.category}</Text>
             </Box>
-            <Box marginTop={1} width="100%">
+            <Box>
               <Text bold color={colors.muted}>
                 Status:{" "}
               </Text>
@@ -62,19 +64,19 @@ export const ServiceDetails = ({ service }: Props) => {
                 {serviceStateLabelsMap[service.state].label}
               </Text>
             </Box>
-            <Box marginTop={1} marginBottom={1}>
+            <Box>
               <Text bold color={colors.muted}>
                 Path:{" "}
               </Text>
               <Text color={colors.dim}>{service.path}</Text>
             </Box>
 
-            <Box marginTop={1} flexDirection="column">
+            <Box flexDirection="column">
               <Text bold color={colors.warning}>
                 Versions Comparison
               </Text>
-              <Box marginLeft={2} flexDirection="column" marginTop={1}>
-                <Box flexDirection="column" marginBottom={1}>
+              <Box marginLeft={2} flexDirection="column">
+                <Box flexDirection="column">
                   <StatusMessage
                     variant={
                       service.localChartVersion === service.installedChartVersion
@@ -107,7 +109,7 @@ export const ServiceDetails = ({ service }: Props) => {
 
             {service.readme ? (
               <ErrorBoundary>
-                <Box flexDirection="column" marginTop={1} borderStyle="round" paddingX={1}>
+                <Box flexDirection="column" borderStyle="round" paddingX={1}>
                   <Box marginBottom={1} justifyContent="space-between">
                     <Text bold color={colors.accent}>
                       README.md
