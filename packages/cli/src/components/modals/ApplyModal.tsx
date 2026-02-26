@@ -1,11 +1,18 @@
 import { Text } from "ink";
 import { Modal } from "../ui/Modal";
-import { colors } from "../../constants";
+import { colors, commandStateLabelsMap } from "../../constants";
 import { CommandOutput } from "../ui/CommandOutput";
 import { useServicesContext } from "../../contexts/ServicesContext";
+import { useCommandHooks } from "../../hooks/useCommandHooks";
 
 export const ApplyModal = () => {
   const { selectedService, refreshService } = useServicesContext();
+  const { commandState, ...commandHooks } = useCommandHooks({
+    onSuccess: () => {
+      if (!selectedService) return;
+      return refreshService(selectedService.name);
+    },
+  });
 
   if (!selectedService) {
     return (
@@ -16,14 +23,20 @@ export const ApplyModal = () => {
   }
 
   return (
-    <Modal id="apply" title={`Helmfile Apply: ${selectedService.name}`} width="80%" height="80%">
+    <Modal
+      id="apply"
+      title={`Helmfile Apply: ${selectedService.name}`}
+      width="80%"
+      height="80%"
+      rightAdornment={commandStateLabelsMap[commandState].icon}
+    >
       <CommandOutput
         command="helmfile"
         args={["--color", "apply"]}
         cwd={selectedService.path}
         loadingText="Applying changes..."
         emptyText="No output from apply"
-        onSuccess={() => refreshService(selectedService.name)}
+        {...commandHooks}
       />
     </Modal>
   );

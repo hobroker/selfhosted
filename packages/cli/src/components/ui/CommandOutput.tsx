@@ -10,6 +10,7 @@ interface Props {
   cwd?: string;
   loadingText?: string;
   emptyText?: string;
+  onStart?: () => void;
   onSuccess?: (result: Result) => void;
   onError?: (error: Error) => void;
 }
@@ -20,20 +21,24 @@ export const CommandOutput = ({
   cwd,
   loadingText = "Running command...",
   emptyText = "No output found",
+  onStart,
   onSuccess,
   onError,
 }: Props) => {
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const onStartRef = useRef(onStart);
   const onSuccessRef = useRef(onSuccess);
   const onErrorRef = useRef(onError);
+  onStartRef.current = onStart;
   onSuccessRef.current = onSuccess;
   onErrorRef.current = onError;
 
   useEffect(() => {
     let isMounted = true;
     const runCommand = async () => {
+      onStartRef.current?.();
       setLoading(true);
       setError(null);
       setOutput("");

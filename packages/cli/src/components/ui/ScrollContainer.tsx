@@ -53,7 +53,6 @@ export const ScrollContainer = ({
         >
           <Box flexDirection="column">
             {children}
-            <Box height={2} />
           </Box>
         </ScrollView>
         <ScrollBar

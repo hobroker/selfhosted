@@ -83,7 +83,7 @@ export const ScrollList = <T,>({
 
   return (
     <ErrorBoundary>
-      <Box flexDirection="row">
+      <Box flexDirection="row" height="100%">
         <ScrollView ref={scrollViewRef} flexGrow={1} {...scrollViewCallbacks} {...props}>
           <Box flexDirection="column">
             {items.map((item, index) => (

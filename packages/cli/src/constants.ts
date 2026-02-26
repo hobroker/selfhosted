@@ -6,6 +6,32 @@ export enum ServiceState {
   UpdateAvailable = "update-available",
 }
 
+export enum CommandState {
+  Idle,
+  Loading,
+  Success,
+  Error,
+}
+
+export const commandStateLabelsMap = {
+  [CommandState.Idle]: {
+    icon: "⏸️",
+    label: "Idle",
+  },
+  [CommandState.Loading]: {
+    icon: "⏳",
+    label: "Loading",
+  },
+  [CommandState.Success]: {
+    icon: "✅",
+    label: "Success",
+  },
+  [CommandState.Error]: {
+    icon: "❌",
+    label: "Error",
+  },
+};
+
 export const serviceStateLabelsMap = {
   [ServiceState.Installed]: {
     icon: "✅",

@@ -10,11 +10,12 @@ import { ScrollContainer } from "./ScrollContainer";
 interface Props extends BoxProps {
   id: FocusState;
   title: string;
+  rightAdornment?: ReactNode;
   children: ReactNode;
   height?: number | string;
 }
 
-export const Modal = ({ title, children, height, id, ...boxProps }: Props) => {
+export const Modal = ({ title, rightAdornment, children, height, id, ...boxProps }: Props) => {
   const dimensions = useDimensions();
   const ref = useRef<DOMElement>(null);
 
@@ -28,6 +29,7 @@ export const Modal = ({ title, children, height, id, ...boxProps }: Props) => {
     >
       <TitledBox
         title={title}
+        rightAdornment={rightAdornment}
         backgroundColor={colors.background}
         isFocused
         height={height}
