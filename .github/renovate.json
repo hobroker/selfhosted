@@ -1,15 +1,19 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    ":semanticCommitTypeAll(chore)",
-    "schedule:monthly"
-  ],
+  "extends": ["config:recommended", ":semanticCommitTypeAll(chore)", "schedule:monthly"],
   "assignees": ["hobroker"],
   "platformAutomerge": false,
   "separateMajorMinor": false,
   "separateMultipleMajor": false,
   "packageRules": [
+    {
+      "matchFileNames": ["packages/cli/**"],
+      "groupName": "NPM cli package"
+    },
+    {
+      "matchFileNames": ["packages/docs/**"],
+      "groupName": "NPM docs package"
+    },
     {
       "matchManagers": ["npm"],
       "groupName": "NPM packages"

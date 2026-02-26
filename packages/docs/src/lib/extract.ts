@@ -7,25 +7,15 @@ const logError = (key: string, message: string) =>
 const logSuccess = (key: string, message: string) =>
   console.log(chalk.greenBright(chalk.bold(`    ${key}: `), message));
 
-export const extractName = (
-  markdown: string,
-  { name }: Pick<ChartService, "name">,
-) => {
-  const value = markdown
-    .split("\n")[0]
-    .replaceAll("`", "")
-    .replaceAll("#", "")
-    .trim();
+export const extractName = (markdown: string, { name }: Pick<ChartService, "name">) => {
+  const value = markdown.split("\n")[0].replaceAll("`", "").replaceAll("#", "").trim();
 
   if (!value) {
     logError("Name", "missing");
   }
 
   if (value !== name) {
-    logError(
-      "Name",
-      `mismatch between directory name and README.md name: ${name} !== ${value}`,
-    );
+    logError("Name", `mismatch between directory name and README.md name: ${name} !== ${value}`);
   }
 
   logSuccess("Name", value);

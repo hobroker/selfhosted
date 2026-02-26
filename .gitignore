@@ -5,3 +5,6 @@
 **/default_values.yaml
 
 node_modules
+.turbo
+
+.claude
