@@ -40,9 +40,7 @@ async function buildServiceInfo(hf: string): Promise<ServiceInfo> {
     const valuesContent = await readFile(join(path, "values.yaml"), "utf-8");
     const values = YAML.parse(valuesContent);
     localAppVersion =
-      values?.controllers?.main?.containers?.main?.image?.tag ||
-      values?.image?.tag ||
-      "unknown";
+      values?.controllers?.main?.containers?.main?.image?.tag || values?.image?.tag || "unknown";
   } catch {
     // Ignore if values.yaml doesn't exist
   }

@@ -33,7 +33,6 @@ export const Sidebar = () => {
     return result;
   }, [services]);
 
-
   useEffect(() => {
     if (services.length > 0) {
       selectService(services[selectedIndex]);

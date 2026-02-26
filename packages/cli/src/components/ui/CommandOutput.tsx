@@ -82,7 +82,7 @@ export const CommandOutput = ({
     return () => {
       isMounted = false;
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(args), command, cwd]);
 
   // Even while loading, we want to show the current output from the stream

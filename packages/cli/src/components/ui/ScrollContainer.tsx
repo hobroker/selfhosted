@@ -45,15 +45,8 @@ export const ScrollContainer = ({
   return (
     <ErrorBoundary>
       <Box flexDirection="row">
-        <ScrollView
-          ref={scrollViewRef}
-          flexGrow={1}
-          {...scrollViewCallbacks}
-          {...props}
-        >
-          <Box flexDirection="column">
-            {children}
-          </Box>
+        <ScrollView ref={scrollViewRef} flexGrow={1} {...scrollViewCallbacks} {...props}>
+          <Box flexDirection="column">{children}</Box>
         </ScrollView>
         <ScrollBar
           placement="inset"

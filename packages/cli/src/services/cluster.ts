@@ -13,7 +13,14 @@ export async function fetchHelmReleases(): Promise<HelmRelease[]> {
 
 export async function fetchHelmRelease(name: string): Promise<HelmRelease | undefined> {
   try {
-    const { stdout } = await execa("helm", ["list", "-A", "--filter", `^${name}$`, "--output", "json"]);
+    const { stdout } = await execa("helm", [
+      "list",
+      "-A",
+      "--filter",
+      `^${name}$`,
+      "--output",
+      "json",
+    ]);
     const releases = JSON.parse(stdout) as HelmRelease[];
     return releases[0];
   } catch (e) {
@@ -58,7 +65,7 @@ export async function fetchPodImage(name: string): Promise<string | undefined> {
       "-l",
       `app.kubernetes.io/instance=${name}`,
       "-o",
-      'jsonpath={.items[0].spec.containers[0].image}',
+      "jsonpath={.items[0].spec.containers[0].image}",
     ]);
     if (!stdout) return undefined;
     return stdout.split(":").pop() || undefined;
