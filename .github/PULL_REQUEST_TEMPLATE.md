@@ -1,3 +1,10 @@
 ### Summary
 
-_Please explain the changes you made._
+<!-- What does this PR do and why? -->
+
+### Type
+
+- [ ] New chart
+- [ ] Chart update (version bump / config change)
+- [ ] Bug fix
+- [ ] Other
