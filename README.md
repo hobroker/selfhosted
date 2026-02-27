@@ -2,6 +2,8 @@
 
 A collection of Helm charts for self-hosted services running on [k3s](https://k3s.io/) (lightweight Kubernetes), managed with [Helmfile](https://helmfile.readthedocs.io/).
 
+> **Personal Setup:** This repository reflects a personal homelab setup. Domains, host paths, and secret names are all specific to this environment. If you're adapting it for your own use, expect to update `values.yaml` in each chart you deploy.
+
 ## Prerequisites
 
 - [k3s](https://docs.k3s.io/installation) — lightweight Kubernetes cluster
@@ -26,26 +28,6 @@ cd selfhosted
 
 Navigate to any chart directory and run `helmfile apply`. See [Deploying a Chart](#deploying-a-chart) for details.
 
-## Interactive CLI (optional)
-
-An interactive terminal UI is available for browsing and managing services:
-
-```shell
-npm install
-npm run cli
-```
-
-## Deploying a Chart
-
-Deploying a chart is usually just:
-
-```shell
-cd charts/<category>/<name>
-helmfile apply
-```
-
-Each chart's `values.yaml` contains a hardcoded domain (e.g. `jellyfin.hobroker.me`) — update it to your own domain before deploying. Some charts also require extra steps (config files, secrets, host volumes) — check the chart's `README.md` for details.
-
 ## Deploy Order
 
 System charts must be deployed before any app charts. A typical bootstrap order:
@@ -69,13 +51,35 @@ Create the directories you need before running `helmfile apply`, e.g.:
 mkdir -p /appdata/k3s/jellyfin
 ```
 
+A custom `StorageClass` with a `Retain` reclaim policy is also available to prevent data loss when PVCs are deleted:
+
+```shell
+kubectl apply -f charts/system/local-path-retain.yaml
+```
+
 ## Secrets
 
 Secrets are managed via [Infisical](https://infisical.com/) using the [infisical-operator](charts/system/infisical-operator). Each chart's `README.md` lists the required secrets and the Infisical secret name they are sourced from.
 
-## Personal Setup
+## Deploying a Chart
 
-This repository reflects a personal homelab setup. Domains, host paths, and secret names are all specific to this environment. If you're adapting it for your own use, expect to update `values.yaml` in each chart you deploy.
+Deploying a chart is usually just:
+
+```shell
+cd charts/<category>/<name>
+helmfile apply
+```
+
+Each chart's `values.yaml` contains a hardcoded domain (e.g. `jellyfin.hobroker.me`) — update it to your own domain before deploying. Some charts also require extra steps (config files, secrets, host volumes) — check the chart's `README.md` for details.
+
+## Interactive CLI (optional)
+
+An interactive terminal UI is available for browsing and managing services:
+
+```shell
+npm install
+npm run cli
+```
 
 ## Apps
 
