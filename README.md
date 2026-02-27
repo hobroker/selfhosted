@@ -4,6 +4,30 @@ A collection of Helm charts for self-hosted services running on [k3s](https://k3
 
 > **Personal Setup:** This repository reflects a personal homelab setup. Domains, host paths, and secret names are all specific to this environment. If you're adapting it for your own use, expect to update `values.yaml` in each chart you deploy.
 
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+  - [1. Install k3s](#1-install-k3s)
+  - [2. Clone this repo](#2-clone-this-repo)
+  - [3. Deploy a service](#3-deploy-a-service)
+- [Deploy Order](#deploy-order)
+- [Host Directories](#host-directories)
+- [Secrets](#secrets)
+- [Deploying a Chart](#deploying-a-chart)
+- [Interactive CLI (optional)](#interactive-cli-optional)
+- [Docs Generation](#docs-generation)
+- [Apps](#apps)
+  - [Automation](#automation)
+  - [Demo](#demo)
+  - [Development](#development)
+  - [Downloads](#downloads)
+  - [Media](#media)
+  - [Monitoring](#monitoring)
+  - [System](#system)
+- [References](#references)
+- [Contributing](#contributing)
+
 ## Prerequisites
 
 - [k3s](https://docs.k3s.io/installation) — lightweight Kubernetes cluster
@@ -45,12 +69,6 @@ Charts use host-mounted volumes for persistent data. The paths are hardcoded in 
 - `/appdata/k3s/<service>` — per-service config and database
 - `/mnt/nebula` — media library (movies, TV shows, downloads)
 
-Create the directories you need before running `helmfile apply`, e.g.:
-
-```shell
-mkdir -p /appdata/k3s/jellyfin
-```
-
 A custom `StorageClass` with a `Retain` reclaim policy is also available to prevent data loss when PVCs are deleted:
 
 ```shell
@@ -79,6 +97,14 @@ An interactive terminal UI is available for browsing and managing services:
 ```shell
 npm install
 npm run cli
+```
+
+## Docs Generation
+
+The [Apps](#apps) tables in this README are auto-generated from chart metadata. To regenerate them after adding or updating a chart:
+
+```shell
+npm run generate
 ```
 
 ## Apps
