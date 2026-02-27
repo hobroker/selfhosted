@@ -59,7 +59,7 @@ System charts must be deployed before any app charts. A typical bootstrap order:
 1. [cert-manager](charts/system/cert-manager) — TLS certificate management
 2. [traefik](charts/system/traefik) — ingress / reverse proxy
 3. [infisical-operator](charts/system/infisical-operator) — secret injection
-4. [reloader](charts/system/reloader) — rolling restarts on config/secret changes
+4. [reloader](charts/system/reloader) — rolling restarts on config/secret changes (optional)
 5. App charts (any order)
 
 ## Host Directories
