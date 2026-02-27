@@ -79,6 +79,8 @@ This repository reflects a personal homelab setup. Domains, host paths, and secr
 
 ## Apps
 
+<!-- apps:start -->
+
 ### Automation
 
 | Chart                                    | Description                                                 | Source Code                            |
@@ -140,6 +142,8 @@ This repository reflects a personal homelab setup. Domains, host paths, and secr
 | [rancher](charts/system/rancher)                       | Container management platform                                             | https://github.com/rancher/rancher           |
 | [reloader](charts/system/reloader)                     | K8s controller to that does rolling upgrades on ConfigMap/Secrets changes | https://github.com/stakater/Reloader         |
 | [traefik](charts/system/traefik)                       | HTTP reverse proxy and load balancer                                      | https://github.com/traefik/traefik           |
+
+<!-- apps:end -->
 
 ---
 
