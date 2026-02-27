@@ -4,11 +4,13 @@ import reactPlugin from "eslint-plugin-react";
 import hooksPlugin from "eslint-plugin-react-hooks";
 import unusedImports from "eslint-plugin-unused-imports";
 import prettierConfig from "eslint-config-prettier";
+import { defineConfig } from "eslint/config";
 import globals from "globals";
 
-export default tseslint.config(
+export default defineConfig(
   eslint.configs.recommended,
-  ...tseslint.configs.recommended,
+  tseslint.configs.recommended,
+  prettierConfig,
   {
     files: ["**/*.{ts,tsx}"],
     plugins: {
@@ -38,10 +40,10 @@ export default tseslint.config(
       "unused-imports/no-unused-vars": [
         "warn",
         {
-          "vars": "all",
-          "varsIgnorePattern": "^_",
-          "args": "after-used",
-          "argsIgnorePattern": "^_",
+          vars: "all",
+          varsIgnorePattern: "^_",
+          args: "after-used",
+          argsIgnorePattern: "^_",
         },
       ],
     },
@@ -51,8 +53,7 @@ export default tseslint.config(
       },
     },
   },
-  prettierConfig,
   {
-    ignores: ["node_modules/", "dist/", "charts/", "packages/cli/dist/"],
+    ignores: ["node_modules/", "charts/"],
   },
 );
