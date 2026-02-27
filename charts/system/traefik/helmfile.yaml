@@ -4,7 +4,7 @@ repositories:
 
 releases:
   - name: traefik
-    version: 39.0.0
+    version: 39.0.2
     atomic: true
     namespace: kube-system
     chart: traefik/traefik
