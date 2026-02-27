@@ -1,6 +1,7 @@
 import { markdownTable } from "markdown-table";
-import { capitalize } from "./capitalize";
 import { ChartData } from "./types";
+
+const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
 
 export const generateMarkdownTable = (data: ChartData[]) => {
   const content = data.map(({ category, services }) => {

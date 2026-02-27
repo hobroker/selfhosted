@@ -1,8 +1,8 @@
-import { parseCharts } from "./lib/parseCharts";
-import { insertMarkdown } from "./lib/insertMarkdown";
-import { generateMarkdownTable } from "./lib/generateMarkdownTable";
+import { parseCharts } from "./parseCharts";
+import { insertMarkdown } from "./insertMarkdown";
+import { generateMarkdownTable } from "./generateMarkdownTable";
 import chalk from "chalk";
-import { getCharts } from "./lib/getCharts";
+import { getCharts } from "./getCharts";
 import { stat } from "fs/promises";
 import { join } from "path";
 
