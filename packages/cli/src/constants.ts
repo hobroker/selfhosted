@@ -67,7 +67,7 @@ export const SECTIONS = {
   details: {},
 } as const;
 
-export const ACTIONS = {
+export const ACTIONS: Record<string, Action> = {
   apply: {
     label: "Apply",
     description: "Run helmfile apply for this service",
@@ -115,4 +115,4 @@ export const ACTIONS = {
     description: "Show logs for this service",
     shortcut: ["l", "L"],
   },
-} as const satisfies Record<string, Action>;
+} as const;
