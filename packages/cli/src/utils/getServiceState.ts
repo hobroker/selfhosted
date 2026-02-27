@@ -7,9 +7,9 @@ export const getServiceState = (service: ServiceInfo): ServiceState => {
   }
 
   if (
-    service.installedChartVersion === service.localChartVersion &&
-    (service.localAppVersion === "unknown" ||
-      service.installedAppVersion === service.localAppVersion)
+    service.installedChartVersion === service.localChartVersion ||
+    service.installedAppVersion === service.localAppVersion ||
+    service.installedChartVersion === service.installedAppVersion
   ) {
     return ServiceState.Installed;
   }
