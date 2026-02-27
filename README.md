@@ -2,6 +2,32 @@
 
 A collection of Helm charts for self-hosted services running on [k3s](https://k3s.io/) (lightweight Kubernetes), managed with [Helmfile](https://helmfile.readthedocs.io/).
 
+> **Personal Setup:** This repository reflects a personal homelab setup. Domains, host paths, and secret names are all specific to this environment. If you're adapting it for your own use, expect to update `values.yaml` in each chart you deploy.
+
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+  - [1. Install k3s](#1-install-k3s)
+  - [2. Clone this repo](#2-clone-this-repo)
+  - [3. Deploy a service](#3-deploy-a-service)
+- [Deploy Order](#deploy-order)
+- [Host Directories](#host-directories)
+- [Secrets](#secrets)
+- [Deploying a Chart](#deploying-a-chart)
+- [Interactive CLI (optional)](#interactive-cli-optional)
+- [Docs Generation](#docs-generation)
+- [Apps](#apps)
+  - [Automation](#automation)
+  - [Demo](#demo)
+  - [Development](#development)
+  - [Downloads](#downloads)
+  - [Media](#media)
+  - [Monitoring](#monitoring)
+  - [System](#system)
+- [References](#references)
+- [Contributing](#contributing)
+
 ## Prerequisites
 
 - [k3s](https://docs.k3s.io/installation) — lightweight Kubernetes cluster
@@ -26,14 +52,32 @@ cd selfhosted
 
 Navigate to any chart directory and run `helmfile apply`. See [Deploying a Chart](#deploying-a-chart) for details.
 
-## Interactive CLI (optional)
+## Deploy Order
 
-An interactive terminal UI is available for browsing and managing services:
+System charts must be deployed before any app charts. A typical bootstrap order:
+
+1. [cert-manager](charts/system/cert-manager) — TLS certificate management
+2. [traefik](charts/system/traefik) — ingress / reverse proxy
+3. [infisical-operator](charts/system/infisical-operator) — secret injection
+4. [reloader](charts/system/reloader) — rolling restarts on config/secret changes (optional)
+5. App charts (any order)
+
+## Host Directories
+
+Charts use host-mounted volumes for persistent data. The paths are hardcoded in each chart's `values.yaml` and must exist on the host before deploying. Common ones:
+
+- `/appdata/k3s/<service>` — per-service config and database
+- `/mnt/nebula` — media library (movies, TV shows, downloads)
+
+A custom `StorageClass` with a `Retain` reclaim policy is also available to prevent data loss when PVCs are deleted:
 
 ```shell
-npm install
-npm run cli
+kubectl apply -f charts/system/local-path-retain.yaml
 ```
+
+## Secrets
+
+Secrets are managed via [Infisical](https://infisical.com/) using the [infisical-operator](charts/system/infisical-operator). Each chart's `README.md` lists the required secrets and the Infisical secret name they are sourced from.
 
 ## Deploying a Chart
 
@@ -46,36 +90,22 @@ helmfile apply
 
 Each chart's `values.yaml` contains a hardcoded domain (e.g. `jellyfin.hobroker.me`) — update it to your own domain before deploying. Some charts also require extra steps (config files, secrets, host volumes) — check the chart's `README.md` for details.
 
-## Deploy Order
+## Interactive CLI (optional)
 
-System charts must be deployed before any app charts. A typical bootstrap order:
-
-1. [cert-manager](charts/system/cert-manager) — TLS certificate management
-2. [traefik](charts/system/traefik) — ingress / reverse proxy
-3. [infisical-operator](charts/system/infisical-operator) — secret injection
-4. [reloader](charts/system/reloader) — rolling restarts on config/secret changes
-5. App charts (any order)
-
-## Host Directories
-
-Charts use host-mounted volumes for persistent data. The paths are hardcoded in each chart's `values.yaml` and must exist on the host before deploying. Common ones:
-
-- `/appdata/k3s/<service>` — per-service config and database
-- `/mnt/nebula` — media library (movies, TV shows, downloads)
-
-Create the directories you need before running `helmfile apply`, e.g.:
+An interactive terminal UI is available for browsing and managing services:
 
 ```shell
-mkdir -p /appdata/k3s/jellyfin
+npm install
+npm run cli
 ```
 
-## Secrets
+## Docs Generation
 
-Secrets are managed via [Infisical](https://infisical.com/) using the [infisical-operator](charts/system/infisical-operator). Each chart's `README.md` lists the required secrets and the Infisical secret name they are sourced from.
+The [Apps](#apps) tables in this README are auto-generated from chart metadata. To regenerate them after adding or updating a chart:
 
-## Personal Setup
-
-This repository reflects a personal homelab setup. Domains, host paths, and secret names are all specific to this environment. If you're adapting it for your own use, expect to update `values.yaml` in each chart you deploy.
+```shell
+npm run generate
+```
 
 ## Apps
 

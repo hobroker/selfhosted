@@ -13,6 +13,16 @@ kubectl apply -f config
 helmfile apply
 ```
 
+### Configuration
+
+Update `externalIPs` in `values.yaml` to match your node's IP before deploying:
+
+```yaml
+service:
+  externalIPs:
+    - 192.168.x.x
+```
+
 ### Helm values
 
 | chart     | values.yaml                                                                   |
