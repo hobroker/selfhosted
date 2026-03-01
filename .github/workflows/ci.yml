@@ -27,7 +27,7 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v4.3.1
       - name: Install Helmfile
-        uses: helmfile/helmfile-action@v2.2.0
+        uses: helmfile/helmfile-action@v2.3.0
       - name: Helmfile lint
         run: |
           set -e
