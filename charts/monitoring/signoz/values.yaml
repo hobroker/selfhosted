@@ -1,0 +1,27 @@
+frontend:
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    hosts:
+      - host: signoz.hobroker.me
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+
+clickhouse:
+  persistence:
+    storageClass: local-path-retain
+    size: 20Gi
+
+alertmanager:
+  persistence:
+    storageClass: local-path-retain
+    size: 1Gi
+
+otelCollector:
+  enabled: true
+
+otelCollectorMetrics:
+  enabled: true
