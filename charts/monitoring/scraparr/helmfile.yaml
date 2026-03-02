@@ -4,7 +4,7 @@ repositories:
 
 releases:
   - name: scraparr
-    version: 4.0.1
+    version: 4.6.2
     atomic: true
     namespace: monitoring
     chart: bjw-s/app-template
