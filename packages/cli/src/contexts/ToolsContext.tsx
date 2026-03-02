@@ -1,65 +1,75 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { isToolAvailable } from "../services/tools";
+import { isToolAvailable, findAvailableTool } from "../services/tools";
 
-const REQUIRED_TOOLS: Record<string, string> = {
+const REQUIRED_TOOLS = {
   helm: "helm list, helm history",
   kubectl: "kubectl get pods",
-};
+} as const;
 
-const OPTIONAL_TOOLS: Record<string, string> = {
+const OPTIONAL_TOOLS = {
   helmfile: "apply/diff/destroy actions",
   stern: "log streaming (Logs modal)",
+} as const;
+
+const TOOL_ALIASES: Record<string, string[]> = {
+  stern: ["stern", "kubectl-stern"],
 };
+
+type ToolKey = keyof typeof REQUIRED_TOOLS | keyof typeof OPTIONAL_TOOLS;
 
 interface ToolsState {
   ready: boolean;
-  missing: string[];
-  unavailable: string[];
-  isAvailable: (tool: string) => boolean;
+  missing: ToolKey[];
+  unavailable: ToolKey[];
+  isAvailable: (tool: ToolKey) => boolean;
+  getCommand: (tool: ToolKey) => string | null;
 }
-
-type ToolCheckResult = {
-  tool: string;
-  available: boolean;
-};
-
-const extractUnavailableTools = (results: ToolCheckResult[]) =>
-  results.filter((result) => !result.available).map((result) => result.tool);
-
-const checkToolsAvailability = async (tools: Record<string, string>): Promise<ToolCheckResult[]> =>
-  Promise.all(
-    Object.keys(tools).map(async (tool) => ({
-      tool,
-      available: await isToolAvailable(tool),
-    })),
-  );
 
 const ToolsContext = createContext<ToolsState | undefined>(undefined);
 
 export const ToolsProvider = ({ children }: { children: React.ReactNode }) => {
   const [ready, setReady] = useState(false);
-  const [missing, setMissing] = useState<string[]>([]);
-  const [unavailable, setUnavailable] = useState<string[]>([]);
+  const [missing, setMissing] = useState<ToolKey[]>([]);
+  const [unavailable, setUnavailable] = useState<ToolKey[]>([]);
+  const [resolvedCommands, setResolvedCommands] = useState<Partial<Record<ToolKey, string>>>({});
 
   useEffect(() => {
     const check = async () => {
       const [requiredResults, optionalResults] = await Promise.all([
-        checkToolsAvailability(REQUIRED_TOOLS),
-        checkToolsAvailability(OPTIONAL_TOOLS),
+        Promise.all(
+          Object.keys(REQUIRED_TOOLS).map(async (tool) => ({
+            tool: tool as ToolKey,
+            found: (await isToolAvailable(tool)) ? tool : null,
+          })),
+        ),
+        Promise.all(
+          Object.keys(OPTIONAL_TOOLS).map(async (tool) => ({
+            tool: tool as ToolKey,
+            found: await findAvailableTool(TOOL_ALIASES[tool] ?? [tool]),
+          })),
+        ),
       ]);
 
-      setMissing(extractUnavailableTools(requiredResults));
-      setUnavailable(extractUnavailableTools(optionalResults));
+      setMissing(requiredResults.filter((r) => !r.found).map((r) => r.tool));
+      setUnavailable(optionalResults.filter((r) => !r.found).map((r) => r.tool));
+      setResolvedCommands(
+        Object.fromEntries(
+          [...requiredResults, ...optionalResults]
+            .filter((r) => r.found)
+            .map((r) => [r.tool, r.found!]),
+        ),
+      );
       setReady(true);
     };
 
     check();
   }, []);
 
-  const isAvailable = (tool: string) => !missing.includes(tool) && !unavailable.includes(tool);
+  const isAvailable = (tool: ToolKey) => !missing.includes(tool) && !unavailable.includes(tool);
+  const getCommand = (tool: ToolKey) => resolvedCommands[tool] ?? null;
 
   return (
-    <ToolsContext.Provider value={{ ready, missing, unavailable, isAvailable }}>
+    <ToolsContext.Provider value={{ ready, missing, unavailable, isAvailable, getCommand }}>
       {children}
     </ToolsContext.Provider>
   );

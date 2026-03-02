@@ -1,14 +1,26 @@
 import { Box, Text } from "ink";
 import { ConfirmModal } from "../ui/ConfirmModal";
+import { Modal } from "../ui/Modal";
+import { ToolUnavailableMessage } from "../ui/ToolUnavailableMessage";
 import { colors } from "../../constants";
 import { useFocusManagerContext } from "../../contexts/FocusManagerContext";
 import { useServicesContext } from "../../contexts/ServicesContext";
+import { useToolsContext } from "../../contexts/ToolsContext";
 
 export const ApplyConfirmModal = () => {
   const { selectedService } = useServicesContext();
+  const { isAvailable } = useToolsContext();
   const { setFocus, closeModals } = useFocusManagerContext();
 
   if (!selectedService) return null;
+
+  if (!isAvailable("helmfile")) {
+    return (
+      <Modal id="apply-confirm" title="Confirm Apply" width="40%" minWidth={70}>
+        <ToolUnavailableMessage tool="helmfile" />
+      </Modal>
+    );
+  }
 
   return (
     <ConfirmModal
