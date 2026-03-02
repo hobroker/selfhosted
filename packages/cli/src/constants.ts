@@ -1,3 +1,4 @@
+import figures from "figures";
 import { Action } from "./types";
 
 export enum ServiceState {
@@ -15,34 +16,37 @@ export enum CommandState {
 
 export const commandStateLabelsMap = {
   [CommandState.Idle]: {
-    icon: "⏸️",
+    icon: figures.bullet,
     label: "Idle",
   },
   [CommandState.Loading]: {
-    icon: "⏳",
+    icon: figures.ellipsis,
     label: "Loading",
   },
   [CommandState.Success]: {
-    icon: "✅",
+    icon: figures.tick,
     label: "Success",
   },
   [CommandState.Error]: {
-    icon: "❌",
+    icon: figures.cross,
     label: "Error",
   },
 };
 
 export const serviceStateLabelsMap = {
   [ServiceState.Installed]: {
-    icon: "✅",
+    icon: figures.tick,
+    iconColor: "green",
     label: "Installed",
   },
   [ServiceState.NotInstalled]: {
-    icon: "❌",
+    icon: figures.cross,
+    iconColor: "red",
     label: "Not Installed",
   },
   [ServiceState.UpdateAvailable]: {
-    icon: "⚠️",
+    icon: figures.warning,
+    iconColor: "yellow",
     label: "Update Available",
   },
 };
