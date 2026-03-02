@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { Box, Text } from "ink";
+import { Box } from "ink";
 import { useDimensions } from "../hooks/useDimensions";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 import { ServiceDetails } from "./ServiceDetails";
 import { Footer } from "./Footer";
-import { colors } from "../constants";
 import { HelpModal } from "./modals/HelpModal";
 import { HistoryModal } from "./modals/HistoryModal";
 import { DiffModal } from "./modals/DiffModal";
@@ -22,6 +21,7 @@ import { ToolsProvider, useToolsContext } from "../contexts/ToolsContext";
 import { ToolsCheckingScreen } from "./screens/ToolsCheckingScreen";
 import { MissingToolsScreen } from "./screens/MissingToolsScreen";
 import { UnavailableToolsScreen } from "./screens/UnavailableToolsScreen";
+import { Spinner } from "@inkjs/ui";
 
 const AppContent = () => {
   const { loading, selectedService } = useServicesContext();
@@ -43,14 +43,9 @@ const AppContent = () => {
   }, []);
 
   if (!ready) return <ToolsCheckingScreen />;
-  if (missing.length > 0) return <MissingToolsScreen missing={missing} />;
+  if (missing.length > 0) return <MissingToolsScreen />;
   if (unavailable.length > 0 && !warningDismissed) {
-    return (
-      <UnavailableToolsScreen
-        unavailable={unavailable}
-        onDismiss={() => setWarningDismissed(true)}
-      />
-    );
+    return <UnavailableToolsScreen onDismiss={() => setWarningDismissed(true)} />;
   }
 
   if (loading) {
@@ -62,7 +57,7 @@ const AppContent = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <Text color={colors.warning}>Loading charts and cluster data...</Text>
+        <Spinner label="Loading charts and cluster data..." />
       </Box>
     );
   }

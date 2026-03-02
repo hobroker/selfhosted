@@ -8,6 +8,6 @@ interface Props {
 
 export const ToolUnavailableMessage = ({ tool }: Props) => (
   <Text color={colors.warning}>
-    {tool} is not installed — {OPTIONAL_TOOLS[tool]} will not be available
+    {tool} is not installed — {OPTIONAL_TOOLS[tool].description} will not be available
   </Text>
 );

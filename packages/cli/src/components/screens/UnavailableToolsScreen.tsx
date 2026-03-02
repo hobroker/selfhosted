@@ -2,14 +2,14 @@ import { Box, Text, useInput } from "ink";
 import figures from "figures";
 import { useDimensions } from "../../hooks/useDimensions";
 import { colors } from "../../constants";
-import { OPTIONAL_TOOLS } from "../../contexts/ToolsContext";
+import { OPTIONAL_TOOLS, useToolsContext } from "../../contexts/ToolsContext";
 
 interface Props {
-  unavailable: string[];
   onDismiss: () => void;
 }
 
-export const UnavailableToolsScreen = ({ unavailable, onDismiss }: Props) => {
+export const UnavailableToolsScreen = ({ onDismiss }: Props) => {
+  const { unavailable } = useToolsContext();
   const dimensions = useDimensions();
 
   useInput((input) => {
@@ -33,7 +33,9 @@ export const UnavailableToolsScreen = ({ unavailable, onDismiss }: Props) => {
           <Text color={colors.text} bold>
             {tool}
           </Text>
-          <Text color={colors.muted}>— {OPTIONAL_TOOLS[tool]} will not be available</Text>
+          <Text color={colors.muted}>
+            — {OPTIONAL_TOOLS[tool].description} will not be available
+          </Text>
         </Box>
       ))}
       <Text color={colors.dim}>Press any key to continue...</Text>

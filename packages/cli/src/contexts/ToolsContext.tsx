@@ -1,21 +1,43 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { isToolAvailable, findAvailableTool } from "../services/tools";
+import { findAvailableTool } from "../services/tools";
 
-const REQUIRED_TOOLS = {
-  helm: "helm list, helm history",
-  kubectl: "kubectl get pods",
+export const REQUIRED_TOOLS: Record<string, Tool> = {
+  helm: {
+    description: "Helm is used for managing Kubernetes applications",
+  },
+  kubectl: {
+    description: "Kubectl is used for interacting with Kubernetes clusters",
+  },
 } as const;
 
-const OPTIONAL_TOOLS = {
-  helmfile: "apply/diff/destroy actions",
-  stern: "log streaming (Logs modal)",
+export const OPTIONAL_TOOLS: Record<string, Tool> = {
+  helmfile: {
+    description: "Helmfile is used for managing Helm charts",
+  },
+  stern: {
+    description: "Stern is used for log streaming (Logs modal)",
+  },
 } as const;
 
-const TOOL_ALIASES: Record<string, string[]> = {
+const TOOL_ALIASES: Record<ToolKey, string[]> = {
   stern: ["stern", "kubectl-stern"],
 };
 
+interface Tool {
+  description: string;
+}
+
 type ToolKey = keyof typeof REQUIRED_TOOLS | keyof typeof OPTIONAL_TOOLS;
+
+const checkTools = (
+  tools: Record<ToolKey, Tool>,
+): Promise<{ tool: ToolKey; found: string | null }[]> =>
+  Promise.all(
+    Object.keys(tools).map(async (tool) => ({
+      tool,
+      found: await findAvailableTool(TOOL_ALIASES[tool] ?? [tool]),
+    })),
+  );
 
 interface ToolsState {
   ready: boolean;
@@ -36,18 +58,8 @@ export const ToolsProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const check = async () => {
       const [requiredResults, optionalResults] = await Promise.all([
-        Promise.all(
-          Object.keys(REQUIRED_TOOLS).map(async (tool) => ({
-            tool: tool as ToolKey,
-            found: (await isToolAvailable(tool)) ? tool : null,
-          })),
-        ),
-        Promise.all(
-          Object.keys(OPTIONAL_TOOLS).map(async (tool) => ({
-            tool: tool as ToolKey,
-            found: await findAvailableTool(TOOL_ALIASES[tool] ?? [tool]),
-          })),
-        ),
+        checkTools(REQUIRED_TOOLS),
+        checkTools(OPTIONAL_TOOLS),
       ]);
 
       setMissing(requiredResults.filter((r) => !r.found).map((r) => r.tool));
@@ -80,5 +92,3 @@ export const useToolsContext = () => {
   if (!ctx) throw new Error("useToolsContext must be used within ToolsProvider");
   return ctx;
 };
-
-export { REQUIRED_TOOLS, OPTIONAL_TOOLS };

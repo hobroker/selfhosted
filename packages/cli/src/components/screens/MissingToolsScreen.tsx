@@ -2,13 +2,10 @@ import { Box, Text } from "ink";
 import figures from "figures";
 import { useDimensions } from "../../hooks/useDimensions";
 import { colors } from "../../constants";
-import { REQUIRED_TOOLS } from "../../contexts/ToolsContext";
+import { REQUIRED_TOOLS, useToolsContext } from "../../contexts/ToolsContext";
 
-interface Props {
-  missing: string[];
-}
-
-export const MissingToolsScreen = ({ missing }: Props) => {
+export const MissingToolsScreen = () => {
+  const { missing } = useToolsContext();
   const dimensions = useDimensions();
 
   return (
@@ -28,7 +25,7 @@ export const MissingToolsScreen = ({ missing }: Props) => {
           <Text color={colors.text} bold>
             {tool}
           </Text>
-          <Text color={colors.muted}>— used for: {REQUIRED_TOOLS[tool]}</Text>
+          <Text color={colors.muted}>— used for: {REQUIRED_TOOLS[tool].description}</Text>
         </Box>
       ))}
       <Text color={colors.muted}>Install the missing tools and try again.</Text>
