@@ -3,14 +3,24 @@ import { Modal } from "../ui/Modal";
 import { colors } from "../../constants";
 import { CommandOutput } from "../ui/CommandOutput";
 import { useServicesContext } from "../../contexts/ServicesContext";
+import { useToolsContext } from "../../contexts/ToolsContext";
 
 export const LogsModal = () => {
   const { selectedService } = useServicesContext();
+  const { isAvailable } = useToolsContext();
 
   if (!selectedService) {
     return (
       <Modal id="logs" title="Logs" width="40%" minWidth={70}>
         <Text color={colors.error}>No service selected</Text>
+      </Modal>
+    );
+  }
+
+  if (!isAvailable("stern")) {
+    return (
+      <Modal id="logs" title={`Logs: ${selectedService.name}`} width="40%" minWidth={70}>
+        <Text color={colors.warning}>stern is not installed — log streaming is unavailable</Text>
       </Modal>
     );
   }

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Box, Text } from "ink";
 import { useDimensions } from "../hooks/useDimensions";
 import { Header } from "./Header";
@@ -18,11 +18,17 @@ import { LogsModal } from "./modals/LogsModal";
 import { useGlobalInput } from "../hooks/useGlobalInput";
 import { FocusManagerProvider, useFocusManagerContext } from "../contexts/FocusManagerContext";
 import { ServicesProvider, useServicesContext } from "../contexts/ServicesContext";
+import { ToolsProvider, useToolsContext } from "../contexts/ToolsContext";
+import { ToolsCheckingScreen } from "./screens/ToolsCheckingScreen";
+import { MissingToolsScreen } from "./screens/MissingToolsScreen";
+import { UnavailableToolsScreen } from "./screens/UnavailableToolsScreen";
 
 const AppContent = () => {
   const { loading, selectedService } = useServicesContext();
   const { focus } = useFocusManagerContext();
+  const { ready, missing, unavailable } = useToolsContext();
   const dimensions = useDimensions();
+  const [warningDismissed, setWarningDismissed] = useState(false);
 
   useGlobalInput();
 
@@ -35,6 +41,17 @@ const AppContent = () => {
       process.stdout.write("\x1b[?1049l");
     };
   }, []);
+
+  if (!ready) return <ToolsCheckingScreen />;
+  if (missing.length > 0) return <MissingToolsScreen missing={missing} />;
+  if (unavailable.length > 0 && !warningDismissed) {
+    return (
+      <UnavailableToolsScreen
+        unavailable={unavailable}
+        onDismiss={() => setWarningDismissed(true)}
+      />
+    );
+  }
 
   if (loading) {
     return (
@@ -79,10 +96,12 @@ const AppContent = () => {
 
 export const App = () => {
   return (
-    <FocusManagerProvider>
-      <ServicesProvider>
-        <AppContent />
-      </ServicesProvider>
-    </FocusManagerProvider>
+    <ToolsProvider>
+      <FocusManagerProvider>
+        <ServicesProvider>
+          <AppContent />
+        </ServicesProvider>
+      </FocusManagerProvider>
+    </ToolsProvider>
   );
 };
