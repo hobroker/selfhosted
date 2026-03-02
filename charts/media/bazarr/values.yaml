@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: linuxserver/bazarr
-          tag: 1.5.5
+          tag: 1.5.6
           pullPolicy: IfNotPresent
 
 service:
