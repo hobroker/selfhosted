@@ -2,10 +2,16 @@ import { Text } from "ink";
 import { Modal } from "../ui/Modal";
 import { colors } from "../../constants";
 import { CommandOutput } from "../ui/CommandOutput";
+import { ToolUnavailableMessage } from "../ui/ToolUnavailableMessage";
 import { useServicesContext } from "../../contexts/ServicesContext";
+import { useToolsContext } from "../../contexts/ToolsContext";
+import { useCommandHooks } from "../../hooks/useCommandHooks";
+import { CommandStateBadge } from "../ui/CommandStateBadge";
 
 export const LogsModal = () => {
   const { selectedService } = useServicesContext();
+  const { isAvailable, getCommand } = useToolsContext();
+  const { commandState, ...commandHooks } = useCommandHooks();
 
   if (!selectedService) {
     return (
@@ -15,20 +21,28 @@ export const LogsModal = () => {
     );
   }
 
+  if (!isAvailable("stern")) {
+    return (
+      <Modal id="logs" title={`Logs: ${selectedService.name}`} width="40%" minWidth={70}>
+        <ToolUnavailableMessage tool="stern" />
+      </Modal>
+    );
+  }
+
   return (
-    <Modal id="logs" title={`Logs: ${selectedService.name}`} width="80%" height="80%">
+    <Modal
+      id="logs"
+      title={`Logs: ${selectedService.name}`}
+      width="80%"
+      height="80%"
+      rightAdornment={<CommandStateBadge state={commandState} />}
+    >
       <CommandOutput
-        command="kubectl"
-        args={[
-          "stern",
-          "--color",
-          "always",
-          "--namespace",
-          selectedService.namespace,
-          selectedService.name,
-        ]}
+        command={getCommand("stern")!}
+        args={["--color", "always", "--namespace", selectedService.namespace, selectedService.name]}
         loadingText="Waiting for logs..."
         emptyText="No logs found"
+        {...commandHooks}
       />
     </Modal>
   );

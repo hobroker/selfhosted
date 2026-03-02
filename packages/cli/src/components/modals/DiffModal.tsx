@@ -1,12 +1,16 @@
 import { Text } from "ink";
 import { Modal } from "../ui/Modal";
-import { colors, commandStateLabelsMap } from "../../constants";
+import { colors } from "../../constants";
 import { CommandOutput } from "../ui/CommandOutput";
+import { ToolUnavailableMessage } from "../ui/ToolUnavailableMessage";
 import { useServicesContext } from "../../contexts/ServicesContext";
+import { useToolsContext } from "../../contexts/ToolsContext";
 import { useCommandHooks } from "../../hooks/useCommandHooks";
+import { CommandStateBadge } from "../ui/CommandStateBadge";
 
 export const DiffModal = () => {
   const { selectedService } = useServicesContext();
+  const { isAvailable } = useToolsContext();
   const { commandState, ...commandHooks } = useCommandHooks();
 
   if (!selectedService) {
@@ -17,13 +21,21 @@ export const DiffModal = () => {
     );
   }
 
+  if (!isAvailable("helmfile")) {
+    return (
+      <Modal id="diff" title={`Helmfile Diff: ${selectedService.name}`} width="40%" minWidth={70}>
+        <ToolUnavailableMessage tool="helmfile" />
+      </Modal>
+    );
+  }
+
   return (
     <Modal
       id="diff"
       title={`Helmfile Diff: ${selectedService.name}`}
       width="80%"
       height="80%"
-      rightAdornment={commandStateLabelsMap[commandState].icon}
+      rightAdornment={<CommandStateBadge state={commandState} />}
     >
       <CommandOutput
         command="helmfile"
