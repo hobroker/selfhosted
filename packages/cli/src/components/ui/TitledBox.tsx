@@ -26,22 +26,14 @@ export const TitledBox = forwardRef<DOMElement, Props>(
           justifyContent="space-between"
         >
           <Box paddingX={1}>
-            <Text
-              color={isFocused ? colors.primary : colors.dim}
-              bold={isFocused}
-              backgroundColor={colors.background}
-            >
+            <Text color={isFocused ? colors.primary : colors.dim} bold={isFocused}>
               {` ${title.toUpperCase()} `}
             </Text>
           </Box>
           {rightAdornment && (
             <Box paddingX={1} marginRight={2}>
               {typeof rightAdornment === "string" ? (
-                <Text
-                  color={isFocused ? colors.primary : colors.dim}
-                  bold={isFocused}
-                  backgroundColor={colors.background}
-                >
+                <Text color={isFocused ? colors.primary : colors.dim} bold={isFocused}>
                   {` ${rightAdornment} `}
                 </Text>
               ) : (

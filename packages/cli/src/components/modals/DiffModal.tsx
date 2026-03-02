@@ -1,9 +1,10 @@
 import { Text } from "ink";
 import { Modal } from "../ui/Modal";
-import { colors, commandStateLabelsMap } from "../../constants";
+import { colors } from "../../constants";
 import { CommandOutput } from "../ui/CommandOutput";
 import { useServicesContext } from "../../contexts/ServicesContext";
 import { useCommandHooks } from "../../hooks/useCommandHooks";
+import { CommandStateBadge } from "../ui/CommandStateBadge";
 
 export const DiffModal = () => {
   const { selectedService } = useServicesContext();
@@ -23,7 +24,7 @@ export const DiffModal = () => {
       title={`Helmfile Diff: ${selectedService.name}`}
       width="80%"
       height="80%"
-      rightAdornment={commandStateLabelsMap[commandState].icon}
+      rightAdornment={<CommandStateBadge state={commandState} />}
     >
       <CommandOutput
         command="helmfile"

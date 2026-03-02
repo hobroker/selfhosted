@@ -59,10 +59,10 @@ export const ServiceDetails = ({ service }: Props) => {
               <Text bold color={colors.muted}>
                 Status:{" "}
               </Text>
-              <Text color={colors.text}>
-                {serviceStateLabelsMap[service.state].icon}{" "}
-                {serviceStateLabelsMap[service.state].label}
+              <Text color={serviceStateLabelsMap[service.state].iconColor}>
+                {serviceStateLabelsMap[service.state].icon}
               </Text>
+              <Text color={colors.text}> {serviceStateLabelsMap[service.state].label}</Text>
             </Box>
             <Box>
               <Text bold color={colors.muted}>

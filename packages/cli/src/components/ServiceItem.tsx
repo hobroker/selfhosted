@@ -17,7 +17,9 @@ export const ServiceItem = ({ service, isSelected }: ServiceItemProps) => {
         </Text>
       </Box>
       <Box flexShrink={0} marginLeft={1}>
-        <Text>{serviceStateLabelsMap[service.state].icon}</Text>
+        <Text color={serviceStateLabelsMap[service.state].iconColor}>
+          {serviceStateLabelsMap[service.state].icon}
+        </Text>
       </Box>
     </Box>
   );
