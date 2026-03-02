@@ -18,6 +18,22 @@ interface ToolsState {
   isAvailable: (tool: string) => boolean;
 }
 
+type ToolCheckResult = {
+  tool: string;
+  available: boolean;
+};
+
+const extractUnavailableTools = (results: ToolCheckResult[]) =>
+  results.filter((result) => !result.available).map((result) => result.tool);
+
+const checkToolsAvailability = async (tools: Record<string, string>): Promise<ToolCheckResult[]> =>
+  Promise.all(
+    Object.keys(tools).map(async (tool) => ({
+      tool,
+      available: await isToolAvailable(tool),
+    })),
+  );
+
 const ToolsContext = createContext<ToolsState | undefined>(undefined);
 
 export const ToolsProvider = ({ children }: { children: React.ReactNode }) => {
@@ -28,22 +44,12 @@ export const ToolsProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const check = async () => {
       const [requiredResults, optionalResults] = await Promise.all([
-        Promise.all(
-          Object.keys(REQUIRED_TOOLS).map(async (tool) => ({
-            tool,
-            available: await isToolAvailable(tool),
-          })),
-        ),
-        Promise.all(
-          Object.keys(OPTIONAL_TOOLS).map(async (tool) => ({
-            tool,
-            available: await isToolAvailable(tool),
-          })),
-        ),
+        checkToolsAvailability(REQUIRED_TOOLS),
+        checkToolsAvailability(OPTIONAL_TOOLS),
       ]);
 
-      setMissing(requiredResults.filter((r) => !r.available).map((r) => r.tool));
-      setUnavailable(optionalResults.filter((r) => !r.available).map((r) => r.tool));
+      setMissing(extractUnavailableTools(requiredResults));
+      setUnavailable(extractUnavailableTools(optionalResults));
       setReady(true);
     };
 
