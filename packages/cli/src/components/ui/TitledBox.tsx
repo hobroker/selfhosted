@@ -33,11 +33,7 @@ export const TitledBox = forwardRef<DOMElement, Props>(
           {rightAdornment && (
             <Box paddingX={1} marginRight={2}>
               {typeof rightAdornment === "string" ? (
-                <Text
-                  color={isFocused ? colors.primary : colors.dim}
-                  bold={isFocused}
-                  backgroundColor={colors.background}
-                >
+                <Text color={isFocused ? colors.primary : colors.dim} bold={isFocused}>
                   {` ${rightAdornment} `}
                 </Text>
               ) : (
