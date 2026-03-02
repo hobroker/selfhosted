@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Box } from "ink";
 import { useDimensions } from "../hooks/useDimensions";
 import { Header } from "./Header";
@@ -26,23 +26,28 @@ import { Spinner } from "@inkjs/ui";
 const AppContent = () => {
   const { loading, selectedService } = useServicesContext();
   const { focus } = useFocusManagerContext();
-  const { ready, missing, unavailable } = useToolsContext();
+  const { isReady, missing, unavailable } = useToolsContext();
   const dimensions = useDimensions();
   const [warningDismissed, setWarningDismissed] = useState(false);
 
   useGlobalInput();
 
-  useEffect(() => {
-    // Enter alternate buffer (fullscreen)
-    process.stdout.write("\x1b[?1049h");
+  const inMainView = useMemo(() => {
+    const toolsReady = isReady && missing.length === 0;
+    const warningsCleared = unavailable.length === 0 || warningDismissed;
+    return toolsReady && warningsCleared && !loading;
+  }, [isReady, missing.length, unavailable.length, warningDismissed, loading]);
 
+  useEffect(() => {
+    if (!inMainView) return;
+
+    process.stdout.write("\x1b[?1049h");
     return () => {
-      // Exit alternate buffer
       process.stdout.write("\x1b[?1049l");
     };
-  }, []);
+  }, [inMainView]);
 
-  if (!ready) return <ToolsCheckingScreen />;
+  if (!isReady) return <ToolsCheckingScreen />;
   if (missing.length > 0) return <MissingToolsScreen />;
   if (unavailable.length > 0 && !warningDismissed) {
     return <UnavailableToolsScreen onDismiss={() => setWarningDismissed(true)} />;
@@ -50,13 +55,7 @@ const AppContent = () => {
 
   if (loading) {
     return (
-      <Box
-        padding={1}
-        height={dimensions.rows}
-        width={dimensions.columns}
-        justifyContent="center"
-        alignItems="center"
-      >
+      <Box padding={1}>
         <Spinner label="Loading charts and cluster data..." />
       </Box>
     );

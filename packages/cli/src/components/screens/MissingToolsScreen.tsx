@@ -1,21 +1,19 @@
-import { Box, Text } from "ink";
+import { Box, Text, useApp } from "ink";
 import figures from "figures";
-import { useDimensions } from "../../hooks/useDimensions";
 import { colors } from "../../constants";
 import { REQUIRED_TOOLS, useToolsContext } from "../../contexts/ToolsContext";
+import { useEffect } from "react";
 
 export const MissingToolsScreen = () => {
   const { missing } = useToolsContext();
-  const dimensions = useDimensions();
+  const { exit } = useApp();
+
+  useEffect(() => {
+    exit();
+  }, [exit]);
 
   return (
-    <Box
-      padding={1}
-      height={dimensions.rows}
-      width={dimensions.columns}
-      flexDirection="column"
-      gap={1}
-    >
+    <Box padding={1} flexDirection="column" gap={1}>
       <Text color={colors.error} bold>
         Missing required tools
       </Text>

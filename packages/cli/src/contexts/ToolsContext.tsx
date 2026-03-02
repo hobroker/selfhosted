@@ -40,7 +40,7 @@ const checkTools = (
   );
 
 interface ToolsState {
-  ready: boolean;
+  isReady: boolean;
   missing: ToolKey[];
   unavailable: ToolKey[];
   isAvailable: (tool: ToolKey) => boolean;
@@ -50,7 +50,7 @@ interface ToolsState {
 const ToolsContext = createContext<ToolsState | undefined>(undefined);
 
 export const ToolsProvider = ({ children }: { children: React.ReactNode }) => {
-  const [ready, setReady] = useState(false);
+  const [isReady, setIsReady] = useState(false);
   const [missing, setMissing] = useState<ToolKey[]>([]);
   const [unavailable, setUnavailable] = useState<ToolKey[]>([]);
   const [resolvedCommands, setResolvedCommands] = useState<Partial<Record<ToolKey, string>>>({});
@@ -71,7 +71,7 @@ export const ToolsProvider = ({ children }: { children: React.ReactNode }) => {
             .map((r) => [r.tool, r.found!]),
         ),
       );
-      setReady(true);
+      setIsReady(true);
     };
 
     check();
@@ -81,7 +81,7 @@ export const ToolsProvider = ({ children }: { children: React.ReactNode }) => {
   const getCommand = (tool: ToolKey) => resolvedCommands[tool] ?? null;
 
   return (
-    <ToolsContext.Provider value={{ ready, missing, unavailable, isAvailable, getCommand }}>
+    <ToolsContext.Provider value={{ isReady, missing, unavailable, isAvailable, getCommand }}>
       {children}
     </ToolsContext.Provider>
   );

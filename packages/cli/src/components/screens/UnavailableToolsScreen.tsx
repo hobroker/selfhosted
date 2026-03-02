@@ -1,6 +1,5 @@
 import { Box, Text, useInput } from "ink";
 import figures from "figures";
-import { useDimensions } from "../../hooks/useDimensions";
 import { colors } from "../../constants";
 import { OPTIONAL_TOOLS, useToolsContext } from "../../contexts/ToolsContext";
 
@@ -10,7 +9,6 @@ interface Props {
 
 export const UnavailableToolsScreen = ({ onDismiss }: Props) => {
   const { unavailable } = useToolsContext();
-  const dimensions = useDimensions();
 
   useInput((input) => {
     if (input) onDismiss();
@@ -19,8 +17,6 @@ export const UnavailableToolsScreen = ({ onDismiss }: Props) => {
   return (
     <Box
       padding={1}
-      height={dimensions.rows}
-      width={dimensions.columns}
       flexDirection="column"
       gap={1}
     >
