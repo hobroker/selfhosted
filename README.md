@@ -113,13 +113,14 @@ npm run generate
 
 ### Automation
 
-| Chart                                    | Description                                                 | Source Code                            |
-| ---------------------------------------- | ----------------------------------------------------------- | -------------------------------------- |
-| [apprise](charts/automation/apprise)     | Push Notifications that work with just about every platform | https://github.com/caronc/apprise      |
-| [fileflows](charts/automation/fileflows) | File processing application                                 | https://github.com/revenz/FileFlows    |
-| [n8n](charts/automation/n8n)             | Workflow automation platform                                | https://github.com/n8n-io/n8n          |
-| [rsnapshot](charts/automation/rsnapshot) | A tool for backing up data using rsync                      | https://github.com/rsnapshot/rsnapshot |
-| [syncthing](charts/automation/syncthing) | Continuous file synchronization                             | https://github.com/syncthing/syncthing |
+| Chart                                    | Description                                                 | Source Code                              |
+| ---------------------------------------- | ----------------------------------------------------------- | ---------------------------------------- |
+| [apprise](charts/automation/apprise)     | Push Notifications that work with just about every platform | https://github.com/caronc/apprise        |
+| [backrest](charts/automation/backrest)   | A web-accessible backup solution built on top of restic     | https://github.com/garethgeorge/backrest |
+| [fileflows](charts/automation/fileflows) | File processing application                                 | https://github.com/revenz/FileFlows      |
+| [n8n](charts/automation/n8n)             | Workflow automation platform                                | https://github.com/n8n-io/n8n            |
+| [rsnapshot](charts/automation/rsnapshot) | A tool for backing up data using rsync                      | https://github.com/rsnapshot/rsnapshot   |
+| [syncthing](charts/automation/syncthing) | Continuous file synchronization                             | https://github.com/syncthing/syncthing   |
 
 ### Demo
 
