@@ -26,7 +26,7 @@ export interface Dimensions {
   rows: number;
 }
 
-export type SectionKey = "sidebar" | "details";
+export type SectionKey = "sidebar" | "details" | "search";
 
 export type ActionKey =
   | "apply"

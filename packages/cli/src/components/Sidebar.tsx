@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { Box, Text, DOMElement } from "ink";
 import { ServiceItem } from "./ServiceItem";
 import { ScrollList } from "./ui/ScrollList";
+import { SidebarSearch } from "./ui/SidebarSearch";
 import { colors } from "../constants";
 import { TitledBox } from "./ui/TitledBox";
 import { useFocusManagerContext } from "../contexts/FocusManagerContext";
@@ -17,14 +18,20 @@ export const Sidebar = () => {
   const { services, selectService } = useServicesContext();
   const { focus, setFocus, isModalOpen } = useFocusManagerContext();
   const isFocused = focus === "sidebar";
-  // index into `services` (no categories) — never points to a header
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
   const ref = useRef<DOMElement>(null);
+
+  const filteredServices = useMemo(() => {
+    if (!searchQuery) return services;
+    const q = searchQuery.toLowerCase();
+    return services.filter((s) => s.name.toLowerCase().includes(q));
+  }, [services, searchQuery]);
 
   const servicesWithCategories = useMemo((): SidebarItem[] => {
     const result: SidebarItem[] = [];
     let lastCategory: string | null = null;
-    for (const service of services) {
+    for (const service of filteredServices) {
       if (service.category !== lastCategory) {
         result.push({ _category: true, label: service.category });
         lastCategory = service.category;
@@ -32,29 +39,31 @@ export const Sidebar = () => {
       result.push(service);
     }
     return result;
-  }, [services]);
+  }, [filteredServices]);
 
-  // display index in servicesWithCategories, derived from services index
+  const clampedIndex = Math.min(selectedIndex, Math.max(0, filteredServices.length - 1));
+
+  // display index in servicesWithCategories, derived from filteredServices index
   const displayIndex = useMemo(() => {
-    const service = services[selectedIndex];
+    const service = filteredServices[clampedIndex];
     if (!service) return 0;
     return servicesWithCategories.findIndex(
       (i) => !isCategoryItem(i) && (i as ServiceInfo).id === service.id,
     );
-  }, [selectedIndex, services, servicesWithCategories]);
+  }, [clampedIndex, filteredServices, servicesWithCategories]);
 
   const handleChange = (displayIdx: number) => {
     const item = servicesWithCategories[displayIdx];
     if (!item || isCategoryItem(item)) return;
-    const serviceIdx = services.findIndex((s) => s.id === item.id);
+    const serviceIdx = filteredServices.findIndex((s) => s.id === item.id);
     if (serviceIdx !== -1) setSelectedIndex(serviceIdx);
   };
 
   useEffect(() => {
-    if (services.length > 0) {
-      selectService(services[selectedIndex]);
+    if (filteredServices.length > 0) {
+      selectService(filteredServices[clampedIndex]);
     }
-  }, [selectedIndex, services, selectService]);
+  }, [clampedIndex, filteredServices, selectService]);
 
   return (
     <TitledBox
@@ -96,6 +105,7 @@ export const Sidebar = () => {
           }}
         />
       )}
+      <SidebarSearch onQueryChange={setSearchQuery} />
     </TitledBox>
   );
 };

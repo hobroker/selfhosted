@@ -86,7 +86,7 @@ export const ACTIONS: Record<ActionKey, Action> = {
   help: {
     label: "Help",
     description: "Show help information",
-    shortcut: ["?", "/"],
+    shortcut: ["?"],
   },
   history: {
     label: "History",
