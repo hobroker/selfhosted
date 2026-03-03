@@ -3,7 +3,7 @@ name: CI
 on: [push]
 
 jobs:
-  ci:
+  check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -11,6 +11,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24
+          cache: 'npm'
       - name: Install dependencies
         run: npm ci
       - name: Run Prettier
@@ -19,6 +20,18 @@ jobs:
         run: npm run lint
       - name: Run typecheck
         run: npm run typecheck
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
       - name: Run tests
         run: npm test
 
@@ -30,6 +43,8 @@ jobs:
         uses: azure/setup-helm@v4.3.1
       - name: Install Helmfile
         uses: helmfile/helmfile-action@v2.3.1
+        with:
+          helmfile-args: version
       - name: Helmfile lint
         run: |
           set -e
