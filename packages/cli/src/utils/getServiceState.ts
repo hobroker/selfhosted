@@ -1,7 +1,12 @@
 import { ServiceState } from "../constants";
 import type { ServiceInfo } from "../types";
 
-export const getServiceState = (service: ServiceInfo): ServiceState => {
+export const getServiceState = (
+  service: Pick<
+    ServiceInfo,
+    "installedChartVersion" | "localChartVersion" | "installedAppVersion" | "localAppVersion"
+  >,
+): ServiceState => {
   if (!service.installedChartVersion) {
     return ServiceState.NotInstalled;
   }

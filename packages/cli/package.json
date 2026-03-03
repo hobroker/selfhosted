@@ -5,6 +5,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "cli": "tsx src/index.tsx",
+    "test": "vitest run",
     "lint": "eslint .",
     "format": "prettier --write ."
   },
