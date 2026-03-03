@@ -1,5 +1,5 @@
 import type { ServiceInfo } from "../types";
-import { getServiceState } from "../utils/getServiceState";
+import { getServiceState } from "../utils/serviceState";
 import { fetchLocalChart, fetchLocalCharts } from "./charts";
 import { fetchHelmRelease, fetchHelmReleases, fetchPodImage, fetchPodImages } from "./cluster";
 
@@ -15,18 +15,18 @@ export async function fetchAllData(): Promise<ServiceInfo[]> {
       .map((svc) => {
         const inst = installed.find((i) => i.name === svc.name);
         if (inst) {
-          return {
+          const service = {
             ...svc,
             installedChartVersion: inst.chart.split("-").pop(),
             installedAppVersion: podImages[svc.name] || inst.app_version || "unknown",
           };
+          return {
+            ...service,
+            state: getServiceState(service),
+          };
         }
         return svc;
       })
-      .map((svc) => ({
-        ...svc,
-        state: getServiceState(svc),
-      }))
       .sort((a, b) => {
         if (a.category !== b.category) {
           return a.category.localeCompare(b.category);

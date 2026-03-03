@@ -11,6 +11,10 @@ import { TitledBox } from "./ui/TitledBox";
 import { ScrollContainer } from "./ui/ScrollContainer";
 import { ScrollViewRef } from "ink-scroll-view";
 import { useFocusManagerContext } from "../contexts/FocusManagerContext";
+import {
+  isAppVersionUpToDate,
+  isServiceChartUpToDate,
+} from "../utils/serviceState";
 
 marked.setOptions({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -77,13 +81,7 @@ export const ServiceDetails = ({ service }: Props) => {
               </Text>
               <Box marginLeft={2} flexDirection="column">
                 <Box flexDirection="column">
-                  <StatusMessage
-                    variant={
-                      service.localChartVersion === service.installedChartVersion
-                        ? "success"
-                        : "warning"
-                    }
-                  >
+                  <StatusMessage variant={isServiceChartUpToDate(service) ? "success" : "warning"}>
                     <Text color={colors.text}>
                       Chart: {service.localChartVersion} (Local) vs{" "}
                       {service.installedChartVersion || "N/A"} (Installed)
@@ -91,13 +89,7 @@ export const ServiceDetails = ({ service }: Props) => {
                   </StatusMessage>
                 </Box>
                 <Box flexDirection="column">
-                  <StatusMessage
-                    variant={
-                      service.localAppVersion === service.installedAppVersion
-                        ? "success"
-                        : "warning"
-                    }
-                  >
+                  <StatusMessage variant={isAppVersionUpToDate(service) ? "success" : "warning"}>
                     <Text color={colors.text}>
                       App: {service.localAppVersion} (Local) vs{" "}
                       {service.installedAppVersion || "N/A"} (Installed)
