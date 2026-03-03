@@ -1,9 +1,9 @@
 import { Text } from "ink";
 import { colors } from "../../constants";
-import { OPTIONAL_TOOLS } from "../../contexts/ToolsContext";
+import { OPTIONAL_TOOLS, OptionalToolKey } from "../../contexts/ToolsContext";
 
 interface Props {
-  tool: string;
+  tool: OptionalToolKey;
 }
 
 export const ToolUnavailableMessage = ({ tool }: Props) => (

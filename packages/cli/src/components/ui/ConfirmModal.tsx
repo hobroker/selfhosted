@@ -1,10 +1,10 @@
 import { Box, Text, useInput } from "ink";
 import { Modal } from "./Modal";
 import { colors } from "../../constants";
-import { FocusState } from "../../types";
+import { ActionKey } from "../../types";
 
 interface Props {
-  id: FocusState;
+  id: ActionKey;
   title: string;
   message: React.ReactNode;
   onConfirm: () => void;

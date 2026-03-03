@@ -4,11 +4,11 @@ import { colors } from "../../constants";
 import { TitledBox } from "./TitledBox";
 import { useDimensions } from "../../hooks/useDimensions";
 import { ErrorBoundary } from "./ErrorBoundary";
-import { FocusState } from "../../types";
+import { ActionKey } from "../../types";
 import { ScrollContainer } from "./ScrollContainer";
 
 interface Props extends BoxProps {
-  id: FocusState;
+  id: ActionKey;
   title: string;
   rightAdornment?: ReactNode;
   children: ReactNode;
