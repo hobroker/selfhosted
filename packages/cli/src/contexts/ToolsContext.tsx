@@ -1,7 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { findAvailableTool } from "../services/tools";
 
-export const REQUIRED_TOOLS: Record<string, Tool> = {
+export type RequiredToolKey = "helm" | "kubectl";
+export type OptionalToolKey = "helmfile" | "stern";
+type ToolKey = RequiredToolKey | OptionalToolKey;
+
+export const REQUIRED_TOOLS: Record<RequiredToolKey, Tool> = {
   helm: {
     description: "Helm is used for managing Kubernetes applications",
   },
@@ -10,7 +14,7 @@ export const REQUIRED_TOOLS: Record<string, Tool> = {
   },
 } as const;
 
-export const OPTIONAL_TOOLS: Record<string, Tool> = {
+export const OPTIONAL_TOOLS: Record<OptionalToolKey, Tool> = {
   helmfile: {
     description: "Helmfile is used for managing Helm charts",
   },
@@ -19,7 +23,7 @@ export const OPTIONAL_TOOLS: Record<string, Tool> = {
   },
 } as const;
 
-const TOOL_ALIASES: Record<ToolKey, string[]> = {
+const TOOL_ALIASES: Partial<Record<ToolKey, string[]>> = {
   stern: ["stern", "kubectl-stern"],
 };
 
@@ -27,22 +31,20 @@ interface Tool {
   description: string;
 }
 
-type ToolKey = keyof typeof REQUIRED_TOOLS | keyof typeof OPTIONAL_TOOLS;
-
-const checkTools = (
-  tools: Record<ToolKey, Tool>,
-): Promise<{ tool: ToolKey; found: string | null }[]> =>
+const checkTools = <T extends ToolKey>(
+  tools: Record<T, Tool>,
+): Promise<{ tool: T; found: string | null }[]> =>
   Promise.all(
     Object.keys(tools).map(async (tool) => ({
-      tool,
-      found: await findAvailableTool(TOOL_ALIASES[tool] ?? [tool]),
+      tool: tool as T,
+      found: await findAvailableTool(TOOL_ALIASES[tool as T] ?? [tool]),
     })),
   );
 
 interface ToolsState {
   isReady: boolean;
-  missing: ToolKey[];
-  unavailable: ToolKey[];
+  missing: RequiredToolKey[];
+  unavailable: OptionalToolKey[];
   isAvailable: (tool: ToolKey) => boolean;
   getCommand: (tool: ToolKey) => string | null;
 }
@@ -51,8 +53,8 @@ const ToolsContext = createContext<ToolsState | undefined>(undefined);
 
 export const ToolsProvider = ({ children }: { children: React.ReactNode }) => {
   const [isReady, setIsReady] = useState(false);
-  const [missing, setMissing] = useState<ToolKey[]>([]);
-  const [unavailable, setUnavailable] = useState<ToolKey[]>([]);
+  const [missing, setMissing] = useState<RequiredToolKey[]>([]);
+  const [unavailable, setUnavailable] = useState<OptionalToolKey[]>([]);
   const [resolvedCommands, setResolvedCommands] = useState<Partial<Record<ToolKey, string>>>({});
 
   useEffect(() => {
@@ -77,7 +79,8 @@ export const ToolsProvider = ({ children }: { children: React.ReactNode }) => {
     check();
   }, []);
 
-  const isAvailable = (tool: ToolKey) => !missing.includes(tool) && !unavailable.includes(tool);
+  const isAvailable = (tool: ToolKey) =>
+    !missing.includes(tool as RequiredToolKey) && !unavailable.includes(tool as OptionalToolKey);
   const getCommand = (tool: ToolKey) => resolvedCommands[tool] ?? null;
 
   return (

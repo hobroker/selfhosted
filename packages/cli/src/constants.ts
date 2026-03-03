@@ -1,5 +1,5 @@
 import figures from "figures";
-import { Action } from "./types";
+import { Action, ActionKey } from "./types";
 
 export enum ServiceState {
   Installed = "installed",
@@ -66,12 +66,7 @@ export const colors = {
   background: "transparent", // Black
 };
 
-export const SECTIONS = {
-  sidebar: {},
-  details: {},
-} as const;
-
-export const ACTIONS: Record<string, Action> = {
+export const ACTIONS: Record<ActionKey, Action> = {
   apply: {
     label: "Apply",
     description: "Run helmfile apply for this service",
@@ -119,4 +114,4 @@ export const ACTIONS: Record<string, Action> = {
     description: "Show logs for this service",
     shortcut: ["l", "L"],
   },
-} as const;
+};
