@@ -3,7 +3,7 @@ name: CI
 on: [push]
 
 jobs:
-  format:
+  ci:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -19,6 +19,8 @@ jobs:
         run: npm run lint
       - name: Run typecheck
         run: npm run typecheck
+      - name: Run tests
+        run: npm test
 
   helmfile-lint:
     runs-on: ubuntu-latest

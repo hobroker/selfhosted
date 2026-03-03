@@ -9,6 +9,9 @@
     },
     "format": {
       "cache": false
+    },
+    "test": {
+      "cache": false
     }
   }
 }

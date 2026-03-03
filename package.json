@@ -12,6 +12,7 @@
     "prepare": "husky",
     "generate": "npm run generate --workspace @hobroker/selfhosted-docs",
     "cli": "npm run cli --workspace @hobroker/selfhosted-cli",
+    "test": "turbo test",
     "typecheck": "turbo typecheck",
     "lint": "turbo lint",
     "lint:fix": "turbo lint -- --fix",
@@ -32,7 +33,8 @@
     "react": "^19.2.4",
     "turbo": "^2.8.11",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.56.1"
+    "typescript-eslint": "^8.56.1",
+    "vitest": "^4.0.18"
   },
   "lint-staged": {
     "*.{md,yaml}": "prettier --write",
