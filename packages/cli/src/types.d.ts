@@ -1,4 +1,4 @@
-import { ServiceState, ACTIONS, SECTIONS } from "./constants";
+import { ServiceState } from "./constants";
 
 export interface ServiceInfo {
   id: string;
@@ -26,7 +26,20 @@ export interface Dimensions {
   rows: number;
 }
 
-export type FocusState = keyof typeof ACTIONS | keyof typeof SECTIONS;
+export type SectionKey = "sidebar" | "details";
+
+export type ActionKey =
+  | "apply"
+  | "apply-confirm"
+  | "diff"
+  | "help"
+  | "history"
+  | "refresh"
+  | "destroy"
+  | "destroy-confirm"
+  | "logs";
+
+export type FocusState = SectionKey | ActionKey;
 
 export interface Action {
   label: string;
