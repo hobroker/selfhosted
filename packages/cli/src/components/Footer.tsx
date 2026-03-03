@@ -17,7 +17,7 @@ const Shortcut = ({
   useOnClick(ref, () => onClick?.());
 
   return (
-    <Box marginRight={2} ref={ref}>
+    <Box ref={ref}>
       <Text color={colors.primary} bold>
         {name}
       </Text>
@@ -46,9 +46,8 @@ const ShortcutAction = ({
 
 export const Footer = () => {
   return (
-    <Box paddingX={1} width="100%">
-      <Shortcut name="q" description="Quit" />
-      <Shortcut name="/" description="Search" />
+    <Box paddingX={1} width="100%" gap={2}>
+      <Shortcut name="q" description="quit" />
       <ShortcutAction actionKey="refresh" />
       <ShortcutAction actionKey="logs" />
       <ShortcutAction actionKey="history" />

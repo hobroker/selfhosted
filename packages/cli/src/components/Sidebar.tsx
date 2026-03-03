@@ -24,14 +24,7 @@ export const Sidebar = () => {
   } = useSidebar();
 
   return (
-    <TitledBox
-      ref={ref}
-      title="Services"
-      isFocused={isFocused}
-      width="20%"
-      minWidth={30}
-      flexDirection="column"
-    >
+    <TitledBox ref={ref} title="Services" isFocused={isFocused} flexDirection="column" width="100%">
       {servicesWithCategories.length === 0 ? (
         <Box padding={1}>
           <Text italic color={colors.dim}>
