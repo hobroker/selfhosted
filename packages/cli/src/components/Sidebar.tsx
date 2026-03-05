@@ -37,12 +37,17 @@ export const Sidebar = () => {
   }, [services]);
 
   // When searching, jump to first match; otherwise use manual selection
-  const matchedIndex = useMemo(() => {
+  const matchedIds = useMemo(() => {
     if (!searchQuery) return null;
-    const firstMatch = filterServices(services, searchQuery)[0];
-    if (!firstMatch) return null;
-    return services.findIndex((s) => s.id === firstMatch.id);
+    const matches = filterServices(services, searchQuery);
+    return new Set(matches.map((s) => s.id));
   }, [services, searchQuery]);
+
+  const matchedIndex = useMemo(() => {
+    if (!matchedIds) return null;
+    const idx = services.findIndex((s) => matchedIds.has(s.id));
+    return idx === -1 ? null : idx;
+  }, [services, matchedIds]);
 
   const effectiveIndex = matchedIndex ?? selectedIndex;
 
@@ -104,7 +109,13 @@ export const Sidebar = () => {
                 </Box>
               );
             }
-            return <ServiceItem service={item} isSelected={isSelected} />;
+            return (
+              <ServiceItem
+                service={item}
+                isSelected={isSelected}
+                isMatch={matchedIds?.has(item.id)}
+              />
+            );
           }}
         />
       )}
