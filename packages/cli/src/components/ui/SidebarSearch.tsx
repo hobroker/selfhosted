@@ -17,7 +17,14 @@ export const SidebarSearch = ({ onQueryChange }: Props) => {
   }, [isActive, onQueryChange]);
 
   return (
-    <Box borderStyle="single" borderColor={isActive ? colors.primary : colors.dim} paddingX={1}>
+    <Box
+      borderStyle="single"
+      borderLeft={false}
+      borderRight={false}
+      borderBottom={false}
+      borderColor={isActive ? colors.primary : colors.dim}
+      paddingX={1}
+    >
       <TextInput
         key={isActive ? "active" : "inactive"}
         isDisabled={!isActive}

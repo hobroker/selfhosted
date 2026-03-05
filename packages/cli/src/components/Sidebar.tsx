@@ -7,6 +7,7 @@ import { colors } from "../constants";
 import { TitledBox } from "./ui/TitledBox";
 import { useFocusManagerContext } from "../contexts/FocusManagerContext";
 import { useServicesContext } from "../contexts/ServicesContext";
+import { filterServices } from "../utils/filterServices";
 import type { ServiceInfo } from "../types";
 
 type CategoryItem = { _category: true; label: string };
@@ -20,13 +21,18 @@ export const Sidebar = () => {
   const isFocused = focus === "sidebar";
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
+  const [prevSearchQuery, setPrevSearchQuery] = useState(searchQuery);
   const ref = useRef<DOMElement>(null);
 
-  const filteredServices = useMemo(() => {
-    if (!searchQuery) return services;
-    const q = searchQuery.toLowerCase();
-    return services.filter((s) => s.name.toLowerCase().includes(q));
-  }, [services, searchQuery]);
+  if (prevSearchQuery !== searchQuery) {
+    setPrevSearchQuery(searchQuery);
+    setSelectedIndex(0);
+  }
+
+  const filteredServices = useMemo(
+    () => filterServices(services, searchQuery),
+    [services, searchQuery],
+  );
 
   const servicesWithCategories = useMemo((): SidebarItem[] => {
     const result: SidebarItem[] = [];
@@ -41,16 +47,16 @@ export const Sidebar = () => {
     return result;
   }, [filteredServices]);
 
-  const clampedIndex = Math.min(selectedIndex, Math.max(0, filteredServices.length - 1));
+  const effectiveIndex = selectedIndex;
 
   // display index in servicesWithCategories, derived from filteredServices index
   const displayIndex = useMemo(() => {
-    const service = filteredServices[clampedIndex];
+    const service = filteredServices[effectiveIndex];
     if (!service) return 0;
     return servicesWithCategories.findIndex(
       (i) => !isCategoryItem(i) && (i as ServiceInfo).id === service.id,
     );
-  }, [clampedIndex, filteredServices, servicesWithCategories]);
+  }, [effectiveIndex, filteredServices, servicesWithCategories]);
 
   const handleChange = (displayIdx: number) => {
     const item = servicesWithCategories[displayIdx];
@@ -61,9 +67,9 @@ export const Sidebar = () => {
 
   useEffect(() => {
     if (filteredServices.length > 0) {
-      selectService(filteredServices[clampedIndex]);
+      selectService(filteredServices[effectiveIndex]);
     }
-  }, [clampedIndex, filteredServices, selectService]);
+  }, [effectiveIndex, filteredServices, selectService]);
 
   return (
     <TitledBox
