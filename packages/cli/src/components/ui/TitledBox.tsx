@@ -3,7 +3,7 @@ import { Box, Text, BoxProps, DOMElement } from "ink";
 import { colors } from "../../constants";
 
 interface Props extends PropsWithChildren, BoxProps {
-  title: string;
+  title?: string;
   isFocused?: boolean;
   rightAdornment?: ReactNode;
 }
@@ -25,11 +25,13 @@ export const TitledBox = forwardRef<DOMElement, Props>(
           flexDirection="row"
           justifyContent="space-between"
         >
-          <Box paddingX={1}>
-            <Text color={isFocused ? colors.primary : colors.dim} bold={isFocused}>
-              {` ${title.toUpperCase()} `}
-            </Text>
-          </Box>
+          {title && (
+            <Box paddingX={1}>
+              <Text color={isFocused ? colors.primary : colors.dim} bold={isFocused}>
+                {` ${title.toUpperCase()} `}
+              </Text>
+            </Box>
+          )}
           {rightAdornment && (
             <Box paddingX={1} marginRight={2}>
               {typeof rightAdornment === "string" ? (
