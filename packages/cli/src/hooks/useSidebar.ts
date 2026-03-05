@@ -1,0 +1,98 @@
+import { useState, useEffect, useMemo, SetStateAction } from "react";
+import { useInput } from "ink";
+import { useFocusManagerContext } from "../contexts/FocusManagerContext";
+import { useServicesContext } from "../contexts/ServicesContext";
+import { filterServices } from "../utils/filterServices";
+import type { ServiceInfo } from "../types";
+
+type CategoryItem = { _category: true; label: string };
+export type SidebarItem = ServiceInfo | CategoryItem;
+
+export const isCategoryItem = (item: SidebarItem): item is CategoryItem => "_category" in item;
+
+export const useSidebar = () => {
+  const { services, selectService } = useServicesContext();
+  const { focus, setFocus, isModalOpen } = useFocusManagerContext();
+  const isFocused = focus === "sidebar";
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [prevSearchQuery, setPrevSearchQuery] = useState("");
+
+  const matchedIds = useMemo(() => {
+    if (!searchQuery) return null;
+    const matches = filterServices(services, searchQuery);
+    return new Set(matches.map((s) => s.id));
+  }, [services, searchQuery]);
+
+  // When the query changes, reset selection to the first match
+  if (prevSearchQuery !== searchQuery) {
+    setPrevSearchQuery(searchQuery);
+    const firstMatchIdx = matchedIds ? services.findIndex((s) => matchedIds.has(s.id)) : 0;
+    setSelectedIndex(Math.max(0, firstMatchIdx));
+  }
+
+  const servicesWithCategories = useMemo((): SidebarItem[] => {
+    const result: SidebarItem[] = [];
+    let lastCategory: string | null = null;
+    for (const service of services) {
+      if (service.category !== lastCategory) {
+        result.push({ _category: true, label: service.category });
+        lastCategory = service.category;
+      }
+      result.push(service);
+    }
+    return result;
+  }, [services]);
+
+  useInput((input, key) => {
+    if (isModalOpen || (focus !== "sidebar" && focus !== "details")) return;
+    const updateSearchQuery = (value: SetStateAction<string>) => {
+      setSearchQuery(value);
+      setFocus("sidebar");
+    };
+    if (key.escape) {
+      updateSearchQuery("");
+      return;
+    }
+    if (key.backspace || key.delete) {
+      updateSearchQuery((prev) => prev.slice(0, -1));
+      return;
+    }
+    if (/^[a-z]$/.test(input)) {
+      updateSearchQuery((prev) => prev + input);
+    }
+  });
+
+  const displayIndex = useMemo(() => {
+    const service = services[selectedIndex];
+    if (!service) return 0;
+    return servicesWithCategories.findIndex(
+      (i) => !isCategoryItem(i) && (i as ServiceInfo).id === service.id,
+    );
+  }, [selectedIndex, services, servicesWithCategories]);
+
+  const handleChange = (displayIdx: number) => {
+    const item = servicesWithCategories[displayIdx];
+    if (!item || isCategoryItem(item)) return;
+    const serviceIdx = services.findIndex((s) => s.id === item.id);
+    if (serviceIdx !== -1) setSelectedIndex(serviceIdx);
+  };
+
+  useEffect(() => {
+    if (services.length > 0) {
+      selectService(services[selectedIndex]);
+    }
+  }, [selectedIndex, services, selectService]);
+
+  return {
+    isFocused,
+    isModalOpen,
+    searchQuery,
+    matchedIds,
+    servicesWithCategories,
+    displayIndex,
+    handleChange,
+    onFocus: () => setFocus("sidebar"),
+  };
+};
