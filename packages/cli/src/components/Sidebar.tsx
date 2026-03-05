@@ -21,23 +21,12 @@ export const Sidebar = () => {
   const isFocused = focus === "sidebar";
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-  const [prevSearchQuery, setPrevSearchQuery] = useState(searchQuery);
   const ref = useRef<DOMElement>(null);
-
-  if (prevSearchQuery !== searchQuery) {
-    setPrevSearchQuery(searchQuery);
-    setSelectedIndex(0);
-  }
-
-  const filteredServices = useMemo(
-    () => filterServices(services, searchQuery),
-    [services, searchQuery],
-  );
 
   const servicesWithCategories = useMemo((): SidebarItem[] => {
     const result: SidebarItem[] = [];
     let lastCategory: string | null = null;
-    for (const service of filteredServices) {
+    for (const service of services) {
       if (service.category !== lastCategory) {
         result.push({ _category: true, label: service.category });
         lastCategory = service.category;
@@ -45,31 +34,39 @@ export const Sidebar = () => {
       result.push(service);
     }
     return result;
-  }, [filteredServices]);
+  }, [services]);
 
-  const effectiveIndex = selectedIndex;
+  // When searching, jump to first match; otherwise use manual selection
+  const matchedIndex = useMemo(() => {
+    if (!searchQuery) return null;
+    const firstMatch = filterServices(services, searchQuery)[0];
+    if (!firstMatch) return null;
+    return services.findIndex((s) => s.id === firstMatch.id);
+  }, [services, searchQuery]);
 
-  // display index in servicesWithCategories, derived from filteredServices index
+  const effectiveIndex = matchedIndex ?? selectedIndex;
+
+  // display index in servicesWithCategories, derived from services index
   const displayIndex = useMemo(() => {
-    const service = filteredServices[effectiveIndex];
+    const service = services[effectiveIndex];
     if (!service) return 0;
     return servicesWithCategories.findIndex(
       (i) => !isCategoryItem(i) && (i as ServiceInfo).id === service.id,
     );
-  }, [effectiveIndex, filteredServices, servicesWithCategories]);
+  }, [effectiveIndex, services, servicesWithCategories]);
 
   const handleChange = (displayIdx: number) => {
     const item = servicesWithCategories[displayIdx];
     if (!item || isCategoryItem(item)) return;
-    const serviceIdx = filteredServices.findIndex((s) => s.id === item.id);
+    const serviceIdx = services.findIndex((s) => s.id === item.id);
     if (serviceIdx !== -1) setSelectedIndex(serviceIdx);
   };
 
   useEffect(() => {
-    if (filteredServices.length > 0) {
-      selectService(filteredServices[effectiveIndex]);
+    if (services.length > 0) {
+      selectService(services[effectiveIndex]);
     }
-  }, [effectiveIndex, filteredServices, selectService]);
+  }, [effectiveIndex, services, selectService]);
 
   return (
     <TitledBox
