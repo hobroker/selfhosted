@@ -162,6 +162,7 @@ npm run generate
 | [grafana-backup](charts/monitoring/grafana-backup)           | Cron job to backup Grafana settings by using the Grafana API                        | https://github.com/ysde/grafana-backup-tool                |
 | [prometheus-operator](charts/monitoring/prometheus-operator) | Operator that manages Prometheus, Grafana, and related monitoring components in K8s | https://github.com/prometheus-operator/prometheus-operator |
 | [scraparr](charts/monitoring/scraparr)                       | Prometheus Exporter for various components of the \*arr Suite.                      | https://github.com/thecfu/scraparr                         |
+| [signoz](charts/monitoring/signoz)                           | Open-source platform for application observability.                                 | https://github.com/SigNoz/signoz                           |
 | [wakatime-exporter](charts/monitoring/wakatime-exporter)     | Exports Prometheus metrics from Wakatime.                                           | https://github.com/MacroPower/wakatime_exporter            |
 
 ### System

@@ -1,0 +1,17 @@
+signoz:
+  ingress:
+    enabled: true
+    className: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    hosts:
+      - host: signoz.hobroker.me
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            port: 8080
+
+clickhouse:
+  persistence:
+    storageClass: local-path-retain
+    size: 5Gi
