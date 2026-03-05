@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo, SetStateAction } from "react";
 import { Box, Text, DOMElement, useInput } from "ink";
 import { ServiceItem } from "./ServiceItem";
 import { ScrollList } from "./ui/ScrollList";
@@ -53,19 +53,25 @@ export const Sidebar = () => {
   const effectiveIndex = selectedIndex;
 
   useInput((input, key) => {
-    if (!isFocused || isModalOpen) return;
+    if (isModalOpen || (focus !== "sidebar" && focus !== "details")) return;
+    const updateSearchQuery = (value: SetStateAction<string>) => {
+      setSearchQuery(value);
+      setFocus("sidebar");
+    };
     if (key.escape) {
-      setSearchQuery("");
+      updateSearchQuery("");
       return;
     }
     if (key.backspace || key.delete) {
-      setSearchQuery((prev) => prev.slice(0, -1));
+      updateSearchQuery((prev) => prev.slice(0, -1));
       return;
     }
     if (/^[a-z]$/.test(input)) {
-      setSearchQuery((prev) => prev + input);
+      updateSearchQuery((prev) => prev + input);
     }
   });
+
+  useEffect(() => {}, [searchQuery]);
 
   // display index in servicesWithCategories, derived from services index
   const displayIndex = useMemo(() => {
