@@ -1,6 +1,6 @@
 import { Box, BoxProps, DOMElement, useInput } from "ink";
 import { ScrollView } from "ink-scroll-view";
-import { ReactNode, RefObject, useRef } from "react";
+import { ReactNode, RefObject, useCallback, useEffect, useRef } from "react";
 import { ScrollBar } from "@byteland/ink-scroll-bar";
 import { useOnClick } from "@ink-tools/ink-mouse";
 import { ErrorBoundary } from "./ErrorBoundary";
@@ -67,7 +67,7 @@ export const ScrollList = <T,>({
     onFocus,
   });
 
-  const scrollToIndex = (index: number) => {
+  const scrollToIndex = useCallback((index: number) => {
     const sv = scrollViewRef.current;
     if (!sv) return;
     const offset = sv.getScrollOffset();
@@ -77,7 +77,7 @@ export const ScrollList = <T,>({
     } else if (index > offset + viewport - 1 - SCROLL_BUFFER) {
       sv.scrollTo(index - viewport + 1 + SCROLL_BUFFER);
     }
-  };
+  }, [scrollViewRef]);
 
   const findNext = (from: number, dir: 1 | -1): number => {
     let i = from + dir;
@@ -87,6 +87,10 @@ export const ScrollList = <T,>({
     }
     return from;
   };
+
+  useEffect(() => {
+    scrollToIndex(selectedIndex);
+  }, [selectedIndex, scrollToIndex]);
 
   useInput((_, key) => {
     if (!isFocused) return;
