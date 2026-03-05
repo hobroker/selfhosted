@@ -15,7 +15,7 @@ export const useGlobalInput = () => {
       return;
     }
 
-    if (input === "q") {
+    if (input === "Q") {
       exit();
     }
 
