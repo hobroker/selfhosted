@@ -15,16 +15,6 @@ export const useGlobalInput = () => {
       return;
     }
 
-    if (focus === "search") {
-      if (key.escape) setFocus("sidebar");
-      return;
-    }
-
-    if (input === "/") {
-      setFocus("search");
-      return;
-    }
-
     if (input === "q") {
       exit();
     }

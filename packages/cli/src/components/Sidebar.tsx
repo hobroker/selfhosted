@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from "react";
-import { Box, Text, DOMElement } from "ink";
+import { Box, Text, DOMElement, useInput } from "ink";
 import { ServiceItem } from "./ServiceItem";
 import { ScrollList } from "./ui/ScrollList";
 import { SidebarSearch } from "./ui/SidebarSearch";
@@ -18,7 +18,7 @@ const isCategoryItem = (item: SidebarItem): item is CategoryItem => "_category" 
 export const Sidebar = () => {
   const { services, selectService } = useServicesContext();
   const { focus, setFocus, isModalOpen } = useFocusManagerContext();
-  const isFocused = focus === "sidebar" || focus === "search";
+  const isFocused = focus === "sidebar";
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [prevSearchQuery, setPrevSearchQuery] = useState("");
@@ -51,6 +51,21 @@ export const Sidebar = () => {
   }, [services]);
 
   const effectiveIndex = selectedIndex;
+
+  useInput((input, key) => {
+    if (!isFocused || isModalOpen) return;
+    if (key.escape) {
+      setSearchQuery("");
+      return;
+    }
+    if (key.backspace || key.delete) {
+      setSearchQuery((prev) => prev.slice(0, -1));
+      return;
+    }
+    if (/^[a-z]$/.test(input)) {
+      setSearchQuery((prev) => prev + input);
+    }
+  });
 
   // display index in servicesWithCategories, derived from services index
   const displayIndex = useMemo(() => {
@@ -121,7 +136,7 @@ export const Sidebar = () => {
           }}
         />
       )}
-      <SidebarSearch onQueryChange={setSearchQuery} />
+      <SidebarSearch query={searchQuery} />
     </TitledBox>
   );
 };

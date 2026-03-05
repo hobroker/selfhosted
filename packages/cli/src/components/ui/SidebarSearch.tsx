@@ -1,37 +1,21 @@
-import { useEffect } from "react";
-import { Box } from "ink";
-import { TextInput } from "@inkjs/ui";
-import { useFocusManagerContext } from "../../contexts/FocusManagerContext";
+import { Box, Text } from "ink";
 import { colors } from "../../constants";
 
 interface Props {
-  onQueryChange: (query: string) => void;
+  query: string;
 }
 
-export const SidebarSearch = ({ onQueryChange }: Props) => {
-  const { focus, setFocus } = useFocusManagerContext();
-  const isActive = focus === "search";
-
-  useEffect(() => {
-    if (!isActive) onQueryChange("");
-  }, [isActive, onQueryChange]);
-
+export const SidebarSearch = ({ query }: Props) => {
   return (
     <Box
       borderStyle="single"
       borderLeft={false}
       borderRight={false}
       borderBottom={false}
-      borderColor={isActive ? colors.primary : colors.dim}
+      borderColor={query ? colors.primary : colors.dim}
       paddingX={1}
     >
-      <TextInput
-        key={isActive ? "active" : "inactive"}
-        isDisabled={!isActive}
-        placeholder="/ search..."
-        onChange={onQueryChange}
-        onSubmit={() => setFocus("sidebar")}
-      />
+      <Text color={query ? colors.text : colors.dim}>{query || "/ search..."}</Text>
     </Box>
   );
 };
