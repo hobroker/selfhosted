@@ -1,5 +1,6 @@
-import { Box, Text } from "ink";
+import { Text } from "ink";
 import { colors } from "../../constants";
+import { TitledBox } from "./TitledBox";
 
 interface Props {
   query: string;
@@ -8,7 +9,8 @@ interface Props {
 export const SidebarSearch = ({ query }: Props) => {
   const borderColor = query ? colors.primary : colors.dim;
   return (
-    <Box
+    <TitledBox
+      title={query ? "Search" : ""}
       borderStyle="single"
       borderLeft={false}
       borderRight={false}
@@ -16,12 +18,7 @@ export const SidebarSearch = ({ query }: Props) => {
       borderColor={borderColor}
       paddingX={1}
     >
-      {query && (
-        <Box position="absolute" marginTop={-1} marginLeft={1}>
-          <Text color={borderColor}> SEARCH </Text>
-        </Box>
-      )}
-      <Text color={query ? colors.text : colors.dim}>{query || "/ type to search..."}</Text>
-    </Box>
+      <Text color={query ? colors.text : colors.dim}>{query || "type to search..."}</Text>
+    </TitledBox>
   );
 };
