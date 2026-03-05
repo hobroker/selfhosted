@@ -95,6 +95,7 @@ export const useSidebar = () => {
     servicesWithCategories,
     displayIndex,
     handleChange,
+    clearSearch: () => setSearchQuery(""),
     onFocus: () => setFocus("sidebar"),
   };
 };

@@ -18,6 +18,7 @@ export const Sidebar = () => {
     servicesWithCategories,
     displayIndex,
     handleChange,
+    clearSearch,
     onFocus,
   } = useSidebar();
 
@@ -62,7 +63,10 @@ export const Sidebar = () => {
                 service={item}
                 isSelected={isSelected}
                 isMatch={matchedIds?.has(item.id)}
-                onClick={() => handleChange(index)}
+                onClick={() => {
+                  handleChange(index);
+                  clearSearch();
+                }}
               />
             );
           }}
