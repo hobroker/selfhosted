@@ -25,11 +25,13 @@ export const useSidebar = () => {
     return new Set(matches.map((s) => s.id));
   }, [services, searchQuery]);
 
-  // When the query changes, reset selection to the first match
+  // When the query changes, jump to the first match (but not when clearing)
   if (prevSearchQuery !== searchQuery) {
     setPrevSearchQuery(searchQuery);
-    const firstMatchIdx = matchedIds ? services.findIndex((s) => matchedIds.has(s.id)) : 0;
-    setSelectedIndex(Math.max(0, firstMatchIdx));
+    if (searchQuery && matchedIds) {
+      const firstMatchIdx = services.findIndex((s) => matchedIds.has(s.id));
+      if (firstMatchIdx !== -1) setSelectedIndex(firstMatchIdx);
+    }
   }
 
   const servicesWithCategories = useMemo((): SidebarItem[] => {
