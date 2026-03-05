@@ -46,8 +46,7 @@ export const Sidebar = () => {
           isFocused={isFocused}
           isHidden={isModalOpen}
           onFocus={onFocus}
-          isCategory={isCategoryItem}
-          isSkip={(item) => !isCategoryItem(item) && !!matchedIds && !matchedIds.has(item.id)}
+          isSkip={(item) => isCategoryItem(item) || (!!matchedIds && !matchedIds.has(item.id))}
           renderItem={(item, index, isSelected) => {
             if (isCategoryItem(item)) {
               return (

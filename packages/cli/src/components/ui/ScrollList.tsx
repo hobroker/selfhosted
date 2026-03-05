@@ -19,7 +19,6 @@ interface ScrollListProps<T> extends BoxProps {
   isFocused?: boolean;
   isHidden?: boolean;
   onFocus?: () => void;
-  isCategory?: (item: T) => boolean;
   isSkip?: (item: T) => boolean;
 }
 
@@ -32,7 +31,6 @@ export const ScrollList = <T,>({
   isFocused = true,
   isHidden = false,
   onFocus,
-  isCategory,
   isSkip,
   ...props
 }: ScrollListProps<T>) => {
@@ -61,7 +59,7 @@ export const ScrollList = <T,>({
   const findNext = (from: number, dir: 1 | -1): number => {
     let i = from + dir;
     while (i >= 0 && i < items.length) {
-      if (!isCategory?.(items[i]) && !isSkip?.(items[i])) return i;
+      if (!isSkip?.(items[i])) return i;
       i += dir;
     }
     return from;
@@ -90,12 +88,11 @@ export const ScrollList = <T,>({
       <Box flexDirection="row" height="100%">
         <ScrollView ref={scrollViewRef} flexGrow={1} {...scrollViewCallbacks} {...props}>
           <Box flexDirection="column">
-            {items.map((item, index) => {
-              const cat = isCategory?.(item) ?? false;
-              return (
-                <Box key={index}>{renderItem(item, index, !cat && index === selectedIndex)}</Box>
-              );
-            })}
+            {items.map((item, index) => (
+              <Box key={index}>
+                {renderItem(item, index, !isSkip?.(item) && index === selectedIndex)}
+              </Box>
+            ))}
           </Box>
         </ScrollView>
         <ScrollBar
