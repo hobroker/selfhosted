@@ -6,6 +6,7 @@ import { SidebarSearch } from "./ui/SidebarSearch";
 import { colors } from "../constants";
 import { TitledBox } from "./ui/TitledBox";
 import { useSidebar, isCategoryItem } from "../hooks/useSidebar";
+import { ClickableItem } from "./ui/ClickableBox";
 
 export const Sidebar = () => {
   const ref = useRef<DOMElement>(null);
@@ -47,14 +48,14 @@ export const Sidebar = () => {
           onFocus={onFocus}
           isCategory={isCategoryItem}
           isSkip={(item) => !isCategoryItem(item) && !!matchedIds && !matchedIds.has(item.id)}
-          renderItem={(item, _, isSelected) => {
+          renderItem={(item, index, isSelected) => {
             if (isCategoryItem(item)) {
               return (
-                <Box paddingX={1}>
+                <ClickableItem onClick={() => handleChange(index + 1)} paddingX={1}>
                   <Text color={colors.dim} bold>
                     {item.label.toUpperCase()}
                   </Text>
-                </Box>
+                </ClickableItem>
               );
             }
             return (
@@ -62,6 +63,7 @@ export const Sidebar = () => {
                 service={item}
                 isSelected={isSelected}
                 isMatch={matchedIds?.has(item.id)}
+                onClick={() => handleChange(index)}
               />
             );
           }}

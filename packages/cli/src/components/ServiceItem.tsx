@@ -1,17 +1,23 @@
-import { Box, Text } from "ink";
+import { Box, DOMElement, Text } from "ink";
 import type { ServiceInfo } from "../types";
 import { serviceStateLabelsMap, colors } from "../constants";
+import { useRef } from "react";
+import { useOnClick } from "@ink-tools/ink-mouse";
 
 interface ServiceItemProps {
   service: ServiceInfo;
   isSelected?: boolean;
   isMatch?: boolean;
+  onClick?: () => void;
 }
 
-export const ServiceItem = ({ service, isSelected, isMatch }: ServiceItemProps) => {
+export const ServiceItem = ({ service, isSelected, isMatch, onClick }: ServiceItemProps) => {
   const isDimmed = isMatch === false && !isSelected;
+  const ref = useRef<DOMElement>(null);
+  useOnClick(ref, onClick);
+
   return (
-    <Box key={service.id} paddingRight={1} justifyContent="space-between" width="100%">
+    <Box ref={ref} key={service.id} paddingRight={1} justifyContent="space-between" width="100%">
       <Box backgroundColor={isSelected ? colors.primary : undefined} flexGrow={1}>
         <Text
           color={isSelected ? "black" : isDimmed ? colors.dim : colors.text}

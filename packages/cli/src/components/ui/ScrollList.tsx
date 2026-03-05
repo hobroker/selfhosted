@@ -1,37 +1,13 @@
 import { Box, BoxProps, DOMElement, useInput } from "ink";
 import { ScrollView } from "ink-scroll-view";
-import { ReactNode, RefObject, useCallback, useEffect, useRef } from "react";
+import { ReactNode, RefObject, useCallback, useEffect } from "react";
 import { ScrollBar } from "@byteland/ink-scroll-bar";
-import { useOnClick } from "@ink-tools/ink-mouse";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { colors } from "../../constants";
 import { useScrollView } from "../../hooks/useScrollView";
 import { FocusState } from "../../types";
 
 const SCROLL_BUFFER = 2;
-
-const ItemWrapper = ({
-  index,
-  onChange,
-  isCategory,
-  children,
-}: {
-  index: number;
-  onChange: (i: number) => void;
-  isCategory: boolean;
-  children: ReactNode;
-}) => {
-  const ref = useRef<DOMElement>(null);
-  useOnClick(ref, () => {
-    if (isCategory) {
-      onChange(index + 1);
-    } else {
-      onChange(index);
-    }
-  });
-
-  return <Box ref={ref}>{children}</Box>;
-};
 
 interface ScrollListProps<T> extends BoxProps {
   id: FocusState;
@@ -67,17 +43,20 @@ export const ScrollList = <T,>({
     onFocus,
   });
 
-  const scrollToIndex = useCallback((index: number) => {
-    const sv = scrollViewRef.current;
-    if (!sv) return;
-    const offset = sv.getScrollOffset();
-    const viewport = sv.getViewportHeight();
-    if (index < offset + SCROLL_BUFFER) {
-      sv.scrollTo(Math.max(0, index - SCROLL_BUFFER));
-    } else if (index > offset + viewport - 1 - SCROLL_BUFFER) {
-      sv.scrollTo(index - viewport + 1 + SCROLL_BUFFER);
-    }
-  }, [scrollViewRef]);
+  const scrollToIndex = useCallback(
+    (index: number) => {
+      const sv = scrollViewRef.current;
+      if (!sv) return;
+      const offset = sv.getScrollOffset();
+      const viewport = sv.getViewportHeight();
+      if (index < offset + SCROLL_BUFFER) {
+        sv.scrollTo(Math.max(0, index - SCROLL_BUFFER));
+      } else if (index > offset + viewport - 1 - SCROLL_BUFFER) {
+        sv.scrollTo(index - viewport + 1 + SCROLL_BUFFER);
+      }
+    },
+    [scrollViewRef],
+  );
 
   const findNext = (from: number, dir: 1 | -1): number => {
     let i = from + dir;
@@ -114,9 +93,7 @@ export const ScrollList = <T,>({
             {items.map((item, index) => {
               const cat = isCategory?.(item) ?? false;
               return (
-                <ItemWrapper key={index} index={index} onChange={onChange} isCategory={cat}>
-                  {renderItem(item, index, !cat && index === selectedIndex)}
-                </ItemWrapper>
+                <Box key={index}>{renderItem(item, index, !cat && index === selectedIndex)}</Box>
               );
             })}
           </Box>
