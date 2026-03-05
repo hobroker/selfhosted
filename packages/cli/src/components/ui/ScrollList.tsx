@@ -44,6 +44,7 @@ interface ScrollListProps<T> extends BoxProps {
   isHidden?: boolean;
   onFocus?: () => void;
   isCategory?: (item: T) => boolean;
+  isSkip?: (item: T) => boolean;
 }
 
 export const ScrollList = <T,>({
@@ -56,6 +57,7 @@ export const ScrollList = <T,>({
   isHidden = false,
   onFocus,
   isCategory,
+  isSkip,
   ...props
 }: ScrollListProps<T>) => {
   const { scrollViewRef, scrollInfo, scrollViewCallbacks } = useScrollView({
@@ -80,7 +82,7 @@ export const ScrollList = <T,>({
   const findNext = (from: number, dir: 1 | -1): number => {
     let i = from + dir;
     while (i >= 0 && i < items.length) {
-      if (!isCategory?.(items[i])) return i;
+      if (!isCategory?.(items[i]) && !isSkip?.(items[i])) return i;
       i += dir;
     }
     return from;

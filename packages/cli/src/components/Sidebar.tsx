@@ -18,10 +18,24 @@ const isCategoryItem = (item: SidebarItem): item is CategoryItem => "_category" 
 export const Sidebar = () => {
   const { services, selectService } = useServicesContext();
   const { focus, setFocus, isModalOpen } = useFocusManagerContext();
-  const isFocused = focus === "sidebar";
+  const isFocused = focus === "sidebar" || focus === "search";
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
+  const [prevSearchQuery, setPrevSearchQuery] = useState("");
   const ref = useRef<DOMElement>(null);
+
+  const matchedIds = useMemo(() => {
+    if (!searchQuery) return null;
+    const matches = filterServices(services, searchQuery);
+    return new Set(matches.map((s) => s.id));
+  }, [services, searchQuery]);
+
+  // When the query changes, reset selection to the first match
+  if (prevSearchQuery !== searchQuery) {
+    setPrevSearchQuery(searchQuery);
+    const firstMatchIdx = matchedIds ? services.findIndex((s) => matchedIds.has(s.id)) : 0;
+    setSelectedIndex(Math.max(0, firstMatchIdx));
+  }
 
   const servicesWithCategories = useMemo((): SidebarItem[] => {
     const result: SidebarItem[] = [];
@@ -36,20 +50,7 @@ export const Sidebar = () => {
     return result;
   }, [services]);
 
-  // When searching, jump to first match; otherwise use manual selection
-  const matchedIds = useMemo(() => {
-    if (!searchQuery) return null;
-    const matches = filterServices(services, searchQuery);
-    return new Set(matches.map((s) => s.id));
-  }, [services, searchQuery]);
-
-  const matchedIndex = useMemo(() => {
-    if (!matchedIds) return null;
-    const idx = services.findIndex((s) => matchedIds.has(s.id));
-    return idx === -1 ? null : idx;
-  }, [services, matchedIds]);
-
-  const effectiveIndex = matchedIndex ?? selectedIndex;
+  const effectiveIndex = selectedIndex;
 
   // display index in servicesWithCategories, derived from services index
   const displayIndex = useMemo(() => {
@@ -99,6 +100,7 @@ export const Sidebar = () => {
           isHidden={isModalOpen}
           onFocus={() => setFocus("sidebar")}
           isCategory={isCategoryItem}
+          isSkip={(item) => !isCategoryItem(item) && !!matchedIds && !matchedIds.has(item.id)}
           renderItem={(item, _, isSelected) => {
             if (isCategoryItem(item)) {
               return (
