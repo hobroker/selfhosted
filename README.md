@@ -168,6 +168,7 @@ npm run generate
 
 | Chart                                                  | Description                                                               | Source Code                                  |
 | ------------------------------------------------------ | ------------------------------------------------------------------------- | -------------------------------------------- |
+| [argocd](charts/system/argocd)                         | Declarative GitOps CD for Kubernetes.                                     | https://github.com/argoproj/argo-cd          |
 | [cert-manager](charts/system/cert-manager)             | Automatically provision and manage TLS certificates in K8s                | https://github.com/cert-manager/cert-manager |
 | [infisical-operator](charts/system/infisical-operator) | Operator to fetch secrets from Infisical.                                 | https://github.com/Infisical/infisical       |
 | [rancher](charts/system/rancher)                       | Container management platform                                             | https://github.com/rancher/rancher           |

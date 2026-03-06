@@ -1,0 +1,13 @@
+global:
+  domain: argo.hobroker.me
+
+configs:
+  params:
+    server.insecure: true # terminate TLS at Traefik, serve HTTP internally
+
+server:
+  ingress:
+    enabled: true
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    hostname: argo.hobroker.me
