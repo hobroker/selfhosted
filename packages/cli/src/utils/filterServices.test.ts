@@ -49,4 +49,15 @@ describe("filterServices", () => {
   it("returns empty array when services list is empty", () => {
     expect(filterServices([], "plex")).toEqual([]);
   });
+
+  it("matches fuzzy patterns (non-contiguous characters)", () => {
+    expect(filterServices(services, "plx")).toEqual([services[0]]);
+    expect(filterServices(services, "ncld")).toEqual([services[2]]);
+  });
+
+  it("ranks better matches above weaker ones", () => {
+    // "port" is a stronger match for "Portainer" than for "Plex"
+    const results = filterServices(services, "port");
+    expect(results[0]).toEqual(services[3]);
+  });
 });
