@@ -15,11 +15,7 @@ export const UnavailableToolsScreen = ({ onDismiss }: Props) => {
   });
 
   return (
-    <Box
-      padding={1}
-      flexDirection="column"
-      gap={1}
-    >
+    <Box padding={1} flexDirection="column" gap={1}>
       <Text color={colors.warning} bold>
         Some optional tools are not installed
       </Text>

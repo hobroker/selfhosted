@@ -9,7 +9,14 @@ interface Props extends PropsWithChildren, BoxProps {
   rightAdornment?: ReactNode;
 }
 
-export const TitledBox = ({ ref, title, children, isFocused, rightAdornment, ...boxProps }: Props) => {
+export const TitledBox = ({
+  ref,
+  title,
+  children,
+  isFocused,
+  rightAdornment,
+  ...boxProps
+}: Props) => {
   return (
     <Box
       ref={ref}

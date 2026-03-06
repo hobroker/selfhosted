@@ -61,7 +61,11 @@ const makeService = (name: string, category = "Test"): ServiceInfo => ({
 beforeEach(() => {
   vi.clearAllMocks();
   mockFocus = "sidebar";
-  mockServices = [makeService("Plex", "Media"), makeService("Jellyfin", "Media"), makeService("Nextcloud", "Storage")];
+  mockServices = [
+    makeService("Plex", "Media"),
+    makeService("Jellyfin", "Media"),
+    makeService("Nextcloud", "Storage"),
+  ];
   capturedInputCb = () => {};
 });
 

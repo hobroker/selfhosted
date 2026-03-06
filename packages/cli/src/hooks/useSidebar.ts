@@ -37,10 +37,7 @@ export const useSidebar = () => {
     }
   }
 
-  const servicesWithCategories = useMemo(
-    () => buildServicesWithCategories(services),
-    [services],
-  );
+  const servicesWithCategories = useMemo(() => buildServicesWithCategories(services), [services]);
 
   useInput((input, key) => {
     if (isModalOpen || (focus !== "sidebar" && focus !== "details")) return;
