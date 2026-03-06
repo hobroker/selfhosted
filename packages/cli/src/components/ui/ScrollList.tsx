@@ -57,10 +57,11 @@ export const ScrollList = <T,>({
   );
 
   const findNext = (from: number, dir: 1 | -1): number => {
-    let i = from + dir;
-    while (i >= 0 && i < items.length) {
+    const len = items.length;
+    let i = (from + dir + len) % len;
+    for (let steps = 0; steps < len; steps++) {
       if (!isSkip?.(items[i])) return i;
-      i += dir;
+      i = (i + dir + len) % len;
     }
     return from;
   };
