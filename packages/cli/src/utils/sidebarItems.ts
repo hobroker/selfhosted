@@ -26,6 +26,6 @@ export const getDisplayIndex = (
   const service = services[selectedIndex];
   if (!service) return 0;
   return servicesWithCategories.findIndex(
-    (i) => !isCategoryItem(i) && (i as ServiceInfo).id === service.id,
+    (item) => !isCategoryItem(item) && item.id === service.id,
   );
 };
