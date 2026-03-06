@@ -14,10 +14,11 @@ interface ServiceItemProps {
 export const ServiceItem = ({ service, isSelected, isMatch, onClick }: ServiceItemProps) => {
   const isDimmed = isMatch === false && !isSelected;
   const ref = useRef<DOMElement>(null);
-  useOnClick(ref, onClick);
+
+  useOnClick(ref, () => onClick?.());
 
   return (
-    <Box ref={ref} key={service.id} paddingRight={1} justifyContent="space-between" width="100%">
+    <Box ref={ref} paddingRight={1} justifyContent="space-between" width="100%">
       <Box backgroundColor={isSelected ? colors.primary : undefined} flexGrow={1}>
         <Text
           color={isSelected ? "black" : isDimmed ? colors.dim : colors.text}

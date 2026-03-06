@@ -12,7 +12,7 @@ export const useGlobalInput = () => {
     if (isModalOpen) {
       lastEscapeAt.current = 0;
       const currentModalShortcut = ACTIONS[focus as keyof typeof ACTIONS]?.shortcut;
-      if (currentModalShortcut?.includes(input) || key.escape || input === "q") {
+      if (currentModalShortcut?.includes(input) || key.escape || input.toLowerCase() === "q") {
         closeModals();
       }
       return;
