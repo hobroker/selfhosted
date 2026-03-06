@@ -46,7 +46,7 @@ const ShortcutAction = ({
 
 export const Footer = () => {
   return (
-    <Box paddingX={1} borderStyle="single" borderColor={colors.primary} width="100%">
+    <Box paddingX={1} width="100%">
       <Shortcut name="q" description="quit" />
       <ShortcutAction actionKey="refresh" />
       <ShortcutAction actionKey="logs" />
