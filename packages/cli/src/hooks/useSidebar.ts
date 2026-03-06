@@ -3,12 +3,14 @@ import { useInput } from "ink";
 import { useFocusManagerContext } from "../contexts/FocusManagerContext";
 import { useServicesContext } from "../contexts/ServicesContext";
 import { filterServices } from "../utils/filterServices";
-import type { ServiceInfo } from "../types";
+import {
+  isCategoryItem,
+  buildServicesWithCategories,
+  getDisplayIndex,
+} from "../utils/sidebarItems";
+import type { SidebarItem } from "../utils/sidebarItems";
 
-type CategoryItem = { _category: true; label: string };
-export type SidebarItem = ServiceInfo | CategoryItem;
-
-export const isCategoryItem = (item: SidebarItem): item is CategoryItem => "_category" in item;
+export { isCategoryItem, SidebarItem };
 
 export const useSidebar = () => {
   const { services, selectService } = useServicesContext();
@@ -35,18 +37,10 @@ export const useSidebar = () => {
     }
   }
 
-  const servicesWithCategories = useMemo((): SidebarItem[] => {
-    const result: SidebarItem[] = [];
-    let lastCategory: string | null = null;
-    for (const service of services) {
-      if (service.category !== lastCategory) {
-        result.push({ _category: true, label: service.category });
-        lastCategory = service.category;
-      }
-      result.push(service);
-    }
-    return result;
-  }, [services]);
+  const servicesWithCategories = useMemo(
+    () => buildServicesWithCategories(services),
+    [services],
+  );
 
   useInput((input, key) => {
     if (isModalOpen || (focus !== "sidebar" && focus !== "details")) return;
@@ -70,13 +64,10 @@ export const useSidebar = () => {
     }
   });
 
-  const displayIndex = useMemo(() => {
-    const service = services[selectedIndex];
-    if (!service) return 0;
-    return servicesWithCategories.findIndex(
-      (i) => !isCategoryItem(i) && (i as ServiceInfo).id === service.id,
-    );
-  }, [selectedIndex, services, servicesWithCategories]);
+  const displayIndex = useMemo(
+    () => getDisplayIndex(services, servicesWithCategories, selectedIndex),
+    [selectedIndex, services, servicesWithCategories],
+  );
 
   const handleChange = (displayIdx: number) => {
     const item = servicesWithCategories[displayIdx];
