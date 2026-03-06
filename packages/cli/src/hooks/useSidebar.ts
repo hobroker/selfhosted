@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, SetStateAction } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useInput } from "ink";
 import { useFocusManagerContext } from "../contexts/FocusManagerContext";
 import { useServicesContext } from "../contexts/ServicesContext";
@@ -16,6 +16,7 @@ export const useSidebar = () => {
   const isFocused = focus === "sidebar";
 
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [prevSearchQuery, setPrevSearchQuery] = useState("");
 
@@ -49,20 +50,23 @@ export const useSidebar = () => {
 
   useInput((input, key) => {
     if (isModalOpen || (focus !== "sidebar" && focus !== "details")) return;
-    const updateSearchQuery = (value: SetStateAction<string>) => {
-      setSearchQuery(value);
-      setFocus("sidebar");
-    };
     if (key.escape) {
-      updateSearchQuery("");
+      setIsSearching(false);
+      setSearchQuery("");
       return;
     }
+    if (input === "/" && !isSearching) {
+      setIsSearching(true);
+      setFocus("sidebar");
+      return;
+    }
+    if (!isSearching) return;
     if (key.backspace || key.delete) {
-      updateSearchQuery((prev) => prev.slice(0, -1));
+      setSearchQuery((prev) => prev.slice(0, -1));
       return;
     }
-    if (/^[a-z]$/.test(input)) {
-      updateSearchQuery((prev) => prev + input);
+    if (/^[\x20-\x7E]$/.test(input)) {
+      setSearchQuery((prev) => prev + input);
     }
   });
 
@@ -90,12 +94,16 @@ export const useSidebar = () => {
   return {
     isFocused,
     isModalOpen,
+    isSearching,
     searchQuery,
     matchedIds,
     servicesWithCategories,
     displayIndex,
     handleChange,
-    clearSearch: () => setSearchQuery(""),
+    clearSearch: () => {
+      setIsSearching(false);
+      setSearchQuery("");
+    },
     onFocus: () => setFocus("sidebar"),
   };
 };

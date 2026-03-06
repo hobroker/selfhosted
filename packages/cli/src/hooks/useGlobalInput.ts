@@ -30,7 +30,7 @@ export const useGlobalInput = () => {
 
     lastEscapeAt.current = 0;
 
-    if (input === "Q") {
+    if (input.toLowerCase() === "q") {
       exit();
     }
 

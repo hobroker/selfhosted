@@ -13,6 +13,7 @@ export const Sidebar = () => {
   const {
     isFocused,
     isModalOpen,
+    isSearching,
     searchQuery,
     matchedIds,
     servicesWithCategories,
@@ -72,7 +73,7 @@ export const Sidebar = () => {
           }}
         />
       )}
-      <SidebarSearch query={searchQuery} />
+      {isSearching && <SidebarSearch query={searchQuery} />}
     </TitledBox>
   );
 };

@@ -48,8 +48,6 @@ export const Footer = () => {
   return (
     <Box paddingX={1} borderStyle="single" borderColor={colors.primary} width="100%">
       <Shortcut name="q" description="quit" />
-      <Shortcut name="tab" description="focus" />
-      <Shortcut name="arrows" description="navigate" />
       <ShortcutAction actionKey="refresh" />
       <ShortcutAction actionKey="logs" />
       <ShortcutAction actionKey="history" />
