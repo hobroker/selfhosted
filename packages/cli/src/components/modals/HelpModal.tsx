@@ -5,7 +5,7 @@ import { Action } from "../../types";
 
 const ShortcutEntry = ({ name, description }: { name: string; description: string }) => (
   <Box marginBottom={1}>
-    <Box width={15}>
+    <Box width={8}>
       <Text color={colors.primary} bold>
         {name}
       </Text>
@@ -30,7 +30,6 @@ export const HelpModal = () => (
     <ActionShortcut action={ACTIONS.logs} />
     <ShortcutEntry name="tab" description="Switch focus between Sidebar and Details" />
     <ShortcutEntry name="arrows" description="Navigate list or scroll details" />
-    <ShortcutEntry name="mouse wheel" description="Scroll focused section" />
 
     <Box marginTop={1} alignSelf="center">
       <Text color={colors.dim}>Press </Text>
