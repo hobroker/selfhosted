@@ -35,13 +35,21 @@ describe("isServiceChartUpToDate", () => {
 describe("isAppVersionUpToDate", () => {
   it("returns true when both chart and app versions match", () => {
     expect(
-      isAppVersionUpToDate({ ...base, installedChartVersion: "1.0.0", installedAppVersion: "1.2.3" }),
+      isAppVersionUpToDate({
+        ...base,
+        installedChartVersion: "1.0.0",
+        installedAppVersion: "1.2.3",
+      }),
     ).toBe(true);
   });
 
   it("returns true when app versions differ only by v-prefix", () => {
     expect(
-      isAppVersionUpToDate({ ...base, installedChartVersion: "1.0.0", installedAppVersion: "v1.2.3" }),
+      isAppVersionUpToDate({
+        ...base,
+        installedChartVersion: "1.0.0",
+        installedAppVersion: "v1.2.3",
+      }),
     ).toBe(true);
   });
 
@@ -58,13 +66,21 @@ describe("isAppVersionUpToDate", () => {
 
   it("returns false when chart version is outdated", () => {
     expect(
-      isAppVersionUpToDate({ ...base, installedChartVersion: "0.9.0", installedAppVersion: "1.2.3" }),
+      isAppVersionUpToDate({
+        ...base,
+        installedChartVersion: "0.9.0",
+        installedAppVersion: "1.2.3",
+      }),
     ).toBe(false);
   });
 
   it("returns false when app version is outdated", () => {
     expect(
-      isAppVersionUpToDate({ ...base, installedChartVersion: "1.0.0", installedAppVersion: "1.1.0" }),
+      isAppVersionUpToDate({
+        ...base,
+        installedChartVersion: "1.0.0",
+        installedAppVersion: "1.1.0",
+      }),
     ).toBe(false);
   });
 });

@@ -11,10 +11,7 @@ import { TitledBox } from "./ui/TitledBox";
 import { ScrollContainer } from "./ui/ScrollContainer";
 import { ScrollViewRef } from "ink-scroll-view";
 import { useFocusManagerContext } from "../contexts/FocusManagerContext";
-import {
-  isAppVersionUpToDate,
-  isServiceChartUpToDate,
-} from "../utils/serviceState";
+import { isAppVersionUpToDate, isServiceChartUpToDate } from "../utils/serviceState";
 
 marked.setOptions({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

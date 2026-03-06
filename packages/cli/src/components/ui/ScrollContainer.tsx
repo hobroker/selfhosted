@@ -51,14 +51,16 @@ export const ScrollContainer = ({
         <ScrollView ref={scrollViewRef} flexGrow={1} {...scrollViewCallbacks} {...props}>
           <Box flexDirection="column">{children}</Box>
         </ScrollView>
-        <ScrollBar
-          placement="inset"
-          style="block"
-          color={isFocused ? colors.text : colors.dim}
-          contentHeight={scrollInfo.contentHeight}
-          viewportHeight={scrollInfo.viewportHeight}
-          scrollOffset={scrollInfo.scrollOffset}
-        />
+        {scrollInfo.contentHeight > scrollInfo.viewportHeight && (
+          <ScrollBar
+            placement="inset"
+            style="block"
+            color={isFocused ? colors.text : colors.dim}
+            contentHeight={scrollInfo.contentHeight}
+            viewportHeight={scrollInfo.viewportHeight}
+            scrollOffset={scrollInfo.scrollOffset}
+          />
+        )}
       </Box>
     </ErrorBoundary>
   );

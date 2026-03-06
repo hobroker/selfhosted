@@ -67,11 +67,11 @@ const AppContent = () => {
         <Header />
       </Box>
 
-      <Box height={dimensions.rows - 6}>
+      <Box height={dimensions.rows - 4}>
         <Sidebar />
         <ServiceDetails service={selectedService} />
       </Box>
-      <Box height={3}>
+      <Box height={1}>
         <Footer />
       </Box>
 

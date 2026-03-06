@@ -1,37 +1,13 @@
 import { Box, BoxProps, DOMElement, useInput } from "ink";
 import { ScrollView } from "ink-scroll-view";
-import { ReactNode, RefObject, useRef } from "react";
+import { ReactNode, RefObject, useCallback, useEffect } from "react";
 import { ScrollBar } from "@byteland/ink-scroll-bar";
-import { useOnClick } from "@ink-tools/ink-mouse";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { colors } from "../../constants";
 import { useScrollView } from "../../hooks/useScrollView";
 import { FocusState } from "../../types";
 
 const SCROLL_BUFFER = 2;
-
-const ItemWrapper = ({
-  index,
-  onChange,
-  isCategory,
-  children,
-}: {
-  index: number;
-  onChange: (i: number) => void;
-  isCategory: boolean;
-  children: ReactNode;
-}) => {
-  const ref = useRef<DOMElement>(null);
-  useOnClick(ref, () => {
-    if (isCategory) {
-      onChange(index + 1);
-    } else {
-      onChange(index);
-    }
-  });
-
-  return <Box ref={ref}>{children}</Box>;
-};
 
 interface ScrollListProps<T> extends BoxProps {
   id: FocusState;
@@ -43,7 +19,7 @@ interface ScrollListProps<T> extends BoxProps {
   isFocused?: boolean;
   isHidden?: boolean;
   onFocus?: () => void;
-  isCategory?: (item: T) => boolean;
+  isSkip?: (item: T) => boolean;
 }
 
 export const ScrollList = <T,>({
@@ -55,7 +31,7 @@ export const ScrollList = <T,>({
   isFocused = true,
   isHidden = false,
   onFocus,
-  isCategory,
+  isSkip,
   ...props
 }: ScrollListProps<T>) => {
   const { scrollViewRef, scrollInfo, scrollViewCallbacks } = useScrollView({
@@ -65,26 +41,34 @@ export const ScrollList = <T,>({
     onFocus,
   });
 
-  const scrollToIndex = (index: number) => {
-    const sv = scrollViewRef.current;
-    if (!sv) return;
-    const offset = sv.getScrollOffset();
-    const viewport = sv.getViewportHeight();
-    if (index < offset + SCROLL_BUFFER) {
-      sv.scrollTo(Math.max(0, index - SCROLL_BUFFER));
-    } else if (index > offset + viewport - 1 - SCROLL_BUFFER) {
-      sv.scrollTo(index - viewport + 1 + SCROLL_BUFFER);
-    }
-  };
+  const scrollToIndex = useCallback(
+    (index: number) => {
+      const sv = scrollViewRef.current;
+      if (!sv) return;
+      const offset = sv.getScrollOffset();
+      const viewport = sv.getViewportHeight();
+      if (index < offset + SCROLL_BUFFER) {
+        sv.scrollTo(Math.max(0, index - SCROLL_BUFFER));
+      } else if (index > offset + viewport - 1 - SCROLL_BUFFER) {
+        sv.scrollTo(index - viewport + 1 + SCROLL_BUFFER);
+      }
+    },
+    [scrollViewRef],
+  );
 
   const findNext = (from: number, dir: 1 | -1): number => {
-    let i = from + dir;
-    while (i >= 0 && i < items.length) {
-      if (!isCategory?.(items[i])) return i;
-      i += dir;
+    const len = items.length;
+    let i = (from + dir + len) % len;
+    for (let steps = 0; steps < len; steps++) {
+      if (!isSkip?.(items[i])) return i;
+      i = (i + dir + len) % len;
     }
     return from;
   };
+
+  useEffect(() => {
+    scrollToIndex(selectedIndex);
+  }, [selectedIndex, scrollToIndex]);
 
   useInput((_, key) => {
     if (!isFocused) return;
@@ -105,24 +89,23 @@ export const ScrollList = <T,>({
       <Box flexDirection="row" height="100%">
         <ScrollView ref={scrollViewRef} flexGrow={1} {...scrollViewCallbacks} {...props}>
           <Box flexDirection="column">
-            {items.map((item, index) => {
-              const cat = isCategory?.(item) ?? false;
-              return (
-                <ItemWrapper key={index} index={index} onChange={onChange} isCategory={cat}>
-                  {renderItem(item, index, !cat && index === selectedIndex)}
-                </ItemWrapper>
-              );
-            })}
+            {items.map((item, index) => (
+              <Box key={index}>
+                {renderItem(item, index, !isSkip?.(item) && index === selectedIndex)}
+              </Box>
+            ))}
           </Box>
         </ScrollView>
-        <ScrollBar
-          placement="inset"
-          style="block"
-          color={isFocused ? colors.text : colors.dim}
-          contentHeight={scrollInfo.contentHeight}
-          viewportHeight={scrollInfo.viewportHeight}
-          scrollOffset={scrollInfo.scrollOffset}
-        />
+        {scrollInfo.contentHeight > scrollInfo.viewportHeight && (
+          <ScrollBar
+            placement="inset"
+            style="block"
+            color={isFocused ? colors.text : colors.dim}
+            contentHeight={scrollInfo.contentHeight}
+            viewportHeight={scrollInfo.viewportHeight}
+            scrollOffset={scrollInfo.scrollOffset}
+          />
+        )}
       </Box>
     </ErrorBoundary>
   );

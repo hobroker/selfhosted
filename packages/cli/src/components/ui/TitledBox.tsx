@@ -1,51 +1,57 @@
-import { PropsWithChildren, ReactNode, forwardRef } from "react";
+import { PropsWithChildren, ReactNode, Ref } from "react";
 import { Box, Text, BoxProps, DOMElement } from "ink";
 import { colors } from "../../constants";
 
 interface Props extends PropsWithChildren, BoxProps {
-  title: string;
+  ref?: Ref<DOMElement>;
+  title?: string;
   isFocused?: boolean;
   rightAdornment?: ReactNode;
 }
 
-export const TitledBox = forwardRef<DOMElement, Props>(
-  ({ title, children, isFocused, rightAdornment, ...boxProps }, ref) => {
-    return (
+export const TitledBox = ({
+  ref,
+  title,
+  children,
+  isFocused,
+  rightAdornment,
+  ...boxProps
+}: Props) => {
+  return (
+    <Box
+      ref={ref}
+      borderStyle="single"
+      borderColor={isFocused ? colors.borderActive : colors.border}
+      {...boxProps}
+    >
       <Box
-        ref={ref}
-        borderStyle="single"
-        borderColor={isFocused ? colors.borderActive : colors.border}
-        {...boxProps}
+        position="absolute"
+        marginTop={-1}
+        marginLeft={1}
+        width="100%"
+        flexDirection="row"
+        justifyContent="space-between"
       >
-        <Box
-          position="absolute"
-          marginTop={-1}
-          marginLeft={1}
-          width="100%"
-          flexDirection="row"
-          justifyContent="space-between"
-        >
+        {title && (
           <Box paddingX={1}>
             <Text color={isFocused ? colors.primary : colors.dim} bold={isFocused}>
               {` ${title.toUpperCase()} `}
             </Text>
           </Box>
-          {rightAdornment && (
-            <Box paddingX={1} marginRight={2}>
-              {typeof rightAdornment === "string" ? (
-                <Text color={isFocused ? colors.primary : colors.dim} bold={isFocused}>
-                  {` ${rightAdornment} `}
-                </Text>
-              ) : (
-                rightAdornment
-              )}
-            </Box>
-          )}
-        </Box>
-        {children}
+        )}
+        {rightAdornment && (
+          <Box paddingX={1} marginRight={2}>
+            {typeof rightAdornment === "string" ? (
+              <Text color={isFocused ? colors.primary : colors.dim} bold={isFocused}>
+                {` ${rightAdornment} `}
+              </Text>
+            ) : (
+              rightAdornment
+            )}
+          </Box>
+        )}
       </Box>
-    );
-  },
-);
-
-TitledBox.displayName = "TitledBox";
+      {children}
+    </Box>
+  );
+};

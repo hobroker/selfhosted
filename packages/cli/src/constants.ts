@@ -70,48 +70,48 @@ export const ACTIONS: Record<ActionKey, Action> = {
   apply: {
     label: "Apply",
     description: "Run helmfile apply for this service",
-    shortcut: ["a", "A"],
+    shortcut: ["A"],
   },
   ["apply-confirm"]: {
     label: "Confirm Apply",
     description: "Show confirmation modal before applying",
-    shortcut: ["a", "A"],
+    shortcut: ["A"],
     hidden: true,
   },
   diff: {
     label: "Diff",
     description: "Show helmfile diff for this service",
-    shortcut: ["d", "D"],
+    shortcut: ["D"],
   },
   help: {
     label: "Help",
     description: "Show help information",
-    shortcut: ["?", "/"],
+    shortcut: ["?"],
   },
   history: {
     label: "History",
     description: "Show history for this service",
-    shortcut: ["h", "H"],
+    shortcut: ["H"],
   },
   refresh: {
     label: "Refresh",
     description: "Refresh services",
-    shortcut: ["r", "R"],
+    shortcut: ["R"],
   },
   destroy: {
     label: "Destroy",
     description: "Destroy this service",
-    shortcut: ["x", "X"],
+    shortcut: ["X"],
   },
   ["destroy-confirm"]: {
     label: "Confirm Destroy",
     description: "Show confirmation modal before destroying",
-    shortcut: ["x", "X"],
+    shortcut: ["X"],
     hidden: true,
   },
   logs: {
     label: "Logs",
     description: "Show logs for this service",
-    shortcut: ["l", "L"],
+    shortcut: ["L"],
   },
 };
