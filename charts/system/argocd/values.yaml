@@ -6,6 +6,14 @@ configs:
     server.insecure: true # terminate TLS at Traefik, serve HTTP internally
 
 server:
+  service:
+    type: LoadBalancer
+    servicePortHttp: 8082
+    servicePortHttps: 8443
+
+  metrics:
+    enabled: true
+
   ingress:
     enabled: true
     annotations:
