@@ -68,7 +68,9 @@ const AppContent = () => {
       </Box>
 
       <Box height={dimensions.rows - 4}>
-        <Sidebar />
+        <Box width="20%" minWidth={30}>
+          <Sidebar />
+        </Box>
         <ServiceDetails service={selectedService} />
       </Box>
       <Box height={1}>

@@ -2,17 +2,19 @@ import { useRef } from "react";
 import { useApp, useInput } from "ink";
 import { ACTIONS } from "../constants";
 import { useFocusManagerContext } from "../contexts/FocusManagerContext";
+import { ActionKey } from "../types";
+
+const isQuit = (input: string) => input.toLowerCase() === "q";
 
 export const useGlobalInput = () => {
   const { exit } = useApp();
-  const { focus, setFocus, isModalOpen, closeModals } = useFocusManagerContext();
+  const { setFocus, isModalOpen, closeModals } = useFocusManagerContext();
   const lastEscapeAt = useRef(0);
 
   useInput((input, key) => {
     if (isModalOpen) {
       lastEscapeAt.current = 0;
-      const currentModalShortcut = ACTIONS[focus as keyof typeof ACTIONS]?.shortcut;
-      if (currentModalShortcut?.includes(input) || key.escape || input.toLowerCase() === "q") {
+      if (key.escape || isQuit(input)) {
         closeModals();
       }
       return;
@@ -30,36 +32,26 @@ export const useGlobalInput = () => {
 
     lastEscapeAt.current = 0;
 
-    if (input.toLowerCase() === "q") {
+    if (isQuit(input)) {
       exit();
     }
 
-    if (ACTIONS.help.shortcut.includes(input)) {
-      setFocus("help");
-    }
+    const actions: ActionKey[] = [
+      "help",
+      "history",
+      "diff",
+      "apply-confirm",
+      "refresh",
+      "destroy-confirm",
+      "logs",
+    ];
 
-    if (ACTIONS.history.shortcut.includes(input)) {
-      setFocus("history");
-    }
-
-    if (ACTIONS.diff.shortcut.includes(input)) {
-      setFocus("diff");
-    }
-
-    if (ACTIONS["apply-confirm"].shortcut.includes(input)) {
-      setFocus("apply-confirm");
-    }
-
-    if (ACTIONS.refresh.shortcut.includes(input)) {
-      setFocus("refresh");
-    }
-
-    if (ACTIONS["destroy-confirm"].shortcut.includes(input)) {
-      setFocus("destroy-confirm");
-    }
-
-    if (ACTIONS.logs.shortcut.includes(input)) {
-      setFocus("logs");
+    for (const modal of actions) {
+      const shortcut = ACTIONS[modal].shortcut;
+      if (shortcut.includes(input)) {
+        setFocus(modal);
+        return;
+      }
     }
 
     if (key.tab || key.rightArrow || key.leftArrow) {
