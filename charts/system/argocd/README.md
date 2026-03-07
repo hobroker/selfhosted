@@ -1,6 +1,6 @@
 `argocd`
 
-> Declarative GitOps CD for Kubernetes.
+> Declarative GitOps CD for Kubernetes
 
 Source Code: https://github.com/argoproj/argo-cd
 
@@ -10,12 +10,10 @@ ArgoCD is bootstrapped via plain Helm (not Helmfile):
 
 ```sh
 helm repo add argo https://argoproj.github.io/argo-helm
-helm repo update
-kubectl create namespace argocd
+helm repo update argo
 helm upgrade --install argocd argo/argo-cd \
-  --namespace argocd \
-  --version 7.8.23 \
-  -f charts/system/argocd/values.yaml
+  --namespace argocd --create-namespace \
+  -f values.yaml
 ```
 
 ## Register Applications
