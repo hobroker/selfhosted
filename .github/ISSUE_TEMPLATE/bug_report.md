@@ -27,4 +27,5 @@ labels: bug
 **Environment**
 
 - k3s version:
-- Helmfile version:
+- ArgoCD version:
+- Helm version:
