@@ -11,7 +11,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: 'npm'
+          cache: "npm"
       - name: Install dependencies
         run: npm ci
       - name: Run Prettier
@@ -29,11 +29,25 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: 'npm'
+          cache: "npm"
       - name: Install dependencies
         run: npm ci
       - name: Run tests
         run: npm test
+
+  kubeconform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: yokawasa/action-setup-kube-tools@v0.13.1
+        with:
+          kubeconform: "0.7.0"
+      - name: Validate manifests
+        run: |
+          grep -rlE --include='*.yaml' 'kind:' charts | xargs kubeconform \
+            -schema-location default \
+            -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
+            -summary
 
   helmfile-lint:
     runs-on: ubuntu-latest
