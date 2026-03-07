@@ -1,5 +1,21 @@
-`local-path-retain`
+# `local-path-retain`
 
 > StorageClass based on local-path provisioner with Retain reclaim policy.
 
 Source Code: https://github.com/rancher/local-path-provisioner
+
+## Installing/upgrading
+
+```sh
+# Register
+kubectl apply -f application.yaml
+
+# Upgrade - via ArgoCD UI or:
+argocd app sync local-path-retain
+```
+
+### Manual (without ArgoCD)
+
+```sh
+kubectl apply -f local-path-retain.yaml
+```
