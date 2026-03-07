@@ -1,6 +1,6 @@
 # Selfhosted
 
-A collection of Helm charts for self-hosted services running on [k3s](https://k3s.io/) (lightweight Kubernetes), managed with [Helmfile](https://helmfile.readthedocs.io/).
+A collection of Helm charts for self-hosted services running on [k3s](https://k3s.io/) (lightweight Kubernetes), managed with [ArgoCD](https://argo-cd.readthedocs.io/).
 
 > **Personal Setup:** This repository reflects a personal homelab setup. Domains, host paths, and secret names are all specific to this environment. If you're adapting it for your own use, expect to update `values.yaml` in each chart you deploy.
 
@@ -10,7 +10,8 @@ A collection of Helm charts for self-hosted services running on [k3s](https://k3
 - [Getting Started](#getting-started)
   - [1. Install k3s](#1-install-k3s)
   - [2. Clone this repo](#2-clone-this-repo)
-  - [3. Deploy a service](#3-deploy-a-service)
+  - [3. Bootstrap ArgoCD (optional)](#3-bootstrap-argocd-optional)
+  - [4. Deploy a service](#4-deploy-a-service)
 - [Deploy Order](#deploy-order)
 - [Host Directories](#host-directories)
 - [Secrets](#secrets)
@@ -31,8 +32,9 @@ A collection of Helm charts for self-hosted services running on [k3s](https://k3
 ## Prerequisites
 
 - [k3s](https://docs.k3s.io/installation) — lightweight Kubernetes cluster
-- [Helmfile](https://helmfile.readthedocs.io/en/latest/#installation) — declarative Helm chart management
+- [Helm](https://helm.sh/docs/intro/install/) — Kubernetes package manager
 - [kubectl](https://kubernetes.io/docs/tasks/tools/) — Kubernetes CLI
+- [ArgoCD](https://argo-cd.readthedocs.io/en/stable/getting_started/) — GitOps controller (optional, see [charts/system/argocd](charts/system/argocd))
 - [Node.js](https://nodejs.org/) + npm — optional, for the interactive CLI
 
 ## Getting Started
@@ -48,19 +50,24 @@ git clone https://github.com/hobroker/selfhosted.git
 cd selfhosted
 ```
 
-### 3. Deploy a service
+### 3. Bootstrap ArgoCD (optional)
 
-Navigate to any chart directory and run `helmfile apply`. See [Deploying a Chart](#deploying-a-chart) for details.
+See [charts/system/argocd](charts/system/argocd) for bootstrap instructions.
+
+### 4. Deploy a service
+
+Navigate to any chart directory and follow the instructions in its `README.md`. See [Deploying a Chart](#deploying-a-chart) for details.
 
 ## Deploy Order
 
-System charts must be deployed before any app charts. A typical bootstrap order:
+System charts must be synced before any app charts. ArgoCD sync-wave annotations handle ordering automatically when syncing all at once. If syncing manually, use this order:
 
-1. [cert-manager](charts/system/cert-manager) — TLS certificate management
-2. [traefik](charts/system/traefik) — ingress / reverse proxy
-3. [infisical-operator](charts/system/infisical-operator) — secret injection
-4. [reloader](charts/system/reloader) — rolling restarts on config/secret changes (optional)
-5. App charts (any order)
+1. [local-path-retain](charts/system/local-path-retain) — persistent storage class
+2. [cert-manager](charts/system/cert-manager) — TLS certificate management
+3. [traefik](charts/system/traefik) — ingress / reverse proxy
+4. [infisical-operator](charts/system/infisical-operator) — secret injection
+5. [reloader](charts/system/reloader) — rolling restarts on config/secret changes
+6. App charts (any order)
 
 ## Host Directories
 
@@ -69,11 +76,7 @@ Charts use host-mounted volumes for persistent data. The paths are hardcoded in 
 - `/appdata/k3s/<service>` — per-service config and database
 - `/mnt/nebula` — media library (movies, TV shows, downloads)
 
-A custom `StorageClass` with a `Retain` reclaim policy is also available to prevent data loss when PVCs are deleted:
-
-```shell
-kubectl apply -f charts/system/local-path-retain.yaml
-```
+A custom `StorageClass` with a `Retain` reclaim policy is also available to prevent data loss when PVCs are deleted — see [local-path-retain](charts/system/local-path-retain).
 
 ## Secrets
 
@@ -83,12 +86,11 @@ Secrets are managed via [Infisical](https://infisical.com/) using the [infisical
 
 Deploying a chart is usually just:
 
-```shell
-cd charts/<category>/<name>
-helmfile apply
+```sh
+kubectl apply -f charts/<category>/<name>/application.yaml
 ```
 
-Each chart's `values.yaml` contains a hardcoded domain (e.g. `jellyfin.hobroker.me`) — update it to your own domain before deploying. Some charts also require extra steps (config files, secrets, host volumes) — check the chart's `README.md` for details.
+Then sync it in the ArgoCD UI. Each chart's `values.yaml` contains a hardcoded domain (e.g. `jellyfin.hobroker.me`) — update it to your own domain before deploying. Some charts also require extra steps (config files, secrets, host volumes) — check the chart's `README.md` for details.
 
 ## Interactive CLI (optional)
 
@@ -183,7 +185,7 @@ npm run generate
 ## References
 
 - [k3s](https://k3s.io/) — Lightweight Kubernetes
-- [Helmfile](https://helmfile.readthedocs.io/) — Declarative Helm chart management
+- [ArgoCD](https://argo-cd.readthedocs.io/) — GitOps continuous delivery
 - [Infisical](https://infisical.com/) — Secret management
 
 ## Contributing

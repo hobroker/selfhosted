@@ -1,4 +1,4 @@
-`argocd`
+# `argocd`
 
 > Declarative GitOps CD for Kubernetes
 
@@ -6,7 +6,7 @@ Source Code: https://github.com/argoproj/argo-cd
 
 ## Bootstrap
 
-ArgoCD is bootstrapped via plain Helm (not Helmfile):
+ArgoCD is bootstrapped once via plain Helm:
 
 ```sh
 helm repo add argo https://argoproj.github.io/argo-helm
@@ -16,16 +16,17 @@ helm upgrade --install argocd argo/argo-cd \
   -f values.yaml
 ```
 
-## Register Applications
+After the initial bootstrap, ArgoCD manages itself — upgrades are done by bumping `targetRevision` in `application.yaml` and syncing via the UI.
 
-Once ArgoCD is running, apply all `application.yaml` manifests:
+## Registering Services
+
+Each service has an `application.yaml` co-located in its chart directory. Register services individually:
 
 ```sh
-find charts/ -name "application.yaml" | xargs kubectl apply -f
+kubectl apply -f charts/<category>/<service>/application.yaml
 ```
 
-Then sync services manually via the ArgoCD UI or CLI.
-Sync system services first, in this order:
+Then sync via the ArgoCD UI. For system services, sync in this order:
 
 1. `local-path-retain`
 2. `cert-manager`
@@ -34,10 +35,9 @@ Sync system services first, in this order:
 5. `reloader`
 6. `rancher` (optional)
 
-After the initial bootstrap, ArgoCD manages itself — upgrades are done by
-bumping `targetRevision` in `application.yaml` and syncing via the UI.
-
 ## CLI Access
+
+Install the ArgoCD CLI: https://argo-cd.readthedocs.io/en/stable/cli_installation/
 
 The server is exposed as a LoadBalancer on port 8082. Get the external IP:
 
