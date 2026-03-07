@@ -7,8 +7,22 @@ Chart: https://github.com/prometheus-community/helm-charts/tree/main/charts/kube
 
 ## Installing/upgrading
 
-```shell
-helmfile apply
+```sh
+# Register (first time)
+kubectl apply -f application.yaml
+
+# Upgrade - bump targetRevision in application.yaml, then sync via ArgoCD UI or:
+argocd app sync prometheus-operator
+```
+
+### Manual Helm (without ArgoCD)
+
+```sh
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update prometheus-community
+helm upgrade --install prometheus-operator prometheus-community/kube-prometheus-stack \
+  --namespace monitoring --create-namespace \
+  -f values.yaml
 ```
 
 ### Helm values

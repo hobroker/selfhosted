@@ -7,10 +7,23 @@ Chart: https://github.com/traefik/traefik-helm-chart
 
 ## Installing/upgrading
 
-```shell
-kubectl apply -f config
+```sh
+# Register (first time)
+kubectl apply -f application.yaml
 
-helmfile apply
+# Upgrade - bump targetRevision in application.yaml, then sync via ArgoCD UI or:
+argocd app sync traefik
+```
+
+### Manual Helm (without ArgoCD)
+
+```sh
+kubectl apply -f config/
+helm repo add traefik https://helm.traefik.io/traefik
+helm repo update traefik
+helm upgrade --install traefik traefik/traefik \
+  --namespace kube-system --create-namespace \
+  -f values.yaml
 ```
 
 ### Configuration
