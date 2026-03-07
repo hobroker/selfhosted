@@ -7,10 +7,23 @@ Chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 
 ## Installing/upgrading
 
-```shell
-kubectl apply -f config
+```sh
+# Register / update the Application resource
+kubectl apply -f application.yaml
 
-helmfile apply
+# Then sync the workload - via ArgoCD UI or:
+argocd app sync wakatime-exporter
+```
+
+### Manual Helm (without ArgoCD)
+
+```sh
+kubectl apply -f config/
+helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
+helm repo update bjw-s
+helm upgrade --install wakatime-exporter bjw-s/app-template \
+  --namespace monitoring --create-namespace \
+  -f values.yaml
 ```
 
 ### Secrets

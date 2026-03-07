@@ -7,8 +7,22 @@ Chart: https://github.com/rancher/rancher/tree/main/chart
 
 ## Installing/upgrading
 
-```shell
-helmfile apply
+```sh
+# Register / update the Application resource
+kubectl apply -f application.yaml
+
+# Then sync the workload - via ArgoCD UI or:
+argocd app sync rancher
+```
+
+### Manual Helm (without ArgoCD)
+
+```sh
+helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
+helm repo update rancher-latest
+helm upgrade --install rancher rancher-latest/rancher \
+  --namespace cattle-system --create-namespace \
+  -f values.yaml
 ```
 
 ### Helm values

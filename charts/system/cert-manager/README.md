@@ -7,8 +7,22 @@ Chart: https://github.com/cert-manager/cert-manager/tree/master/deploy/charts/ce
 
 ## Installing/upgrading
 
-```shell
-helmfile apply
+```sh
+# Register / update the Application resource
+kubectl apply -f application.yaml
+
+# Then sync the workload - via ArgoCD UI or:
+argocd app sync cert-manager
+```
+
+### Manual Helm (without ArgoCD)
+
+```sh
+helm repo add jetstack https://charts.jetstack.io
+helm repo update jetstack
+helm upgrade --install cert-manager jetstack/cert-manager \
+  --namespace cert-manager --create-namespace \
+  -f values.yaml
 ```
 
 ### Helm values

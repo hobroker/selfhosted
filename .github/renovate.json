@@ -19,7 +19,7 @@
       "groupName": "NPM packages"
     },
     {
-      "matchManagers": ["helm-values", "helmfile", "helmv3"],
+      "matchManagers": ["helm-values", "argocd", "helmv3"],
       "groupName": "Services"
     },
     {
