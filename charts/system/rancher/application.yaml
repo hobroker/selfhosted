@@ -24,4 +24,8 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: cattle-system
-  syncPolicy: {}
+  revisionHistoryLimit: 3
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

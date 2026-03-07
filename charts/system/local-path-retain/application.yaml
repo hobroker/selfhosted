@@ -18,4 +18,8 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: default
-  syncPolicy: {}
+  revisionHistoryLimit: 3
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

@@ -25,4 +25,8 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
-  syncPolicy: {}
+  revisionHistoryLimit: 3
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
