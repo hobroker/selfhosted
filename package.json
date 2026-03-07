@@ -1,6 +1,6 @@
 {
   "name": "@hobroker/selfhosted",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Generate docs from charts to the main README.md",
   "author": "Igor Leahu <igor.leahu24@gmail.com>",
   "packageManager": "npm@11.11.0",
