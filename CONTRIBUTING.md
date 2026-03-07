@@ -6,12 +6,13 @@
 charts/
   <category>/
     <service>/
-      helmfile.yaml   # Helm release definition (chart, version, namespace)
-      values.yaml     # Helm values overrides
-      README.md       # Install instructions, secrets, host volumes
+      application.yaml  # ArgoCD Application manifest
+      helmfile.yaml     # Helm release definition (kept as reference/CLI stub)
+      values.yaml       # Helm values overrides
+      README.md         # Install instructions, secrets, host volumes
 packages/
-  cli/                # Interactive terminal UI (Ink/React)
-  docs/               # README table generator
+  cli/                  # Interactive terminal UI (Ink/React)
+  docs/                 # README table generator
 ```
 
 ## Adding a New Chart
@@ -26,21 +27,34 @@ Use an existing category (`automation`, `development`, `downloads`, `media`, `mo
 
 ### 2. Add the required files
 
-**`helmfile.yaml`** — defines the Helm release:
+**`application.yaml`** — ArgoCD Application manifest:
 
 ```yaml
-repositories:
-  - name: <repo-name>
-    url: <helm-repo-url>
-
-releases:
-  - name: <service-name>
-    version: <chart-version>
-    atomic: true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: <service-name>
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    category: <category>
+spec:
+  project: default
+  sources:
+    - repoURL: https://bjw-s-labs.github.io/helm-charts
+      chart: app-template
+      targetRevision: <version>
+      helm:
+        valueFiles:
+          - $values/charts/<category>/<service-name>/values.yaml
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
     namespace: self
-    chart: <repo-name>/<chart-name>
-    values:
-      - values.yaml
+  syncPolicy: {}
 ```
 
 **`values.yaml`** — your Helm values overrides.
