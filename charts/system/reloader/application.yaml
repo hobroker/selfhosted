@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: reloader
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    category: system
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+spec:
+  project: default
+  sources:
+    - repoURL: https://stakater.github.io/stakater-charts
+      chart: reloader
+      targetRevision: 2.2.8
+      helm:
+        valueFiles:
+          - $values/charts/system/reloader/values.yaml
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system
+  syncPolicy: {}

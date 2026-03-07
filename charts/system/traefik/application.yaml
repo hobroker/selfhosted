@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    category: system
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      path: charts/system/traefik/config
+    - repoURL: https://helm.traefik.io/traefik
+      chart: traefik
+      targetRevision: 39.0.2
+      helm:
+        valueFiles:
+          - $values/charts/system/traefik/values.yaml
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system
+  syncPolicy: {}
