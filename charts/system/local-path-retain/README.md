@@ -7,10 +7,10 @@ Source Code: https://github.com/rancher/local-path-provisioner
 ## Installing/upgrading
 
 ```sh
-# Register
+# Register / update the Application resource
 kubectl apply -f application.yaml
 
-# Upgrade - via ArgoCD UI or:
+# Then sync the workload - via ArgoCD UI or:
 argocd app sync local-path-retain
 ```
 

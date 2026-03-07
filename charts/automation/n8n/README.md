@@ -8,10 +8,10 @@ Chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 ## Installing/upgrading
 
 ```sh
-# Register
+# Register / update the Application resource
 kubectl apply -f application.yaml
 
-# Upgrade - via ArgoCD UI or:
+# Then sync the workload - via ArgoCD UI or:
 argocd app sync n8n
 ```
 

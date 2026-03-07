@@ -8,10 +8,10 @@ Chart: https://github.com/Infisical/infisical/tree/main/helm-charts/secrets-oper
 ## Installing/upgrading
 
 ```sh
-# Register
+# Register / update the Application resource
 kubectl apply -f application.yaml
 
-# Upgrade - via ArgoCD UI or:
+# Then sync the workload - via ArgoCD UI or:
 argocd app sync infisical-operator
 ```
 

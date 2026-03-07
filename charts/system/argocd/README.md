@@ -18,7 +18,7 @@ helm upgrade --install argocd argo/argo-cd \
 
 After the initial bootstrap, ArgoCD manages itself — upgrades are done by bumping `targetRevision` in `application.yaml` and syncing via the UI.
 
-## Registering Services
+## Register / update the Application resourceing Services
 
 Each service has an `application.yaml` co-located in its chart directory. Register services individually:
 
