@@ -8,10 +8,10 @@ Chart: https://github.com/traefik/traefik-helm-chart
 ## Installing/upgrading
 
 ```sh
-# Register (first time)
+# Register
 kubectl apply -f application.yaml
 
-# Upgrade - bump targetRevision in application.yaml, then sync via ArgoCD UI or:
+# Upgrade - via ArgoCD UI or:
 argocd app sync traefik
 ```
 
