@@ -7,7 +7,6 @@ charts/
   <category>/
     <service>/
       application.yaml  # ArgoCD Application manifest
-      helmfile.yaml     # Helm release definition (kept as reference/CLI stub)
       values.yaml       # Helm values overrides
       README.md         # Install instructions, secrets, host volumes
 packages/
