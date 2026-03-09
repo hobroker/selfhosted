@@ -67,20 +67,20 @@ export const colors = {
 };
 
 export const ACTIONS: Record<ActionKey, Action> = {
-  apply: {
-    label: "Apply",
-    description: "Run helmfile apply for this service",
-    shortcut: ["A"],
+  sync: {
+    label: "Sync",
+    description: "Run argocd app sync for this service",
+    shortcut: ["S"],
   },
-  ["apply-confirm"]: {
-    label: "Confirm Apply",
-    description: "Show confirmation modal before applying",
-    shortcut: ["A"],
+  ["sync-confirm"]: {
+    label: "Confirm Sync",
+    description: "Show confirmation modal before syncing",
+    shortcut: ["S"],
     hidden: true,
   },
   diff: {
     label: "Diff",
-    description: "Show helmfile diff for this service",
+    description: "Show argocd app diff for this service",
     shortcut: ["D"],
   },
   help: {
@@ -90,7 +90,7 @@ export const ACTIONS: Record<ActionKey, Action> = {
   },
   history: {
     label: "History",
-    description: "Show history for this service",
+    description: "Show ArgoCD history for this service",
     shortcut: ["H"],
   },
   refresh: {
@@ -99,13 +99,13 @@ export const ACTIONS: Record<ActionKey, Action> = {
     shortcut: ["R"],
   },
   destroy: {
-    label: "Destroy",
-    description: "Destroy this service",
+    label: "Delete",
+    description: "Delete this service via argocd",
     shortcut: ["X"],
   },
   ["destroy-confirm"]: {
-    label: "Confirm Destroy",
-    description: "Show confirmation modal before destroying",
+    label: "Confirm Delete",
+    description: "Show confirmation modal before deleting",
     shortcut: ["X"],
     hidden: true,
   },

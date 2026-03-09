@@ -1,30 +1,42 @@
 import { execa } from "execa";
-import type { HelmRelease } from "../types";
+import type { ArgoApp } from "../types";
 
-export async function fetchHelmReleases(): Promise<HelmRelease[]> {
+export async function fetchArgoApps(): Promise<ArgoApp[]> {
   try {
-    const { stdout } = await execa("helm", ["list", "-A", "--output", "json"]);
-    return JSON.parse(stdout) as HelmRelease[];
+    const { stdout } = await execa("argocd", ["app", "list", "-o", "json"]);
+    const items = JSON.parse(stdout) as Array<Record<string, unknown>>;
+    return items.map((item) => {
+      const metadata = item.metadata as Record<string, unknown>;
+      const status = item.status as Record<string, unknown>;
+      const sync = status?.sync as Record<string, unknown>;
+      const health = status?.health as Record<string, unknown>;
+      return {
+        name: metadata?.name as string,
+        syncStatus: (sync?.status as string) || "Unknown",
+        healthStatus: (health?.status as string) || "Unknown",
+      };
+    });
   } catch (e) {
-    console.error("Failed to fetch helm data", e);
+    console.error("Failed to fetch ArgoCD apps", e);
     return [];
   }
 }
 
-export async function fetchHelmRelease(name: string): Promise<HelmRelease | undefined> {
+export async function fetchArgoApp(name: string): Promise<ArgoApp | undefined> {
   try {
-    const { stdout } = await execa("helm", [
-      "list",
-      "-A",
-      "--filter",
-      `^${name}$`,
-      "--output",
-      "json",
-    ]);
-    const releases = JSON.parse(stdout) as HelmRelease[];
-    return releases[0];
+    const { stdout } = await execa("argocd", ["app", "get", name, "-o", "json"]);
+    const item = JSON.parse(stdout) as Record<string, unknown>;
+    const metadata = item.metadata as Record<string, unknown>;
+    const status = item.status as Record<string, unknown>;
+    const sync = status?.sync as Record<string, unknown>;
+    const health = status?.health as Record<string, unknown>;
+    return {
+      name: metadata?.name as string,
+      syncStatus: (sync?.status as string) || "Unknown",
+      healthStatus: (health?.status as string) || "Unknown",
+    };
   } catch (e) {
-    console.error(`Failed to fetch helm release "${name}"`, e);
+    console.error(`Failed to fetch ArgoCD app "${name}"`, e);
     return undefined;
   }
 }

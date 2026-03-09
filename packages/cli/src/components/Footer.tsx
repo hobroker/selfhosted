@@ -52,7 +52,7 @@ export const Footer = () => {
       <ShortcutAction actionKey="logs" />
       <ShortcutAction actionKey="history" />
       <ShortcutAction actionKey="diff" />
-      <ShortcutAction actionKey="apply-confirm" action={ACTIONS.apply} />
+      <ShortcutAction actionKey="sync-confirm" action={ACTIONS.sync} />
       <ShortcutAction actionKey="destroy-confirm" action={ACTIONS.destroy} />
       <ShortcutAction actionKey="help" />
     </Box>

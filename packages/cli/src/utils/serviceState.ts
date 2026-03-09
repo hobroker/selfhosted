@@ -4,11 +4,15 @@ import type { ServiceInfo } from "../types";
 const stripV = (version?: string) => version?.replace(/^v/, "");
 
 export const getServiceState = (service: ServiceInfo): ServiceState => {
-  if (!service.installedChartVersion) {
+  if (!service.syncStatus) {
     return ServiceState.NotInstalled;
   }
 
-  if (isServiceChartUpToDate(service) && isAppVersionUpToDate(service)) {
+  if (service.syncStatus === "OutOfSync") {
+    return ServiceState.UpdateAvailable;
+  }
+
+  if (isAppVersionUpToDate(service)) {
     return ServiceState.Installed;
   }
 

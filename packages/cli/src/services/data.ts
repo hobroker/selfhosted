@@ -1,24 +1,25 @@
 import type { ServiceInfo } from "../types";
 import { getServiceState } from "../utils/serviceState";
 import { fetchLocalChart, fetchLocalCharts } from "./charts";
-import { fetchHelmRelease, fetchHelmReleases, fetchPodImage, fetchPodImages } from "./cluster";
+import { fetchArgoApp, fetchArgoApps, fetchPodImage, fetchPodImages } from "./cluster";
 
 export async function fetchAllData(): Promise<ServiceInfo[]> {
   try {
-    const [localServices, installed, podImages] = await Promise.all([
+    const [localServices, argoApps, podImages] = await Promise.all([
       fetchLocalCharts(),
-      fetchHelmReleases(),
+      fetchArgoApps(),
       fetchPodImages(),
     ]);
 
     return localServices
       .map((svc) => {
-        const inst = installed.find((i) => i.name === svc.name);
-        if (inst) {
+        const app = argoApps.find((a) => a.name === svc.name);
+        if (app) {
           const service = {
             ...svc,
-            installedChartVersion: inst.chart.split("-").pop(),
-            installedAppVersion: podImages[svc.name] || inst.app_version || "unknown",
+            syncStatus: app.syncStatus,
+            installedChartVersion: svc.localChartVersion,
+            installedAppVersion: podImages[svc.name] || svc.localAppVersion,
           };
           return {
             ...service,
@@ -41,19 +42,20 @@ export async function fetchAllData(): Promise<ServiceInfo[]> {
 
 export async function fetchServiceData(name: string): Promise<ServiceInfo | null> {
   try {
-    const [localSvc, inst, podImage] = await Promise.all([
+    const [localSvc, app, podImage] = await Promise.all([
       fetchLocalChart(name),
-      fetchHelmRelease(name),
+      fetchArgoApp(name),
       fetchPodImage(name),
     ]);
 
     if (!localSvc) return null;
 
-    const merged = inst
+    const merged = app
       ? {
           ...localSvc,
-          installedChartVersion: inst.chart.split("-").pop(),
-          installedAppVersion: podImage || inst.app_version || "unknown",
+          syncStatus: app.syncStatus,
+          installedChartVersion: localSvc.localChartVersion,
+          installedAppVersion: podImage || localSvc.localAppVersion,
         }
       : localSvc;
 

@@ -24,7 +24,7 @@ export const HelpModal = () => (
     <ActionShortcut action={ACTIONS.help} />
     <ActionShortcut action={ACTIONS.history} />
     <ActionShortcut action={ACTIONS.diff} />
-    <ActionShortcut action={ACTIONS.apply} />
+    <ActionShortcut action={ACTIONS.sync} />
     <ActionShortcut action={ACTIONS.refresh} />
     <ActionShortcut action={ACTIONS.destroy} />
     <ActionShortcut action={ACTIONS.logs} />

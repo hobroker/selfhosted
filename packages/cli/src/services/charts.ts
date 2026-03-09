@@ -26,14 +26,15 @@ async function findChartsDir(): Promise<string> {
   }
 }
 
-async function buildServiceInfo(hf: string): Promise<ServiceInfo> {
-  const content = await readFile(hf, "utf-8");
+async function buildServiceInfo(appYaml: string): Promise<ServiceInfo> {
+  const content = await readFile(appYaml, "utf-8");
   const parsed = YAML.parse(content);
-  const release = parsed.releases?.[0];
-  const name = release?.name || "unknown";
-  const path = dirname(hf);
-  const relativePath = path.split("/charts/")[1];
-  const [category] = relativePath.split("/");
+  const name = parsed.metadata?.name || "unknown";
+  const path = dirname(appYaml);
+  const category =
+    parsed.metadata?.labels?.category || path.split("/charts/")[1]?.split("/")[0] || "unknown";
+  const namespace = parsed.spec?.destination?.namespace || "default";
+  const localChartVersion = parsed.spec?.sources?.[0]?.targetRevision || "unknown";
 
   let localAppVersion = "unknown";
   try {
@@ -54,34 +55,34 @@ async function buildServiceInfo(hf: string): Promise<ServiceInfo> {
 
   return {
     id: name,
-    namespace: release?.namespace || "default",
+    namespace,
     name,
     category,
     path,
-    localChartVersion: release?.version || "unknown",
+    localChartVersion: String(localChartVersion),
     localAppVersion: String(localAppVersion),
     state: ServiceState.NotInstalled,
     readme: dedent(readme),
   };
 }
 
-async function findHelmfiles(): Promise<string[]> {
+async function findApplicationYamls(): Promise<string[]> {
   const rootDir = await findChartsDir();
   const files = await getFiles(rootDir);
-  return files.filter((f) => f.endsWith("helmfile.yaml"));
+  return files.filter((f) => f.endsWith("application.yaml"));
 }
 
 export async function fetchLocalChart(name: string): Promise<ServiceInfo | undefined> {
-  const helmfiles = await findHelmfiles();
-  for (const hf of helmfiles) {
-    const parsed = YAML.parse(await readFile(hf, "utf-8"));
-    if (parsed.releases?.[0]?.name !== name) continue;
-    return buildServiceInfo(hf);
+  const appYamls = await findApplicationYamls();
+  for (const appYaml of appYamls) {
+    const parsed = YAML.parse(await readFile(appYaml, "utf-8"));
+    if (parsed.metadata?.name !== name) continue;
+    return buildServiceInfo(appYaml);
   }
   return undefined;
 }
 
 export async function fetchLocalCharts(): Promise<ServiceInfo[]> {
-  const helmfiles = await findHelmfiles();
-  return Promise.all(helmfiles.map(buildServiceInfo));
+  const appYamls = await findApplicationYamls();
+  return Promise.all(appYamls.map(buildServiceInfo));
 }

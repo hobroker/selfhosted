@@ -1,35 +1,23 @@
 import { Box, Text } from "ink";
 import { ConfirmModal } from "../ui/ConfirmModal";
-import { Modal } from "../ui/Modal";
-import { ToolUnavailableMessage } from "../ui/ToolUnavailableMessage";
 import { colors } from "../../constants";
 import { useFocusManagerContext } from "../../contexts/FocusManagerContext";
 import { useServicesContext } from "../../contexts/ServicesContext";
-import { useToolsContext } from "../../contexts/ToolsContext";
 
 export const DestroyConfirmModal = () => {
   const { selectedService } = useServicesContext();
-  const { isAvailable } = useToolsContext();
   const { setFocus, closeModals } = useFocusManagerContext();
 
   if (!selectedService) return null;
 
-  if (!isAvailable("helmfile")) {
-    return (
-      <Modal id="destroy-confirm" title="Confirm Destroy" width="40%" minWidth={70}>
-        <ToolUnavailableMessage tool="helmfile" />
-      </Modal>
-    );
-  }
-
   return (
     <ConfirmModal
       id="destroy-confirm"
-      title="Confirm Destroy"
+      title="Confirm Delete"
       message={
         <Box flexDirection="column" alignItems="center">
           <Box>
-            <Text>Are you sure you want to destroy </Text>
+            <Text>Are you sure you want to delete </Text>
             <Text color={colors.error} bold>
               {selectedService.name}
             </Text>
@@ -39,7 +27,7 @@ export const DestroyConfirmModal = () => {
           <Box marginTop={1} paddingX={1} borderStyle="round" borderColor={colors.dim}>
             <Text color={colors.muted}>Command: </Text>
             <Text color={colors.text} bold>
-              helmfile destroy
+              argocd app delete {selectedService.name} --yes
             </Text>
           </Box>
         </Box>

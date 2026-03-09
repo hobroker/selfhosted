@@ -10,15 +10,15 @@ export interface ServiceInfo {
   localAppVersion: string;
   installedChartVersion?: string;
   installedAppVersion?: string;
+  syncStatus?: string;
   state: ServiceState;
   readme?: string;
 }
 
-export interface HelmRelease {
+export interface ArgoApp {
   name: string;
-  chart: string;
-  app_version: string;
-  status: string;
+  syncStatus: string;
+  healthStatus: string;
 }
 
 export interface Dimensions {
@@ -29,8 +29,8 @@ export interface Dimensions {
 export type SectionKey = "sidebar" | "details";
 
 export type ActionKey =
-  | "apply"
-  | "apply-confirm"
+  | "sync"
+  | "sync-confirm"
   | "diff"
   | "help"
   | "history"
