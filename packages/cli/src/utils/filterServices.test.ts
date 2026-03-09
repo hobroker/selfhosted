@@ -1,6 +1,6 @@
+import { ArgoSyncStatus } from "../constants";
 import type { ServiceInfo } from "../types";
 import { filterServices } from "./filterServices";
-import { ServiceState } from "../constants";
 
 const makeService = (name: string): ServiceInfo => ({
   id: name.toLowerCase().replace(/\s+/g, "-"),
@@ -8,9 +8,7 @@ const makeService = (name: string): ServiceInfo => ({
   namespace: "default",
   category: "Test",
   path: `/path/${name}`,
-  localChartVersion: "1.0.0",
-  localAppVersion: "1.0.0",
-  state: ServiceState.NotInstalled,
+  syncStatus: ArgoSyncStatus.Unknown,
   readme: "",
 });
 

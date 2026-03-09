@@ -1,6 +1,6 @@
 import { Box, DOMElement, Text } from "ink";
 import type { ServiceInfo } from "../types";
-import { serviceStateLabelsMap, colors } from "../constants";
+import { syncStatusLabelsMap, colors } from "../constants";
 import { useRef } from "react";
 import { useOnClick } from "@ink-tools/ink-mouse";
 
@@ -30,8 +30,8 @@ export const ServiceItem = ({ service, isSelected, isMatch, onClick }: ServiceIt
         </Text>
       </Box>
       <Box flexShrink={0} marginLeft={1}>
-        <Text color={serviceStateLabelsMap[service.state].iconColor}>
-          {serviceStateLabelsMap[service.state].icon}
+        <Text color={syncStatusLabelsMap[service.syncStatus].iconColor}>
+          {syncStatusLabelsMap[service.syncStatus].icon}
         </Text>
       </Box>
     </Box>

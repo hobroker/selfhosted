@@ -2,8 +2,8 @@ import { readdir, readFile, stat } from "fs/promises";
 import { resolve, join, dirname } from "path";
 import YAML from "yaml";
 import type { ServiceInfo } from "../types";
-import { ServiceState } from "../constants";
 import dedent from "dedent";
+import { ArgoSyncStatus } from "../constants";
 
 async function getFiles(dir: string): Promise<string[]> {
   const subdirs = await readdir(dir);
@@ -34,17 +34,6 @@ async function buildServiceInfo(appYaml: string): Promise<ServiceInfo> {
   const category =
     parsed.metadata?.labels?.category || path.split("/charts/")[1]?.split("/")[0] || "unknown";
   const namespace = parsed.spec?.destination?.namespace || "default";
-  const localChartVersion = parsed.spec?.sources?.[0]?.targetRevision || "unknown";
-
-  let localAppVersion = "unknown";
-  try {
-    const valuesContent = await readFile(join(path, "values.yaml"), "utf-8");
-    const values = YAML.parse(valuesContent);
-    localAppVersion =
-      values?.controllers?.main?.containers?.main?.image?.tag || values?.image?.tag || "unknown";
-  } catch {
-    // Ignore if values.yaml doesn't exist
-  }
 
   let readme = "";
   try {
@@ -59,9 +48,7 @@ async function buildServiceInfo(appYaml: string): Promise<ServiceInfo> {
     name,
     category,
     path,
-    localChartVersion: String(localChartVersion),
-    localAppVersion: String(localAppVersion),
-    state: ServiceState.NotInstalled,
+    syncStatus: ArgoSyncStatus.Unknown,
     readme: dedent(readme),
   };
 }

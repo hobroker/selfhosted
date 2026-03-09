@@ -1,10 +1,10 @@
 import figures from "figures";
 import { Action, ActionKey } from "./types";
 
-export enum ServiceState {
-  Installed = "installed",
-  NotInstalled = "not-installed",
-  UpdateAvailable = "update-available",
+export enum ArgoSyncStatus {
+  Synced = "Synced",
+  OutOfSync = "OutOfSync",
+  Unknown = "Unknown",
 }
 
 export enum CommandState {
@@ -33,21 +33,24 @@ export const commandStateLabelsMap = {
   },
 };
 
-export const serviceStateLabelsMap = {
-  [ServiceState.Installed]: {
-    icon: figures.tick,
+export const syncStatusLabelsMap: Record<
+  ArgoSyncStatus,
+  { icon: string; iconColor: string; label: string }
+> = {
+  [ArgoSyncStatus.Synced]: {
+    icon: figures.circleFilled,
     iconColor: "green",
-    label: "Installed",
+    label: "Synced",
   },
-  [ServiceState.NotInstalled]: {
-    icon: figures.cross,
+  [ArgoSyncStatus.OutOfSync]: {
+    icon: figures.circleDotted,
     iconColor: "red",
-    label: "Not Installed",
+    label: "Out of Sync",
   },
-  [ServiceState.UpdateAvailable]: {
-    icon: figures.warning,
+  [ArgoSyncStatus.Unknown]: {
+    icon: figures.circle,
     iconColor: "yellow",
-    label: "Update Available",
+    label: "Unknown",
   },
 };
 

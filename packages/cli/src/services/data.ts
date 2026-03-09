@@ -1,29 +1,18 @@
 import type { ServiceInfo } from "../types";
-import { getServiceState } from "../utils/serviceState";
 import { fetchLocalChart, fetchLocalCharts } from "./charts";
-import { fetchArgoApp, fetchArgoApps, fetchPodImage, fetchPodImages } from "./cluster";
+import { fetchArgoApp, fetchArgoApps } from "./cluster";
 
 export async function fetchAllData(): Promise<ServiceInfo[]> {
   try {
-    const [localServices, argoApps, podImages] = await Promise.all([
-      fetchLocalCharts(),
-      fetchArgoApps(),
-      fetchPodImages(),
-    ]);
+    const [localServices, argoApps] = await Promise.all([fetchLocalCharts(), fetchArgoApps()]);
 
     return localServices
       .map((svc) => {
         const app = argoApps.find((a) => a.name === svc.name);
         if (app) {
-          const service = {
+          return {
             ...svc,
             syncStatus: app.syncStatus,
-            installedChartVersion: svc.localChartVersion,
-            installedAppVersion: podImages[svc.name] || svc.localAppVersion,
-          };
-          return {
-            ...service,
-            state: getServiceState(service),
           };
         }
         return svc;
@@ -42,24 +31,16 @@ export async function fetchAllData(): Promise<ServiceInfo[]> {
 
 export async function fetchServiceData(name: string): Promise<ServiceInfo | null> {
   try {
-    const [localSvc, app, podImage] = await Promise.all([
-      fetchLocalChart(name),
-      fetchArgoApp(name),
-      fetchPodImage(name),
-    ]);
+    const [localSvc, app] = await Promise.all([fetchLocalChart(name), fetchArgoApp(name)]);
 
     if (!localSvc) return null;
 
-    const merged = app
+    return app
       ? {
           ...localSvc,
           syncStatus: app.syncStatus,
-          installedChartVersion: localSvc.localChartVersion,
-          installedAppVersion: podImage || localSvc.localAppVersion,
         }
       : localSvc;
-
-    return { ...merged, state: getServiceState(merged) };
   } catch (e) {
     console.error(`Failed to refresh service "${name}"`, e);
     return null;

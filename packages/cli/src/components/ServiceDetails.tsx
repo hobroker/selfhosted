@@ -1,17 +1,15 @@
 import { useEffect, useRef } from "react";
 import { Box, Text, DOMElement } from "ink";
-import { StatusMessage } from "@inkjs/ui";
 
 import type { ServiceInfo } from "../types";
 import { ErrorBoundary } from "./ui/ErrorBoundary";
-import { serviceStateLabelsMap, colors } from "../constants";
+import { syncStatusLabelsMap, colors } from "../constants";
 import { marked } from "marked";
 import TerminalRenderer from "marked-terminal";
 import { TitledBox } from "./ui/TitledBox";
 import { ScrollContainer } from "./ui/ScrollContainer";
 import { ScrollViewRef } from "ink-scroll-view";
 import { useFocusManagerContext } from "../contexts/FocusManagerContext";
-import { isAppVersionUpToDate, isServiceChartUpToDate } from "../utils/serviceState";
 
 marked.setOptions({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -60,40 +58,16 @@ export const ServiceDetails = ({ service }: Props) => {
               <Text bold color={colors.muted}>
                 Status:{" "}
               </Text>
-              <Text color={serviceStateLabelsMap[service.state].iconColor}>
-                {serviceStateLabelsMap[service.state].icon}
+              <Text color={syncStatusLabelsMap[service.syncStatus].iconColor}>
+                {syncStatusLabelsMap[service.syncStatus].icon}
               </Text>
-              <Text color={colors.text}> {serviceStateLabelsMap[service.state].label}</Text>
+              <Text color={colors.text}> {syncStatusLabelsMap[service.syncStatus].label}</Text>
             </Box>
             <Box>
               <Text bold color={colors.muted}>
                 Path:{" "}
               </Text>
               <Text color={colors.dim}>{service.path}</Text>
-            </Box>
-
-            <Box flexDirection="column">
-              <Text bold color={colors.warning}>
-                Versions Comparison
-              </Text>
-              <Box marginLeft={2} flexDirection="column">
-                <Box flexDirection="column">
-                  <StatusMessage variant={isServiceChartUpToDate(service) ? "success" : "warning"}>
-                    <Text color={colors.text}>
-                      Chart: {service.localChartVersion} (Local) vs{" "}
-                      {service.installedChartVersion || "N/A"} (Installed)
-                    </Text>
-                  </StatusMessage>
-                </Box>
-                <Box flexDirection="column">
-                  <StatusMessage variant={isAppVersionUpToDate(service) ? "success" : "warning"}>
-                    <Text color={colors.text}>
-                      App: {service.localAppVersion} (Local) vs{" "}
-                      {service.installedAppVersion || "N/A"} (Installed)
-                    </Text>
-                  </StatusMessage>
-                </Box>
-              </Box>
             </Box>
 
             {service.readme ? (
