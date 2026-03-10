@@ -4,6 +4,10 @@ global:
 configs:
   params:
     server.insecure: true # terminate TLS at Traefik, serve HTTP internally
+  cm:
+    resource.customizations.ignoreDifferences.apps_Deployment: |
+      jsonPointers:
+        - /status
 
 server:
   service:
