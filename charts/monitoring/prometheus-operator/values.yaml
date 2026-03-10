@@ -5,13 +5,13 @@ prometheus:
     scrapeInterval: 1m
     podMonitorSelectorNilUsesHelmValues: false
     serviceMonitorSelectorNilUsesHelmValues: false
-    storageSpec:
-      volumeClaimTemplate:
-        spec:
-          storageClassName: "local-path-retain"
-          resources:
-            requests:
-              storage: 5Gi
+    # storageSpec:
+    #   volumeClaimTemplate:
+    #     spec:
+    #       storageClassName: "local-path-retain"
+    #       resources:
+    #         requests:
+    #           storage: 5Gi
   ingress:
     enabled: true
     ingressClassName: traefik

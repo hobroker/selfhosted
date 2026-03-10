@@ -23,21 +23,15 @@ service:
 
 persistence:
   config:
-    enabled: true
-    type: hostPath
-    hostPath: /appdata/k3s/sonarr
+    existingClaim: sonarr-config-pvc
     globalMounts:
       - path: /config
   nebula:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/nebula/tvshows
+    existingClaim: sonarr-tvshows-pvc
     globalMounts:
       - path: /nebula/tvshows
   downloads:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/nebula/downloads
+    existingClaim: sonarr-downloads-pvc
     globalMounts:
       - path: /downloads
 

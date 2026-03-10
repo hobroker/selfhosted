@@ -25,14 +25,6 @@ service:
 
 persistence:
   data:
-    enabled: true
-    type: hostPath
-    hostPath: /appdata/k3s/backrest/data
+    existingClaim: backrest-data-pvc
     globalMounts:
       - path: /data
-  appdata:
-    enabled: true
-    type: hostPath
-    hostPath: /appdata/k3s
-    globalMounts:
-      - path: /appdata/k3s

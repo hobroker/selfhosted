@@ -18,19 +18,20 @@ argocd app sync code-server
 ### Manual Helm (without ArgoCD)
 
 ```sh
+kubectl apply -f config/pv.yaml
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
 helm upgrade --install code-server bjw-s/app-template \
-  --namespace self --create-namespace \
+  --version 4.6.2 --namespace default --create-namespace \
   -f values.yaml
 ```
 
-### Host Volumes
+## Storage
 
-| hostPath                   | containerPath           | description                             |
-| -------------------------- | ----------------------- | --------------------------------------- |
-| `/appdata/k3s/code-server` | `/config`               | Application configuration and user data |
-| `/appdata`                 | `/appdata`              | Access to application data directory    |
-| `/mnt/nebula/downloads`    | `/mnt/nebula/downloads` | Access to downloads directory           |
-| `/storage/ww`              | `/storage/ww`           | Access to external storage              |
-| `/home/kira/.openclaw`     | `/home/kira/.openclaw`  | Access to openclaw config directory     |
+| source                              | containerPath | description               |
+| ----------------------------------- | ------------- | ------------------------- |
+| `/var/local/code-server` (hostPath) | `/config`     | Application configuration |
+| `/var/local` (hostPath)             | `/var/local`  | Access to all local data  |
+
+PV: `code-server-config-pv` → PVC: `code-server-config-pvc`
+PV: `code-server-varlocal-pv` → PVC: `code-server-varlocal-pvc`

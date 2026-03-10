@@ -18,17 +18,20 @@ argocd app sync plex
 ### Manual Helm (without ArgoCD)
 
 ```sh
+kubectl apply -f config/pv.yaml
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
 helm upgrade --install plex bjw-s/app-template \
-  --namespace self --create-namespace \
+  --version 4.6.2 --namespace default --create-namespace \
   -f values.yaml
 ```
 
-### Host Volumes
+## Storage
 
-| hostPath            | containerPath | description                            |
-| ------------------- | ------------- | -------------------------------------- |
-| `/appdata/k3s/plex` | `/config`     | Application configuration and database |
-| `/storage`          | `/storage`    | Access to main storage                 |
-| `/mnt/nebula`       | `/nebula`     | Access to media library                |
+| source                           | containerPath | description                            |
+| -------------------------------- | ------------- | -------------------------------------- |
+| `/var/local/plex` (hostPath)     | `/config`     | Application configuration and database |
+| `192.168.50.7:/mnt/nebula` (NFS) | `/nebula`     | Access to media library                |
+
+PV: `plex-config-pv` → PVC: `plex-config-pvc`
+PV: `plex-nebula-pv` → PVC: `plex-nebula-pvc`

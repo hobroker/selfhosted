@@ -6,7 +6,7 @@ releases:
   - name: http-https-echo
     version: 4.0.1
     atomic: true
-    namespace: self
+    namespace: default
     chart: bjw-s/app-template
     values:
       - values.yaml

@@ -13,7 +13,7 @@ controllers:
 service:
   main:
     controller: main
-    type: LoadBalancer
+    type: ClusterIP
     ports:
       http:
         port: 8384
@@ -37,17 +37,13 @@ service:
 
 persistence:
   config:
-    enabled: true
-    type: hostPath
-    hostPath: /appdata/k3s/syncthing
+    existingClaim: syncthing-config-pvc
     globalMounts:
       - path: /config
   storage:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/wdata
+    existingClaim: syncthing-storage-pvc
     globalMounts:
-      - path: /mnt/wdata
+      - path: /mnt/nebula/syncthing
 
 ingress:
   main:

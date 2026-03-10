@@ -53,7 +53,7 @@ spec:
       ref: values
   destination:
     server: https://kubernetes.default.svc
-    namespace: self
+    namespace: default
   syncPolicy: {}
 ```
 

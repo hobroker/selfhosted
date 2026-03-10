@@ -18,16 +18,20 @@ argocd app sync syncthing
 ### Manual Helm (without ArgoCD)
 
 ```sh
+kubectl apply -f config/pv.yaml
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
 helm upgrade --install syncthing bjw-s/app-template \
-  --namespace self --create-namespace \
+  --version 4.6.2 --namespace default --create-namespace \
   -f values.yaml
 ```
 
-### Host Volumes
+## Storage
 
-| hostPath                 | containerPath | description                            |
-| ------------------------ | ------------- | -------------------------------------- |
-| `/appdata/k3s/syncthing` | `/config`     | Application configuration and database |
-| `/mnt/wdata`             | `/mnt/wdata`  | Folder to share with the node          |
+| source                                     | containerPath           | description               |
+| ------------------------------------------ | ----------------------- | ------------------------- |
+| `/var/local/syncthing` (hostPath)          | `/config`               | Application configuration |
+| `192.168.50.7:/mnt/nebula/syncthing` (NFS) | `/mnt/nebula/syncthing` | Synced data               |
+
+PV: `syncthing-config-pv` → PVC: `syncthing-config-pvc`
+PV: `syncthing-storage-pv` → PVC: `syncthing-storage-pvc`

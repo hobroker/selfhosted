@@ -6,7 +6,7 @@ releases:
   - name: sonarr
     version: 4.6.2
     atomic: true
-    namespace: self
+    namespace: default
     chart: bjw-s/app-template
     values:
       - values.yaml

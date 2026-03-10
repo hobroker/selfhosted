@@ -5,6 +5,15 @@
 Source Code: https://github.com/garethgeorge/backrest
 Chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 
+## Prerequisites
+
+Create the directory on the Talos node before deploying:
+
+```bash
+# Via a privileged pod or copy-helper
+mkdir -p /var/local/backrest/data
+```
+
 ## Installing/upgrading
 
 ```sh
@@ -18,15 +27,14 @@ argocd app sync backrest
 ### Manual Helm (without ArgoCD)
 
 ```sh
-helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
-helm repo update bjw-s
-helm upgrade --install backrest bjw-s/app-template \
-  --namespace self --create-namespace \
-  -f values.yaml
+kubectl apply -f config/pv.yaml
+helmfile apply
 ```
 
-### Host Volumes
+## Storage
 
-| hostPath                | containerPath | description                           |
-| ----------------------- | ------------- | ------------------------------------- |
-| `/appdata/k3s/backrest` | `/data`       | Backrest config, repos index and logs |
+| hostPath                   | containerPath | description                           |
+| -------------------------- | ------------- | ------------------------------------- |
+| `/var/local/backrest/data` | `/data`       | Backrest config, repos index and logs |
+
+PV: `backrest-data-pv` (5Gi, Retain) → PVC: `backrest-data-pvc` in namespace `default`
