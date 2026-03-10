@@ -12,7 +12,6 @@ controllers:
         env:
           PGID: "1000"
           PUID: "1000"
-          ADVERTISE_IP: "http://192.168.50.200:32400/"
 
 service:
   main:

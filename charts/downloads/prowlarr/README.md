@@ -21,7 +21,7 @@ argocd app sync prowlarr
 kubectl apply -f config/pv.yaml
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm upgrade --install prowlarr bjw-s/app-template \
-  --version 4.6.2 --namespace default --create-namespace \
+  --namespace default --create-namespace \
   -f values.yaml
 ```
 
