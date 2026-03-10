@@ -13,12 +13,7 @@ controllers:
 service:
   main:
     controller: main
-    type: LoadBalancer
-    annotations:
-      metallb.universe.tf/allow-shared-ip: shared
-    ports:
-      http:
-        port: 34400
+    type: ClusterIP
 
 persistence:
   config:

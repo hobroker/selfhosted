@@ -22,13 +22,7 @@ controllers:
 service:
   main:
     controller: main
-    type: LoadBalancer
-    annotations:
-      metallb.universe.tf/allow-shared-ip: shared
-    ports:
-      web:
-        port: 19200
-        targetPort: 5000
+    type: ClusterIP
 
 persistence:
   config:
@@ -48,3 +42,16 @@ persistence:
     existingClaim: fileflows-nebula-pvc
     globalMounts:
       - path: /media/nebula
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    hosts:
+      - host: fileflows.hobroker.me
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main

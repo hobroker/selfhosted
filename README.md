@@ -70,10 +70,10 @@ System charts must be synced before any app charts. ArgoCD sync-wave annotations
 
 ## Host Directories
 
-Charts use host-mounted volumes for persistent data. The paths are hardcoded in each chart's `values.yaml` and must exist on the host before deploying. Common ones:
+Charts use host-mounted volumes for persistent data. The paths are defined in each chart's `config/pv.yaml` and must exist on the host before deploying. Common ones:
 
-- `/appdata/k3s/<service>` — per-service config and database
-- `/mnt/nebula` — media library (movies, TV shows, downloads)
+- `/var/local/<service>` — per-service config and database (hostPath on the node)
+- `/mnt/nebula` — media library (movies, TV shows, downloads), mounted via NFS from `192.168.50.7:/mnt/nebula`
 
 A custom `StorageClass` with a `Retain` reclaim policy is also available to prevent data loss when PVCs are deleted — see [local-path-retain](charts/system/local-path-retain).
 

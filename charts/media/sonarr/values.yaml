@@ -16,7 +16,7 @@ controllers:
 service:
   main:
     controller: main
-    type: LoadBalancer
+    type: ClusterIP
     annotations:
       metallb.universe.tf/allow-shared-ip: shared
     ports:
