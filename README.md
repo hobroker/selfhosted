@@ -1,6 +1,6 @@
 # Selfhosted
 
-A collection of Helm charts for self-hosted services running on [k3s](https://k3s.io/) (lightweight Kubernetes), managed with [ArgoCD](https://argo-cd.readthedocs.io/).
+A collection of Helm charts for self-hosted services running on [Talos Linux](https://www.talos.dev/) Kubernetes, managed with [ArgoCD](https://argo-cd.readthedocs.io/).
 
 > **Personal Setup:** This repository reflects a personal homelab setup. Domains, host paths, and secret names are all specific to this environment. If you're adapting it for your own use, expect to update `values.yaml` in each chart you deploy.
 
@@ -8,7 +8,7 @@ A collection of Helm charts for self-hosted services running on [k3s](https://k3
 
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
-  - [1. Install k3s](#1-install-k3s)
+  - [1. Bootstrap Talos cluster](#1-bootstrap-talos-cluster)
   - [2. Clone this repo](#2-clone-this-repo)
   - [3. Bootstrap ArgoCD (optional)](#3-bootstrap-argocd-optional)
   - [4. Deploy a service](#4-deploy-a-service)
@@ -31,7 +31,7 @@ A collection of Helm charts for self-hosted services running on [k3s](https://k3
 
 ## Prerequisites
 
-- [k3s](https://docs.k3s.io/installation) — lightweight Kubernetes cluster
+- [Talos Linux](https://www.talos.dev/) — immutable Kubernetes-focused OS
 - [Helm](https://helm.sh/docs/intro/install/) — Kubernetes package manager
 - [kubectl](https://kubernetes.io/docs/tasks/tools/) — Kubernetes CLI
 - [ArgoCD](https://argo-cd.readthedocs.io/en/stable/getting_started/) — GitOps controller (optional, see [charts/system/argocd](charts/system/argocd))
@@ -39,9 +39,9 @@ A collection of Helm charts for self-hosted services running on [k3s](https://k3
 
 ## Getting Started
 
-### 1. Install k3s
+### 1. Bootstrap Talos cluster
 
-Follow the [k3s Quick Start](https://docs.k3s.io/quick-start).
+Provision your Talos control-plane and worker nodes, then export a working kubeconfig for this cluster.
 
 ### 2. Clone this repo
 
@@ -63,11 +63,10 @@ Navigate to any chart directory and follow the instructions in its `README.md`. 
 System charts must be synced before any app charts. ArgoCD sync-wave annotations handle ordering automatically when syncing all at once. If syncing manually, use this order:
 
 1. [local-path-retain](charts/system/local-path-retain) — persistent storage class
-2. [cert-manager](charts/system/cert-manager) — TLS certificate management
-3. [traefik](charts/system/traefik) — ingress / reverse proxy
-4. [infisical-operator](charts/system/infisical-operator) — secret injection
-5. [reloader](charts/system/reloader) — rolling restarts on config/secret changes
-6. App charts (any order)
+2. [traefik](charts/system/traefik) — ingress / reverse proxy
+3. [infisical-operator](charts/system/infisical-operator) — secret injection
+4. [reloader](charts/system/reloader) — rolling restarts on config/secret changes
+5. App charts (any order)
 
 ## Host Directories
 
@@ -90,7 +89,7 @@ Deploying a chart is usually just:
 kubectl apply -f charts/<category>/<name>/application.yaml
 ```
 
-Then sync it in the ArgoCD UI. Each chart's `values.yaml` contains a hardcoded domain (e.g. `jellyfin.hobroker.me`) — update it to your own domain before deploying. Some charts also require extra steps (config files, secrets, host volumes) — check the chart's `README.md` for details.
+Then sync it in the ArgoCD UI. Some charts contain a hardcoded domain (e.g. `jellyfin.hobroker.me`) — update it to your own domain before deploying. Some charts also require extra steps (config files, secrets, host volumes) — check the chart's `README.md` for details.
 
 ## Interactive CLI (optional)
 
@@ -184,7 +183,7 @@ npm run generate
 
 ## References
 
-- [k3s](https://k3s.io/) — Lightweight Kubernetes
+- [Talos Linux](https://www.talos.dev/) — Kubernetes-focused Linux
 - [ArgoCD](https://argo-cd.readthedocs.io/) — GitOps continuous delivery
 - [Infisical](https://infisical.com/) — Secret management
 
