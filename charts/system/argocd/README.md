@@ -29,11 +29,10 @@ kubectl apply -f charts/<category>/<service>/application.yaml
 Then sync via the ArgoCD UI. For system services, sync in this order:
 
 1. `local-path-retain`
-2. `cert-manager`
-3. `traefik`
-4. `infisical-operator`
-5. `reloader`
-6. `rancher` (optional)
+2. `traefik`
+3. `infisical-operator`
+4. `reloader` (optional)
+5. `rancher` (optional)
 
 ## CLI Access
 

@@ -20,35 +20,13 @@ service:
 
 persistence:
   config:
-    enabled: true
-    type: hostPath
-    hostPath: /appdata/k3s/code-server
+    existingClaim: code-server-config-pvc
     globalMounts:
       - path: /config
-  appdata:
-    enabled: true
-    type: hostPath
-    hostPath: /appdata
+  varlocal:
+    existingClaim: code-server-varlocal-pvc
     globalMounts:
-      - path: /appdata
-  nebula-downloads:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/nebula/downloads
-    globalMounts:
-      - path: /mnt/nebula/downloads
-  storage-ww:
-    enabled: true
-    type: hostPath
-    hostPath: /storage/ww
-    globalMounts:
-      - path: /storage/ww
-  openclaw:
-    enabled: true
-    type: hostPath
-    hostPath: /home/kira/.openclaw
-    globalMounts:
-      - path: /home/kira/.openclaw
+      - path: /var/local
 
 ingress:
   main:

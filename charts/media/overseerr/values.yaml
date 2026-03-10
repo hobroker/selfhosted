@@ -20,9 +20,7 @@ service:
 
 persistence:
   config:
-    enabled: true
-    type: hostPath
-    hostPath: /appdata/k3s/overseerr
+    existingClaim: overseerr-config-pvc
     globalMounts:
       - path: /config
 

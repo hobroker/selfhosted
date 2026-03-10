@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sonarr-config-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  hostPath:
+    path: /var/local/sonarr
+    type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sonarr-config-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ""
+  volumeName: sonarr-config-pv
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sonarr-tvshows-pv
+spec:
+  capacity:
+    storage: 100Ti
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  nfs:
+    server: 192.168.50.7
+    path: /mnt/nebula/tvshows
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sonarr-tvshows-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ""
+  volumeName: sonarr-tvshows-pv
+  resources:
+    requests:
+      storage: 100Ti
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sonarr-downloads-pv
+spec:
+  capacity:
+    storage: 100Ti
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  nfs:
+    server: 192.168.50.7
+    path: /mnt/nebula/downloads
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sonarr-downloads-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ""
+  volumeName: sonarr-downloads-pv
+  resources:
+    requests:
+      storage: 100Ti

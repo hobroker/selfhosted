@@ -18,16 +18,19 @@ argocd app sync threadfin
 ### Manual Helm (without ArgoCD)
 
 ```sh
+kubectl apply -f config/pv.yaml
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
 helm upgrade --install threadfin bjw-s/app-template \
-  --namespace self --create-namespace \
+  --namespace default --create-namespace \
   -f values.yaml
 ```
 
-### Host Volumes
+## Storage
 
-| hostPath                      | containerPath          | description               |
-| ----------------------------- | ---------------------- | ------------------------- |
-| `/appdata/k3s/threadfin/conf` | `/home/threadfin/conf` | Application configuration |
-| `/appdata/k3s/threadfin/temp` | `/tmp/threadfin`       | Temporary files directory |
+| source                            | containerPath          | description               |
+| --------------------------------- | ---------------------- | ------------------------- |
+| `/var/local/threadfin` (hostPath) | `/home/threadfin/conf` | Application configuration |
+| emptyDir                          | `/tmp/threadfin`       | Temporary files           |
+
+PV: `threadfin-config-pv` → PVC: `threadfin-config-pvc`

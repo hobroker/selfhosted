@@ -18,10 +18,11 @@ argocd app sync radarr
 ### Manual Helm (without ArgoCD)
 
 ```sh
+kubectl apply -f config/pv.yaml
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
 helm upgrade --install radarr bjw-s/app-template \
-  --namespace self --create-namespace \
+  --namespace default --create-namespace \
   -f values.yaml
 ```
 
@@ -31,10 +32,14 @@ helm upgrade --install radarr bjw-s/app-template \
 | --------------------------- | ------------------------------------------ |
 | `infisical-scraparr-secret` | (Used by scraparr) Contains Radarr API key |
 
-### Host Volumes
+## Storage
 
-| hostPath                | containerPath        | description                            |
-| ----------------------- | -------------------- | -------------------------------------- |
-| `/appdata/k3s/radarr`   | `/config`            | Application configuration and database |
-| `/mnt/nebula/movies`    | `/mnt/nebula/movies` | Movie library directory                |
-| `/mnt/nebula/downloads` | `/downloads`         | Downloads directory for processing     |
+| source                                     | containerPath        | description                            |
+| ------------------------------------------ | -------------------- | -------------------------------------- |
+| `/var/local/radarr` (hostPath)             | `/config`            | Application configuration and database |
+| `192.168.50.7:/mnt/nebula/movies` (NFS)    | `/mnt/nebula/movies` | Movie library directory                |
+| `192.168.50.7:/mnt/nebula/downloads` (NFS) | `/downloads`         | Downloads directory for processing     |
+
+PV: `radarr-config-pv` → PVC: `radarr-config-pvc`
+PV: `radarr-movies-pv` → PVC: `radarr-movies-pvc`
+PV: `radarr-downloads-pv` → PVC: `radarr-downloads-pvc`

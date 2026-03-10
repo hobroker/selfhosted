@@ -1,0 +1,16 @@
+repositories:
+  - name: metallb
+    url: https://metallb.github.io/metallb
+
+helmDefaults:
+  createNamespace: true
+
+releases:
+  - name: metallb
+    version: 0.14.9
+    atomic: false
+    timeout: 300
+    namespace: metallb-system
+    chart: metallb/metallb
+    values:
+      - values.yaml

@@ -13,22 +13,18 @@ controllers:
 service:
   main:
     controller: main
-    type: LoadBalancer
+    type: ClusterIP
     ports:
       http:
         port: 8096
 
 persistence:
   config:
-    enabled: true
-    type: hostPath
-    hostPath: /appdata/k3s/jellyfin
+    existingClaim: jellyfin-config-pvc
     globalMounts:
       - path: /config
   nebula:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/nebula
+    existingClaim: jellyfin-nebula-pvc
     globalMounts:
       - path: /mnt/nebula
 
@@ -43,6 +39,5 @@ ingress:
         paths:
           - path: /
             pathType: Prefix
-
             service:
               identifier: main

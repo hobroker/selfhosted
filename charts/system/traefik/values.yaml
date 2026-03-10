@@ -9,8 +9,8 @@ additionalArguments:
 service:
   enabled: true
   type: LoadBalancer
-  externalIPs:
-    - 192.168.50.7
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: 192.168.50.201
 
 ports:
   traefik:
@@ -34,8 +34,8 @@ metrics:
 deployment:
   additionalVolumes:
     - name: traefik-acme
-      hostPath:
-        path: "/appdata/k3s/traefik/acme"
+      persistentVolumeClaim:
+        claimName: traefik-acme-pvc
   podAnnotations:
     secret.reloader.stakater.com/reload: "infisical-traefik-secret"
 

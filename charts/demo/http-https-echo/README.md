@@ -21,6 +21,6 @@ argocd app sync http-https-echo
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
 helm upgrade --install http-https-echo bjw-s/app-template \
-  --namespace self --create-namespace \
+  --namespace default --create-namespace \
   -f values.yaml
 ```

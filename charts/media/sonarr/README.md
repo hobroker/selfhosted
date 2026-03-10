@@ -18,10 +18,11 @@ argocd app sync sonarr
 ### Manual Helm (without ArgoCD)
 
 ```sh
+kubectl apply -f config/pv.yaml
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
 helm upgrade --install sonarr bjw-s/app-template \
-  --namespace self --create-namespace \
+  --namespace default --create-namespace \
   -f values.yaml
 ```
 
@@ -31,10 +32,14 @@ helm upgrade --install sonarr bjw-s/app-template \
 | --------------------------- | ------------------------------------------ |
 | `infisical-scraparr-secret` | (Used by scraparr) Contains Sonarr API key |
 
-### Host Volumes
+## Storage
 
-| hostPath                | containerPath     | description                            |
-| ----------------------- | ----------------- | -------------------------------------- |
-| `/appdata/k3s/sonarr`   | `/config`         | Application configuration and database |
-| `/mnt/nebula/tvshows`   | `/nebula/tvshows` | TV series library directory            |
-| `/mnt/nebula/downloads` | `/downloads`      | Downloads directory for processing     |
+| source                                     | containerPath     | description                            |
+| ------------------------------------------ | ----------------- | -------------------------------------- |
+| `/var/local/sonarr` (hostPath)             | `/config`         | Application configuration and database |
+| `192.168.50.7:/mnt/nebula/tvshows` (NFS)   | `/nebula/tvshows` | TV series library directory            |
+| `192.168.50.7:/mnt/nebula/downloads` (NFS) | `/downloads`      | Downloads directory for processing     |
+
+PV: `sonarr-config-pv` → PVC: `sonarr-config-pvc`
+PV: `sonarr-tvshows-pv` → PVC: `sonarr-tvshows-pvc`
+PV: `sonarr-downloads-pv` → PVC: `sonarr-downloads-pvc`

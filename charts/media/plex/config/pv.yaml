@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-config-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  hostPath:
+    path: /var/local/plex
+    type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: plex-config-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ""
+  volumeName: plex-config-pv
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-nebula-pv
+spec:
+  capacity:
+    storage: 100Ti
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  nfs:
+    server: 192.168.50.7
+    path: /mnt/nebula
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: plex-nebula-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ""
+  volumeName: plex-nebula-pv
+  resources:
+    requests:
+      storage: 100Ti

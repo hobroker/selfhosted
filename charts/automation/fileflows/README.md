@@ -18,19 +18,23 @@ argocd app sync fileflows
 ### Manual Helm (without ArgoCD)
 
 ```sh
+kubectl apply -f config/pv.yaml
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
 helm upgrade --install fileflows bjw-s/app-template \
-  --namespace self --create-namespace \
+  --namespace default --create-namespace \
   -f values.yaml
 ```
 
-### Host Volumes
+## Storage
 
-| hostPath                        | containerPath   | description                            |
-| ------------------------------- | --------------- | -------------------------------------- |
-| `/appdata/k3s/fileflows/common` | `/app/common`   | Shared application data                |
-| `/appdata/k3s/fileflows/Data`   | `/app/Data`     | Application database and state         |
-| `/appdata/k3s/fileflows/Logs`   | `/app/Logs`     | Application logs                       |
-| `/transcode_cache`              | `/temp`         | Temporary directory for transcoding    |
-| `/mnt/nebula`                   | `/media/nebula` | Access to media library for processing |
+| source                            | containerPath   | description                              |
+| --------------------------------- | --------------- | ---------------------------------------- |
+| `/var/local/fileflows` (hostPath) | `/app/common`   | Shared application data (subPath)        |
+| `/var/local/fileflows` (hostPath) | `/app/Data`     | Application database and state (subPath) |
+| `/var/local/fileflows` (hostPath) | `/app/Logs`     | Application logs (subPath)               |
+| emptyDir                          | `/temp`         | Temporary directory for transcoding      |
+| `192.168.50.7:/mnt/nebula` (NFS)  | `/media/nebula` | Media library for processing             |
+
+PV: `fileflows-config-pv` → PVC: `fileflows-config-pvc`
+PV: `fileflows-nebula-pv` → PVC: `fileflows-nebula-pvc`

@@ -13,21 +13,14 @@ controllers:
 service:
   main:
     controller: main
-    type: LoadBalancer
-    ports:
-      http:
-        port: 34400
+    type: ClusterIP
 
 persistence:
-  root:
-    enabled: true
-    type: hostPath
-    hostPath: /appdata/k3s/threadfin/conf
+  config:
+    existingClaim: threadfin-config-pvc
     globalMounts:
       - path: /home/threadfin/conf
-  config:
-    enabled: true
-    type: hostPath
-    hostPath: /appdata/k3s/threadfin/temp
+  tmp:
+    type: emptyDir
     globalMounts:
       - path: /tmp/threadfin

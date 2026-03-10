@@ -26,9 +26,7 @@ service:
 
 persistence:
   config:
-    enabled: true
-    type: hostPath
-    hostPath: /appdata/k3s/n8n
+    existingClaim: n8n-config-pvc
     globalMounts:
       - path: /home/node/.n8n
 

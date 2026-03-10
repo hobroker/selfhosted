@@ -17,27 +17,19 @@ service:
   main:
     controller: main
     type: LoadBalancer
+    annotations:
+      metallb.universe.tf/loadBalancerIPs: 192.168.50.200
     ports:
       http:
         port: 32400
 
 persistence:
   config:
-    enabled: true
-    type: hostPath
-    hostPath: /appdata/k3s/plex
+    existingClaim: plex-config-pvc
     globalMounts:
       - path: /config
-  storage:
-    enabled: true
-    type: hostPath
-    hostPath: /storage
-    globalMounts:
-      - path: /storage
   nebula:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/nebula
+    existingClaim: plex-nebula-pvc
     globalMounts:
       - path: /nebula
 

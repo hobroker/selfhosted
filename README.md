@@ -1,6 +1,6 @@
 # Selfhosted
 
-A collection of Helm charts for self-hosted services running on [k3s](https://k3s.io/) (lightweight Kubernetes), managed with [ArgoCD](https://argo-cd.readthedocs.io/).
+A collection of Helm charts for self-hosted services running on [Talos Linux](https://www.talos.dev/) Kubernetes, managed with [ArgoCD](https://argo-cd.readthedocs.io/).
 
 > **Personal Setup:** This repository reflects a personal homelab setup. Domains, host paths, and secret names are all specific to this environment. If you're adapting it for your own use, expect to update `values.yaml` in each chart you deploy.
 
@@ -8,7 +8,7 @@ A collection of Helm charts for self-hosted services running on [k3s](https://k3
 
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
-  - [1. Install k3s](#1-install-k3s)
+  - [1. Bootstrap Talos cluster](#1-bootstrap-talos-cluster)
   - [2. Clone this repo](#2-clone-this-repo)
   - [3. Bootstrap ArgoCD (optional)](#3-bootstrap-argocd-optional)
   - [4. Deploy a service](#4-deploy-a-service)
@@ -31,7 +31,7 @@ A collection of Helm charts for self-hosted services running on [k3s](https://k3
 
 ## Prerequisites
 
-- [k3s](https://docs.k3s.io/installation) — lightweight Kubernetes cluster
+- [Talos Linux](https://www.talos.dev/) — immutable Kubernetes-focused OS
 - [Helm](https://helm.sh/docs/intro/install/) — Kubernetes package manager
 - [kubectl](https://kubernetes.io/docs/tasks/tools/) — Kubernetes CLI
 - [ArgoCD](https://argo-cd.readthedocs.io/en/stable/getting_started/) — GitOps controller (optional, see [charts/system/argocd](charts/system/argocd))
@@ -39,9 +39,9 @@ A collection of Helm charts for self-hosted services running on [k3s](https://k3
 
 ## Getting Started
 
-### 1. Install k3s
+### 1. Bootstrap Talos cluster
 
-Follow the [k3s Quick Start](https://docs.k3s.io/quick-start).
+Provision your Talos control-plane and worker nodes, then export a working kubeconfig for this cluster.
 
 ### 2. Clone this repo
 
@@ -63,18 +63,17 @@ Navigate to any chart directory and follow the instructions in its `README.md`. 
 System charts must be synced before any app charts. ArgoCD sync-wave annotations handle ordering automatically when syncing all at once. If syncing manually, use this order:
 
 1. [local-path-retain](charts/system/local-path-retain) — persistent storage class
-2. [cert-manager](charts/system/cert-manager) — TLS certificate management
-3. [traefik](charts/system/traefik) — ingress / reverse proxy
-4. [infisical-operator](charts/system/infisical-operator) — secret injection
-5. [reloader](charts/system/reloader) — rolling restarts on config/secret changes
-6. App charts (any order)
+2. [traefik](charts/system/traefik) — ingress / reverse proxy
+3. [infisical-operator](charts/system/infisical-operator) — secret injection
+4. [reloader](charts/system/reloader) — rolling restarts on config/secret changes
+5. App charts (any order)
 
 ## Host Directories
 
-Charts use host-mounted volumes for persistent data. The paths are hardcoded in each chart's `values.yaml` and must exist on the host before deploying. Common ones:
+Charts use host-mounted volumes for persistent data. The paths are defined in each chart's `config/pv.yaml` and must exist on the host before deploying. Common ones:
 
-- `/appdata/k3s/<service>` — per-service config and database
-- `/mnt/nebula` — media library (movies, TV shows, downloads)
+- `/var/local/<service>` — per-service config and database (hostPath on the node)
+- `/mnt/nebula` — media library (movies, TV shows, downloads), mounted via NFS from `192.168.50.7:/mnt/nebula`
 
 A custom `StorageClass` with a `Retain` reclaim policy is also available to prevent data loss when PVCs are deleted — see [local-path-retain](charts/system/local-path-retain).
 
@@ -90,7 +89,7 @@ Deploying a chart is usually just:
 kubectl apply -f charts/<category>/<name>/application.yaml
 ```
 
-Then sync it in the ArgoCD UI. Each chart's `values.yaml` contains a hardcoded domain (e.g. `jellyfin.hobroker.me`) — update it to your own domain before deploying. Some charts also require extra steps (config files, secrets, host volumes) — check the chart's `README.md` for details.
+Then sync it in the ArgoCD UI. Some charts contain a hardcoded domain (e.g. `jellyfin.hobroker.me`) — update it to your own domain before deploying. Some charts also require extra steps (config files, secrets, host volumes) — check the chart's `README.md` for details.
 
 ## Interactive CLI (optional)
 
@@ -121,7 +120,6 @@ npm run generate
 | [backrest](charts/automation/backrest)   | A web-accessible backup solution built on top of restic     | https://github.com/garethgeorge/backrest |
 | [fileflows](charts/automation/fileflows) | File processing application                                 | https://github.com/revenz/FileFlows      |
 | [n8n](charts/automation/n8n)             | Workflow automation platform                                | https://github.com/n8n-io/n8n            |
-| [rsnapshot](charts/automation/rsnapshot) | A tool for backing up data using rsync                      | https://github.com/rsnapshot/rsnapshot   |
 | [syncthing](charts/automation/syncthing) | Continuous file synchronization                             | https://github.com/syncthing/syncthing   |
 
 ### Demo
@@ -174,6 +172,7 @@ npm run generate
 | [cert-manager](charts/system/cert-manager)             | Automatically provision and manage TLS certificates in K8s                | https://github.com/cert-manager/cert-manager      |
 | [infisical-operator](charts/system/infisical-operator) | Operator to fetch secrets from Infisical.                                 | https://github.com/Infisical/infisical            |
 | [local-path-retain](charts/system/local-path-retain)   | StorageClass based on local-path provisioner with Retain reclaim policy.  | https://github.com/rancher/local-path-provisioner |
+| [metallb](charts/system/metallb)                       | Layer 2 load balancer for bare-metal Kubernetes clusters                  | https://github.com/metallb/metallb                |
 | [rancher](charts/system/rancher)                       | Container management platform                                             | https://github.com/rancher/rancher                |
 | [reloader](charts/system/reloader)                     | K8s controller to that does rolling upgrades on ConfigMap/Secrets changes | https://github.com/stakater/Reloader              |
 | [traefik](charts/system/traefik)                       | HTTP reverse proxy and load balancer                                      | https://github.com/traefik/traefik                |
@@ -184,7 +183,7 @@ npm run generate
 
 ## References
 
-- [k3s](https://k3s.io/) — Lightweight Kubernetes
+- [Talos Linux](https://www.talos.dev/) — Kubernetes-focused Linux
 - [ArgoCD](https://argo-cd.readthedocs.io/) — GitOps continuous delivery
 - [Infisical](https://infisical.com/) — Secret management
 

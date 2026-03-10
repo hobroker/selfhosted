@@ -26,6 +26,6 @@ labels: bug
 
 **Environment**
 
-- k3s version:
+- Talos version:
 - ArgoCD version:
 - Helm version:

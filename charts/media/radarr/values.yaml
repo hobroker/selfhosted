@@ -16,7 +16,7 @@ controllers:
 service:
   main:
     controller: main
-    type: LoadBalancer
+    type: ClusterIP
     ports:
       http:
         port: 7878
@@ -30,21 +30,15 @@ serviceMonitor:
 
 persistence:
   config:
-    enabled: true
-    type: hostPath
-    hostPath: /appdata/k3s/radarr
+    existingClaim: radarr-config-pvc
     globalMounts:
       - path: /config
   storage:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/nebula/movies
+    existingClaim: radarr-movies-pvc
     globalMounts:
       - path: /mnt/nebula/movies
   downloads:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/nebula/downloads
+    existingClaim: radarr-downloads-pvc
     globalMounts:
       - path: /downloads
 

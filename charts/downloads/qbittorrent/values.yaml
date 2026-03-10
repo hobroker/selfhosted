@@ -29,7 +29,7 @@ controllers:
 service:
   main:
     controller: main
-    type: LoadBalancer
+    type: ClusterIP
     ports:
       http:
         port: 8112
@@ -49,23 +49,15 @@ serviceMonitor:
 
 persistence:
   config:
-    enabled: true
-    type: hostPath
-    hostPath: /appdata/k3s/qbittorrent
+    existingClaim: qbittorrent-config-pvc
     globalMounts:
       - path: /config/qBittorrent
-  blackhole:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/nebula/downloads/blackhole
-    globalMounts:
-      - path: /blackhole
   downloads:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/nebula/downloads
+    existingClaim: qbittorrent-downloads-pvc
     globalMounts:
       - path: /downloads
+      - path: /blackhole
+        subPath: blackhole
 
 ingress:
   main:
