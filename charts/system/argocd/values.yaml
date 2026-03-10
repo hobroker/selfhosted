@@ -7,7 +7,9 @@ configs:
 
 server:
   service:
-    type: ClusterIP
+    type: LoadBalancer
+    annotations:
+      metallb.universe.tf/allow-shared-ip: shared
 
   metrics:
     enabled: true
