@@ -20,8 +20,6 @@ service:
 
 persistence:
   config:
-    enabled: true
-    type: hostPath
-    hostPath: /appdata/k3s/apprise
+    existingClaim: apprise-config-pvc
     globalMounts:
       - path: /config

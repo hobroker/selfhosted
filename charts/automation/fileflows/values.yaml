@@ -29,33 +29,20 @@ service:
         targetPort: 5000
 
 persistence:
-  common:
-    enabled: true
-    type: hostPath
-    hostPath: /appdata/k3s/fileflows/common
+  config:
+    existingClaim: fileflows-config-pvc
     globalMounts:
       - path: /app/common
-  data:
-    enabled: true
-    type: hostPath
-    hostPath: /appdata/k3s/fileflows/Data
-    globalMounts:
+        subPath: common
       - path: /app/Data
-  logs:
-    enabled: true
-    type: hostPath
-    hostPath: /appdata/k3s/fileflows/Logs
-    globalMounts:
+        subPath: Data
       - path: /app/Logs
+        subPath: Logs
   tmp:
-    enabled: true
-    type: hostPath
-    hostPath: /transcode_cache
+    type: emptyDir
     globalMounts:
       - path: /temp
-  storage2:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/nebula
+  nebula:
+    existingClaim: fileflows-nebula-pvc
     globalMounts:
       - path: /media/nebula
