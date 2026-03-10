@@ -18,16 +18,20 @@ argocd app sync jellyfin
 ### Manual Helm (without ArgoCD)
 
 ```sh
+kubectl apply -f config/pv.yaml
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
 helm upgrade --install jellyfin bjw-s/app-template \
-  --namespace self --create-namespace \
+  --namespace default --create-namespace \
   -f values.yaml
 ```
 
-### Host Volumes
+## Storage
 
-| hostPath                | containerPath | description                            |
-| ----------------------- | ------------- | -------------------------------------- |
-| `/appdata/k3s/jellyfin` | `/config`     | Application configuration and database |
-| `/mnt/nebula`           | `/mnt/nebula` | Access to media library for streaming  |
+| source                           | containerPath | description                            |
+| -------------------------------- | ------------- | -------------------------------------- |
+| `/var/local/jellyfin` (hostPath) | `/config`     | Application configuration and database |
+| `192.168.50.7:/mnt/nebula` (NFS) | `/mnt/nebula` | Media library                          |
+
+PV: `jellyfin-config-pv` → PVC: `jellyfin-config-pvc`
+PV: `jellyfin-nebula-pv` → PVC: `jellyfin-nebula-pvc`

@@ -18,15 +18,18 @@ argocd app sync apprise
 ### Manual Helm (without ArgoCD)
 
 ```sh
+kubectl apply -f config/pv.yaml
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
 helm upgrade --install apprise bjw-s/app-template \
-  --namespace self --create-namespace \
+  --namespace default --create-namespace \
   -f values.yaml
 ```
 
-### Host Volumes
+## Storage
 
-| hostPath               | containerPath | description               |
-| ---------------------- | ------------- | ------------------------- |
-| `/appdata/k3s/apprise` | `/config`     | Application configuration |
+| source                          | containerPath | description               |
+| ------------------------------- | ------------- | ------------------------- |
+| `/var/local/apprise` (hostPath) | `/config`     | Application configuration |
+
+PV: `apprise-config-pv` → PVC: `apprise-config-pvc`
