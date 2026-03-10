@@ -26,15 +26,33 @@ cluster:
 ## Installing/upgrading
 
 ```sh
+# Register / update the Application resource
+kubectl apply -f application.yaml
+
+# Then sync the workload - via ArgoCD UI or:
+argocd app sync metallb
+
+# Apply the IP pool configuration (once per cluster):
+kubectl apply -f ippool.yaml
+```
+
+### Manual Helm (without ArgoCD)
+
+```sh
 helm repo add metallb https://metallb.github.io/metallb
 helm repo update metallb
 helm upgrade --install metallb metallb/metallb \
   --version 0.14.9 --namespace metallb-system --create-namespace \
   -f values.yaml
 
-# Apply the IP pool configuration (once per cluster):
 kubectl apply -f ippool.yaml
 ```
+
+### Helm values
+
+| chart     | values.yaml                                                             |
+| --------- | ----------------------------------------------------------------------- |
+| `metallb` | https://github.com/metallb/metallb/blob/main/charts/metallb/values.yaml |
 
 ## IP Pool
 
