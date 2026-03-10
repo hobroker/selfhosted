@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    category: system
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  project: default
+  sources:
+    - repoURL: https://metallb.github.io/metallb
+      chart: metallb
+      targetRevision: 0.14.9
+      helm:
+        valueFiles:
+          - $values/charts/system/metallb/values.yaml
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: metallb-system
+  revisionHistoryLimit: 3
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
