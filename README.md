@@ -121,7 +121,6 @@ npm run generate
 | [backrest](charts/automation/backrest)   | A web-accessible backup solution built on top of restic     | https://github.com/garethgeorge/backrest |
 | [fileflows](charts/automation/fileflows) | File processing application                                 | https://github.com/revenz/FileFlows      |
 | [n8n](charts/automation/n8n)             | Workflow automation platform                                | https://github.com/n8n-io/n8n            |
-| [rsnapshot](charts/automation/rsnapshot) | A tool for backing up data using rsync                      | https://github.com/rsnapshot/rsnapshot   |
 | [syncthing](charts/automation/syncthing) | Continuous file synchronization                             | https://github.com/syncthing/syncthing   |
 
 ### Demo
@@ -174,7 +173,7 @@ npm run generate
 | [cert-manager](charts/system/cert-manager)             | Automatically provision and manage TLS certificates in K8s                | https://github.com/cert-manager/cert-manager      |
 | [infisical-operator](charts/system/infisical-operator) | Operator to fetch secrets from Infisical.                                 | https://github.com/Infisical/infisical            |
 | [local-path-retain](charts/system/local-path-retain)   | StorageClass based on local-path provisioner with Retain reclaim policy.  | https://github.com/rancher/local-path-provisioner |
-| [MetalLB](charts/system/metallb)                       |                                                                           |                                                   |
+| [metallb](charts/system/metallb)                       | Layer 2 load balancer for bare-metal Kubernetes clusters                  | https://github.com/metallb/metallb                |
 | [rancher](charts/system/rancher)                       | Container management platform                                             | https://github.com/rancher/rancher                |
 | [reloader](charts/system/reloader)                     | K8s controller to that does rolling upgrades on ConfigMap/Secrets changes | https://github.com/stakater/Reloader              |
 | [traefik](charts/system/traefik)                       | HTTP reverse proxy and load balancer                                      | https://github.com/traefik/traefik                |

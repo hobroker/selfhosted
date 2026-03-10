@@ -1,31 +1,44 @@
-# MetalLB
+# `metallb`
+
+> Layer 2 load balancer for bare-metal Kubernetes clusters
+
+Source Code: https://github.com/metallb/metallb
+Chart: https://metallb.github.io/metallb
 
 ## Prerequisites
 
-Before deploying, apply these once per cluster:
+These must be applied once per cluster before deploying:
 
-**1. Label the namespace as privileged** (required for speaker pod to run with NET_RAW/NET_ADMIN):
+**1. Label the namespace as privileged** (required for speaker pod `NET_RAW`/`NET_ADMIN`):
 
-```bash
+```sh
 kubectl create namespace metallb-system
 kubectl label namespace metallb-system pod-security.kubernetes.io/enforce=privileged
 ```
 
-**2. Talos machine config** must have `allowSchedulingOnControlPlanes: true` (prevents Talos from adding the `exclude-from-external-load-balancers` label and `NoSchedule` taint to control-plane nodes, which would block MetalLB from announcing IPs):
+**2. Talos machine config** must have `allowSchedulingOnControlPlanes: true` — prevents Talos from adding the `exclude-from-external-load-balancers` label and `NoSchedule` taint to control-plane nodes, which would block MetalLB from announcing IPs:
 
 ```yaml
 cluster:
   allowSchedulingOnControlPlanes: true
 ```
 
-## Deploy
+## Installing/upgrading
 
-```bash
-helmfile apply
+```sh
+helm repo add metallb https://metallb.github.io/metallb
+helm repo update metallb
+helm upgrade --install metallb metallb/metallb \
+  --version 0.14.9 --namespace metallb-system --create-namespace \
+  -f values.yaml
+
+# Apply the IP pool configuration (once per cluster):
 kubectl apply -f ippool.yaml
 ```
 
 ## IP Pool
 
-- `192.168.50.200` — general services
-- `192.168.50.201` — Traefik
+| IP               | service                         |
+| ---------------- | ------------------------------- |
+| `192.168.50.200` | shared (qbittorrent, plex, etc) |
+| `192.168.50.201` | Traefik                         |
