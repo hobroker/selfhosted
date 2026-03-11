@@ -8,8 +8,9 @@ spec:
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
   claimRef:
-    name: openclaw-data-pvc
+    name: openclaw
     namespace: default
   hostPath:
     path: /var/local/openclaw

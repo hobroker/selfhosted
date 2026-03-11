@@ -10,6 +10,6 @@ controllers:
               name: infisical-openclaw-secret
 persistence:
   data:
-    existingClaim: openclaw-data-pvc
+    storageClassName: ""
     globalMounts:
       - path: /home/node/.openclaw
