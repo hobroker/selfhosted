@@ -114,13 +114,14 @@ npm run generate
 
 ### Automation
 
-| Chart                                    | Description                                                 | Source Code                              |
-| ---------------------------------------- | ----------------------------------------------------------- | ---------------------------------------- |
-| [apprise](charts/automation/apprise)     | Push Notifications that work with just about every platform | https://github.com/caronc/apprise        |
-| [backrest](charts/automation/backrest)   | A web-accessible backup solution built on top of restic     | https://github.com/garethgeorge/backrest |
-| [fileflows](charts/automation/fileflows) | File processing application                                 | https://github.com/revenz/FileFlows      |
-| [n8n](charts/automation/n8n)             | Workflow automation platform                                | https://github.com/n8n-io/n8n            |
-| [syncthing](charts/automation/syncthing) | Continuous file synchronization                             | https://github.com/syncthing/syncthing   |
+| Chart                                    | Description                                                                       | Source Code                              |
+| ---------------------------------------- | --------------------------------------------------------------------------------- | ---------------------------------------- |
+| [apprise](charts/automation/apprise)     | Push Notifications that work with just about every platform                       | https://github.com/caronc/apprise        |
+| [backrest](charts/automation/backrest)   | A web-accessible backup solution built on top of restic                           | https://github.com/garethgeorge/backrest |
+| [fileflows](charts/automation/fileflows) | File processing application                                                       | https://github.com/revenz/FileFlows      |
+| [n8n](charts/automation/n8n)             | Workflow automation platform                                                      | https://github.com/n8n-io/n8n            |
+| [openclaw](charts/automation/openclaw)   | AI assistant that connects to messaging platforms and executes tasks autonomously | https://github.com/openclaw/openclaw     |
+| [syncthing](charts/automation/syncthing) | Continuous file synchronization                                                   | https://github.com/syncthing/syncthing   |
 
 ### Demo
 

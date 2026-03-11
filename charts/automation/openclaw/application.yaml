@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openclaw
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    category: automation
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      path: charts/automation/openclaw/config
+    - repoURL: https://serhanekicii.github.io/openclaw-helm
+      chart: openclaw
+      targetRevision: 1.4.6
+      helm:
+        valueFiles:
+          - $values/charts/automation/openclaw/values.yaml
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  revisionHistoryLimit: 3
+  ignoreDifferences:
+    - group: ""
+      kind: ConfigMap
+      name: openclaw
+      jsonPointers:
+        - /data
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
