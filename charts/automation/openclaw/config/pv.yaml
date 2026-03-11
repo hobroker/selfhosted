@@ -10,7 +10,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: ""
   claimRef:
-    name: openclaw-data
+    name: openclaw
     namespace: default
   hostPath:
     path: /var/local/openclaw
