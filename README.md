@@ -153,47 +153,42 @@ npm run generate
 
 ### Automation
 
-| Chart                                    | Description                                                                       | Source Code                              |
-| ---------------------------------------- | --------------------------------------------------------------------------------- | ---------------------------------------- |
-| [apprise](charts/automation/apprise)     | Push Notifications that work with just about every platform                       | https://github.com/caronc/apprise        |
-| [backrest](charts/automation/backrest)   | A web-accessible backup solution built on top of restic                           | https://github.com/garethgeorge/backrest |
-| [fileflows](charts/automation/fileflows) | File processing application                                                       | https://github.com/revenz/FileFlows      |
-| [n8n](charts/automation/n8n)             | Workflow automation platform                                                      | https://github.com/n8n-io/n8n            |
-| [openclaw](charts/automation/openclaw)   | AI assistant that connects to messaging platforms and executes tasks autonomously | https://github.com/openclaw/openclaw     |
-| [syncthing](charts/automation/syncthing) | Continuous file synchronization                                                   | https://github.com/syncthing/syncthing   |
+| Chart                                  | Description                                                                       | Source Code                          |
+| -------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------ |
+| [apprise](charts/automation/apprise)   | Push Notifications that work with just about every platform                       | https://github.com/caronc/apprise    |
+| [n8n](charts/automation/n8n)           | Workflow automation platform                                                      | https://github.com/n8n-io/n8n        |
+| [openclaw](charts/automation/openclaw) | AI assistant that connects to messaging platforms and executes tasks autonomously | https://github.com/openclaw/openclaw |
 
-### Demo
+### Backup
 
-| Chart                                          | Description                                                 | Source Code                                       |
-| ---------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------- |
-| [http-https-echo](charts/demo/http-https-echo) | App that echoes request data as JSON (useful for debugging) | https://github.com/mendhak/docker-http-https-echo |
+| Chart                                | Description                                             | Source Code                              |
+| ------------------------------------ | ------------------------------------------------------- | ---------------------------------------- |
+| [backrest](charts/backup/backrest)   | A web-accessible backup solution built on top of restic | https://github.com/garethgeorge/backrest |
+| [syncthing](charts/backup/syncthing) | Continuous file synchronization                         | https://github.com/syncthing/syncthing   |
 
 ### Development
 
-| Chart                                         | Description                                                        | Source Code                                       |
-| --------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------- |
-| [code-server](charts/development/code-server) | VS Code running on a remote server, accessible through the browser | https://github.com/linuxserver/docker-code-server |
-
-### Downloads
-
-| Chart                                         | Description                                                                               | Source Code                                  |
-| --------------------------------------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------- |
-| [flaresolverr](charts/downloads/flaresolverr) | Proxy server to bypass Cloudflare protection                                              | https://github.com/FlareSolverr/FlareSolverr |
-| [prowlarr](charts/downloads/prowlarr)         | Indexer manager/proxy built on the popular \*arr stack to integrate with various PVR apps | https://github.com/Prowlarr/Prowlarr         |
-| [qbittorrent](charts/downloads/qbittorrent)   | Bittorrent client with a feature rich Web UI for remote access                            | https://github.com/qbittorrent/qBittorrent   |
+| Chart                                                 | Description                                                        | Source Code                                       |
+| ----------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------- |
+| [code-server](charts/development/code-server)         | VS Code running on a remote server, accessible through the browser | https://github.com/linuxserver/docker-code-server |
+| [http-https-echo](charts/development/http-https-echo) | App that echoes request data as JSON (useful for debugging)        | https://github.com/mendhak/docker-http-https-echo |
 
 ### Media
 
-| Chart                               | Description                                                                          | Source Code                             |
-| ----------------------------------- | ------------------------------------------------------------------------------------ | --------------------------------------- |
-| [bazarr](charts/media/bazarr)       | Companion application to Sonarr and Radarr that manages and downloads subtitles.     | https://github.com/morpheus65535/bazarr |
-| [jellyfin](charts/media/jellyfin)   | An open-source media server                                                          | https://github.com/jellyfin/jellyfin    |
-| [overseerr](charts/media/overseerr) | A tool for browsing and requesting new media content.                                | https://github.com/sct/overseerr        |
-| [plex](charts/media/plex)           | A media server that organizes and streams video and audio content across devices.    | https://www.plex.tv/                    |
-| [radarr](charts/media/radarr)       | A movie tracking and automation tool that downloads movies as they become available. | https://github.com/Radarr/Radarr        |
-| [sonarr](charts/media/sonarr)       | A TV series tracking and automation tool for downloading episodes as they air.       | https://github.com/Sonarr/Sonarr        |
-| [tautulli](charts/media/tautulli)   | A monitoring and analytics tool for Plex                                             | https://github.com/Tautulli/Tautulli    |
-| [threadfin](charts/media/threadfin) | An M3U proxy for Kernel/Plex/Jellyfin/Emby based on xTeVe                            | https://github.com/Threadfin/Threadfin  |
+| Chart                                     | Description                                                                               | Source Code                                  |
+| ----------------------------------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------- |
+| [bazarr](charts/media/bazarr)             | Companion application to Sonarr and Radarr that manages and downloads subtitles.          | https://github.com/morpheus65535/bazarr      |
+| [fileflows](charts/media/fileflows)       | File processing application                                                               | https://github.com/revenz/FileFlows          |
+| [flaresolverr](charts/media/flaresolverr) | Proxy server to bypass Cloudflare protection                                              | https://github.com/FlareSolverr/FlareSolverr |
+| [jellyfin](charts/media/jellyfin)         | An open-source media server                                                               | https://github.com/jellyfin/jellyfin         |
+| [overseerr](charts/media/overseerr)       | A tool for browsing and requesting new media content.                                     | https://github.com/sct/overseerr             |
+| [plex](charts/media/plex)                 | A media server that organizes and streams video and audio content across devices.         | https://www.plex.tv/                         |
+| [prowlarr](charts/media/prowlarr)         | Indexer manager/proxy built on the popular \*arr stack to integrate with various PVR apps | https://github.com/Prowlarr/Prowlarr         |
+| [qbittorrent](charts/media/qbittorrent)   | Bittorrent client with a feature rich Web UI for remote access                            | https://github.com/qbittorrent/qBittorrent   |
+| [radarr](charts/media/radarr)             | A movie tracking and automation tool that downloads movies as they become available.      | https://github.com/Radarr/Radarr             |
+| [sonarr](charts/media/sonarr)             | A TV series tracking and automation tool for downloading episodes as they air.            | https://github.com/Sonarr/Sonarr             |
+| [tautulli](charts/media/tautulli)         | A monitoring and analytics tool for Plex                                                  | https://github.com/Tautulli/Tautulli         |
+| [threadfin](charts/media/threadfin)       | An M3U proxy for Kernel/Plex/Jellyfin/Emby based on xTeVe                                 | https://github.com/Threadfin/Threadfin       |
 
 ### Monitoring
 

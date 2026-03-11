@@ -1,21 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: flaresolverr
+  name: http-https-echo
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   labels:
-    category: downloads
+    category: development
 spec:
   project: default
   sources:
     - repoURL: https://bjw-s-labs.github.io/helm-charts
       chart: app-template
-      targetRevision: 4.6.2
+      targetRevision: 4.0.1
       helm:
         valueFiles:
-          - $values/charts/downloads/flaresolverr/values.yaml
+          - $values/charts/development/http-https-echo/values.yaml
     - repoURL: https://github.com/hobroker/selfhosted.git
       targetRevision: HEAD
       ref: values
