@@ -28,3 +28,7 @@ persistence:
     existingClaim: backrest-data-pvc
     globalMounts:
       - path: /data
+  varlocal:
+    existingClaim: backrest-varlocal-pvc
+    globalMounts:
+      - path: /var/local
