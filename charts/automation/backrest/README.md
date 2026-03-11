@@ -27,14 +27,20 @@ argocd app sync backrest
 ### Manual Helm (without ArgoCD)
 
 ```sh
-kubectl apply -f config/pv.yaml
-helmfile apply
+kubectl apply -f config
+helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
+helm repo update bjw-s
+helm upgrade --install backrest bjw-s/app-template \
+  --namespace default --create-namespace \
+  -f values.yaml
 ```
 
 ## Storage
 
-| hostPath                   | containerPath | description                           |
-| -------------------------- | ------------- | ------------------------------------- |
-| `/var/local/backrest/data` | `/data`       | Backrest config, repos index and logs |
+| hostPath                              | containerPath | description                           |
+| ------------------------------------- | ------------- | ------------------------------------- |
+| `/var/local/backrest/data` (hostPath) | `/data`       | Backrest config, repos index and logs |
+| `/var/local` (hostPath)               | `/var/local`  | Backrest varlocal data                |
 
-PV: `backrest-data-pv` (5Gi, Retain) → PVC: `backrest-data-pvc` in namespace `default`
+PV: `backrest-data-pv` (Retain) → PVC: `backrest-data-pvc`
+PV: `backrest-varlocal-pv` (Retain) → PVC: `backrest-varlocal-pvc`
