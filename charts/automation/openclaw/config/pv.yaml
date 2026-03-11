@@ -9,7 +9,7 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   claimRef:
-    name: openclaw
+    name: openclaw-data-pvc
     namespace: default
   hostPath:
     path: /var/local/openclaw
