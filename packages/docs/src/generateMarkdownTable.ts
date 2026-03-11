@@ -1,7 +1,9 @@
 import { markdownTable } from "markdown-table";
 import { ChartData } from "./types";
 
-const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
+const acronyms = new Set(["ai"]);
+const capitalize = (value: string) =>
+  acronyms.has(value) ? value.toUpperCase() : value.charAt(0).toUpperCase() + value.slice(1);
 
 export const generateMarkdownTable = (data: ChartData[]) => {
   const content = data.map(({ category, services }) => {
