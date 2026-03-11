@@ -8,9 +8,21 @@ spec:
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  claimRef:
-    name: openclaw-data-pvc
-    namespace: default
+  storageClassName: ""
   hostPath:
     path: /var/local/openclaw
     type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: openclaw-data-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ""
+  volumeName: openclaw-pv
+  resources:
+    requests:
+      storage: 5Gi
