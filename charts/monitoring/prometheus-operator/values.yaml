@@ -12,10 +12,10 @@ prometheus:
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: "local-path-retain"
+          storageClassName: ""
           resources:
             requests:
-              storage: 5Gi
+              storage: 20Gi
   ingress:
     enabled: true
     ingressClassName: traefik

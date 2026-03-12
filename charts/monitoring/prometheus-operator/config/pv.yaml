@@ -29,3 +29,21 @@ spec:
   resources:
     requests:
       storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prometheus-operator-prometheus-pv
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  claimRef:
+    name: db-prometheus-prometheus-operator-kube-p-prometheus-0
+    namespace: monitoring
+  hostPath:
+    path: /var/local/prometheus
+    type: DirectoryOrCreate
