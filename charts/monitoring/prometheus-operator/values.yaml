@@ -5,13 +5,17 @@ prometheus:
     scrapeInterval: 1m
     podMonitorSelectorNilUsesHelmValues: false
     serviceMonitorSelectorNilUsesHelmValues: false
-    # storageSpec:
-    #   volumeClaimTemplate:
-    #     spec:
-    #       storageClassName: "local-path-retain"
-    #       resources:
-    #         requests:
-    #           storage: 5Gi
+    securityContext:
+      fsGroup: 0
+      runAsNonRoot: false
+      runAsUser: 0
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: "local-path-retain"
+          resources:
+            requests:
+              storage: 5Gi
   ingress:
     enabled: true
     ingressClassName: traefik
@@ -43,39 +47,23 @@ grafana:
     size: 5Gi
     storageClassName: "local-path-retain"
 
-# alertmanager:
-#   ingress:
-#     enabled: true
-
-# kubeScheduler:
-#   enabled: false
-
-# kubeApiServer:
-#   enabled: false
-
-# kubeProxy:
-#   enabled: false
-
-# kubeEtcd:
-#   enabled: false
-
-# kubeControllerManager:
-#   enabled: false
-
-# too many metrics being scraped
-kubelet:
-  serviceMonitor:
-    metricRelabelings:
-      - regex: apiserver_request_duration_seconds_bucket
-        action: drop
+alertmanager:
+  enabled: false
 
 defaultRules:
-  create: true
-  # rules:
-  # alertmanager: false
-  # etcd: false
-  # windows: false
-  # kubeApiserverAvailability: false
-  # kubeApiserverBurnrate: false
-  # kubeApiserverHistogram: false
-  # kubeApiserverSlos: false
+  create: false # no alertmanager to route these to
+
+kubeApiServer:
+  enabled: false
+
+kubeControllerManager:
+  enabled: false
+
+kubeScheduler:
+  enabled: false
+
+kubeProxy:
+  enabled: false # Talos doesn't run kube-proxy
+
+kubeEtcd:
+  enabled: false # requires client cert setup on Talos
