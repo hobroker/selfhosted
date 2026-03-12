@@ -44,8 +44,7 @@ grafana:
       - grafana.hobroker.me
   persistence:
     enabled: true
-    size: 5Gi
-    storageClassName: "local-path-retain"
+    existingClaim: prometheus-operator-grafana
 
 alertmanager:
   enabled: false
