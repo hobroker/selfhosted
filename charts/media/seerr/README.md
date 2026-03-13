@@ -3,7 +3,7 @@
 > A modern media request and discovery tool.
 
 Source Code: https://github.com/seerr-team/seerr
-Chart: oci://ghcr.io/seerr-team/seerr/seerr-chart
+Chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 
 ## Installing/upgrading
 
@@ -19,7 +19,9 @@ argocd app sync seerr
 
 ```sh
 kubectl apply -f config/pv.yaml
-helm upgrade --install seerr oci://ghcr.io/seerr-team/seerr/seerr-chart \
+helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
+helm repo update bjw-s
+helm upgrade --install seerr bjw-s/app-template \
   --namespace default --create-namespace \
   -f values.yaml
 ```
