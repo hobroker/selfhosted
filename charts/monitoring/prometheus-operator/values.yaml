@@ -52,6 +52,16 @@ grafana:
     enabled: true
     existingClaim: prometheus-operator-grafana
 
+nodeExporter:
+  enabled: true
+  operatingSystems:
+    linux:
+      enabled: true
+    aix:
+      enabled: false
+    darwin:
+      enabled: false
+
 alertmanager:
   enabled: false
 
