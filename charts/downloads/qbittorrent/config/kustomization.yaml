@@ -1,0 +1,11 @@
+resources:
+  - pv.yaml
+configMapGenerator:
+  - name: qbittorrent-grafana-dashboard
+    namespace: default
+    options:
+      labels:
+        grafana_dashboard: "1"
+      disableNameSuffixHash: true
+    files:
+      - qbittorrent.json=qbittorrent-dashboard.json
