@@ -186,6 +186,7 @@ npm run generate
 | [prowlarr](charts/media/prowlarr)         | Indexer manager/proxy built on the popular \*arr stack to integrate with various PVR apps | https://github.com/Prowlarr/Prowlarr         |
 | [qbittorrent](charts/media/qbittorrent)   | Bittorrent client with a feature rich Web UI for remote access                            | https://github.com/qbittorrent/qBittorrent   |
 | [radarr](charts/media/radarr)             | A movie tracking and automation tool that downloads movies as they become available.      | https://github.com/Radarr/Radarr             |
+| [seerr](charts/media/seerr)               | A modern media request and discovery tool.                                                | https://github.com/seerr-team/seerr          |
 | [sonarr](charts/media/sonarr)             | A TV series tracking and automation tool for downloading episodes as they air.            | https://github.com/Sonarr/Sonarr             |
 | [tautulli](charts/media/tautulli)         | A monitoring and analytics tool for Plex                                                  | https://github.com/Tautulli/Tautulli         |
 | [threadfin](charts/media/threadfin)       | An M3U proxy for Kernel/Plex/Jellyfin/Emby based on xTeVe                                 | https://github.com/Threadfin/Threadfin       |
