@@ -1,0 +1,12 @@
+repositories:
+  - name: bjw-s
+    url: https://bjw-s-labs.github.io/helm-charts
+
+releases:
+  - name: prowlarr
+    version: 4.6.2
+    atomic: true
+    namespace: default
+    chart: bjw-s/app-template
+    values:
+      - values.yaml

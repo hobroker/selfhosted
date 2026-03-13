@@ -1,24 +1,24 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: qbittorrent
+  name: fileflows
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   labels:
-    category: downloads
+    category: media
 spec:
   project: default
   sources:
     - repoURL: https://github.com/hobroker/selfhosted.git
       targetRevision: HEAD
-      path: charts/downloads/qbittorrent/config
+      path: charts/media/fileflows/config
     - repoURL: https://bjw-s-labs.github.io/helm-charts
       chart: app-template
       targetRevision: 4.6.2
       helm:
         valueFiles:
-          - $values/charts/downloads/qbittorrent/values.yaml
+          - $values/charts/media/fileflows/values.yaml
     - repoURL: https://github.com/hobroker/selfhosted.git
       targetRevision: HEAD
       ref: values

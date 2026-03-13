@@ -1,24 +1,24 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: fileflows
+  name: prowlarr
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   labels:
-    category: automation
+    category: media
 spec:
   project: default
   sources:
     - repoURL: https://github.com/hobroker/selfhosted.git
       targetRevision: HEAD
-      path: charts/automation/fileflows/config
+      path: charts/media/prowlarr/config
     - repoURL: https://bjw-s-labs.github.io/helm-charts
       chart: app-template
       targetRevision: 4.6.2
       helm:
         valueFiles:
-          - $values/charts/automation/fileflows/values.yaml
+          - $values/charts/media/prowlarr/values.yaml
     - repoURL: https://github.com/hobroker/selfhosted.git
       targetRevision: HEAD
       ref: values
