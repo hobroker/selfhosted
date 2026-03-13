@@ -30,7 +30,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: sonarr-tvshows-pv
+  name: sonarr-nebula-pv
 spec:
   capacity:
     storage: 100Ti
@@ -40,47 +40,18 @@ spec:
   storageClassName: ""
   nfs:
     server: 192.168.50.7
-    path: /mnt/nebula/tvshows
+    path: /mnt/nebula
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: sonarr-tvshows-pvc
+  name: sonarr-nebula-pvc
   namespace: default
 spec:
   accessModes:
     - ReadWriteMany
   storageClassName: ""
-  volumeName: sonarr-tvshows-pv
-  resources:
-    requests:
-      storage: 100Ti
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: sonarr-downloads-pv
-spec:
-  capacity:
-    storage: 100Ti
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: ""
-  nfs:
-    server: 192.168.50.7
-    path: /mnt/nebula/downloads
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: sonarr-downloads-pvc
-  namespace: default
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: ""
-  volumeName: sonarr-downloads-pv
+  volumeName: sonarr-nebula-pv
   resources:
     requests:
       storage: 100Ti

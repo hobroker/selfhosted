@@ -29,13 +29,9 @@ persistence:
     globalMounts:
       - path: /config
   nebula:
-    existingClaim: sonarr-tvshows-pvc
+    existingClaim: sonarr-nebula-pvc
     globalMounts:
-      - path: /nebula/tvshows
-  downloads:
-    existingClaim: sonarr-downloads-pvc
-    globalMounts:
-      - path: /downloads
+      - path: /mnt/nebula
 
 ingress:
   main:
