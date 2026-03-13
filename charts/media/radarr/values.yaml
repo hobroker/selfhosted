@@ -33,14 +33,10 @@ persistence:
     existingClaim: radarr-config-pvc
     globalMounts:
       - path: /config
-  storage:
-    existingClaim: radarr-movies-pvc
+  nebula:
+    existingClaim: radarr-nebula-pvc
     globalMounts:
-      - path: /mnt/nebula/movies
-  downloads:
-    existingClaim: radarr-downloads-pvc
-    globalMounts:
-      - path: /downloads
+      - path: /mnt/nebula
 
 ingress:
   main:

@@ -30,7 +30,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: radarr-movies-pv
+  name: radarr-nebula-pv
 spec:
   capacity:
     storage: 100Ti
@@ -40,47 +40,18 @@ spec:
   storageClassName: ""
   nfs:
     server: 192.168.50.7
-    path: /mnt/nebula/movies
+    path: /mnt/nebula
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: radarr-movies-pvc
+  name: radarr-nebula-pvc
   namespace: default
 spec:
   accessModes:
     - ReadWriteMany
   storageClassName: ""
-  volumeName: radarr-movies-pv
-  resources:
-    requests:
-      storage: 100Ti
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: radarr-downloads-pv
-spec:
-  capacity:
-    storage: 100Ti
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: ""
-  nfs:
-    server: 192.168.50.7
-    path: /mnt/nebula/downloads
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: radarr-downloads-pvc
-  namespace: default
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: ""
-  volumeName: radarr-downloads-pv
+  volumeName: radarr-nebula-pv
   resources:
     requests:
       storage: 100Ti

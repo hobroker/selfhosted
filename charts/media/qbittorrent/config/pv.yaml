@@ -30,7 +30,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: qbittorrent-downloads-pv
+  name: qbittorrent-nebula-pv
 spec:
   capacity:
     storage: 100Ti
@@ -40,18 +40,18 @@ spec:
   storageClassName: ""
   nfs:
     server: 192.168.50.7
-    path: /mnt/nebula/downloads
+    path: /mnt/nebula
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: qbittorrent-downloads-pvc
+  name: qbittorrent-nebula-pvc
   namespace: default
 spec:
   accessModes:
     - ReadWriteMany
   storageClassName: ""
-  volumeName: qbittorrent-downloads-pv
+  volumeName: qbittorrent-nebula-pv
   resources:
     requests:
       storage: 100Ti
