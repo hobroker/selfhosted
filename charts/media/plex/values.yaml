@@ -31,7 +31,7 @@ persistence:
   nebula:
     existingClaim: plex-nebula-pvc
     globalMounts:
-      - path: /nebula
+      - path: /mnt/nebula
 
 ingress:
   main:
