@@ -25,6 +25,10 @@ prometheus:
       - prometheus.hobroker.me
 
 grafana:
+  admin:
+    existingSecret: infisical-grafana-secret
+    userKey: admin-user
+    passwordKey: admin-password
   grafana.ini:
     users:
       auto_assign_org: true
@@ -42,6 +46,8 @@ grafana:
       traefik.ingress.kubernetes.io/router.entrypoints: websecure
     hosts:
       - grafana.hobroker.me
+  initChownData:
+    enabled: false
   persistence:
     enabled: true
     existingClaim: prometheus-operator-grafana
