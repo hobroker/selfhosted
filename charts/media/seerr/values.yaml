@@ -1,8 +1,5 @@
 defaultPodOptions:
   automountServiceAccountToken: false
-  securityContext:
-    fsGroup: 1000
-    fsGroupChangePolicy: OnRootMismatch
 
 controllers:
   main:
@@ -25,7 +22,7 @@ persistence:
   config:
     existingClaim: seerr-config-pvc
     globalMounts:
-      - path: /config
+      - path: /app/config
 
 ingress:
   main:
