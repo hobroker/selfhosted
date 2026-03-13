@@ -34,12 +34,10 @@ helm upgrade --install radarr bjw-s/app-template \
 
 ## Storage
 
-| source                                     | containerPath        | description                            |
-| ------------------------------------------ | -------------------- | -------------------------------------- |
-| `/var/local/radarr` (hostPath)             | `/config`            | Application configuration and database |
-| `192.168.50.7:/mnt/nebula/movies` (NFS)    | `/mnt/nebula/movies` | Movie library directory                |
-| `192.168.50.7:/mnt/nebula/downloads` (NFS) | `/downloads`         | Downloads directory for processing     |
+| source                           | containerPath | description                            |
+| -------------------------------- | ------------- | -------------------------------------- |
+| `/var/local/radarr` (hostPath)   | `/config`     | Application configuration and database |
+| `192.168.50.7:/mnt/nebula` (NFS) | `/mnt/nebula` | Full nebula share (movies, downloads)  |
 
 PV: `radarr-config-pv` → PVC: `radarr-config-pvc`
-PV: `radarr-movies-pv` → PVC: `radarr-movies-pvc`
-PV: `radarr-downloads-pv` → PVC: `radarr-downloads-pvc`
+PV: `radarr-nebula-pv` → PVC: `radarr-nebula-pvc`

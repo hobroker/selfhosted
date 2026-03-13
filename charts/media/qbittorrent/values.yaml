@@ -52,12 +52,10 @@ persistence:
     existingClaim: qbittorrent-config-pvc
     globalMounts:
       - path: /config/qBittorrent
-  downloads:
-    existingClaim: qbittorrent-downloads-pvc
+  nebula:
+    existingClaim: qbittorrent-nebula-pvc
     globalMounts:
-      - path: /downloads
-      - path: /blackhole
-        subPath: blackhole
+      - path: /mnt/nebula
 
 ingress:
   main:
