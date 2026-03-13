@@ -28,11 +28,10 @@ helm upgrade --install qbittorrent bjw-s/app-template \
 
 ## Storage
 
-| source                                                       | containerPath         | description                           |
-| ------------------------------------------------------------ | --------------------- | ------------------------------------- |
-| `/var/local/qbittorrent` (hostPath)                          | `/config/qBittorrent` | Application configuration             |
-| `192.168.50.7:/mnt/nebula/downloads` (NFS)                   | `/downloads`          | Main downloads directory              |
-| `192.168.50.7:/mnt/nebula/downloads/blackhole` (NFS subPath) | `/blackhole`          | Blackhole directory for torrent files |
+| source                              | containerPath         | description                        |
+| ----------------------------------- | --------------------- | ---------------------------------- |
+| `/var/local/qbittorrent` (hostPath) | `/config/qBittorrent` | Application configuration          |
+| `192.168.50.7:/mnt/nebula` (NFS)    | `/mnt/nebula`         | Full nebula share (downloads, etc) |
 
 PV: `qbittorrent-config-pv` (1Gi, Retain) → PVC: `qbittorrent-config-pvc`
-PV: `qbittorrent-downloads-pv` (NFS, Retain) → PVC: `qbittorrent-downloads-pvc`
+PV: `qbittorrent-nebula-pv` (NFS, Retain) → PVC: `qbittorrent-nebula-pvc`
