@@ -11,7 +11,7 @@ spec:
   project: default
   sources:
     - repoURL: https://github.com/hobroker/selfhosted.git
-      targetRevision: feat/media-seerr
+      targetRevision: HEAD
       path: charts/media/seerr/config
     - repoURL: https://bjw-s-labs.github.io/helm-charts
       chart: app-template
@@ -20,7 +20,7 @@ spec:
         valueFiles:
           - $values/charts/media/seerr/values.yaml
     - repoURL: https://github.com/hobroker/selfhosted.git
-      targetRevision: feat/media-seerr
+      targetRevision: HEAD
       ref: values
   destination:
     server: https://kubernetes.default.svc
