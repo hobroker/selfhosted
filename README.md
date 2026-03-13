@@ -180,7 +180,6 @@ npm run generate
 | [fileflows](charts/media/fileflows)       | File processing application                                                               | https://github.com/revenz/FileFlows          |
 | [flaresolverr](charts/media/flaresolverr) | Proxy server to bypass Cloudflare protection                                              | https://github.com/FlareSolverr/FlareSolverr |
 | [jellyfin](charts/media/jellyfin)         | An open-source media server                                                               | https://github.com/jellyfin/jellyfin         |
-| [overseerr](charts/media/overseerr)       | A tool for browsing and requesting new media content.                                     | https://github.com/sct/overseerr             |
 | [plex](charts/media/plex)                 | A media server that organizes and streams video and audio content across devices.         | https://www.plex.tv/                         |
 | [prowlarr](charts/media/prowlarr)         | Indexer manager/proxy built on the popular \*arr stack to integrate with various PVR apps | https://github.com/Prowlarr/Prowlarr         |
 | [qbittorrent](charts/media/qbittorrent)   | Bittorrent client with a feature rich Web UI for remote access                            | https://github.com/qbittorrent/qBittorrent   |
