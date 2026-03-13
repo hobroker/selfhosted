@@ -1,0 +1,12 @@
+resources:
+  - infisical-traefik-secret.yaml
+  - pv.yaml
+configMapGenerator:
+  - name: traefik-grafana-dashboard
+    namespace: kube-system
+    options:
+      labels:
+        grafana_dashboard: "1"
+      disableNameSuffixHash: true
+    files:
+      - traefik.json=traefik-dashboard.json
