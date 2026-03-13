@@ -10,6 +10,9 @@ metadata:
 spec:
   project: default
   sources:
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      path: charts/monitoring/prometheus-operator/config
     - repoURL: https://prometheus-community.github.io/helm-charts
       chart: kube-prometheus-stack
       targetRevision: 82.4.3
