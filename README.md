@@ -155,7 +155,6 @@ npm run generate
 
 | Chart                                  | Description                                                                       | Source Code                          |
 | -------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------ |
-| [apprise](charts/automation/apprise)   | Push Notifications that work with just about every platform                       | https://github.com/caronc/apprise    |
 | [n8n](charts/automation/n8n)           | Workflow automation platform                                                      | https://github.com/n8n-io/n8n        |
 | [openclaw](charts/automation/openclaw) | AI assistant that connects to messaging platforms and executes tasks autonomously | https://github.com/openclaw/openclaw |
 
