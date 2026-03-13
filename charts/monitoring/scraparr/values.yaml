@@ -14,28 +14,28 @@ controllers:
           pullPolicy: IfNotPresent
         env:
           - name: SONARR_URL
-            value: "http://sonarr.self.svc.cluster.local:8989"
+            value: "http://sonarr.default.svc.cluster.local:8989"
           - name: SONARR_API_KEY
             valueFrom:
               secretKeyRef:
                 name: infisical-scraparr-secret
                 key: SONARR_API_KEY
           - name: RADARR_URL
-            value: "http://radarr.self.svc.cluster.local:7878"
+            value: "http://radarr.default.svc.cluster.local:7878"
           - name: RADARR_API_KEY
             valueFrom:
               secretKeyRef:
                 name: infisical-scraparr-secret
                 key: RADARR_API_KEY
           - name: PROWLARR_URL
-            value: "http://prowlarr.self.svc.cluster.local:9696"
+            value: "http://prowlarr.default.svc.cluster.local:9696"
           - name: PROWLARR_API_KEY
             valueFrom:
               secretKeyRef:
                 name: infisical-scraparr-secret
                 key: PROWLARR_API_KEY
           - name: BAZARR_URL
-            value: "http://bazarr.self.svc.cluster.local:6767"
+            value: "http://bazarr.default.svc.cluster.local:6767"
           - name: BAZARR_API_KEY
             valueFrom:
               secretKeyRef:
