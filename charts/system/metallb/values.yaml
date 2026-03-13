@@ -1,5 +1,6 @@
-# prometheus:
-#   serviceAccount: prometheus
-#   serviceMonitor:
-#     enabled: true
-#     jobLabel: metallb
+prometheus:
+  namespace: monitoring
+  serviceAccount: prometheus
+  serviceMonitor:
+    enabled: true
+    jobLabel: metallb

@@ -12,6 +12,9 @@ metadata:
 spec:
   project: default
   sources:
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      path: charts/system/metallb/config
     - repoURL: https://metallb.github.io/metallb
       chart: metallb
       targetRevision: 0.14.9
