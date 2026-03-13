@@ -1,0 +1,11 @@
+resources:
+  - infisical-scraparr-secret.yaml
+configMapGenerator:
+  - name: scraparr-grafana-dashboard
+    namespace: monitoring
+    options:
+      labels:
+        grafana_dashboard: "1"
+      disableNameSuffixHash: true
+    files:
+      - scraparr.json=scraparr-dashboard.json
