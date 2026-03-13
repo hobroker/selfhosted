@@ -1,0 +1,15 @@
+global:
+  deploymentEnvironment: k3s
+
+# Point to the in-cluster SigNoz otel-collector
+otelCollectorEndpoint: http://signoz-otel-collector.monitoring:4317
+
+presets:
+  logsCollection:
+    enabled: true
+  clusterMetrics:
+    enabled: false
+  hostMetrics:
+    enabled: false
+  kubeletMetrics:
+    enabled: false
