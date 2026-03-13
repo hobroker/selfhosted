@@ -19,6 +19,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "links": [],
+  "liveNow": true,
   "panels": [
     {
       "collapsed": false,
@@ -30,8 +31,7 @@
       },
       "id": 11,
       "panels": [],
-      "repeat": "sonarr",
-      "title": "Sonarr ${sonarr}",
+      "title": "Sonarr",
       "type": "row"
     },
     {
@@ -939,8 +939,7 @@
       },
       "id": 1,
       "panels": [],
-      "repeat": "radarr",
-      "title": "Radarr ${radarr}",
+      "title": "Radarr",
       "type": "row"
     },
     {
@@ -1762,8 +1761,7 @@
       },
       "id": 22,
       "panels": [],
-      "repeat": "prowlarr",
-      "title": "Prowlarr ${prowlarr}",
+      "title": "Prowlarr",
       "type": "row"
     },
     {
@@ -2614,8 +2612,7 @@
       },
       "id": 35,
       "panels": [],
-      "repeat": "bazarr",
-      "title": "Bazarr ${bazarr}",
+      "title": "Bazarr",
       "type": "row"
     },
     {
@@ -3465,6 +3462,10 @@
           "text": "All",
           "value": "$__all"
         },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
         "definition": "label_values(scraparr_services_up{scraparr_services=\"bazarr\"},alias)",
         "hide": 2,
         "includeAll": true,
@@ -3572,8 +3573,8 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Scraping_test",
+  "title": "Scraparr",
   "uid": "becuowssfebcwb",
-  "version": 4,
+  "version": 1,
   "weekStart": ""
 }
