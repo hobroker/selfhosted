@@ -8,8 +8,8 @@ import { Footer } from "./Footer";
 import { HelpModal } from "./modals/HelpModal";
 import { HistoryModal } from "./modals/HistoryModal";
 import { DiffModal } from "./modals/DiffModal";
-import { ApplyConfirmModal } from "./modals/ApplyConfirmModal";
-import { ApplyModal } from "./modals/ApplyModal";
+import { SyncConfirmModal } from "./modals/SyncConfirmModal";
+import { SyncModal } from "./modals/SyncModal";
 import { RefreshModal } from "./modals/RefreshModal";
 import { DestroyConfirmModal } from "./modals/DestroyConfirmModal";
 import { DestroyModal } from "./modals/DestroyModal";
@@ -80,8 +80,8 @@ const AppContent = () => {
       {focus === "help" && <HelpModal />}
       {focus === "history" && <HistoryModal />}
       {focus === "diff" && <DiffModal />}
-      {focus === "apply-confirm" && <ApplyConfirmModal />}
-      {focus === "apply" && <ApplyModal />}
+      {focus === "sync-confirm" && <SyncConfirmModal />}
+      {focus === "sync" && <SyncModal />}
       {focus === "refresh" && <RefreshModal />}
       {focus === "destroy-confirm" && <DestroyConfirmModal />}
       {focus === "destroy" && <DestroyModal />}

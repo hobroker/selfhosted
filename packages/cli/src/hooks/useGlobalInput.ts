@@ -40,7 +40,7 @@ export const useGlobalInput = () => {
       "help",
       "history",
       "diff",
-      "apply-confirm",
+      "sync-confirm",
       "refresh",
       "destroy-confirm",
       "logs",

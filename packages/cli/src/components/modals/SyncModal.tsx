@@ -5,7 +5,7 @@ import { CommandOutput } from "../ui/CommandOutput";
 import { useServicesContext } from "../../contexts/ServicesContext";
 import { useCommandHooks } from "../../hooks/useCommandHooks";
 
-export const ApplyModal = () => {
+export const SyncModal = () => {
   const { selectedService, refreshService } = useServicesContext();
   const { commandState, ...commandHooks } = useCommandHooks({
     onSuccess: () => {
@@ -16,7 +16,7 @@ export const ApplyModal = () => {
 
   if (!selectedService) {
     return (
-      <Modal id="apply" title="Helmfile Apply" width="40%" minWidth={70}>
+      <Modal id="sync" title="ArgoCD Sync" width="40%" minWidth={70}>
         <Text color={colors.error}>No service selected</Text>
       </Modal>
     );
@@ -24,18 +24,17 @@ export const ApplyModal = () => {
 
   return (
     <Modal
-      id="apply"
-      title={`Helmfile Apply: ${selectedService.name}`}
+      id="sync"
+      title={`ArgoCD Sync: ${selectedService.name}`}
       width="80%"
       height="80%"
       rightAdornment={commandStateLabelsMap[commandState].icon}
     >
       <CommandOutput
-        command="helmfile"
-        args={["--color", "apply"]}
-        cwd={selectedService.path}
-        loadingText="Applying changes..."
-        emptyText="No output from apply"
+        command="argocd"
+        args={["app", "sync", selectedService.name]}
+        loadingText="Syncing..."
+        emptyText="No output from sync"
         {...commandHooks}
       />
     </Modal>

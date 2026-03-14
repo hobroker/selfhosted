@@ -9,17 +9,17 @@ export const HistoryModal = () => {
 
   if (!selectedService) {
     return (
-      <Modal id="history" title="Helm History" width="40%" minWidth={70}>
+      <Modal id="history" title="ArgoCD History" width="40%" minWidth={70}>
         <Text color={colors.error}>No service selected</Text>
       </Modal>
     );
   }
 
   return (
-    <Modal id="history" title={`Helm History: ${selectedService.name}`} width="80%" height="80%">
+    <Modal id="history" title={`ArgoCD History: ${selectedService.name}`} width="80%" height="80%">
       <CommandOutput
-        command="helm"
-        args={["history", selectedService.name, "-n", selectedService.namespace]}
+        command="argocd"
+        args={["app", "history", selectedService.name]}
         loadingText="Fetching history..."
         emptyText="No history found"
       />

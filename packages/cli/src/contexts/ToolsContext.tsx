@@ -1,13 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { findAvailableTool } from "../services/tools";
 
-export type RequiredToolKey = "helm" | "kubectl";
-export type OptionalToolKey = "helmfile" | "stern";
+export type RequiredToolKey = "argocd" | "kubectl";
+export type OptionalToolKey = "stern";
 type ToolKey = RequiredToolKey | OptionalToolKey;
 
 export const REQUIRED_TOOLS: Record<RequiredToolKey, Tool> = {
-  helm: {
-    description: "Helm is used for managing Kubernetes applications",
+  argocd: {
+    description: "ArgoCD CLI is used for syncing and managing applications",
   },
   kubectl: {
     description: "Kubectl is used for interacting with Kubernetes clusters",
@@ -15,9 +15,6 @@ export const REQUIRED_TOOLS: Record<RequiredToolKey, Tool> = {
 } as const;
 
 export const OPTIONAL_TOOLS: Record<OptionalToolKey, Tool> = {
-  helmfile: {
-    description: "Helmfile is used for managing Helm charts",
-  },
   stern: {
     description: "Stern is used for log streaming (Logs modal)",
   },

@@ -1,4 +1,4 @@
-import { ServiceState } from "./constants";
+import type { ArgoSyncStatus } from "./constants";
 
 export interface ServiceInfo {
   id: string;
@@ -6,19 +6,14 @@ export interface ServiceInfo {
   namespace: string;
   category: string;
   path: string;
-  localChartVersion: string;
-  localAppVersion: string;
-  installedChartVersion?: string;
-  installedAppVersion?: string;
-  state: ServiceState;
+  syncStatus: ArgoSyncStatus;
   readme?: string;
 }
 
-export interface HelmRelease {
+export interface ArgoApp {
   name: string;
-  chart: string;
-  app_version: string;
-  status: string;
+  syncStatus: ArgoSyncStatus;
+  healthStatus: string;
 }
 
 export interface Dimensions {
@@ -29,8 +24,8 @@ export interface Dimensions {
 export type SectionKey = "sidebar" | "details";
 
 export type ActionKey =
-  | "apply"
-  | "apply-confirm"
+  | "sync"
+  | "sync-confirm"
   | "diff"
   | "help"
   | "history"

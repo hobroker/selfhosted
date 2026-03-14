@@ -2,8 +2,8 @@
 import { renderHook, act } from "@testing-library/react";
 import { vi, beforeEach } from "vitest";
 import { useSidebar } from "./useSidebar";
-import { ServiceState } from "../constants";
 import type { ServiceInfo } from "../types";
+import { ArgoSyncStatus } from "../constants";
 
 // --- mocks ---
 
@@ -50,9 +50,7 @@ const makeService = (name: string, category = "Test"): ServiceInfo => ({
   namespace: "default",
   category,
   path: `/path/${name}`,
-  localChartVersion: "1.0.0",
-  localAppVersion: "1.0.0",
-  state: ServiceState.NotInstalled,
+  syncStatus: ArgoSyncStatus.Unknown,
   readme: "",
 });
 

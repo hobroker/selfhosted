@@ -1,5 +1,5 @@
-import { ServiceState } from "../constants";
 import type { ServiceInfo } from "../types";
+import { ArgoSyncStatus } from "../constants";
 import { isCategoryItem, buildServicesWithCategories, getDisplayIndex } from "./sidebarItems";
 
 const makeService = (name: string, category: string): ServiceInfo => ({
@@ -8,9 +8,7 @@ const makeService = (name: string, category: string): ServiceInfo => ({
   namespace: "default",
   category,
   path: `/path/${name}`,
-  localChartVersion: "1.0.0",
-  localAppVersion: "1.0.0",
-  state: ServiceState.NotInstalled,
+  syncStatus: ArgoSyncStatus.Unknown,
   readme: "",
 });
 
