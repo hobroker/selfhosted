@@ -1,0 +1,38 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: adguard/adguardhome
+          tag: v0.107.73
+          pullPolicy: IfNotPresent
+
+service:
+  main:
+    controller: main
+    type: LoadBalancer
+    externalTrafficPolicy: Local
+    annotations:
+      metallb.universe.tf/loadBalancerIPs: 192.168.50.203
+    ports:
+      http:
+        port: 3000
+      dns-tcp:
+        port: 53
+        protocol: TCP
+      dns-udp:
+        port: 53
+        protocol: UDP
+
+persistence:
+  work:
+    existingClaim: adguardhome-work-pvc
+    globalMounts:
+      - path: /opt/adguardhome/work
+  conf:
+    existingClaim: adguardhome-conf-pvc
+    globalMounts:
+      - path: /opt/adguardhome/conf
