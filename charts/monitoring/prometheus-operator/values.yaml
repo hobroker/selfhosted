@@ -5,6 +5,10 @@ prometheus:
     scrapeInterval: 1m
     podMonitorSelectorNilUsesHelmValues: false
     serviceMonitorSelectorNilUsesHelmValues: false
+    securityContext:
+      fsGroup: 0
+      runAsNonRoot: false
+      runAsUser: 0
     storageSpec:
       volumeClaimTemplate:
         spec:
