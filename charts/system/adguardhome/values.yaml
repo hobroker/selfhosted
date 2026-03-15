@@ -1,0 +1,69 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: adguard/adguardhome
+          tag: v0.107.64
+          pullPolicy: IfNotPresent
+
+service:
+  main:
+    controller: main
+    type: LoadBalancer
+    annotations:
+      metallb.universe.tf/loadBalancerIPs: 192.168.50.203
+    ports:
+      http:
+        port: 3000
+      dns-tcp:
+        port: 53
+        protocol: TCP
+      dns-udp:
+        port: 53
+        protocol: UDP
+      dot:
+        port: 853
+        protocol: TCP
+      dot-udp:
+        port: 853
+        protocol: UDP
+      doq:
+        port: 784
+        protocol: UDP
+      doq-8853:
+        port: 8853
+        protocol: UDP
+      dnscrypt-tcp:
+        port: 5443
+        protocol: TCP
+      dnscrypt-udp:
+        port: 5443
+        protocol: UDP
+
+persistence:
+  work:
+    existingClaim: adguardhome-work-pvc
+    globalMounts:
+      - path: /opt/adguardhome/work
+  conf:
+    existingClaim: adguardhome-conf-pvc
+    globalMounts:
+      - path: /opt/adguardhome/conf
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    className: "traefik"
+    hosts:
+      - host: adguard.hobroker.me
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
