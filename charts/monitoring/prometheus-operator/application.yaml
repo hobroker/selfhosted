@@ -11,7 +11,7 @@ spec:
   project: default
   sources:
     - repoURL: https://github.com/hobroker/selfhosted.git
-      targetRevision: fix/monitoring/prometheus-pv-binding
+      targetRevision: HEAD
       path: charts/monitoring/prometheus-operator/config
     - repoURL: https://prometheus-community.github.io/helm-charts
       chart: kube-prometheus-stack
@@ -21,7 +21,7 @@ spec:
         valueFiles:
           - $values/charts/monitoring/prometheus-operator/values.yaml
     - repoURL: https://github.com/hobroker/selfhosted.git
-      targetRevision: fix/monitoring/prometheus-pv-binding
+      targetRevision: HEAD
       ref: values
   destination:
     server: https://kubernetes.default.svc
