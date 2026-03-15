@@ -15,7 +15,7 @@ spec:
     - repoURL: https://github.com/hobroker/selfhosted.git
       targetRevision: HEAD
       path: apps/system/infisical-operator/config
-    - repoURL: https://dl.cloudsmith.io/public/infisical/helm-apps/helm/apps/
+    - repoURL: https://dl.cloudsmith.io/public/infisical/helm-charts/helm/charts/
       chart: secrets-operator
       targetRevision: 0.10.25
       helm:

@@ -14,7 +14,7 @@ packages/
   docs/                 # README table generator
 ```
 
-## Adding a New App
+## Adding a new App
 
 ### 1. Create the app directory
 
