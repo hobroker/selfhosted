@@ -16,6 +16,7 @@ service:
   main:
     controller: main
     type: LoadBalancer
+    externalTrafficPolicy: Local
     annotations:
       metallb.universe.tf/loadBalancerIPs: 192.168.50.203
     ports:
