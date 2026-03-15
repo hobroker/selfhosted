@@ -54,17 +54,3 @@ persistence:
     existingClaim: adguardhome-conf-pvc
     globalMounts:
       - path: /opt/adguardhome/conf
-
-ingress:
-  main:
-    enabled: true
-    annotations:
-      traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    className: "traefik"
-    hosts:
-      - host: adguard.hobroker.me
-        paths:
-          - path: /
-            pathType: Prefix
-            service:
-              identifier: main
