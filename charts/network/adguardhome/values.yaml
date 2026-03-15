@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: adguard/adguardhome
-          tag: v0.107.64
+          tag: v0.107.73
           pullPolicy: IfNotPresent
 
 service:
