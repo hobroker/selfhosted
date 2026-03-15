@@ -26,24 +26,6 @@ service:
       dns-udp:
         port: 53
         protocol: UDP
-      dot:
-        port: 853
-        protocol: TCP
-      dot-udp:
-        port: 853
-        protocol: UDP
-      doq:
-        port: 784
-        protocol: UDP
-      doq-8853:
-        port: 8853
-        protocol: UDP
-      dnscrypt-tcp:
-        port: 5443
-        protocol: TCP
-      dnscrypt-udp:
-        port: 5443
-        protocol: UDP
 
 persistence:
   work:
