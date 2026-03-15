@@ -22,11 +22,11 @@ Run your own media server, backups, monitoring, automation, and more — on hard
 - [Docs Generation](#docs-generation)
 - [Apps](#apps)
   - [Automation](#automation)
-  - [Demo](#demo)
+  - [Backup](#backup)
   - [Development](#development)
-  - [Downloads](#downloads)
   - [Media](#media)
   - [Monitoring](#monitoring)
+  - [Network](#network)
   - [System](#system)
 - [Troubleshooting](#troubleshooting)
 - [References](#references)
@@ -91,7 +91,7 @@ If you're not using ArgoCD, you can deploy any chart directly with `helm install
 
 System charts must be synced before any app charts. ArgoCD sync-wave annotations handle ordering automatically when syncing all at once. If syncing manually, use this order:
 
-1. [local-path-retain](charts/system/local-path-retain) — persistent storage class
+1. [local-path-provisioner](charts/system/local-path-provisioner) — persistent storage class
 2. [traefik](charts/system/traefik) — ingress / reverse proxy
 3. [infisical-operator](charts/system/infisical-operator) — secret injection
 4. [reloader](charts/system/reloader) — rolling restarts on config/secret changes
@@ -108,7 +108,7 @@ The defaults below reflect this homelab's setup — update them to match your ow
 
 To customize paths, edit the `config/pv.yaml` in each chart you deploy.
 
-A custom `StorageClass` with a `Retain` reclaim policy is also available to prevent data loss when PVCs are deleted — see [local-path-retain](charts/system/local-path-retain).
+A custom `StorageClass` with a `Retain` reclaim policy is also available to prevent data loss when PVCs are deleted — see [local-path-provisioner](charts/system/local-path-provisioner).
 
 ## Secrets
 
