@@ -12,10 +12,10 @@ prometheus:
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: ""
+          storageClassName: "local-path-retain"
           resources:
             requests:
-              storage: 20Gi
+              storage: 10Gi
   ingress:
     enabled: true
     ingressClassName: traefik
@@ -50,7 +50,8 @@ grafana:
     enabled: false
   persistence:
     enabled: true
-    existingClaim: prometheus-operator-grafana
+    size: 1Gi
+    storageClassName: "local-path-retain"
 
 nodeExporter:
   enabled: true
