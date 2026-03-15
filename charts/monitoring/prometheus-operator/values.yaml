@@ -13,6 +13,7 @@ prometheus:
       volumeClaimTemplate:
         spec:
           storageClassName: ""
+          volumeName: prometheus-operator-prometheus-pv
           resources:
             requests:
               storage: 20Gi
