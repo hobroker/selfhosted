@@ -9,14 +9,13 @@ prometheus:
       fsGroup: 0
       runAsNonRoot: false
       runAsUser: 0
-    storageSpec:
-      volumeClaimTemplate:
-        spec:
-          storageClassName: ""
-          volumeName: prometheus-operator-prometheus-pv
-          resources:
-            requests:
-              storage: 20Gi
+    volumes:
+      - name: prometheus-db
+        persistentVolumeClaim:
+          claimName: prometheus-operator-prometheus
+    volumeMounts:
+      - name: prometheus-db
+        mountPath: /prometheus
   ingress:
     enabled: true
     ingressClassName: traefik

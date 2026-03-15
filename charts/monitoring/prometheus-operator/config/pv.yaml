@@ -42,8 +42,22 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: ""
   claimRef:
-    name: prometheus-prometheus-operator-kube-p-prometheus-db-prometheus-prometheus-operator-kube-p-prometheus-0
+    name: prometheus-operator-prometheus
     namespace: monitoring
   hostPath:
     path: /var/local/prometheus
     type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-operator-prometheus
+  namespace: monitoring
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ""
+  volumeName: prometheus-operator-prometheus-pv
+  resources:
+    requests:
+      storage: 20Gi
