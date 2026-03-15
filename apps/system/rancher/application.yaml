@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rancher
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    category: system
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  project: default
+  sources:
+    - repoURL: https://releases.rancher.com/server-apps/latest
+      chart: rancher
+      targetRevision: 2.13.3
+      helm:
+        valueFiles:
+          - $values/apps/system/rancher/values.yaml
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cattle-system
+  revisionHistoryLimit: 3
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

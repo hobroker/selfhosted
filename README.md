@@ -37,7 +37,7 @@ Run your own media server, backups, monitoring, automation, and more — on hard
 - A Kubernetes cluster (any distribution — [Talos](https://www.talos.dev/), [k3s](https://k3s.io/), etc.)
 - [Helm](https://helm.sh/docs/intro/install/) — Kubernetes package manager
 - [kubectl](https://kubernetes.io/docs/tasks/tools/) — Kubernetes CLI
-- [ArgoCD](https://argo-cd.readthedocs.io/en/stable/getting_started/) — optional GitOps controller (see [charts/system/argocd](charts/system/argocd))
+- [ArgoCD](https://argo-cd.readthedocs.io/en/stable/getting_started/) — optional GitOps controller (see [apps/system/argocd](apps/system/argocd))
 - [Node.js](https://nodejs.org/) + npm — optional, for the interactive CLI
 
 ## Getting Started
@@ -61,18 +61,18 @@ cd selfhosted
 
 ### 3. Bootstrap ArgoCD (optional)
 
-ArgoCD watches this Git repo and automatically syncs changes to your cluster — no manual `helm install` needed. It also provides a web UI to monitor and manage all your deployments. See [charts/system/argocd](charts/system/argocd) for bootstrap instructions.
+ArgoCD watches this Git repo and automatically syncs changes to your cluster — no manual `helm install` needed. It also provides a web UI to monitor and manage all your deployments. See [apps/system/argocd](apps/system/argocd) for bootstrap instructions.
 
 ### 4. Deploy a service
 
-Pick a chart and follow its `README.md` — each one includes instructions for both ArgoCD and plain Helm deployment. For example, to deploy [Syncthing](charts/backup/syncthing):
+Pick a chart and follow its `README.md` — each one includes instructions for both ArgoCD and plain Helm deployment. For example, to deploy [Syncthing](apps/backup/syncthing):
 
 ```shell
 # With ArgoCD
-kubectl apply -f charts/backup/syncthing/application.yaml
+kubectl apply -f apps/backup/syncthing/application.yaml
 
 # Or with Helm directly
-helm install syncthing charts/backup/syncthing
+helm install syncthing apps/backup/syncthing
 ```
 
 See [Deploying a Chart](#deploying-a-chart) for more details.
@@ -91,10 +91,10 @@ If you're not using ArgoCD, you can deploy any chart directly with `helm install
 
 System charts must be synced before any app charts. ArgoCD sync-wave annotations handle ordering automatically when syncing all at once. If syncing manually, use this order:
 
-1. [local-path-provisioner](charts/system/local-path-provisioner) — persistent storage class
-2. [traefik](charts/system/traefik) — ingress / reverse proxy
-3. [infisical-operator](charts/system/infisical-operator) — secret injection
-4. [reloader](charts/system/reloader) — rolling restarts on config/secret changes
+1. [local-path-provisioner](apps/system/local-path-provisioner) — persistent storage class
+2. [traefik](apps/system/traefik) — ingress / reverse proxy
+3. [infisical-operator](apps/system/infisical-operator) — secret injection
+4. [reloader](apps/system/reloader) — rolling restarts on config/secret changes
 5. App charts (any order)
 
 ## Host Directories
@@ -108,11 +108,11 @@ The defaults below reflect this homelab's setup — update them to match your ow
 
 To customize paths, edit the `config/pv.yaml` in each chart you deploy.
 
-A custom `StorageClass` with a `Retain` reclaim policy is also available to prevent data loss when PVCs are deleted — see [local-path-provisioner](charts/system/local-path-provisioner).
+A custom `StorageClass` with a `Retain` reclaim policy is also available to prevent data loss when PVCs are deleted — see [local-path-provisioner](apps/system/local-path-provisioner).
 
 ## Secrets
 
-Secrets are managed via [Infisical](https://infisical.com/) using the [infisical-operator](charts/system/infisical-operator). Each chart's `README.md` lists the required secrets and the Infisical secret name they are sourced from.
+Secrets are managed via [Infisical](https://infisical.com/) using the [infisical-operator](apps/system/infisical-operator). Each chart's `README.md` lists the required secrets and the Infisical secret name they are sourced from.
 
 If you don't use Infisical, you can create Kubernetes Secrets manually — just make sure the Secret names and keys match what each chart's templates expect.
 
@@ -125,7 +125,7 @@ Each chart's `README.md` includes instructions for both **ArgoCD** and **plain H
 **Quick start with ArgoCD:**
 
 ```sh
-kubectl apply -f charts/<category>/<name>/application.yaml
+kubectl apply -f apps/<category>/<name>/application.yaml
 ```
 
 Then sync it in the ArgoCD UI or with `argocd app sync <name>`.
@@ -153,68 +153,68 @@ npm run generate
 
 ### Automation
 
-| Chart                                  | Description                                                                       | Source Code                          |
-| -------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------ |
-| [n8n](charts/automation/n8n)           | Workflow automation platform                                                      | https://github.com/n8n-io/n8n        |
-| [openclaw](charts/automation/openclaw) | AI assistant that connects to messaging platforms and executes tasks autonomously | https://github.com/openclaw/openclaw |
+| Chart                                | Description                                                                       | Source Code                          |
+| ------------------------------------ | --------------------------------------------------------------------------------- | ------------------------------------ |
+| [n8n](apps/automation/n8n)           | Workflow automation platform                                                      | https://github.com/n8n-io/n8n        |
+| [openclaw](apps/automation/openclaw) | AI assistant that connects to messaging platforms and executes tasks autonomously | https://github.com/openclaw/openclaw |
 
 ### Backup
 
-| Chart                                | Description                                             | Source Code                              |
-| ------------------------------------ | ------------------------------------------------------- | ---------------------------------------- |
-| [backrest](charts/backup/backrest)   | A web-accessible backup solution built on top of restic | https://github.com/garethgeorge/backrest |
-| [syncthing](charts/backup/syncthing) | Continuous file synchronization                         | https://github.com/syncthing/syncthing   |
+| Chart                              | Description                                             | Source Code                              |
+| ---------------------------------- | ------------------------------------------------------- | ---------------------------------------- |
+| [backrest](apps/backup/backrest)   | A web-accessible backup solution built on top of restic | https://github.com/garethgeorge/backrest |
+| [syncthing](apps/backup/syncthing) | Continuous file synchronization                         | https://github.com/syncthing/syncthing   |
 
 ### Development
 
-| Chart                                                 | Description                                                        | Source Code                                       |
-| ----------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------- |
-| [code-server](charts/development/code-server)         | VS Code running on a remote server, accessible through the browser | https://github.com/linuxserver/docker-code-server |
-| [http-https-echo](charts/development/http-https-echo) | App that echoes request data as JSON (useful for debugging)        | https://github.com/mendhak/docker-http-https-echo |
+| Chart                                               | Description                                                        | Source Code                                       |
+| --------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------- |
+| [code-server](apps/development/code-server)         | VS Code running on a remote server, accessible through the browser | https://github.com/linuxserver/docker-code-server |
+| [http-https-echo](apps/development/http-https-echo) | App that echoes request data as JSON (useful for debugging)        | https://github.com/mendhak/docker-http-https-echo |
 
 ### Media
 
-| Chart                                     | Description                                                                               | Source Code                                  |
-| ----------------------------------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------- |
-| [bazarr](charts/media/bazarr)             | Companion application to Sonarr and Radarr that manages and downloads subtitles.          | https://github.com/morpheus65535/bazarr      |
-| [fileflows](charts/media/fileflows)       | File processing application                                                               | https://github.com/revenz/FileFlows          |
-| [flaresolverr](charts/media/flaresolverr) | Proxy server to bypass Cloudflare protection                                              | https://github.com/FlareSolverr/FlareSolverr |
-| [jellyfin](charts/media/jellyfin)         | An open-source media server                                                               | https://github.com/jellyfin/jellyfin         |
-| [plex](charts/media/plex)                 | A media server that organizes and streams video and audio content across devices.         | https://www.plex.tv/                         |
-| [prowlarr](charts/media/prowlarr)         | Indexer manager/proxy built on the popular \*arr stack to integrate with various PVR apps | https://github.com/Prowlarr/Prowlarr         |
-| [qbittorrent](charts/media/qbittorrent)   | Bittorrent client with a feature rich Web UI for remote access                            | https://github.com/qbittorrent/qBittorrent   |
-| [radarr](charts/media/radarr)             | A movie tracking and automation tool that downloads movies as they become available.      | https://github.com/Radarr/Radarr             |
-| [seerr](charts/media/seerr)               | A modern media request and discovery tool.                                                | https://github.com/seerr-team/seerr          |
-| [sonarr](charts/media/sonarr)             | A TV series tracking and automation tool for downloading episodes as they air.            | https://github.com/Sonarr/Sonarr             |
-| [tautulli](charts/media/tautulli)         | A monitoring and analytics tool for Plex                                                  | https://github.com/Tautulli/Tautulli         |
-| [threadfin](charts/media/threadfin)       | An M3U proxy for Kernel/Plex/Jellyfin/Emby based on xTeVe                                 | https://github.com/Threadfin/Threadfin       |
+| Chart                                   | Description                                                                               | Source Code                                  |
+| --------------------------------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------- |
+| [bazarr](apps/media/bazarr)             | Companion application to Sonarr and Radarr that manages and downloads subtitles.          | https://github.com/morpheus65535/bazarr      |
+| [fileflows](apps/media/fileflows)       | File processing application                                                               | https://github.com/revenz/FileFlows          |
+| [flaresolverr](apps/media/flaresolverr) | Proxy server to bypass Cloudflare protection                                              | https://github.com/FlareSolverr/FlareSolverr |
+| [jellyfin](apps/media/jellyfin)         | An open-source media server                                                               | https://github.com/jellyfin/jellyfin         |
+| [plex](apps/media/plex)                 | A media server that organizes and streams video and audio content across devices.         | https://www.plex.tv/                         |
+| [prowlarr](apps/media/prowlarr)         | Indexer manager/proxy built on the popular \*arr stack to integrate with various PVR apps | https://github.com/Prowlarr/Prowlarr         |
+| [qbittorrent](apps/media/qbittorrent)   | Bittorrent client with a feature rich Web UI for remote access                            | https://github.com/qbittorrent/qBittorrent   |
+| [radarr](apps/media/radarr)             | A movie tracking and automation tool that downloads movies as they become available.      | https://github.com/Radarr/Radarr             |
+| [seerr](apps/media/seerr)               | A modern media request and discovery tool.                                                | https://github.com/seerr-team/seerr          |
+| [sonarr](apps/media/sonarr)             | A TV series tracking and automation tool for downloading episodes as they air.            | https://github.com/Sonarr/Sonarr             |
+| [tautulli](apps/media/tautulli)         | A monitoring and analytics tool for Plex                                                  | https://github.com/Tautulli/Tautulli         |
+| [threadfin](apps/media/threadfin)       | An M3U proxy for Kernel/Plex/Jellyfin/Emby based on xTeVe                                 | https://github.com/Threadfin/Threadfin       |
 
 ### Monitoring
 
-| Chart                                                        | Description                                                                         | Source Code                                                |
-| ------------------------------------------------------------ | ----------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| [grafana-backup](charts/monitoring/grafana-backup)           | Cron job to backup Grafana settings by using the Grafana API                        | https://github.com/ysde/grafana-backup-tool                |
-| [prometheus-operator](charts/monitoring/prometheus-operator) | Operator that manages Prometheus, Grafana, and related monitoring components in K8s | https://github.com/prometheus-operator/prometheus-operator |
-| [scraparr](charts/monitoring/scraparr)                       | Prometheus Exporter for various components of the \*arr Suite.                      | https://github.com/thecfu/scraparr                         |
+| Chart                                                      | Description                                                                         | Source Code                                                |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| [grafana-backup](apps/monitoring/grafana-backup)           | Cron job to backup Grafana settings by using the Grafana API                        | https://github.com/ysde/grafana-backup-tool                |
+| [prometheus-operator](apps/monitoring/prometheus-operator) | Operator that manages Prometheus, Grafana, and related monitoring components in K8s | https://github.com/prometheus-operator/prometheus-operator |
+| [scraparr](apps/monitoring/scraparr)                       | Prometheus Exporter for various components of the \*arr Suite.                      | https://github.com/thecfu/scraparr                         |
 
 ### Network
 
-| Chart                                     | Description                                      | Source Code                                |
-| ----------------------------------------- | ------------------------------------------------ | ------------------------------------------ |
-| [adguardhome](charts/network/adguardhome) | A network-wide DNS ad blocker and privacy filter | https://github.com/AdguardTeam/AdGuardHome |
+| Chart                                   | Description                                      | Source Code                                |
+| --------------------------------------- | ------------------------------------------------ | ------------------------------------------ |
+| [adguardhome](apps/network/adguardhome) | A network-wide DNS ad blocker and privacy filter | https://github.com/AdguardTeam/AdGuardHome |
 
 ### System
 
-| Chart                                                          | Description                                                                                    | Source Code                                       |
-| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| [argocd](charts/system/argocd)                                 | Declarative GitOps CD for Kubernetes                                                           | https://github.com/argoproj/argo-cd               |
-| [cert-manager](charts/system/cert-manager)                     | Automatically provision and manage TLS certificates in K8s                                     | https://github.com/cert-manager/cert-manager      |
-| [infisical-operator](charts/system/infisical-operator)         | Operator to fetch secrets from Infisical.                                                      | https://github.com/Infisical/infisical            |
-| [local-path-provisioner](charts/system/local-path-provisioner) | Local path provisioner with a Retain storage class for persistent storage on node local disks. | https://github.com/rancher/local-path-provisioner |
-| [metallb](charts/system/metallb)                               | Layer 2 load balancer for bare-metal Kubernetes clusters                                       | https://github.com/metallb/metallb                |
-| [rancher](charts/system/rancher)                               | Container management platform                                                                  | https://github.com/rancher/rancher                |
-| [reloader](charts/system/reloader)                             | K8s controller to that does rolling upgrades on ConfigMap/Secrets changes                      | https://github.com/stakater/Reloader              |
-| [traefik](charts/system/traefik)                               | HTTP reverse proxy and load balancer                                                           | https://github.com/traefik/traefik                |
+| Chart                                                        | Description                                                                                    | Source Code                                       |
+| ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| [argocd](apps/system/argocd)                                 | Declarative GitOps CD for Kubernetes                                                           | https://github.com/argoproj/argo-cd               |
+| [cert-manager](apps/system/cert-manager)                     | Automatically provision and manage TLS certificates in K8s                                     | https://github.com/cert-manager/cert-manager      |
+| [infisical-operator](apps/system/infisical-operator)         | Operator to fetch secrets from Infisical.                                                      | https://github.com/Infisical/infisical            |
+| [local-path-provisioner](apps/system/local-path-provisioner) | Local path provisioner with a Retain storage class for persistent storage on node local disks. | https://github.com/rancher/local-path-provisioner |
+| [metallb](apps/system/metallb)                               | Layer 2 load balancer for bare-metal Kubernetes clusters                                       | https://github.com/metallb/metallb                |
+| [rancher](apps/system/rancher)                               | Container management platform                                                                  | https://github.com/rancher/rancher                |
+| [reloader](apps/system/reloader)                             | K8s controller to that does rolling upgrades on ConfigMap/Secrets changes                      | https://github.com/stakater/Reloader              |
+| [traefik](apps/system/traefik)                               | HTTP reverse proxy and load balancer                                                           | https://github.com/traefik/traefik                |
 
 <!-- apps:end -->
 
