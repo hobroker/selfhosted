@@ -197,6 +197,12 @@ npm run generate
 | [prometheus-operator](charts/monitoring/prometheus-operator) | Operator that manages Prometheus, Grafana, and related monitoring components in K8s | https://github.com/prometheus-operator/prometheus-operator |
 | [scraparr](charts/monitoring/scraparr)                       | Prometheus Exporter for various components of the \*arr Suite.                      | https://github.com/thecfu/scraparr                         |
 
+### Network
+
+| Chart                                     | Description                                      | Source Code                                |
+| ----------------------------------------- | ------------------------------------------------ | ------------------------------------------ |
+| [adguardhome](charts/network/adguardhome) | A network-wide DNS ad blocker and privacy filter | https://github.com/AdguardTeam/AdGuardHome |
+
 ### System
 
 | Chart                                                  | Description                                                               | Source Code                                       |

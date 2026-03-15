@@ -6,19 +6,19 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   labels:
-    category: system
+    category: network
 spec:
   project: default
   sources:
     - repoURL: https://github.com/hobroker/selfhosted.git
       targetRevision: HEAD
-      path: charts/system/adguardhome/config
+      path: charts/network/adguardhome/config
     - repoURL: https://bjw-s-labs.github.io/helm-charts
       chart: app-template
       targetRevision: 4.6.2
       helm:
         valueFiles:
-          - $values/charts/system/adguardhome/values.yaml
+          - $values/charts/network/adguardhome/values.yaml
     - repoURL: https://github.com/hobroker/selfhosted.git
       targetRevision: HEAD
       ref: values
