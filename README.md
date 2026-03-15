@@ -22,11 +22,11 @@ Run your own media server, backups, monitoring, automation, and more — on hard
 - [Docs Generation](#docs-generation)
 - [Apps](#apps)
   - [Automation](#automation)
-  - [Demo](#demo)
+  - [Backup](#backup)
   - [Development](#development)
-  - [Downloads](#downloads)
   - [Media](#media)
   - [Monitoring](#monitoring)
+  - [Network](#network)
   - [System](#system)
 - [Troubleshooting](#troubleshooting)
 - [References](#references)
@@ -91,7 +91,7 @@ If you're not using ArgoCD, you can deploy any chart directly with `helm install
 
 System charts must be synced before any app charts. ArgoCD sync-wave annotations handle ordering automatically when syncing all at once. If syncing manually, use this order:
 
-1. [local-path-retain](charts/system/local-path-retain) — persistent storage class
+1. [local-path-provisioner](charts/system/local-path-provisioner) — persistent storage class
 2. [traefik](charts/system/traefik) — ingress / reverse proxy
 3. [infisical-operator](charts/system/infisical-operator) — secret injection
 4. [reloader](charts/system/reloader) — rolling restarts on config/secret changes
@@ -108,7 +108,7 @@ The defaults below reflect this homelab's setup — update them to match your ow
 
 To customize paths, edit the `config/pv.yaml` in each chart you deploy.
 
-A custom `StorageClass` with a `Retain` reclaim policy is also available to prevent data loss when PVCs are deleted — see [local-path-retain](charts/system/local-path-retain).
+A custom `StorageClass` with a `Retain` reclaim policy is also available to prevent data loss when PVCs are deleted — see [local-path-provisioner](charts/system/local-path-provisioner).
 
 ## Secrets
 
@@ -205,16 +205,16 @@ npm run generate
 
 ### System
 
-| Chart                                                  | Description                                                               | Source Code                                       |
-| ------------------------------------------------------ | ------------------------------------------------------------------------- | ------------------------------------------------- |
-| [argocd](charts/system/argocd)                         | Declarative GitOps CD for Kubernetes                                      | https://github.com/argoproj/argo-cd               |
-| [cert-manager](charts/system/cert-manager)             | Automatically provision and manage TLS certificates in K8s                | https://github.com/cert-manager/cert-manager      |
-| [infisical-operator](charts/system/infisical-operator) | Operator to fetch secrets from Infisical.                                 | https://github.com/Infisical/infisical            |
-| [local-path-retain](charts/system/local-path-retain)   | StorageClass based on local-path provisioner with Retain reclaim policy.  | https://github.com/rancher/local-path-provisioner |
-| [metallb](charts/system/metallb)                       | Layer 2 load balancer for bare-metal Kubernetes clusters                  | https://github.com/metallb/metallb                |
-| [rancher](charts/system/rancher)                       | Container management platform                                             | https://github.com/rancher/rancher                |
-| [reloader](charts/system/reloader)                     | K8s controller to that does rolling upgrades on ConfigMap/Secrets changes | https://github.com/stakater/Reloader              |
-| [traefik](charts/system/traefik)                       | HTTP reverse proxy and load balancer                                      | https://github.com/traefik/traefik                |
+| Chart                                                          | Description                                                                                    | Source Code                                       |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| [argocd](charts/system/argocd)                                 | Declarative GitOps CD for Kubernetes                                                           | https://github.com/argoproj/argo-cd               |
+| [cert-manager](charts/system/cert-manager)                     | Automatically provision and manage TLS certificates in K8s                                     | https://github.com/cert-manager/cert-manager      |
+| [infisical-operator](charts/system/infisical-operator)         | Operator to fetch secrets from Infisical.                                                      | https://github.com/Infisical/infisical            |
+| [local-path-provisioner](charts/system/local-path-provisioner) | Local path provisioner with a Retain storage class for persistent storage on node local disks. | https://github.com/rancher/local-path-provisioner |
+| [metallb](charts/system/metallb)                               | Layer 2 load balancer for bare-metal Kubernetes clusters                                       | https://github.com/metallb/metallb                |
+| [rancher](charts/system/rancher)                               | Container management platform                                                                  | https://github.com/rancher/rancher                |
+| [reloader](charts/system/reloader)                             | K8s controller to that does rolling upgrades on ConfigMap/Secrets changes                      | https://github.com/stakater/Reloader              |
+| [traefik](charts/system/traefik)                               | HTTP reverse proxy and load balancer                                                           | https://github.com/traefik/traefik                |
 
 <!-- apps:end -->
 
