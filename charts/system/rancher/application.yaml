@@ -16,6 +16,7 @@ spec:
       chart: rancher
       targetRevision: 2.13.3
       helm:
+        kubeVersion: "1.34.0"
         valueFiles:
           - $values/charts/system/rancher/values.yaml
     - repoURL: https://github.com/hobroker/selfhosted.git
