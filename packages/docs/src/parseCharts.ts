@@ -7,9 +7,9 @@ import {
   extractName,
   extractReadmeLocation,
 } from "./extract";
-import { ChartData, ChartSource } from "./types";
+import { Category, ChartSource } from "./types";
 
-export const parseCharts = async (sources: ChartSource[]): Promise<ChartData[]> =>
+export const parseCharts = async (sources: ChartSource[]): Promise<Category[]> =>
   sources.map(({ category, services: _services }) => {
     console.log(chalk.blue(chalk.bold("Parsing category:"), chalk.italic(category)));
     const services = _services.map(({ service, path }) => {

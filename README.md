@@ -1,6 +1,6 @@
 # Selfhosted
 
-Run your own media server, backups, monitoring, automation, and more — on hardware you control. This repository contains a collection of Helm charts for self-hosted services, deployable on any Kubernetes cluster via [Helm](https://helm.sh/) or [ArgoCD](https://argo-cd.readthedocs.io/).
+Run your own media server, backups, monitoring, automation, and more — on hardware you control. This repository contains a collection of self-hosted apps, deployable on any Kubernetes cluster via [Helm](https://helm.sh/) or [ArgoCD](https://argo-cd.readthedocs.io/).
 
 > [!NOTE]
 > **Personal Setup:** This repository reflects a personal homelab setup. Domains, host paths, and secret names are specific to this environment. If you're adapting it for your own use, update the `values.yaml` in each chart you deploy.
@@ -85,17 +85,17 @@ Git push → ArgoCD detects changes → Helm chart deployed → Traefik routes t
 
 Each service is packaged as a Helm chart. ArgoCD watches this repo and keeps your cluster in sync with it automatically. Traefik acts as the reverse proxy, routing incoming requests to the right service based on domain/path rules. Infisical injects secrets into pods at deploy time.
 
-If you're not using ArgoCD, you can deploy any chart directly with `helm install` — the charts work the same either way.
+If you're not using ArgoCD, you can deploy any app directly with `helm install` — the Helm values work the same either way.
 
 ## Deploy Order
 
-System charts must be synced before any app charts. ArgoCD sync-wave annotations handle ordering automatically when syncing all at once. If syncing manually, use this order:
+System apps must be synced before any other apps. ArgoCD sync-wave annotations handle ordering automatically when syncing all at once. If syncing manually, use this order:
 
 1. [local-path-provisioner](apps/system/local-path-provisioner) — persistent storage class
 2. [traefik](apps/system/traefik) — ingress / reverse proxy
 3. [infisical-operator](apps/system/infisical-operator) — secret injection
 4. [reloader](apps/system/reloader) — rolling restarts on config/secret changes
-5. App charts (any order)
+5. Apps (any order)
 
 ## Host Directories
 
@@ -141,7 +141,7 @@ npm run cli
 
 ## Docs Generation
 
-The [Apps](#apps) tables in this README are auto-generated from chart metadata. To regenerate them after adding or updating a chart:
+The [Apps](#apps) tables in this README are auto-generated from each app's metadata. To regenerate them after adding or updating an app:
 
 ```shell
 npm run generate

@@ -13,14 +13,14 @@ const getFiles = async (dir: string): Promise<string[]> => {
   return files.reduce<string[]>((acc, item) => acc.concat(item), []);
 };
 
-export const getCharts = async (dir: string): Promise<ChartSource[]> => {
+export const getApps = async (dir: string): Promise<ChartSource[]> => {
   const files = await getFiles(dir).then((files) =>
     files.filter((file) => file.endsWith("README.md")),
   );
   const map: Record<string, Record<string, { path: string }>> = {};
 
   files.forEach((file) => {
-    const subpath = file.split("/charts/")[1];
+    const subpath = file.split("/apps/")[1];
     const [category, service] = subpath.split("/");
 
     if (!map[category]) {

@@ -47,7 +47,7 @@ export const extractDescription = (markdown: string) => {
 };
 
 export const extractReadmeLocation = (category: string, serviceName: string) =>
-  `charts/${category}/${serviceName}`;
+  `apps/${category}/${serviceName}`;
 
 export const extractSourceCodeUrl = (markdown: string) => {
   const value = markdown

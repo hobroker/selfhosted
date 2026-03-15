@@ -23,27 +23,27 @@
       "groupName": "Services"
     },
     {
-      "matchFileNames": ["charts/automation/**"],
+      "matchFileNames": ["apps/automation/**"],
       "groupName": "automation"
     },
     {
-      "matchFileNames": ["charts/media/**"],
+      "matchFileNames": ["apps/media/**"],
       "groupName": "media"
     },
     {
-      "matchFileNames": ["charts/monitoring/**"],
+      "matchFileNames": ["apps/monitoring/**"],
       "groupName": "monitoring"
     },
     {
-      "matchFileNames": ["charts/downloads/**"],
+      "matchFileNames": ["apps/downloads/**"],
       "groupName": "downloads"
     },
     {
-      "matchFileNames": ["charts/development/**"],
+      "matchFileNames": ["apps/development/**"],
       "groupName": "development"
     },
     {
-      "matchFileNames": ["charts/system/**"],
+      "matchFileNames": ["apps/system/**"],
       "groupName": "system"
     },
     {

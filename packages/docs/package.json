@@ -1,7 +1,7 @@
 {
   "name": "@hobroker/selfhosted-docs",
   "version": "1.1.0",
-  "description": "Generate docs from charts to the main README.md",
+  "description": "Generate docs from apps to the main README.md",
   "author": "Igor Leahu <igor.leahu24@gmail.com>",
   "type": "module",
   "scripts": {

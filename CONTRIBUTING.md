@@ -3,7 +3,7 @@
 ## Project Structure
 
 ```
-charts/
+apps/
   <category>/
     <service>/
       application.yaml  # ArgoCD Application manifest
@@ -14,12 +14,12 @@ packages/
   docs/                 # README table generator
 ```
 
-## Adding a New Chart
+## Adding a New App
 
-### 1. Create the chart directory
+### 1. Create the app directory
 
 ```
-charts/<category>/<service-name>/
+apps/<category>/<service-name>/
 ```
 
 Use an existing category (`automation`, `development`, `downloads`, `media`, `monitoring`, `system`) or add a new one.
@@ -46,7 +46,7 @@ spec:
       targetRevision: <version>
       helm:
         valueFiles:
-          - $values/charts/<category>/<service-name>/values.yaml
+          - $values/apps/<category>/<service-name>/values.yaml
     - repoURL: https://github.com/hobroker/selfhosted.git
       targetRevision: HEAD
       ref: values
@@ -86,7 +86,7 @@ The `Apps` tables in `README.md` are auto-generated. After editing a chart's `RE
 npm run generate
 ```
 
-This also runs automatically as a pre-commit hook whenever a `charts/**/README.md` is staged.
+This also runs automatically as a pre-commit hook whenever a `apps/**/README.md` is staged.
 
 ## Development
 

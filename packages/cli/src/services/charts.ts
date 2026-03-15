@@ -17,12 +17,12 @@ async function getFiles(dir: string): Promise<string[]> {
 }
 
 async function findChartsDir(): Promise<string> {
-  const local = join(process.cwd(), "charts");
+  const local = join(process.cwd(), "apps");
   try {
     await stat(local);
     return local;
   } catch {
-    return join(process.cwd(), "../../charts");
+    return join(process.cwd(), "../../apps");
   }
 }
 
@@ -32,7 +32,7 @@ async function buildServiceInfo(hf: string): Promise<ServiceInfo> {
   const release = parsed.releases?.[0];
   const name = release?.name || "unknown";
   const path = dirname(hf);
-  const relativePath = path.split("/charts/")[1];
+  const relativePath = path.split("/apps/")[1];
   const [category] = relativePath.split("/");
 
   let localAppVersion = "unknown";

@@ -54,6 +54,6 @@ export default defineConfig(
     },
   },
   {
-    ignores: ["node_modules/", "charts/"],
+    ignores: ["node_modules/", "apps/"],
   },
 );

@@ -2,22 +2,22 @@ import { parseCharts } from "./parseCharts";
 import { insertMarkdown } from "./insertMarkdown";
 import { generateMarkdownTable } from "./generateMarkdownTable";
 import chalk from "chalk";
-import { getCharts } from "./getCharts";
+import { getApps } from "./getApps";
 import { stat } from "fs/promises";
 import { join } from "path";
 
 // Find root dir
 let rootDir = process.cwd();
 try {
-  await stat(join(rootDir, "charts"));
+  await stat(join(rootDir, "apps"));
 } catch {
   rootDir = join(process.cwd(), "../../");
 }
 
-const chartsDir = join(rootDir, "charts");
+const appsDir = join(rootDir, "apps");
 const readmePath = join(rootDir, "README.md");
 
-const sources = await getCharts(chartsDir);
+const sources = await getApps(appsDir);
 const data = await parseCharts(sources);
 const markdown = generateMarkdownTable(data);
 

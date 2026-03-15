@@ -44,7 +44,7 @@ jobs:
           kubeconform: "0.7.0"
       - name: Validate manifests
         run: |
-          grep -rlE --include='*.yaml' 'kind:' charts | xargs kubeconform \
+          grep -rlE --include='*.yaml' 'kind:' apps | xargs kubeconform \
             -schema-location default \
             -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
             -summary
