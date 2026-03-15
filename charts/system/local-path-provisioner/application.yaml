@@ -12,6 +12,9 @@ metadata:
 spec:
   project: default
   sources:
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      path: charts/system/local-path-provisioner/config
     - repoURL: https://github.com/rancher/local-path-provisioner.git
       targetRevision: v0.0.35
       path: deploy/chart/local-path-provisioner
