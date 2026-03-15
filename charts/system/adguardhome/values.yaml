@@ -1,5 +1,7 @@
 defaultPodOptions:
   automountServiceAccountToken: false
+  hostNetwork: true
+  dnsPolicy: ClusterFirstWithHostNet
 
 controllers:
   main:
