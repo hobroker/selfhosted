@@ -9,13 +9,16 @@ prometheus:
       fsGroup: 0
       runAsNonRoot: false
       runAsUser: 0
+    additionalArgs:
+      - name: storage.tsdb.path
+        value: /data
     volumes:
       - name: prometheus-db
         persistentVolumeClaim:
           claimName: prometheus-operator-prometheus
     volumeMounts:
       - name: prometheus-db
-        mountPath: /prometheus
+        mountPath: /data
   ingress:
     enabled: true
     ingressClassName: traefik
