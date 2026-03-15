@@ -3,7 +3,7 @@
 Run your own media server, backups, monitoring, automation, and more — on hardware you control. This repository contains a collection of self-hosted apps, deployable on any Kubernetes cluster via [Helm](https://helm.sh/) or [ArgoCD](https://argo-cd.readthedocs.io/).
 
 > [!NOTE]
-> **Personal Setup:** This repository reflects a personal homelab setup. Domains, host paths, and secret names are specific to this environment. If you're adapting it for your own use, update the `values.yaml` in each chart you deploy.
+> **Personal Setup:** This repository reflects a personal homelab setup. Domains, host paths, and secret names are specific to this environment. If you're adapting it for your own use, update the `values.yaml` in each app you deploy.
 
 ## Table of Contents
 
@@ -17,7 +17,7 @@ Run your own media server, backups, monitoring, automation, and more — on hard
 - [Deploy Order](#deploy-order)
 - [Host Directories](#host-directories)
 - [Secrets](#secrets)
-- [Deploying a Chart](#deploying-a-chart)
+- [Deploying an App](#deploying-an-app)
 - [Interactive CLI (optional)](#interactive-cli-optional)
 - [Docs Generation](#docs-generation)
 - [Apps](#apps)
@@ -65,7 +65,7 @@ ArgoCD watches this Git repo and automatically syncs changes to your cluster —
 
 ### 4. Deploy a service
 
-Pick a chart and follow its `README.md` — each one includes instructions for both ArgoCD and plain Helm deployment. For example, to deploy [Syncthing](apps/backup/syncthing):
+Pick an app and follow its `README.md` — each one includes instructions for both ArgoCD and plain Helm deployment. For example, to deploy [Syncthing](apps/backup/syncthing):
 
 ```shell
 # With ArgoCD
@@ -75,15 +75,15 @@ kubectl apply -f apps/backup/syncthing/application.yaml
 helm install syncthing apps/backup/syncthing
 ```
 
-See [Deploying a Chart](#deploying-a-chart) for more details.
+See [Deploying an App](#deploying-an-app) for more details.
 
 ## How It Works
 
 ```
-Git push → ArgoCD detects changes → Helm chart deployed → Traefik routes traffic → Service accessible
+Git push → ArgoCD detects changes → app deployed → Traefik routes traffic → Service accessible
 ```
 
-Each service is packaged as a Helm chart. ArgoCD watches this repo and keeps your cluster in sync with it automatically. Traefik acts as the reverse proxy, routing incoming requests to the right service based on domain/path rules. Infisical injects secrets into pods at deploy time.
+Most apps are packaged as Helm charts. ArgoCD watches this repo and keeps your cluster in sync with it automatically. Traefik acts as the reverse proxy, routing incoming requests to the right service based on domain/path rules. Infisical injects secrets into pods at deploy time.
 
 If you're not using ArgoCD, you can deploy any app directly with `helm install` — the Helm values work the same either way.
 
@@ -99,28 +99,28 @@ System apps must be synced before any other apps. ArgoCD sync-wave annotations h
 
 ## Host Directories
 
-Charts use host-mounted volumes for persistent data. The paths are defined in each chart's `config/pv.yaml` and must exist on the host before deploying.
+Apps use host-mounted volumes for persistent data. The paths are defined in each app's `config/pv.yaml` and must exist on the host before deploying.
 
 The defaults below reflect this homelab's setup — update them to match your own environment:
 
 - `/var/local/<service>` — per-service config and database (hostPath on the node)
 - `/mnt/nebula` — media library (movies, TV shows, downloads), mounted via NFS
 
-To customize paths, edit the `config/pv.yaml` in each chart you deploy.
+To customize paths, edit the `config/pv.yaml` in each app you deploy.
 
 A custom `StorageClass` with a `Retain` reclaim policy is also available to prevent data loss when PVCs are deleted — see [local-path-provisioner](apps/system/local-path-provisioner).
 
 ## Secrets
 
-Secrets are managed via [Infisical](https://infisical.com/) using the [infisical-operator](apps/system/infisical-operator). Each chart's `README.md` lists the required secrets and the Infisical secret name they are sourced from.
+Secrets are managed via [Infisical](https://infisical.com/) using the [infisical-operator](apps/system/infisical-operator). Each app's `README.md` lists the required secrets and the Infisical secret name they are sourced from.
 
-If you don't use Infisical, you can create Kubernetes Secrets manually — just make sure the Secret names and keys match what each chart's templates expect.
+If you don't use Infisical, you can create Kubernetes Secrets manually — just make sure the Secret names and keys match what each app's templates expect.
 
-## Deploying a Chart
+## Deploying an App
 
-Before deploying any chart, review its `values.yaml` and update domains, paths, and other environment-specific values to match your setup. Some charts contain hardcoded domains (e.g. `jellyfin.hobroker.me`) that must be changed.
+Before deploying any app, review its `values.yaml` and update domains, paths, and other environment-specific values to match your setup. Some apps contain hardcoded domains (e.g. `jellyfin.hobroker.me`) that must be changed.
 
-Each chart's `README.md` includes instructions for both **ArgoCD** and **plain Helm** deployment, along with any extra steps required (secrets, host volumes, config files).
+Each app's `README.md` includes instructions for both **ArgoCD** and **plain Helm** deployment, along with any extra steps required (secrets, host volumes, config files).
 
 **Quick start with ArgoCD:**
 
@@ -141,7 +141,7 @@ npm run cli
 
 ## Docs Generation
 
-The [Apps](#apps) tables in this README are auto-generated from each app's metadata. To regenerate them after adding or updating an app:
+The [Apps](#apps) tables in this README are auto-generated from app metadata. To regenerate them after adding or updating an app:
 
 ```shell
 npm run generate
@@ -225,7 +225,7 @@ npm run generate
 - **Pod stuck in `Pending`** — check that the PersistentVolume exists and the host directory has been created (`kubectl describe pod <name>` will show the exact error)
 - **ArgoCD sync failed** — run `argocd app get <name>` or check the ArgoCD UI for error details
 - **Ingress not reachable** — verify Traefik is running (`kubectl get pods -n traefik`) and that your domain's DNS points to the cluster's external IP
-- **Secrets missing** — ensure the Infisical operator is synced, or create the required Kubernetes Secrets manually (check the chart's `README.md` for the expected Secret names)
+- **Secrets missing** — ensure the Infisical operator is synced, or create the required Kubernetes Secrets manually (check the app's `README.md` for the expected Secret names)
 
 ## References
 

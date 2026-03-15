@@ -1,8 +1,5 @@
 .DS_Store
 .idea
-**/charts/*.tgz
-
-**/default_values.yaml
 
 node_modules
 .turbo

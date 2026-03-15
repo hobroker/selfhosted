@@ -60,9 +60,9 @@ spec:
 
 **`README.md`** — must follow the format below exactly, as it is parsed by the doc generator.
 
-### 3. Chart README format
+### 3. App README format
 
-The doc generator reads three fields from each chart's `README.md`:
+The doc generator reads three fields from each app's `README.md`:
 
 ```markdown
 # `<service-name>`
@@ -76,11 +76,11 @@ Source Code: <url>
 - **Line 2** — description starting with `> `
 - **`Source Code:`** — a line with this exact prefix followed by the upstream URL
 
-The rest of the README is free-form. Use it to document install steps, required secrets, and host volumes. See any existing chart for reference.
+The rest of the README is free-form. Use it to document install steps, required secrets, and host volumes. See any existing app for reference.
 
 ### 4. Update the main README
 
-The `Apps` tables in `README.md` are auto-generated. After editing a chart's `README.md`, regenerate them with:
+The `Apps` tables in `README.md` are auto-generated. After editing an app's `README.md`, regenerate them with:
 
 ```shell
 npm run generate

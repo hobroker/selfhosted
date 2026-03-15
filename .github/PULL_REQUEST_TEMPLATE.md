@@ -5,7 +5,8 @@
 ### Type
 
 <!-- Select ONE type that best describes this PR -->
-- [ ] New chart
-- [ ] Chart update (version bump / config change)
+
+- [ ] New app
+- [ ] App update (version bump / config change)
 - [ ] Bug fix
 - [ ] Other
