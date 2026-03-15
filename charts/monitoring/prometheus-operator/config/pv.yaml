@@ -42,7 +42,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: ""
   claimRef:
-    name: db-prometheus-prometheus-operator-kube-p-prometheus-0
+    name: prometheus-prometheus-operator-kube-p-prometheus-db-prometheus-prometheus-operator-kube-p-prometheus-0
     namespace: monitoring
   hostPath:
     path: /var/local/prometheus
