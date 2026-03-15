@@ -1,8 +1,8 @@
-import { parseCharts } from "./parseCharts";
+import { parseRawCategories } from "./parseRawCategories";
 import { insertMarkdown } from "./insertMarkdown";
 import { generateMarkdownTable } from "./generateMarkdownTable";
 import chalk from "chalk";
-import { getApps } from "./getApps";
+import { findRawCategories } from "./findApps";
 import { stat } from "fs/promises";
 import { join } from "path";
 
@@ -17,8 +17,8 @@ try {
 const appsDir = join(rootDir, "apps");
 const readmePath = join(rootDir, "README.md");
 
-const sources = await getApps(appsDir);
-const data = await parseCharts(sources);
+const rawCategories = await findRawCategories(appsDir);
+const data = parseRawCategories(rawCategories);
 const markdown = generateMarkdownTable(data);
 
 await insertMarkdown(markdown, readmePath);

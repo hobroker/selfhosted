@@ -153,28 +153,28 @@ npm run generate
 
 ### Automation
 
-| Chart                                | Description                                                                       | Source Code                          |
+| App                                  | Description                                                                       | Source Code                          |
 | ------------------------------------ | --------------------------------------------------------------------------------- | ------------------------------------ |
 | [n8n](apps/automation/n8n)           | Workflow automation platform                                                      | https://github.com/n8n-io/n8n        |
 | [openclaw](apps/automation/openclaw) | AI assistant that connects to messaging platforms and executes tasks autonomously | https://github.com/openclaw/openclaw |
 
 ### Backup
 
-| Chart                              | Description                                             | Source Code                              |
+| App                                | Description                                             | Source Code                              |
 | ---------------------------------- | ------------------------------------------------------- | ---------------------------------------- |
 | [backrest](apps/backup/backrest)   | A web-accessible backup solution built on top of restic | https://github.com/garethgeorge/backrest |
 | [syncthing](apps/backup/syncthing) | Continuous file synchronization                         | https://github.com/syncthing/syncthing   |
 
 ### Development
 
-| Chart                                               | Description                                                        | Source Code                                       |
+| App                                                 | Description                                                        | Source Code                                       |
 | --------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------- |
 | [code-server](apps/development/code-server)         | VS Code running on a remote server, accessible through the browser | https://github.com/linuxserver/docker-code-server |
 | [http-https-echo](apps/development/http-https-echo) | App that echoes request data as JSON (useful for debugging)        | https://github.com/mendhak/docker-http-https-echo |
 
 ### Media
 
-| Chart                                   | Description                                                                               | Source Code                                  |
+| App                                     | Description                                                                               | Source Code                                  |
 | --------------------------------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------- |
 | [bazarr](apps/media/bazarr)             | Companion application to Sonarr and Radarr that manages and downloads subtitles.          | https://github.com/morpheus65535/bazarr      |
 | [fileflows](apps/media/fileflows)       | File processing application                                                               | https://github.com/revenz/FileFlows          |
@@ -191,7 +191,7 @@ npm run generate
 
 ### Monitoring
 
-| Chart                                                      | Description                                                                         | Source Code                                                |
+| App                                                        | Description                                                                         | Source Code                                                |
 | ---------------------------------------------------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | [grafana-backup](apps/monitoring/grafana-backup)           | Cron job to backup Grafana settings by using the Grafana API                        | https://github.com/ysde/grafana-backup-tool                |
 | [prometheus-operator](apps/monitoring/prometheus-operator) | Operator that manages Prometheus, Grafana, and related monitoring components in K8s | https://github.com/prometheus-operator/prometheus-operator |
@@ -199,13 +199,13 @@ npm run generate
 
 ### Network
 
-| Chart                                   | Description                                      | Source Code                                |
+| App                                     | Description                                      | Source Code                                |
 | --------------------------------------- | ------------------------------------------------ | ------------------------------------------ |
 | [adguardhome](apps/network/adguardhome) | A network-wide DNS ad blocker and privacy filter | https://github.com/AdguardTeam/AdGuardHome |
 
 ### System
 
-| Chart                                                        | Description                                                                                    | Source Code                                       |
+| App                                                          | Description                                                                                    | Source Code                                       |
 | ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- | ------------------------------------------------- |
 | [argocd](apps/system/argocd)                                 | Declarative GitOps CD for Kubernetes                                                           | https://github.com/argoproj/argo-cd               |
 | [cert-manager](apps/system/cert-manager)                     | Automatically provision and manage TLS certificates in K8s                                     | https://github.com/cert-manager/cert-manager      |

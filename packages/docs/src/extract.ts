@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { ChartService } from "./types";
+import { App } from "./types";
 
 const logError = (key: string, message: string) =>
   console.log(chalk.redBright(chalk.bold(`    ❌ ${key}: `), message));
@@ -7,7 +7,7 @@ const logError = (key: string, message: string) =>
 const logSuccess = (key: string, message: string) =>
   console.log(chalk.greenBright(chalk.bold(`    ${key}: `), message));
 
-export const extractName = (markdown: string, { name }: Pick<ChartService, "name">) => {
+export const extractName = (markdown: string, { name }: Pick<App, "name">) => {
   const value = markdown.split("\n")[0].replaceAll("`", "").replaceAll("#", "").trim();
 
   if (!value) {

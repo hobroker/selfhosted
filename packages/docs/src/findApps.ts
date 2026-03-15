@@ -1,6 +1,6 @@
 import { readdir, stat } from "fs/promises";
 import { dirname, resolve } from "path";
-import { ChartSource } from "./types";
+import { RawCategory } from "./types";
 
 const getFiles = async (dir: string): Promise<string[]> => {
   const subdirs = await readdir(dir);
@@ -13,7 +13,7 @@ const getFiles = async (dir: string): Promise<string[]> => {
   return files.reduce<string[]>((acc, item) => acc.concat(item), []);
 };
 
-export const getApps = async (dir: string): Promise<ChartSource[]> => {
+export const findRawCategories = async (dir: string): Promise<RawCategory[]> => {
   const files = await getFiles(dir).then((files) =>
     files.filter((file) => file.endsWith("README.md")),
   );
