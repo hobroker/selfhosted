@@ -18,7 +18,7 @@ service:
     controller: main
     type: ClusterIP
     annotations:
-      metallb.universe.tf/allow-shared-ip: shared
+      metallb.io/allow-shared-ip: shared
     ports:
       http:
         port: 8989

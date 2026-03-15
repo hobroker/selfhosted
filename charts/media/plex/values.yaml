@@ -19,7 +19,7 @@ service:
     type: LoadBalancer
     externalTrafficPolicy: Local
     annotations:
-      metallb.universe.tf/loadBalancerIPs: 192.168.50.200
+      metallb.io/loadBalancerIPs: 192.168.50.200
     ports:
       http:
         port: 32400
