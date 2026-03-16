@@ -6,7 +6,7 @@
 #   Radarr: Accept WEB immediately, upgrade to BluRay-1080p when available
 
 sonarr:
-  main:
+  sonarr:
     base_url: http://sonarr:8989
     api_key: $SONARR_API_KEY
 
@@ -104,7 +104,7 @@ sonarr:
             score: -10000
 
 radarr:
-  main:
+  radarr:
     base_url: http://radarr:7878
     api_key: $RADARR_API_KEY
 
