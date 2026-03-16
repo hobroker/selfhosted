@@ -29,8 +29,12 @@ export async function scanApps(appsDir: string): Promise<ScanResult> {
                   category: cat.name,
                   serviceName: svc.name,
                 });
-              } catch {
-                missing.push({ category: cat.name, serviceName: svc.name });
+              } catch (err) {
+                if ((err as NodeJS.ErrnoException).code === "ENOENT") {
+                  missing.push({ category: cat.name, serviceName: svc.name });
+                } else {
+                  throw err;
+                }
               }
             }),
         );

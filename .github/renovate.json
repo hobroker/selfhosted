@@ -11,8 +11,8 @@
       "groupName": "NPM cli package"
     },
     {
-      "matchFileNames": ["packages/docs/**"],
-      "groupName": "NPM docs package"
+      "matchFileNames": ["packages/catalog/**"],
+      "groupName": "NPM catalog package"
     },
     {
       "matchManagers": ["npm"],
