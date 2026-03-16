@@ -21,6 +21,7 @@ controllers:
               name: infisical-recyclarr-secret
     containers:
       main:
+        nameOverride: recyclarr-sync
         image:
           repository: ghcr.io/recyclarr/recyclarr
           tag: 8
