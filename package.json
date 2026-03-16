@@ -6,11 +6,14 @@
   "packageManager": "npm@11.11.0",
   "workspaces": [
     "packages/docs",
+    "packages/catalog",
     "packages/cli"
   ],
   "scripts": {
     "prepare": "husky",
     "generate": "npm run generate --workspace @hobroker/selfhosted-docs",
+    "generate2": "npm run generate --workspace @hobroker/selfhosted-catalog",
+    "generate2:check": "npm run generate:check --workspace @hobroker/selfhosted-catalog",
     "cli": "npm run cli --workspace @hobroker/selfhosted-cli",
     "test": "turbo test",
     "typecheck": "turbo typecheck",
@@ -38,6 +41,6 @@
   },
   "lint-staged": {
     "*.{md,yaml}": "prettier --write",
-    "apps/**/README.md": "npm run generate"
+    "apps/**/README.md": ["npm run generate", "npm run generate2"]
   }
 }
