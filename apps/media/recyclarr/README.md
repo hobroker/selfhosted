@@ -32,8 +32,14 @@ Add the following to Infisical at path `/recyclarr`:
 
 | key              | description        |
 | ---------------- | ------------------ |
-| `sonarr_api_key` | API key for Sonarr |
-| `radarr_api_key` | API key for Radarr |
+| `SONARR_API_KEY` | API key for Sonarr |
+| `RADARR_API_KEY` | API key for Radarr |
+
+## Configuration
+
+Edit `config/recyclarr.yml` to customize quality profiles, custom formats, and scoring for Radarr and Sonarr. See the [Recyclarr config reference](https://recyclarr.dev/wiki/yaml/config-reference/) for all available options.
+
+ArgoCD will automatically run a sync job whenever this file changes.
 
 ## Storage
 
