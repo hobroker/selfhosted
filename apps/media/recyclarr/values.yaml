@@ -10,15 +10,15 @@ controllers:
       failedJobsHistory: 2
       backoffLimit: 3
     initContainers:
-      write-secrets:
+      render-config:
         image:
-          repository: busybox
+          repository: bhgedigital/envsubst
           tag: latest
           pullPolicy: IfNotPresent
         command:
           - sh
           - -c
-          - 'printf "sonarr_api_key: %s\nradarr_api_key: %s\n" "$SONARR_API_KEY" "$RADARR_API_KEY" > /config/secrets.yml'
+          - envsubst < /recyclarr-template/recyclarr.yml > /config/recyclarr.yml
         env:
           - name: SONARR_API_KEY
             valueFrom:
@@ -44,9 +44,11 @@ persistence:
     existingClaim: recyclarr-config-pvc
     globalMounts:
       - path: /config
-  recyclarr-yml:
+  recyclarr-template:
     type: configMap
     name: recyclarr-config
-    globalMounts:
-      - path: /config/recyclarr.yml
-        subPath: recyclarr.yml
+    advancedMounts:
+      main:
+        render-config:
+          - path: /recyclarr-template/recyclarr.yml
+            subPath: recyclarr.yml

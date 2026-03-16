@@ -28,20 +28,19 @@ helm upgrade --install recyclarr bjw-s/app-template \
 
 ### Secrets
 
-The following environment variables are required and sourced from the `infisical-recyclarr-secret`:
+Add the following to Infisical at path `/recyclarr`:
 
-| name             | description        |
+| key              | description        |
 | ---------------- | ------------------ |
 | `sonarr_api_key` | API key for Sonarr |
 | `radarr_api_key` | API key for Radarr |
 
 ## Storage
 
-| source                            | containerPath           | description                               |
-| --------------------------------- | ----------------------- | ----------------------------------------- |
-| `/var/local/recyclarr` (hostPath) | `/config`               | State, logs, and cache                    |
-| `recyclarr-config` (ConfigMap)    | `/config/recyclarr.yml` | Main config (from `config/recyclarr.yml`) |
+| source                            | containerPath | description            |
+| --------------------------------- | ------------- | ---------------------- |
+| `/var/local/recyclarr` (hostPath) | `/config`     | State, logs, and cache |
 
-`/config/secrets.yml` is written at runtime by an init container using API keys from `infisical-recyclarr-secret`.
+`recyclarr.yml` is rendered at runtime by an init container — API keys from `infisical-recyclarr-secret` are substituted into the ConfigMap template.
 
 PV: `recyclarr-config-pv` → PVC: `recyclarr-config-pvc`
