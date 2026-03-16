@@ -1,0 +1,37 @@
+controllers:
+  main:
+    type: cronjob
+    cronjob:
+      concurrencyPolicy: Forbid
+      timeZone: Europe/Chisinau
+      schedule: "0 0 * * *" # every day at midnight
+      startingDeadlineSeconds: 30
+      successfulJobsHistory: 1
+      failedJobsHistory: 2
+      backoffLimit: 3
+    containers:
+      main:
+        image:
+          repository: ghcr.io/recyclarr/recyclarr
+          tag: 8
+          pullPolicy: IfNotPresent
+        args:
+          - sync
+
+persistence:
+  config:
+    existingClaim: recyclarr-config-pvc
+    globalMounts:
+      - path: /config
+  recyclarr-yml:
+    type: configMap
+    name: recyclarr-config
+    globalMounts:
+      - path: /config/recyclarr.yml
+        subPath: recyclarr.yml
+  secrets-yml:
+    type: secret
+    name: infisical-recyclarr-secret
+    globalMounts:
+      - path: /config/secrets.yml
+        subPath: secrets.yml
