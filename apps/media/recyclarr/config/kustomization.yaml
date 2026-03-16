@@ -1,0 +1,10 @@
+resources:
+  - pv.yaml
+  - infisical-recyclarr-secret.yaml
+configMapGenerator:
+  - name: recyclarr-config
+    namespace: default
+    options:
+      disableNameSuffixHash: true
+    files:
+      - recyclarr.yml=recyclarr.yml

@@ -1,0 +1,44 @@
+controllers:
+  main:
+    type: job
+    annotations:
+      argocd.argoproj.io/hook: PostSync
+      argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    job:
+      ttlSecondsAfterFinished: 3600
+    initContainers:
+      render-config:
+        image:
+          repository: bhgedigital/envsubst
+          tag: latest
+          pullPolicy: IfNotPresent
+        command:
+          - sh
+          - -c
+          - envsubst < /recyclarr-template/recyclarr.yml > /config/recyclarr.yml
+        envFrom:
+          - secretRef:
+              name: infisical-recyclarr-secret
+    containers:
+      main:
+        nameOverride: recyclarr-sync
+        image:
+          repository: ghcr.io/recyclarr/recyclarr
+          tag: 8
+          pullPolicy: IfNotPresent
+        args:
+          - sync
+
+persistence:
+  config:
+    existingClaim: recyclarr-config-pvc
+    globalMounts:
+      - path: /config
+  recyclarr-template:
+    type: configMap
+    name: recyclarr-config
+    advancedMounts:
+      main:
+        render-config:
+          - path: /recyclarr-template/recyclarr.yml
+            subPath: recyclarr.yml

@@ -185,6 +185,7 @@ npm run generate
 | [prowlarr](apps/media/prowlarr)         | Indexer manager/proxy built on the popular \*arr stack to integrate with various PVR apps | <https://github.com/Prowlarr/Prowlarr>         |
 | [qbittorrent](apps/media/qbittorrent)   | Bittorrent client with a feature rich Web UI for remote access                            | <https://github.com/qbittorrent/qBittorrent>   |
 | [radarr](apps/media/radarr)             | A movie tracking and automation tool that downloads movies as they become available.      | <https://github.com/Radarr/Radarr>             |
+| [recyclarr](apps/media/recyclarr)       | Automatically sync TRaSH Guide settings to Radarr and Sonarr.                             | <https://github.com/recyclarr/recyclarr>       |
 | [seerr](apps/media/seerr)               | A modern media request and discovery tool.                                                | <https://github.com/seerr-team/seerr>          |
 | [sonarr](apps/media/sonarr)             | A TV series tracking and automation tool for downloading episodes as they air.            | <https://github.com/Sonarr/Sonarr>             |
 | [tautulli](apps/media/tautulli)         | A monitoring and analytics tool for Plex                                                  | <https://github.com/Tautulli/Tautulli>         |
