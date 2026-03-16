@@ -1,0 +1,29 @@
+{
+  "name": "@hobroker/selfhosted-catalog",
+  "version": "1.0.0",
+  "description": "Catalog generator — scans app READMEs and injects markdown tables into the root README",
+  "author": "Igor Leahu <igor.leahu24@gmail.com>",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "module",
+  "scripts": {
+    "generate": "tsx src/cli.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "commander": "^13.1.0",
+    "picocolors": "^1.1.1",
+    "tinyglobby": "^0.2.15",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "prettier": "^3.8.1",
+    "tsx": "^4.19.4",
+    "vitest": "^4.0.18"
+  }
+}
