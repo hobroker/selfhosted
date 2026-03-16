@@ -92,13 +92,21 @@ describe("getServiceState", () => {
 
   it("returns Installed when chart versions match exactly", () => {
     expect(
-      getServiceState({ ...base, installedChartVersion: "1.0.0", installedAppVersion: "1.2.3" }),
+      getServiceState({
+        ...base,
+        installedChartVersion: "1.0.0",
+        installedAppVersion: "1.2.3",
+      }),
     ).toBe(ServiceState.Installed);
   });
 
   it("returns Installed when installed has v-prefix and local does not", () => {
     expect(
-      getServiceState({ ...base, installedChartVersion: "v1.0.0", installedAppVersion: "1.2.3" }),
+      getServiceState({
+        ...base,
+        installedChartVersion: "v1.0.0",
+        installedAppVersion: "1.2.3",
+      }),
     ).toBe(ServiceState.Installed);
   });
 
@@ -126,13 +134,21 @@ describe("getServiceState", () => {
 
   it("returns UpdateAvailable when chart versions differ", () => {
     expect(
-      getServiceState({ ...base, installedChartVersion: "0.9.0", installedAppVersion: "1.2.3" }),
+      getServiceState({
+        ...base,
+        installedChartVersion: "0.9.0",
+        installedAppVersion: "1.2.3",
+      }),
     ).toBe(ServiceState.UpdateAvailable);
   });
 
   it("returns UpdateAvailable when chart versions match but app versions differ", () => {
     expect(
-      getServiceState({ ...base, installedChartVersion: "1.0.0", installedAppVersion: "1.1.0" }),
+      getServiceState({
+        ...base,
+        installedChartVersion: "1.0.0",
+        installedAppVersion: "1.1.0",
+      }),
     ).toBe(ServiceState.UpdateAvailable);
   });
 });

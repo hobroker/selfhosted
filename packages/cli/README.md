@@ -18,21 +18,21 @@ npm run cli
 
 ## Keyboard shortcuts
 
-| Key | Action |
-|-----|--------|
-| `q` | Quit |
-| `Esc Esc` | Quit (double-press within 1s) |
+| Key             | Action                                   |
+| --------------- | ---------------------------------------- |
+| `q`             | Quit                                     |
+| `Esc Esc`       | Quit (double-press within 1s)            |
 | `Tab` / `←` `→` | Switch focus between sidebar and details |
-| `/` | Open search |
-| `Esc` | Close search / close modal |
-| `↑` `↓` | Navigate services (wraps around) |
-| `A` | Apply (helmfile apply) |
-| `D` | Diff (helmfile diff) |
-| `H` | History |
-| `R` | Refresh |
-| `L` | Logs |
-| `X` | Destroy |
-| `?` | Help |
+| `/`             | Open search                              |
+| `Esc`           | Close search / close modal               |
+| `↑` `↓`         | Navigate services (wraps around)         |
+| `A`             | Apply (helmfile apply)                   |
+| `D`             | Diff (helmfile diff)                     |
+| `H`             | History                                  |
+| `R`             | Refresh                                  |
+| `L`             | Logs                                     |
+| `X`             | Destroy                                  |
+| `?`             | Help                                     |
 
 ## Sidebar search
 
@@ -40,10 +40,10 @@ Press `/` to open the search box. Type to filter services by name using fuzzy ma
 
 ## Service states
 
-| State | Meaning |
-|-------|---------|
-| `Installed` | Chart and app versions match local config |
-| `Not Installed` | No helm release found in the cluster |
+| State              | Meaning                                                  |
+| ------------------ | -------------------------------------------------------- |
+| `Installed`        | Chart and app versions match local config                |
+| `Not Installed`    | No helm release found in the cluster                     |
 | `Update Available` | Installed chart or app version differs from local config |
 
 Version comparison strips a leading `v` prefix, so `1.0.0` and `v1.0.0` are treated as equal.

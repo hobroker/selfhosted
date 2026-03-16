@@ -1,19 +1,19 @@
 import { markdownTable } from "markdown-table";
-import { ChartData } from "./types";
+import { ParsedCategory } from "./types";
 
 const acronyms = new Set(["ai"]);
 const capitalize = (value: string) =>
   acronyms.has(value) ? value.toUpperCase() : value.charAt(0).toUpperCase() + value.slice(1);
 
-export const generateMarkdownTable = (data: ChartData[]) => {
+export const generateMarkdownTable = (data: ParsedCategory[]) => {
   const content = data.map(({ category, services }) => {
     const heading = `### ${capitalize(category)}`;
     const rows = [
-      ["Chart", "Description", "Source Code"],
+      ["App", "Description", "Source Code"],
       ...services.map(({ name, url, description }) => [
         `[${name}](${url.local})`,
         description,
-        url.sourceCode,
+        `<${url.sourceCode}>`,
       ]),
     ];
 

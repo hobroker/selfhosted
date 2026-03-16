@@ -1,9 +1,12 @@
-export interface ChartSource {
+export interface RawCategory {
   category: string;
-  services: { path: string; service: string }[];
+  services: {
+    path: string;
+    service: string;
+  }[];
 }
 
-export interface ChartService {
+export interface App {
   name: string;
   description: string;
   url: {
@@ -12,7 +15,7 @@ export interface ChartService {
   };
 }
 
-export interface ChartData {
+export interface ParsedCategory {
   category: string;
-  services: ChartService[];
+  services: App[];
 }

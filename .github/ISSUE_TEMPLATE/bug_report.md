@@ -1,12 +1,12 @@
 ---
 name: Bug report
-about: Report a broken or misbehaving chart
+about: Report a broken or misbehaving app
 labels: bug
 ---
 
-**Chart**
+**App**
 
-<!-- e.g. charts/media/jellyfin -->
+<!-- e.g. apps/media/jellyfin -->
 
 **Description**
 

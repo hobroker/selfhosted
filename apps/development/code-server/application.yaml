@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: code-server
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    category: development
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      path: apps/development/code-server/config
+    - repoURL: https://bjw-s-labs.github.io/helm-charts
+      chart: app-template
+      targetRevision: 4.6.2
+      helm:
+        valueFiles:
+          - $values/apps/development/code-server/values.yaml
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  revisionHistoryLimit: 3
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

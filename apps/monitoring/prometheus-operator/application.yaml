@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus-operator
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    category: monitoring
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      path: apps/monitoring/prometheus-operator/config
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: kube-prometheus-stack
+      targetRevision: 82.4.3
+      helm:
+        releaseName: prometheus-operator
+        valueFiles:
+          - $values/apps/monitoring/prometheus-operator/values.yaml
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  revisionHistoryLimit: 3
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

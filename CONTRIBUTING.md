@@ -3,9 +3,9 @@
 ## Project Structure
 
 ```
-charts/
+apps/
   <category>/
-    <service>/
+    <app>/
       application.yaml  # ArgoCD Application manifest
       values.yaml       # Helm values overrides
       README.md         # Install instructions, secrets, host volumes
@@ -14,12 +14,12 @@ packages/
   docs/                 # README table generator
 ```
 
-## Adding a New Chart
+## Adding a new App
 
-### 1. Create the chart directory
+### 1. Create the app directory
 
 ```
-charts/<category>/<service-name>/
+apps/<category>/<app-name>/
 ```
 
 Use an existing category (`automation`, `development`, `downloads`, `media`, `monitoring`, `system`) or add a new one.
@@ -32,7 +32,7 @@ Use an existing category (`automation`, `development`, `downloads`, `media`, `mo
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: <service-name>
+  name: <app-name>
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -46,7 +46,7 @@ spec:
       targetRevision: <version>
       helm:
         valueFiles:
-          - $values/charts/<category>/<service-name>/values.yaml
+          - $values/apps/<category>/<app-name>/values.yaml
     - repoURL: https://github.com/hobroker/selfhosted.git
       targetRevision: HEAD
       ref: values
@@ -60,12 +60,12 @@ spec:
 
 **`README.md`** — must follow the format below exactly, as it is parsed by the doc generator.
 
-### 3. Chart README format
+### 3. App README format
 
-The doc generator reads three fields from each chart's `README.md`:
+The doc generator reads three fields from each app's `README.md`:
 
 ```markdown
-# `<service-name>`
+# `<app-name>`
 
 > <one-line description>
 
@@ -76,17 +76,17 @@ Source Code: <url>
 - **Line 2** — description starting with `> `
 - **`Source Code:`** — a line with this exact prefix followed by the upstream URL
 
-The rest of the README is free-form. Use it to document install steps, required secrets, and host volumes. See any existing chart for reference.
+The rest of the README is free-form. Use it to document install steps, required secrets, and host volumes. See any existing app for reference.
 
 ### 4. Update the main README
 
-The `Apps` tables in `README.md` are auto-generated. After editing a chart's `README.md`, regenerate them with:
+The `Apps` tables in `README.md` are auto-generated. After editing an app's `README.md`, regenerate them with:
 
 ```shell
 npm run generate
 ```
 
-This also runs automatically as a pre-commit hook whenever a `charts/**/README.md` is staged.
+This also runs automatically as a pre-commit hook whenever a `apps/**/README.md` is staged.
 
 ## Development
 

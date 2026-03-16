@@ -20,7 +20,10 @@ const mockSelectService = vi.fn();
 let mockServices: ServiceInfo[] = [];
 
 vi.mock("../contexts/ServicesContext", () => ({
-  useServicesContext: () => ({ services: mockServices, selectService: mockSelectService }),
+  useServicesContext: () => ({
+    services: mockServices,
+    selectService: mockSelectService,
+  }),
 }));
 
 let mockFocus = "sidebar";
