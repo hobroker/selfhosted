@@ -1,6 +1,12 @@
 import { readFile, writeFile } from "node:fs/promises";
+import { format, resolveConfig } from "prettier";
 import type { CliOptions } from "./types";
 import type { CatalogLogger } from "./logger";
+
+async function formatMarkdown(content: string, filepath: string): Promise<string> {
+  const config = await resolveConfig(filepath);
+  return format(content, { ...config, filepath });
+}
 
 const MARKER_START = "<!-- apps:start -->";
 const MARKER_END = "<!-- apps:end -->";
@@ -32,16 +38,16 @@ export async function injectCatalog(
     return;
   }
 
+  const updated = await formatMarkdown(buildUpdatedReadme(original, newBlock), readmePath);
+
   if (options.check) {
-    if (contentWouldChange(original, newBlock)) {
+    if (updated !== original) {
       logger.error("README.md is out of date — run `npm run generate` to update it");
     } else {
       logger.success("README.md is up to date");
     }
     return;
   }
-
-  const updated = buildUpdatedReadme(original, newBlock);
 
   if (options.dryRun) {
     console.log("\n--- dry-run output ---\n");

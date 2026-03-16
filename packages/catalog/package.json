@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
+    "prettier": "^3.8.1",
     "tsx": "^4.19.4",
     "vitest": "^4.0.18"
   }
