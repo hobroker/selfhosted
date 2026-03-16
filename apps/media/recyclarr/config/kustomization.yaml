@@ -1,6 +1,7 @@
 resources:
   - pv.yaml
   - infisical-recyclarr-secret.yaml
+  - job.yaml
 configMapGenerator:
   - name: recyclarr-config
     namespace: default

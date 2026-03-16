@@ -9,19 +9,10 @@ metadata:
     category: media
 spec:
   project: default
-  sources:
-    - repoURL: https://github.com/hobroker/selfhosted.git
-      targetRevision: HEAD
-      path: apps/media/recyclarr/config
-    - repoURL: https://bjw-s-labs.github.io/helm-charts
-      chart: app-template
-      targetRevision: 4.6.2
-      helm:
-        valueFiles:
-          - $values/apps/media/recyclarr/values.yaml
-    - repoURL: https://github.com/hobroker/selfhosted.git
-      targetRevision: HEAD
-      ref: values
+  source:
+    repoURL: https://github.com/hobroker/selfhosted.git
+    targetRevision: HEAD
+    path: apps/media/recyclarr/config
   destination:
     server: https://kubernetes.default.svc
     namespace: default
