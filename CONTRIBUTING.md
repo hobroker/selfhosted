@@ -11,7 +11,7 @@ apps/
       README.md         # Install instructions, secrets, host volumes
 packages/
   cli/                  # Interactive terminal UI (Ink/React)
-  docs/                 # README table generator
+  catalog/              # Generates README.md and main README.md from app READMEs
 ```
 
 ## Adding a new App

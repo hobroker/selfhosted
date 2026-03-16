@@ -34,7 +34,7 @@ export async function injectCatalog(
 
   if (options.check) {
     if (contentWouldChange(original, newBlock)) {
-      logger.error("README.md is out of date — run `npm run generate2` to update it");
+      logger.error("README.md is out of date — run `npm run generate` to update it");
     } else {
       logger.success("README.md is up to date");
     }
