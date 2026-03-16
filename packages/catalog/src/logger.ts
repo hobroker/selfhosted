@@ -16,7 +16,7 @@ export class CatalogLogger {
   }
 
   error(msg: string): void {
-    console.log(pc.red(pc.bold(`✖ ${msg}`)));
+    console.error(pc.red(pc.bold(`✖ ${msg}`)));
     this.collectedErrors.push(msg);
   }
 
@@ -40,9 +40,7 @@ export class CatalogLogger {
     if (this.collectedErrors.length === 0) {
       console.log(pc.green(pc.bold("\n✔ Done — no errors")));
     } else {
-      console.log(
-        pc.red(pc.bold(`\n✖ Done — ${this.collectedErrors.length} error(s) found`)),
-      );
+      console.error(pc.red(pc.bold(`\n✖ Done — ${this.collectedErrors.length} error(s) found`)));
     }
   }
 }

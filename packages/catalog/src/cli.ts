@@ -33,7 +33,9 @@ program
 
     const root = opts.root ?? (await findRoot(process.cwd()));
     if (root === null) {
-      logger.error("Could not find a monorepo root (no apps/ + README.md found in parent directories)");
+      logger.error(
+        "Could not find a monorepo root (no apps/ + README.md found in parent directories)",
+      );
       logger.summarize();
       process.exit(1);
     }

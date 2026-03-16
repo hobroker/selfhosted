@@ -9,7 +9,10 @@ function extractRawFields(content: string): {
 } {
   const lines = content.split("\n");
 
-  const rawName = (lines[0] ?? "").replace(/^#+\s*/, "").replaceAll("`", "").trim();
+  const rawName = (lines[0] ?? "")
+    .replace(/^#+\s*/, "")
+    .replaceAll("`", "")
+    .trim();
 
   const descriptionLines: string[] = [];
   for (let i = 1; i < lines.length; i++) {
@@ -45,7 +48,9 @@ export function parseReadme(
 
   if (!result.success) {
     for (const issue of result.error.issues) {
-      logger.error(`[${scanned.category}/${scanned.serviceName}] ${issue.path[0]}: ${issue.message}`);
+      logger.error(
+        `[${scanned.category}/${scanned.serviceName}] ${issue.path[0]}: ${issue.message}`,
+      );
     }
     return null;
   }

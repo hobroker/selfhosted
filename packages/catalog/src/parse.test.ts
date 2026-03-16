@@ -48,9 +48,8 @@ describe("parseReadme", () => {
     const entry = parseReadme(readme, { ...scanned, serviceName: "plex" }, logger);
     expect(logger.hasErrors()).toBe(true);
     expect(logger.getErrors()[0]).toMatch(/mismatch/i);
-    // Entry is still null because schema rawName="jellyfin" !== serviceName="plex"
-    // but schema itself passes — check that null is returned due to name mismatch only
-    // (rawName "jellyfin" is valid; name mismatch only logs, does not short-circuit)
+    // The mismatch is logged as an error but does not short-circuit parsing.
+    // The schema passes (rawName "jellyfin" is valid), so a non-null entry is returned.
     expect(entry?.name).toBe("jellyfin");
   });
 

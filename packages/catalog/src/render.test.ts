@@ -65,7 +65,11 @@ describe("renderSection", () => {
 
 describe("renderCatalog", () => {
   it("joins sections with a blank line", () => {
-    const s1: CatalogSection = { category: "automation", categoryLabel: "Automation", entries: [entry] };
+    const s1: CatalogSection = {
+      category: "automation",
+      categoryLabel: "Automation",
+      entries: [entry],
+    };
     const s2: CatalogSection = { category: "media", categoryLabel: "Media", entries: [entry] };
     const result = renderCatalog([s1, s2]);
     expect(result).toContain("### Automation");

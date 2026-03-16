@@ -10,13 +10,10 @@ async function formatMarkdown(content: string, filepath: string): Promise<string
 
 const MARKER_START = "<!-- apps:start -->";
 const MARKER_END = "<!-- apps:end -->";
-const BLOCK_PATTERN = new RegExp(
-  `(${MARKER_START})([\\s\\S]*?)(${MARKER_END})`,
-  "m",
-);
+const BLOCK_PATTERN = new RegExp(`(${MARKER_START})([\\s\\S]*?)(${MARKER_END})`, "m");
 
 export function buildUpdatedReadme(original: string, newBlock: string): string {
-  return original.replace(BLOCK_PATTERN, `$1\n\n${newBlock}\n\n$3`);
+  return original.replace(BLOCK_PATTERN, (_match, p1, _p2, p3) => `${p1}\n\n${newBlock}\n\n${p3}`);
 }
 
 export function contentWouldChange(original: string, newBlock: string): boolean {
@@ -32,9 +29,7 @@ export async function injectCatalog(
   const original = await readFile(readmePath, "utf-8");
 
   if (!BLOCK_PATTERN.test(original)) {
-    logger.error(
-      `README.md is missing injection markers (${MARKER_START} / ${MARKER_END})`,
-    );
+    logger.error(`README.md is missing injection markers (${MARKER_START} / ${MARKER_END})`);
     return;
   }
 

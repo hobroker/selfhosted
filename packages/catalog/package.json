@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Catalog generator — scans app READMEs and injects markdown tables into the root README",
   "author": "Igor Leahu <igor.leahu24@gmail.com>",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "type": "module",
   "scripts": {
     "generate": "tsx src/cli.ts",

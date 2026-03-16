@@ -2,6 +2,11 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { buildUpdatedReadme, contentWouldChange, injectCatalog } from "./inject";
 import { CatalogLogger } from "./logger";
 
+vi.mock("prettier", () => ({
+  resolveConfig: vi.fn().mockResolvedValue(null),
+  format: vi.fn().mockImplementation(async (content: string) => content),
+}));
+
 const BLOCK = "### Media\n\n| App | Description | Source Code |\n| --- | --- | --- |";
 
 const readmeWithMarkers = `# My Project
