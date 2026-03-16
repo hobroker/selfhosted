@@ -37,10 +37,11 @@ The following environment variables are required and sourced from the `infisical
 
 ## Storage
 
-| source                                | containerPath           | description                               |
-| ------------------------------------- | ----------------------- | ----------------------------------------- |
-| `/var/local/recyclarr` (hostPath)     | `/config`               | State, logs, and cache                    |
-| `recyclarr-config` (ConfigMap)        | `/config/recyclarr.yml` | Main config (from `config/recyclarr.yml`) |
-| `infisical-recyclarr-secret` (Secret) | `/config/secrets.yml`   | API keys                                  |
+| source                            | containerPath           | description                               |
+| --------------------------------- | ----------------------- | ----------------------------------------- |
+| `/var/local/recyclarr` (hostPath) | `/config`               | State, logs, and cache                    |
+| `recyclarr-config` (ConfigMap)    | `/config/recyclarr.yml` | Main config (from `config/recyclarr.yml`) |
+
+`/config/secrets.yml` is written at runtime by an init container using API keys from `infisical-recyclarr-secret`.
 
 PV: `recyclarr-config-pv` → PVC: `recyclarr-config-pvc`

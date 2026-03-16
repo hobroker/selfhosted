@@ -9,6 +9,27 @@ controllers:
       successfulJobsHistory: 1
       failedJobsHistory: 2
       backoffLimit: 3
+    initContainers:
+      write-secrets:
+        image:
+          repository: busybox
+          tag: latest
+          pullPolicy: IfNotPresent
+        command:
+          - sh
+          - -c
+          - 'printf "sonarr_api_key: %s\nradarr_api_key: %s\n" "$SONARR_API_KEY" "$RADARR_API_KEY" > /config/secrets.yml'
+        env:
+          - name: SONARR_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: infisical-recyclarr-secret
+                key: sonarr_api_key
+          - name: RADARR_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: infisical-recyclarr-secret
+                key: radarr_api_key
     containers:
       main:
         image:
@@ -29,9 +50,3 @@ persistence:
     globalMounts:
       - path: /config/recyclarr.yml
         subPath: recyclarr.yml
-  secrets-yml:
-    type: secret
-    name: infisical-recyclarr-secret
-    globalMounts:
-      - path: /config/secrets.yml
-        subPath: secrets.yml

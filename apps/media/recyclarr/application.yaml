@@ -11,7 +11,7 @@ spec:
   project: default
   sources:
     - repoURL: https://github.com/hobroker/selfhosted.git
-      targetRevision: HEAD
+      targetRevision: feat/media/recyclarr
       path: apps/media/recyclarr/config
     - repoURL: https://bjw-s-labs.github.io/helm-charts
       chart: app-template
@@ -20,7 +20,7 @@ spec:
         valueFiles:
           - $values/apps/media/recyclarr/values.yaml
     - repoURL: https://github.com/hobroker/selfhosted.git
-      targetRevision: HEAD
+      targetRevision: feat/media/recyclarr
       ref: values
   destination:
     server: https://kubernetes.default.svc
