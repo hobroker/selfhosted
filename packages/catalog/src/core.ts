@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { scanReadmes } from "./scan";
+import { scanApps } from "./scan";
 import { parseReadme } from "./parse";
 import { renderCatalog } from "./render";
 import { injectCatalog } from "./inject";
@@ -12,7 +12,8 @@ export async function buildCatalog(options: CliOptions, logger: CatalogLogger): 
   const appsDir = join(options.root, "apps");
   const readmePath = join(options.root, "README.md");
 
-  const scannedList = await scanReadmes(appsDir);
+  const { found: scannedList, missing } = await scanApps(appsDir);
+
   logger.info(`Found ${scannedList.length} README(s) across apps/`);
 
   const sectionMap = new Map<string, CatalogSection>();
@@ -34,6 +35,10 @@ export async function buildCatalog(options: CliOptions, logger: CatalogLogger): 
     }
 
     sectionMap.get(scanned.category)!.entries.push(entry);
+  }
+
+  for (const { category, serviceName } of missing) {
+    logger.error(`${category}/${serviceName} has no README.md`);
   }
 
   const sections = Array.from(sectionMap.values());

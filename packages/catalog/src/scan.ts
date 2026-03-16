@@ -1,23 +1,46 @@
-import { glob } from "tinyglobby";
-import { resolve } from "node:path";
+import { access, readdir } from "node:fs/promises";
+import { join, resolve } from "node:path";
 import type { ScannedReadme } from "./types";
 
-export async function scanReadmes(appsDir: string): Promise<ScannedReadme[]> {
-  const matches = await glob("*/*/README.md", { cwd: appsDir, absolute: false });
+export interface ScanResult {
+  found: ScannedReadme[];
+  missing: { category: string; serviceName: string }[];
+}
 
-  const scanned: ScannedReadme[] = matches.map((relativePath) => {
-    const parts = relativePath.split("/");
-    const category = parts[0] ?? "";
-    const serviceName = parts[1] ?? "";
-    return {
-      absolutePath: resolve(appsDir, relativePath),
-      category,
-      serviceName,
-    };
-  });
+export async function scanApps(appsDir: string): Promise<ScanResult> {
+  const found: ScannedReadme[] = [];
+  const missing: { category: string; serviceName: string }[] = [];
 
-  return scanned.sort((a, b) => {
+  const categories = await readdir(appsDir, { withFileTypes: true });
+  await Promise.all(
+    categories
+      .filter((d) => d.isDirectory())
+      .map(async (cat) => {
+        const services = await readdir(join(appsDir, cat.name), { withFileTypes: true });
+        await Promise.all(
+          services
+            .filter((d) => d.isDirectory())
+            .map(async (svc) => {
+              const readmePath = join(appsDir, cat.name, svc.name, "README.md");
+              try {
+                await access(readmePath);
+                found.push({
+                  absolutePath: resolve(readmePath),
+                  category: cat.name,
+                  serviceName: svc.name,
+                });
+              } catch {
+                missing.push({ category: cat.name, serviceName: svc.name });
+              }
+            }),
+        );
+      }),
+  );
+
+  found.sort((a, b) => {
     const catOrder = a.category.localeCompare(b.category);
     return catOrder !== 0 ? catOrder : a.serviceName.localeCompare(b.serviceName);
   });
+
+  return { found, missing };
 }
