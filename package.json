@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "prepare": "husky",
-    "generate": "npm run generate --workspace @hobroker/selfhosted-catalog",
+    "generate": "tsx packages/catalog/src/cli.ts",
     "cli": "npm run cli --workspace @hobroker/selfhosted-cli",
     "test": "turbo test",
     "typecheck": "turbo typecheck",
