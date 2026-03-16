@@ -13,7 +13,7 @@ export const generateMarkdownTable = (data: ParsedCategory[]) => {
       ...services.map(({ name, url, description }) => [
         `[${name}](${url.local})`,
         description,
-        url.sourceCode,
+        `<${url.sourceCode}>`,
       ]),
     ];
 

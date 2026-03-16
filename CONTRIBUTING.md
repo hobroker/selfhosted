@@ -5,7 +5,7 @@
 ```
 apps/
   <category>/
-    <service>/
+    <app>/
       application.yaml  # ArgoCD Application manifest
       values.yaml       # Helm values overrides
       README.md         # Install instructions, secrets, host volumes
@@ -19,7 +19,7 @@ packages/
 ### 1. Create the app directory
 
 ```
-apps/<category>/<service-name>/
+apps/<category>/<app-name>/
 ```
 
 Use an existing category (`automation`, `development`, `downloads`, `media`, `monitoring`, `system`) or add a new one.
@@ -32,7 +32,7 @@ Use an existing category (`automation`, `development`, `downloads`, `media`, `mo
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: <service-name>
+  name: <app-name>
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -46,7 +46,7 @@ spec:
       targetRevision: <version>
       helm:
         valueFiles:
-          - $values/apps/<category>/<service-name>/values.yaml
+          - $values/apps/<category>/<app-name>/values.yaml
     - repoURL: https://github.com/hobroker/selfhosted.git
       targetRevision: HEAD
       ref: values
@@ -65,7 +65,7 @@ spec:
 The doc generator reads three fields from each app's `README.md`:
 
 ```markdown
-# `<service-name>`
+# `<app-name>`
 
 > <one-line description>
 

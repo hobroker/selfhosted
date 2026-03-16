@@ -20,7 +20,7 @@
     },
     {
       "matchManagers": ["helm-values", "argocd", "helmv3"],
-      "groupName": "Services"
+      "groupName": "Apps"
     },
     {
       "matchFileNames": ["apps/automation/**"],

@@ -20,7 +20,11 @@ interface ScrollViewCallbacks {
 
 interface Result {
   scrollViewRef: RefObject<ScrollViewRef | null>;
-  scrollInfo: { scrollOffset: number; contentHeight: number; viewportHeight: number };
+  scrollInfo: {
+    scrollOffset: number;
+    contentHeight: number;
+    viewportHeight: number;
+  };
   scrollBy: (offset: number) => void;
   scrollViewCallbacks: ScrollViewCallbacks;
 }
