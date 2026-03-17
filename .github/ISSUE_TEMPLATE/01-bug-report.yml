@@ -16,6 +16,7 @@ body:
     id: steps
     attributes:
       label: Steps to reproduce
+      description: Help us reproduce the issue by listing the exact steps,
       placeholder: |
         1. Go to '...'
         2. Run '...'
@@ -36,6 +37,17 @@ body:
     attributes:
       label: Actual behavior
       description: What actually happened?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment
+      options:
+        - Talos
+        - k3s
+        - Other
     validations:
       required: true
 
