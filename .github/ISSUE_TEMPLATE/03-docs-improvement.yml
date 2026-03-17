@@ -1,0 +1,38 @@
+---
+name: Documentation Improvement
+description: Report missing, outdated, or unclear documentation
+
+body:
+  - type: input
+    id: location
+    attributes:
+      label: Location
+      description: Which app or page has the documentation issue?
+      placeholder: e.g. jellyfin, README
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's wrong?
+      description: Describe what is missing, outdated, or unclear.
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested improvement
+      description: How should it be improved? (optional)
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/hobroker/selfhosted/blob/master/CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
