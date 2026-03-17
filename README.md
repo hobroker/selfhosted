@@ -207,16 +207,17 @@ npm run generate
 
 ### System
 
-| App                                                          | Description                                                                                    | Source Code                                         |
-| ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| [argocd](apps/system/argocd)                                 | Declarative GitOps CD for Kubernetes                                                           | <https://github.com/argoproj/argo-cd>               |
-| [cert-manager](apps/system/cert-manager)                     | Automatically provision and manage TLS certificates in K8s                                     | <https://github.com/cert-manager/cert-manager>      |
-| [infisical-operator](apps/system/infisical-operator)         | Operator to fetch secrets from Infisical.                                                      | <https://github.com/Infisical/infisical>            |
-| [local-path-provisioner](apps/system/local-path-provisioner) | Local path provisioner with a Retain storage class for persistent storage on node local disks. | <https://github.com/rancher/local-path-provisioner> |
-| [metallb](apps/system/metallb)                               | Layer 2 load balancer for bare-metal Kubernetes clusters                                       | <https://github.com/metallb/metallb>                |
-| [rancher](apps/system/rancher)                               | Container management platform                                                                  | <https://github.com/rancher/rancher>                |
-| [reloader](apps/system/reloader)                             | K8s controller that triggers rolling upgrades when ConfigMaps or Secrets change                | <https://github.com/stakater/Reloader>              |
-| [traefik](apps/system/traefik)                               | HTTP reverse proxy and load balancer                                                           | <https://github.com/traefik/traefik>                |
+| App                                                          | Description                                                                                       | Source Code                                              |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| [argocd](apps/system/argocd)                                 | Declarative GitOps CD for Kubernetes                                                              | <https://github.com/argoproj/argo-cd>                    |
+| [cert-manager](apps/system/cert-manager)                     | Automatically provision and manage TLS certificates in K8s                                        | <https://github.com/cert-manager/cert-manager>           |
+| [infisical-operator](apps/system/infisical-operator)         | Operator to fetch secrets from Infisical.                                                         | <https://github.com/Infisical/infisical>                 |
+| [local-path-provisioner](apps/system/local-path-provisioner) | Local path provisioner with a Retain storage class for persistent storage on node local disks.    | <https://github.com/rancher/local-path-provisioner>      |
+| [metallb](apps/system/metallb)                               | Layer 2 load balancer for bare-metal Kubernetes clusters                                          | <https://github.com/metallb/metallb>                     |
+| [openebs](apps/system/openebs)                               | OpenEBS Dynamic LocalPV Provisioner — host-local storage provisioner with a Retain storage class. | <https://github.com/openebs/dynamic-localpv-provisioner> |
+| [rancher](apps/system/rancher)                               | Container management platform                                                                     | <https://github.com/rancher/rancher>                     |
+| [reloader](apps/system/reloader)                             | K8s controller that triggers rolling upgrades when ConfigMaps or Secrets change                   | <https://github.com/stakater/Reloader>                   |
+| [traefik](apps/system/traefik)                               | HTTP reverse proxy and load balancer                                                              | <https://github.com/traefik/traefik>                     |
 
 <!-- apps:end -->
 

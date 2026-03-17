@@ -1,0 +1,9 @@
+localpv:
+  basePath: "/var/local/openebs"
+
+hostpathClass:
+  name: openebs-hostpath
+  enabled: true
+  reclaimPolicy: Retain
+  isDefaultClass: false
+  basePath: "/var/local/openebs"
