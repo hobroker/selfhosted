@@ -1,6 +1,7 @@
 ---
 name: Documentation Improvement
 description: Report missing, outdated, or unclear documentation
+labels: ["documentation"]
 
 body:
   - type: input

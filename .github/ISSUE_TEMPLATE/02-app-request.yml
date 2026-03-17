@@ -1,6 +1,7 @@
 ---
 name: App Request
 description: Suggest adding a new app to the collection
+labels: ["enhancement"]
 
 body:
   - type: input
