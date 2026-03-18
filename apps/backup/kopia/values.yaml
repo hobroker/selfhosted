@@ -7,20 +7,18 @@ controllers:
       main:
         image:
           repository: kopia/kopia
-          tag: 0.18.2
+          tag: 20260224.0.42919
           pullPolicy: IfNotPresent
-        command:
-          - /bin/sh
-          - -c
-          - >-
-            kopia server start
-            --insecure
-            --address=0.0.0.0:51515
-            --server-username=admin
-            --server-password=$KOPIA_UI_PASSWORD
-        env:
-          KOPIA_UI_PASSWORD: changeme
-          KOPIA_PASSWORD: changeme
+        args:
+          - server
+          - start
+          - --insecure
+          - --address=0.0.0.0:51515
+          - --server-username=admin
+          - --server-password=$(KOPIA_UI_PASSWORD)
+        envFrom:
+          - secretRef:
+              name: infisical-kopia-secret
 
 service:
   main:
