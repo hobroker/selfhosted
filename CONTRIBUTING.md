@@ -10,7 +10,6 @@ apps/
       values.yaml       # Helm values overrides
       README.md         # Install instructions, secrets, host volumes
 packages/
-  cli/                  # Interactive terminal UI (Ink/React)
   catalog/              # Generates README.md and main README.md from app READMEs
 ```
 
@@ -87,27 +86,6 @@ npm run generate
 ```
 
 This also runs automatically as a pre-commit hook whenever a `apps/**/README.md` is staged.
-
-## Development
-
-Install dependencies:
-
-```shell
-npm install
-```
-
-Run the interactive CLI:
-
-```shell
-npm run cli
-```
-
-Lint and format:
-
-```shell
-npm run lint
-npm run format
-```
 
 ## Opening a Pull Request
 
