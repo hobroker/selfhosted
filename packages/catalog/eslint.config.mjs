@@ -3,23 +3,13 @@ import tseslint from "typescript-eslint";
 import unusedImports from "eslint-plugin-unused-imports";
 import prettierConfig from "eslint-config-prettier";
 import { defineConfig } from "eslint/config";
-import globals from "globals";
 
 export default defineConfig(
   eslint.configs.recommended,
   tseslint.configs.recommended,
   prettierConfig,
   {
-    files: ["**/*.{ts,tsx}"],
-    plugins: {
-      "unused-imports": unusedImports,
-    },
-    languageOptions: {
-      globals: {
-        ...globals.node,
-        ...globals.vitest,
-      },
-    },
+    plugins: { "unused-imports": unusedImports },
     rules: {
       "@typescript-eslint/no-explicit-any": "warn",
       "no-unused-vars": "off",

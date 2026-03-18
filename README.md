@@ -53,7 +53,7 @@ curl -sfL https://get.k3s.io | sh -
 
 ### 2. Clone this repo
 
-```shell
+```
 git clone https://github.com/hobroker/selfhosted.git
 cd selfhosted
 ```
