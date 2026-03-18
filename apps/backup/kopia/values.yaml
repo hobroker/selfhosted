@@ -9,13 +9,15 @@ controllers:
           repository: kopia/kopia
           tag: 0.18.2
           pullPolicy: IfNotPresent
-        args:
-          - server
-          - start
-          - --insecure
-          - --address=0.0.0.0:51515
-          - --server-username=admin
-          - --server-password=$(KOPIA_UI_PASSWORD)
+        command:
+          - /bin/sh
+          - -c
+          - >-
+            kopia server start
+            --insecure
+            --address=0.0.0.0:51515
+            --server-username=admin
+            --server-password=$KOPIA_UI_PASSWORD
         env:
           KOPIA_UI_PASSWORD: changeme
           KOPIA_PASSWORD: changeme
