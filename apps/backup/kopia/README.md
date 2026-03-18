@@ -43,11 +43,11 @@ helm upgrade --install kopia bjw-s/app-template \
 
 ## Storage
 
-| hostPath                  | containerPath | description             |
-| ------------------------- | ------------- | ----------------------- |
-| `/var/local/kopia/config` | `/app/config` | Kopia config + TLS cert |
-| `/var/local/kopia/cache`  | `/app/cache`  | Local dedup cache       |
-| `/var/local/kopia/logs`   | `/app/logs`   | Server logs             |
+| hostPath                  | containerPath | description       |
+| ------------------------- | ------------- | ----------------- |
+| `/var/local/kopia/config` | `/app/config` | Kopia config      |
+| `/var/local/kopia/cache`  | `/app/cache`  | Local dedup cache |
+| `/var/local/kopia/logs`   | `/app/logs`   | Server logs       |
 
 PV: `kopia-config-pv` → PVC: `kopia-config-pvc`
 PV: `kopia-cache-pv` → PVC: `kopia-cache-pvc`
@@ -57,14 +57,8 @@ Repository backend: configured via UI after deploy (S3, B2, GCS, etc.)
 
 ## VolSync Integration
 
-Kopia runs in server mode with a self-signed TLS cert. VolSync can connect via the ClusterIP service:
+Kopia runs in server mode (insecure/no TLS). VolSync can connect via the ClusterIP service:
 
 ```
-kopia.default.svc.cluster.local:51515
-```
-
-Get the cert fingerprint after deploy:
-
-```bash
-kubectl exec -n default deploy/kopia -- kopia server status
+http://kopia.default.svc.cluster.local:51515
 ```
