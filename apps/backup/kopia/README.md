@@ -10,7 +10,7 @@ Chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 Create directories on the Talos node before deploying:
 
 ```bash
-mkdir -p /var/local/kopia/config /var/local/kopia/cache /var/local/kopia/logs
+mkdir -p /var/local/kopia/config /var/local/kopia/cache
 ```
 
 ## Secrets
@@ -47,11 +47,9 @@ helm upgrade --install kopia bjw-s/app-template \
 | ------------------------- | ------------- | ----------------- |
 | `/var/local/kopia/config` | `/app/config` | Kopia config      |
 | `/var/local/kopia/cache`  | `/app/cache`  | Local dedup cache |
-| `/var/local/kopia/logs`   | `/app/logs`   | Server logs       |
 
 PV: `kopia-config-pv` → PVC: `kopia-config-pvc`
 PV: `kopia-cache-pv` → PVC: `kopia-cache-pvc`
-PV: `kopia-logs-pv` → PVC: `kopia-logs-pvc`
 
 Repository backend: configured via UI after deploy (S3, B2, GCS, etc.)
 

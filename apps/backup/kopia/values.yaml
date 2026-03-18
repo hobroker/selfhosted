@@ -50,7 +50,3 @@ persistence:
     existingClaim: kopia-cache-pvc
     globalMounts:
       - path: /app/cache
-  logs:
-    existingClaim: kopia-logs-pvc
-    globalMounts:
-      - path: /app/logs
