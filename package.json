@@ -5,13 +5,11 @@
   "author": "Igor Leahu <igor.leahu24@gmail.com>",
   "packageManager": "npm@11.11.0",
   "workspaces": [
-    "packages/catalog",
-    "packages/cli"
+    "packages/catalog"
   ],
   "scripts": {
     "prepare": "husky",
     "generate": "tsx packages/catalog/src/cli.ts",
-    "cli": "npm run cli --workspace @hobroker/selfhosted-cli",
     "test": "turbo test",
     "typecheck": "turbo typecheck",
     "lint": "turbo lint",

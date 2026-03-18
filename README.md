@@ -18,7 +18,6 @@ Run your own media server, backups, monitoring, automation, and more — on hard
 - [Host Directories](#host-directories)
 - [Secrets](#secrets)
 - [Deploying an App](#deploying-an-app)
-- [Interactive CLI (optional)](#interactive-cli-optional)
 - [Docs Generation](#docs-generation)
 - [Apps](#apps)
   - [Automation](#automation)
@@ -38,7 +37,7 @@ Run your own media server, backups, monitoring, automation, and more — on hard
 - [Helm](https://helm.sh/docs/intro/install/) — Kubernetes package manager
 - [kubectl](https://kubernetes.io/docs/tasks/tools/) — Kubernetes CLI
 - [ArgoCD](https://argo-cd.readthedocs.io/en/stable/getting_started/) — optional GitOps controller (see [apps/system/argocd](apps/system/argocd))
-- [Node.js](https://nodejs.org/) + npm — optional, for the interactive CLI
+- [Node.js](https://nodejs.org/) + npm — optional, for [generating docs](#docs-generation)
 
 ## Getting Started
 
@@ -130,15 +129,6 @@ kubectl apply -f apps/<category>/<name>/application.yaml
 ```
 
 Then sync it in the ArgoCD UI or with `argocd app sync <name>`.
-
-## Interactive CLI (optional)
-
-An interactive terminal UI is available for browsing and managing apps:
-
-```shell
-npm install
-npm run cli
-```
 
 ## Docs Generation
 
