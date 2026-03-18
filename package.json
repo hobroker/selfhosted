@@ -24,9 +24,5 @@
     "turbo": "^2.8.11",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
-  },
-  "lint-staged": {
-    "*.{md,yaml}": "prettier --write",
-    "apps/**/README.md": "bash -c 'npm run generate'"
   }
 }

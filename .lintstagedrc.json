@@ -1,0 +1,4 @@
+{
+  "*.{md,json,yml,yaml}": "prettier --write",
+  "apps/**/README.md": "bash -c 'npm run generate'"
+}
