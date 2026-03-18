@@ -1,4 +1,3 @@
-import { describe, it, expect } from "vitest";
 import { formatCategoryLabel, renderTable, renderSection, renderCatalog } from "./render";
 import type { AppEntry, CatalogSection } from "./types";
 

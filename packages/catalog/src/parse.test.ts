@@ -1,4 +1,3 @@
-import { describe, it, expect, beforeEach } from "vitest";
 import { parseReadme } from "./parse";
 import { CatalogLogger } from "./logger";
 import type { ScannedReadme } from "./types";
