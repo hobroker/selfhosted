@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "description": "A collection of tools and documentation for self-hosted applications",
   "author": "Igor Leahu <igor.leahu24@gmail.com>",
-  "packageManager": "npm@11.11.0",
+  "packageManager": "npm@11.12.0",
   "workspaces": [
     "packages/catalog"
   ],
@@ -14,15 +14,15 @@
     "typecheck": "turbo typecheck",
     "lint": "turbo lint",
     "lint:fix": "turbo lint -- --fix",
-    "prettier": "prettier --write .",
-    "prettier:check": "prettier --check ."
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.7",
+    "lint-staged": "^16.4.0",
     "prettier": "^3.8.1",
-    "turbo": "^2.8.11",
+    "turbo": "^2.8.19",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.18"
+    "vitest": "^4.1.0"
   }
 }
