@@ -21,9 +21,7 @@ argocd app sync recyclarr
 kubectl apply -k config/
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
-helm upgrade --install recyclarr bjw-s/app-template \
-  --namespace default --create-namespace \
-  -f values.yaml
+helm upgrade --install recyclarr bjw-s/app-template -f values.yaml
 ```
 
 ### Secrets

@@ -18,7 +18,7 @@ argocd app sync traefik
 ### Manual Helm (without ArgoCD)
 
 ```sh
-kubectl apply -f config/
+kubectl apply -f config
 helm repo add traefik https://helm.traefik.io/traefik
 helm repo update traefik
 helm upgrade --install traefik traefik/traefik \

@@ -8,6 +8,7 @@ configs:
     resource.customizations.ignoreDifferences.apps_Deployment: |
       jsonPointers:
         - /status
+    users.session.duration: "2160h"
 
 server:
   service:

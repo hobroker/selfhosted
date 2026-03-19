@@ -4,9 +4,19 @@
 
 Source Code: https://github.com/argoproj/argo-cd
 
-## Bootstrap
+## Installing/upgrading
 
-ArgoCD is bootstrapped once via plain Helm:
+ArgoCD is bootstrapped once via plain Helm, then manages itself going forward.
+
+```sh
+# Register / update the Application resource
+kubectl apply -f application.yaml
+
+# Then sync the workload - via ArgoCD UI or:
+argocd app sync argocd
+```
+
+### Manual Helm (without ArgoCD)
 
 ```sh
 helm repo add argo https://argoproj.github.io/argo-helm
@@ -16,9 +26,9 @@ helm upgrade --install argocd argo/argo-cd \
   -f values.yaml
 ```
 
-After the initial bootstrap, ArgoCD manages itself — upgrades are done by bumping `targetRevision` in `application.yaml` and syncing via the UI.
+After the initial bootstrap, upgrades are done by bumping `targetRevision` in `application.yaml` and syncing via the UI.
 
-## Register / update the Application resourceing Services
+## Register / update the Application resources
 
 Each service has an `application.yaml` co-located in its chart directory. Register services individually:
 
@@ -26,13 +36,7 @@ Each service has an `application.yaml` co-located in its chart directory. Regist
 kubectl apply -f charts/<category>/<service>/application.yaml
 ```
 
-Then sync via the ArgoCD UI. For system services, sync in this order:
-
-1. `local-path-provisioner`
-2. `traefik`
-3. `infisical-operator`
-4. `reloader` (optional)
-5. `rancher` (optional)
+Then sync via the ArgoCD UI.
 
 ## CLI Access
 
