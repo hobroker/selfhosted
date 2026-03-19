@@ -18,21 +18,10 @@ argocd app sync prometheus-operator
 ### Manual Helm (without ArgoCD)
 
 ```sh
+kubectl apply -f config
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update prometheus-community
 helm upgrade --install prometheus-operator prometheus-community/kube-prometheus-stack \
-  --namespace monitoring --create-namespace \
+  --version 82.10.4 --namespace monitoring --create-namespace \
   -f values.yaml
 ```
-
-### Helm values
-
-| chart                 | values.yaml                                                                                            |
-| --------------------- | ------------------------------------------------------------------------------------------------------ |
-| `prometheus-operator` | https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml |
-| `grafana`             | https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml                            |
-
-### Persistence
-
-- **Prometheus**: Uses `local-path-retain` storage class (5Gi) for metrics retention.
-- **Grafana**: Uses `local-path-retain` storage class (5Gi) for dashboards and user data.

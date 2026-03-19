@@ -4,6 +4,26 @@
 
 Source Code: https://github.com/argoproj/argo-cd
 
+## Installing/upgrading
+
+```sh
+# Register / update the Application resource
+kubectl apply -f application.yaml
+
+# Then sync the workload - via ArgoCD UI or:
+argocd app sync argocd
+```
+
+### Manual Helm (without ArgoCD)
+
+```sh
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update argo
+helm upgrade --install argocd argo/argo-cd \
+  --version 7.8.23 --namespace argocd --create-namespace \
+  -f values.yaml
+```
+
 ## Bootstrap
 
 ArgoCD is bootstrapped once via plain Helm:

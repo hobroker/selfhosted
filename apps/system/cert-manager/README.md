@@ -21,12 +21,6 @@ argocd app sync cert-manager
 helm repo add jetstack https://charts.jetstack.io
 helm repo update jetstack
 helm upgrade --install cert-manager jetstack/cert-manager \
-  --namespace cert-manager --create-namespace \
+  --version v1.19.4 --namespace cert-manager --create-namespace \
   -f values.yaml
 ```
-
-### Helm values
-
-| chart          | values.yaml                                                                                     |
-| -------------- | ----------------------------------------------------------------------------------------------- |
-| `cert-manager` | https://github.com/cert-manager/cert-manager/blob/master/deploy/charts/cert-manager/values.yaml |

@@ -21,12 +21,6 @@ argocd app sync reloader
 helm repo add stakater https://stakater.github.io/stakater-charts
 helm repo update stakater
 helm upgrade --install reloader stakater/reloader \
-  --namespace kube-system --create-namespace \
+  --version 2.2.8 --namespace kube-system --create-namespace \
   -f values.yaml
 ```
-
-### Helm values
-
-| chart      | values.yaml                                                                                        |
-| ---------- | -------------------------------------------------------------------------------------------------- |
-| `reloader` | https://github.com/stakater/Reloader/blob/master/deployments/kubernetes/chart/reloader/values.yaml |

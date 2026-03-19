@@ -22,8 +22,7 @@ kubectl apply -f config
 helm repo add openclaw https://serhanekicii.github.io/openclaw-helm
 helm repo update openclaw
 helm upgrade --install openclaw openclaw/openclaw \
-  --namespace default --create-namespace \
-  -f values.yaml
+  --version 1.4.6 -f values.yaml
 ```
 
 ## Secrets

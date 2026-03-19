@@ -18,21 +18,10 @@ argocd app sync scraparr
 ### Manual Helm (without ArgoCD)
 
 ```sh
-kubectl apply -f config/
+kubectl apply -k config
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
 helm upgrade --install scraparr bjw-s/app-template \
-  --namespace monitoring --create-namespace \
+  --version 4.6.2 --namespace monitoring --create-namespace \
   -f values.yaml
 ```
-
-### Secrets
-
-The following environment variables are required and sourced from the `infisical-scraparr-secret`:
-
-| name               | description          |
-| ------------------ | -------------------- |
-| `SONARR_API_KEY`   | API key for Sonarr   |
-| `RADARR_API_KEY`   | API key for Radarr   |
-| `PROWLARR_API_KEY` | API key for Prowlarr |
-| `BAZARR_API_KEY`   | API key for Bazarr   |

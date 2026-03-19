@@ -18,22 +18,12 @@ argocd app sync recyclarr
 ### Manual Helm (without ArgoCD)
 
 ```sh
-kubectl apply -k config/
+kubectl apply -k config
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
 helm upgrade --install recyclarr bjw-s/app-template \
-  --namespace default --create-namespace \
-  -f values.yaml
+  --version 4.6.2 -f values.yaml
 ```
-
-### Secrets
-
-Add the following to Infisical at path `/recyclarr`:
-
-| key              | description        |
-| ---------------- | ------------------ |
-| `SONARR_API_KEY` | API key for Sonarr |
-| `RADARR_API_KEY` | API key for Radarr |
 
 ## Configuration
 

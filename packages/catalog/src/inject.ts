@@ -3,7 +3,7 @@ import { format, resolveConfig } from "prettier";
 import type { CliOptions } from "./types";
 import type { CatalogLogger } from "./logger";
 
-async function formatMarkdown(content: string, filepath: string): Promise<string> {
+export async function formatMarkdown(content: string, filepath: string): Promise<string> {
   const config = await resolveConfig(filepath);
   return format(content, { ...config, filepath });
 }
