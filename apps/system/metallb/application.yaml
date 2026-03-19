@@ -15,6 +15,9 @@ spec:
     - repoURL: https://github.com/hobroker/selfhosted.git
       targetRevision: HEAD
       path: apps/system/metallb/config
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      path: apps/system/metallb/postsync
     - repoURL: https://metallb.github.io/metallb
       chart: metallb
       targetRevision: 0.14.9
