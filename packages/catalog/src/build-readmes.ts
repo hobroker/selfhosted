@@ -1,31 +1,12 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { load } from "js-yaml";
 import { scanAppsForGeneration } from "./scan";
 import { parseApplication } from "./parse-application";
 import { renderReadme } from "./render-readme";
 import { formatMarkdown } from "./inject";
-import { PartialReadmeFrontmatterSchema } from "./schema";
+import { parsePartialReadme } from "./parse-partial";
 import type { AppManifest, CliOptions, PartialReadme } from "./types";
 import type { CatalogLogger } from "./logger";
-
-function parsePartialReadme(content: string): PartialReadme {
-  const match = content.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
-  if (!match) {
-    throw new Error("Missing frontmatter — expected content between --- delimiters");
-  }
-
-  const raw = load(match[1]!);
-  const result = PartialReadmeFrontmatterSchema.safeParse(raw);
-  if (!result.success) {
-    throw new Error(`Invalid frontmatter: ${result.error.message}`);
-  }
-
-  return {
-    frontmatter: result.data,
-    body: match[2]!.trimStart(),
-  };
-}
 
 export async function buildReadmes(options: CliOptions, logger: CatalogLogger): Promise<void> {
   const appsDir = join(options.root, "apps");
@@ -89,7 +70,7 @@ export async function buildReadmes(options: CliOptions, logger: CatalogLogger): 
           // file doesn't exist yet
         }
         if (formatted !== existing) {
-          logger.error(`${label}: README.md is out of date — run \`npm run generate:readmes\``);
+          logger.error(`${label}: README.md is out of date — run \`npm run generate\``);
         }
         return;
       }
