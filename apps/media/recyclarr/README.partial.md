@@ -12,9 +12,9 @@ ArgoCD will automatically run a sync job whenever this file changes.
 
 ## Storage
 
-| source                            | containerPath | description            |
-| --------------------------------- | ------------- | ---------------------- |
-| `/var/local/recyclarr` (hostPath) | `/config`     | State, logs, and cache |
+| source                 | container path | type       | description            |
+| ---------------------- | -------------- | ---------- | ---------------------- |
+| `/var/local/recyclarr` | `/config`      | `hostPath` | State, logs, and cache |
 
 `recyclarr.yml` is rendered at runtime by an init container — API keys from `infisical-recyclarr-secret` are substituted into the ConfigMap template.
 

@@ -6,8 +6,8 @@ chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 
 ## Storage
 
-| hostPath              | containerPath | description                            |
-| --------------------- | ------------- | -------------------------------------- |
-| `/var/local/prowlarr` | `/config`     | Application configuration and database |
+| source                | container path | type       | description                            |
+| --------------------- | -------------- | ---------- | -------------------------------------- |
+| `/var/local/prowlarr` | `/config`      | `hostPath` | Application configuration and database |
 
 PV: `prowlarr-config-pv` (1Gi, Retain) → PVC: `prowlarr-config-pvc` in namespace `default`

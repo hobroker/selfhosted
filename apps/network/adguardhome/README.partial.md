@@ -6,10 +6,10 @@ chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 
 ## Storage
 
-| source                                   | containerPath           | description         |
-| ---------------------------------------- | ----------------------- | ------------------- |
-| `/var/local/adguardhome/work` (hostPath) | `/opt/adguardhome/work` | Working data        |
-| `/var/local/adguardhome/conf` (hostPath) | `/opt/adguardhome/conf` | Configuration files |
+| source                        | container path          | type       | description         |
+| ----------------------------- | ----------------------- | ---------- | ------------------- |
+| `/var/local/adguardhome/work` | `/opt/adguardhome/work` | `hostPath` | Working data        |
+| `/var/local/adguardhome/conf` | `/opt/adguardhome/conf` | `hostPath` | Configuration files |
 
 PV: `adguardhome-work-pv` → PVC: `adguardhome-work-pvc`
 PV: `adguardhome-conf-pv` → PVC: `adguardhome-conf-pvc`

@@ -6,8 +6,8 @@ chart: https://github.com/traefik/traefik-helm-chart
 
 ## Storage
 
-| source                               | containerPath | description                                 |
-| ------------------------------------ | ------------- | ------------------------------------------- |
-| `/var/local/traefik/acme` (hostPath) | `/acme`       | Storage for ACME certificates (letsencrypt) |
+| source                    | container path | type       | description                                 |
+| ------------------------- | -------------- | ---------- | ------------------------------------------- |
+| `/var/local/traefik/acme` | `/acme`        | `hostPath` | Storage for ACME certificates (letsencrypt) |
 
 PV: `traefik-acme-pv` → PVC: `traefik-acme-pvc`

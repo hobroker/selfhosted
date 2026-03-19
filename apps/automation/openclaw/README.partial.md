@@ -15,9 +15,9 @@ Add the following secrets to Infisical under `/openclaw`:
 
 ## Storage
 
-| source                           | containerPath          | description                            |
-| -------------------------------- | ---------------------- | -------------------------------------- |
-| `/var/local/openclaw` (hostPath) | `/home/node/.openclaw` | Config, sessions, and installed skills |
+| source                | container path         | type       | description                            |
+| --------------------- | ---------------------- | ---------- | -------------------------------------- |
+| `/var/local/openclaw` | `/home/node/.openclaw` | `hostPath` | Config, sessions, and installed skills |
 
 PV: `openclaw-data-pv` → PVC: `openclaw-data-pvc`
 

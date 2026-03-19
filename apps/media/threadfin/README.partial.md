@@ -6,9 +6,9 @@ chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 
 ## Storage
 
-| source                            | containerPath          | description               |
-| --------------------------------- | ---------------------- | ------------------------- |
-| `/var/local/threadfin` (hostPath) | `/home/threadfin/conf` | Application configuration |
-| emptyDir                          | `/tmp/threadfin`       | Temporary files           |
+| source                 | container path         | type       | description               |
+| ---------------------- | ---------------------- | ---------- | ------------------------- |
+| `/var/local/threadfin` | `/home/threadfin/conf` | `hostPath` | Application configuration |
+| —                      | `/tmp/threadfin`       | `emptyDir` | Temporary files           |
 
 PV: `threadfin-config-pv` → PVC: `threadfin-config-pvc`

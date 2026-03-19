@@ -6,8 +6,8 @@ chart: https://bjw-s-labs.github.io/helm-charts/docs/app-template/
 
 ## Storage
 
-| source                        | containerPath | description                            |
-| ----------------------------- | ------------- | -------------------------------------- |
-| `/var/local/seerr` (hostPath) | `/app/config` | Application configuration and database |
+| source             | container path | type       | description                            |
+| ------------------ | -------------- | ---------- | -------------------------------------- |
+| `/var/local/seerr` | `/app/config`  | `hostPath` | Application configuration and database |
 
 PV: `seerr-config-pv` → PVC: `seerr-config-pvc`

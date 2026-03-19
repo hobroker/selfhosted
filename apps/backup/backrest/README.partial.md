@@ -15,10 +15,10 @@ mkdir -p /var/local/backrest/data
 
 ## Storage
 
-| hostPath                              | containerPath | description                           |
-| ------------------------------------- | ------------- | ------------------------------------- |
-| `/var/local/backrest/data` (hostPath) | `/data`       | Backrest config, repos index and logs |
-| `/var/local` (hostPath)               | `/var/local`  | Backrest varlocal data                |
+| source                     | container path | type       | description                           |
+| -------------------------- | -------------- | ---------- | ------------------------------------- |
+| `/var/local/backrest/data` | `/data`        | `hostPath` | Backrest config, repos index and logs |
+| `/var/local`               | `/var/local`   | `hostPath` | Backrest varlocal data                |
 
 PV: `backrest-data-pv` (Retain) → PVC: `backrest-data-pvc`
 PV: `backrest-varlocal-pv` (Retain) → PVC: `backrest-varlocal-pvc`
