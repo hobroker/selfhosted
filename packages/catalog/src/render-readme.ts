@@ -1,5 +1,17 @@
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import ejs from "ejs";
+const ejsRender = ejs.render.bind(ejs);
 import type { CatalogLogger } from "./logger";
-import type { AppManifest, PartialReadme } from "./types";
+import type { AppManifest, PartialReadme, StorageMount } from "./types";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const TEMPLATE = readFileSync(join(__dirname, "readme.template.ejs"), "utf-8");
+const PATTERN_TEMPLATES: Record<string, string> = {
+  "helm-repo": readFileSync(join(__dirname, "patterns/helm-repo.ejs"), "utf-8"),
+  "git-chart": readFileSync(join(__dirname, "patterns/git-chart.ejs"), "utf-8"),
+};
 
 // ── Helm repo alias lookup ────────────────────────────────────────────────────
 
@@ -44,100 +56,55 @@ export function deriveHelmAlias(repoURL: string, logger?: CatalogLogger): string
 
 // ── README renderer ───────────────────────────────────────────────────────────
 
-function renderManualHelm(manifest: AppManifest, logger?: CatalogLogger): string[] {
-  const { name, namespace, pattern } = manifest;
-  const needsNamespace = namespace !== "default";
-  const namespaceFlags = `--namespace ${namespace} --create-namespace`;
-  const lines: string[] = [];
-
-  if (pattern.kind === "helm-repo") {
-    const { helmSource, configPath, hasKustomization } = pattern;
-    const alias = deriveHelmAlias(helmSource.repoURL, logger);
-    const releaseName = helmSource.helm?.releaseName ?? name;
-
-    if (configPath) {
-      lines.push(hasKustomization ? "kubectl apply -k config" : "kubectl apply -f config");
-    }
-    lines.push(`helm repo add ${alias} ${helmSource.repoURL}`);
-    lines.push(`helm repo update ${alias}`);
-
-    const versionFlag = helmSource.targetRevision ? `--version ${helmSource.targetRevision} ` : "";
-    if (needsNamespace) {
-      lines.push(
-        `helm upgrade --install ${releaseName} ${alias}/${helmSource.chart} \\`,
-        `  ${versionFlag}${namespaceFlags} \\`,
-        `  -f values.yaml`,
-      );
-    } else if (versionFlag) {
-      lines.push(
-        `helm upgrade --install ${releaseName} ${alias}/${helmSource.chart} \\`,
-        `  ${versionFlag}-f values.yaml`,
-      );
-    } else {
-      lines.push(`helm upgrade --install ${releaseName} ${alias}/${helmSource.chart} -f values.yaml`);
-    }
-  } else {
-    // Pattern C: git-based chart
-    const { configPath, gitChartSource, hasKustomization } = pattern;
-    const releaseName = gitChartSource.helm?.releaseName ?? name;
-
-    lines.push(hasKustomization ? "kubectl apply -k config" : "kubectl apply -f config");
-    lines.push(
-      `git clone --depth 1 --branch ${gitChartSource.targetRevision} ${gitChartSource.repoURL} /tmp/${name}`,
-    );
-    lines.push(
-      `helm upgrade --install ${releaseName} /tmp/${name}/${gitChartSource.path} \\`,
-      `  ${namespaceFlags} \\`,
-      `  -f values.yaml`,
-    );
-    void configPath; // used for kustomization detection above
-  }
-
-  return lines;
-}
-
 export function renderReadme(
   partial: PartialReadme,
   manifest: AppManifest,
+  storage: StorageMount[],
   logger?: CatalogLogger,
 ): string {
-  const { name } = manifest;
+  const { name, namespace, pattern } = manifest;
   const { description, sourceCode, chart } = partial.frontmatter;
 
-  const lines: string[] = [
-    `# \`${name}\``,
-    "",
-    `> ${description}`,
-    "",
-    `Source Code: ${sourceCode}`,
-  ];
+  const needsNamespace = namespace !== "default";
+  const namespaceFlags = `--namespace ${namespace} --create-namespace`;
 
-  if (chart) {
-    lines.push(`Chart: ${chart}`);
+  let patternData: Record<string, unknown>;
+
+  if (pattern.kind === "helm-repo") {
+    patternData = {
+      kind: "helm-repo",
+      alias: deriveHelmAlias(pattern.helmSource.repoURL, logger),
+      releaseName: pattern.helmSource.helm?.releaseName ?? name,
+      helmSource: pattern.helmSource,
+      configPath: pattern.configPath,
+      hasKustomization: pattern.hasKustomization,
+      needsNamespace,
+      namespaceFlags,
+      targetRevision: pattern.helmSource.targetRevision,
+    };
+  } else {
+    patternData = {
+      kind: "git-chart",
+      releaseName: pattern.gitChartSource.helm?.releaseName ?? name,
+      gitChartSource: pattern.gitChartSource,
+      hasKustomization: pattern.hasKustomization,
+      needsNamespace,
+      namespaceFlags,
+    };
   }
 
-  lines.push(
-    "",
-    "## Installing/upgrading",
-    "",
-    "```sh",
-    "# Register / update the Application resource",
-    "kubectl apply -f application.yaml",
-    "",
-    "# Then sync the workload - via ArgoCD UI or:",
-    `argocd app sync ${name}`,
-    "```",
-    "",
-    "### Manual Helm (without ArgoCD)",
-    "",
-    "```sh",
-    ...renderManualHelm(manifest, logger),
-    "```",
-  );
+  const manualHelm = ejsRender(PATTERN_TEMPLATES[patternData.kind as string]!, {
+    name,
+    pattern: patternData,
+  });
 
-  if (partial.body.trim()) {
-    lines.push("", partial.body.trimEnd());
-  }
-
-  return lines.join("\n") + "\n";
+  return ejsRender(TEMPLATE, {
+    name,
+    description,
+    sourceCode,
+    chart,
+    body: partial.body,
+    manualHelm,
+    storage,
+  });
 }

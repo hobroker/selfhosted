@@ -2,6 +2,9 @@
  * One-time migration script: converts existing hand-authored README.md files
  * into README.partial.md (frontmatter + custom body, without the install section).
  *
+ * Also strips ## Storage sections from existing README.partial.md files since
+ * storage tables are now auto-generated from config/pv.yaml + values.yaml.
+ *
  * Run: tsx scripts/migrate-readmes.ts
  * After running, verify with: git diff
  * Then commit both README.partial.md and (regenerated) README.md files.
@@ -46,13 +49,21 @@ function extractBody(content: string): string {
   // Split into top-level ## sections
   const parts = content.split(/(?=^## )/m);
 
-  // First part is the header block (# name + description + source lines)
-  // Filter out the ## Installing/upgrading section, keep the rest as body
+  // Skip header block, filter out auto-generated sections
   const bodySections = parts
-    .slice(1) // skip header block
-    .filter((section) => !section.startsWith("## Installing/upgrading"));
+    .slice(1)
+    .filter(
+      (section) =>
+        !section.startsWith("## Installing/upgrading") && !section.startsWith("## Storage"),
+    );
 
   return bodySections.join("").trimStart();
+}
+
+function stripStorageSection(content: string): string {
+  const parts = content.split(/(?=^## )/m);
+  const filtered = parts.filter((section) => !section.startsWith("## Storage"));
+  return filtered.join("").trimEnd() + "\n";
 }
 
 async function fileExists(path: string): Promise<boolean> {
@@ -68,13 +79,21 @@ async function migrateApp(appDir: string, label: string): Promise<void> {
   const readmePath = join(appDir, "README.md");
   const partialPath = join(appDir, "README.partial.md");
 
-  if (!(await fileExists(readmePath))) {
-    console.log(`  skip: no README.md`);
+  // If partial already exists, strip its ## Storage section (now auto-generated)
+  if (await fileExists(partialPath)) {
+    const content = await readFile(partialPath, "utf-8");
+    if (content.includes("## Storage")) {
+      const stripped = stripStorageSection(content);
+      await writeFile(partialPath, stripped);
+      console.log(`  ✓ stripped ## Storage from README.partial.md`);
+    } else {
+      console.log(`  skip: README.partial.md already exists (no ## Storage to strip)`);
+    }
     return;
   }
 
-  if (await fileExists(partialPath)) {
-    console.log(`  skip: README.partial.md already exists`);
+  if (!(await fileExists(readmePath))) {
+    console.log(`  skip: no README.md`);
     return;
   }
 
@@ -109,7 +128,7 @@ async function main(): Promise<void> {
     }
   }
 
-  console.log("\nDone. Now run: npm run generate:readmes");
+  console.log("\nDone. Now run: npm run generate");
 }
 
 main().catch((err) => {

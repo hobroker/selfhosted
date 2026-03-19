@@ -58,6 +58,13 @@ export interface AppManifest {
   pattern: AppPattern;
 }
 
+export interface StorageMount {
+  name: string;
+  source: string; // hostPath or "nfs:<server>:<path>"
+  containerPaths: string[];
+  size: string;
+}
+
 export interface ScannedApp {
   category: string;
   serviceName: string;
