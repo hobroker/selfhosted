@@ -18,7 +18,7 @@ argocd app sync scraparr
 ### Manual Helm (without ArgoCD)
 
 ```sh
-kubectl apply -f config/
+kubectl apply -k config
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
 helm upgrade --install scraparr bjw-s/app-template \

@@ -18,20 +18,15 @@ argocd app sync adguardhome
 ### Manual Helm (without ArgoCD)
 
 ```sh
-kubectl apply -f config/pv.yaml
+kubectl apply -f config
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
-helm upgrade --install adguardhome bjw-s/app-template \
-  --namespace default --create-namespace \
-  -f values.yaml
+helm upgrade --install adguardhome bjw-s/app-template -f values.yaml
 ```
 
 ## Storage
 
-| source                                   | containerPath           | description         |
-| ---------------------------------------- | ----------------------- | ------------------- |
-| `/var/local/adguardhome/work` (hostPath) | `/opt/adguardhome/work` | Working data        |
-| `/var/local/adguardhome/conf` (hostPath) | `/opt/adguardhome/conf` | Configuration files |
-
-PV: `adguardhome-work-pv` → PVC: `adguardhome-work-pvc`
-PV: `adguardhome-conf-pv` → PVC: `adguardhome-conf-pvc`
+| source                        | container path          | type       | description         |
+| ----------------------------- | ----------------------- | ---------- | ------------------- |
+| `/var/local/adguardhome/work` | `/opt/adguardhome/work` | `hostPath` | Working data        |
+| `/var/local/adguardhome/conf` | `/opt/adguardhome/conf` | `hostPath` | Configuration files |

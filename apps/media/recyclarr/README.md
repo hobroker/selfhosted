@@ -18,22 +18,11 @@ argocd app sync recyclarr
 ### Manual Helm (without ArgoCD)
 
 ```sh
-kubectl apply -k config/
+kubectl apply -k config
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
-helm upgrade --install recyclarr bjw-s/app-template \
-  --namespace default --create-namespace \
-  -f values.yaml
+helm upgrade --install recyclarr bjw-s/app-template -f values.yaml
 ```
-
-### Secrets
-
-Add the following to Infisical at path `/recyclarr`:
-
-| key              | description        |
-| ---------------- | ------------------ |
-| `SONARR_API_KEY` | API key for Sonarr |
-| `RADARR_API_KEY` | API key for Radarr |
 
 ## Configuration
 
@@ -43,10 +32,15 @@ ArgoCD will automatically run a sync job whenever this file changes.
 
 ## Storage
 
-| source                            | containerPath | description            |
-| --------------------------------- | ------------- | ---------------------- |
-| `/var/local/recyclarr` (hostPath) | `/config`     | State, logs, and cache |
+| source                 | container path | type       | description            |
+| ---------------------- | -------------- | ---------- | ---------------------- |
+| `/var/local/recyclarr` | `/config`      | `hostPath` | State, logs, and cache |
 
-`recyclarr.yml` is rendered at runtime by an init container — API keys from `infisical-recyclarr-secret` are substituted into the ConfigMap template.
+### Secrets
 
-PV: `recyclarr-config-pv` → PVC: `recyclarr-config-pvc`
+Add the following to Infisical at path `/recyclarr`:
+
+| key              | description        |
+| ---------------- | ------------------ |
+| `SONARR_API_KEY` | API key for Sonarr |
+| `RADARR_API_KEY` | API key for Radarr |

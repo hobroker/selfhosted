@@ -9,14 +9,7 @@ Chart: https://metallb.github.io/metallb
 
 These must be applied once per cluster before deploying:
 
-**1. Label the namespace as privileged** (required for speaker pod `NET_RAW`/`NET_ADMIN`):
-
-```sh
-kubectl create namespace metallb-system
-kubectl label namespace metallb-system pod-security.kubernetes.io/enforce=privileged
-```
-
-**2. Talos machine config** must have `allowSchedulingOnControlPlanes: true` — prevents Talos from adding the `exclude-from-external-load-balancers` label and `NoSchedule` taint to control-plane nodes, which would block MetalLB from announcing IPs:
+**1. Talos machine config** must have `allowSchedulingOnControlPlanes: true` — prevents Talos from adding the `exclude-from-external-load-balancers` label and `NoSchedule` taint to control-plane nodes, which would block MetalLB from announcing IPs:
 
 ```yaml
 cluster:
@@ -31,32 +24,31 @@ kubectl apply -f application.yaml
 
 # Then sync the workload - via ArgoCD UI or:
 argocd app sync metallb
-
-# Apply the IP pool configuration (once per cluster):
-kubectl apply -f ippool.yaml
 ```
 
 ### Manual Helm (without ArgoCD)
 
 ```sh
+kubectl apply -k config
 helm repo add metallb https://metallb.github.io/metallb
 helm repo update metallb
 helm upgrade --install metallb metallb/metallb \
-  --version 0.14.9 --namespace metallb-system --create-namespace \
+  --namespace metallb-system --create-namespace \
   -f values.yaml
-
-kubectl apply -f ippool.yaml
 ```
+
+## After Manual Helm Install
+
+Once the helm chart is deployed and MetalLB CRDs are available, apply the IP pool config:
+
+```sh
+kubectl apply -f postsync/ippool.yaml
+```
+
+> When deploying via ArgoCD, `postsync/` is a separate source — resources are annotated with `hook: PostSync` and applied automatically after the helm chart is healthy.
 
 ### Helm values
 
 | chart     | values.yaml                                                             |
 | --------- | ----------------------------------------------------------------------- |
 | `metallb` | https://github.com/metallb/metallb/blob/main/charts/metallb/values.yaml |
-
-## IP Pool
-
-| IP               | service                         |
-| ---------------- | ------------------------------- |
-| `192.168.50.200` | shared (qbittorrent, plex, etc) |
-| `192.168.50.201` | Traefik                         |

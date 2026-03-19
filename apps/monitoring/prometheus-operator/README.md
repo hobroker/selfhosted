@@ -18,6 +18,7 @@ argocd app sync prometheus-operator
 ### Manual Helm (without ArgoCD)
 
 ```sh
+kubectl apply -f config
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update prometheus-community
 helm upgrade --install prometheus-operator prometheus-community/kube-prometheus-stack \
@@ -34,5 +35,4 @@ helm upgrade --install prometheus-operator prometheus-community/kube-prometheus-
 
 ### Persistence
 
-- **Prometheus**: Uses `local-path-retain` storage class (5Gi) for metrics retention.
-- **Grafana**: Uses `local-path-retain` storage class (5Gi) for dashboards and user data.
+**Prometheus** and **Grafana** use `local-path-retain` storage class for metrics retention and dashboards/user data, respectively.

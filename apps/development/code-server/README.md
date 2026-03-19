@@ -18,20 +18,15 @@ argocd app sync code-server
 ### Manual Helm (without ArgoCD)
 
 ```sh
-kubectl apply -f config/pv.yaml
+kubectl apply -f config
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
-helm upgrade --install code-server bjw-s/app-template \
-  --namespace default --create-namespace \
-  -f values.yaml
+helm upgrade --install code-server bjw-s/app-template -f values.yaml
 ```
 
 ## Storage
 
-| source                              | containerPath | description               |
-| ----------------------------------- | ------------- | ------------------------- |
-| `/var/local/code-server` (hostPath) | `/config`     | Application configuration |
-| `/var/local` (hostPath)             | `/var/local`  | Access to all local data  |
-
-PV: `code-server-config-pv` → PVC: `code-server-config-pvc`
-PV: `code-server-varlocal-pv` → PVC: `code-server-varlocal-pvc`
+| source                   | container path | type       | description               |
+| ------------------------ | -------------- | ---------- | ------------------------- |
+| `/var/local/code-server` | `/config`      | `hostPath` | Application configuration |
+| `/var/local`             | `/var/local`   | `hostPath` | Access to all local data  |

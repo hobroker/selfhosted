@@ -18,18 +18,14 @@ argocd app sync n8n
 ### Manual Helm (without ArgoCD)
 
 ```sh
-kubectl apply -f config/pv.yaml
+kubectl apply -f config
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
-helm upgrade --install n8n bjw-s/app-template \
-  --namespace default --create-namespace \
-  -f values.yaml
+helm upgrade --install n8n bjw-s/app-template -f values.yaml
 ```
 
 ## Storage
 
-| source                      | containerPath     | description                            |
-| --------------------------- | ----------------- | -------------------------------------- |
-| `/var/local/n8n` (hostPath) | `/home/node/.n8n` | Application configuration and database |
-
-PV: `n8n-config-pv` → PVC: `n8n-config-pvc`
+| source           | container path    | type       | description                            |
+| ---------------- | ----------------- | ---------- | -------------------------------------- |
+| `/var/local/n8n` | `/home/node/.n8n` | `hostPath` | Application configuration and database |

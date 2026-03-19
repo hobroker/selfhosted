@@ -18,23 +18,18 @@ argocd app sync fileflows
 ### Manual Helm (without ArgoCD)
 
 ```sh
-kubectl apply -f config/pv.yaml
+kubectl apply -f config
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
-helm upgrade --install fileflows bjw-s/app-template \
-  --namespace default --create-namespace \
-  -f values.yaml
+helm upgrade --install fileflows bjw-s/app-template -f values.yaml
 ```
 
 ## Storage
 
-| source                            | containerPath   | description                              |
-| --------------------------------- | --------------- | ---------------------------------------- |
-| `/var/local/fileflows` (hostPath) | `/app/common`   | Shared application data (subPath)        |
-| `/var/local/fileflows` (hostPath) | `/app/Data`     | Application database and state (subPath) |
-| `/var/local/fileflows` (hostPath) | `/app/Logs`     | Application logs (subPath)               |
-| emptyDir                          | `/temp`         | Temporary directory for transcoding      |
-| `192.168.50.7:/mnt/nebula` (NFS)  | `/media/nebula` | Media library for processing             |
-
-PV: `fileflows-config-pv` → PVC: `fileflows-config-pvc`
-PV: `fileflows-nebula-pv` → PVC: `fileflows-nebula-pvc`
+| source                     | container path  | type       | description                              |
+| -------------------------- | --------------- | ---------- | ---------------------------------------- |
+| `/var/local/fileflows`     | `/app/common`   | `hostPath` | Shared application data (subPath)        |
+| `/var/local/fileflows`     | `/app/Data`     | `hostPath` | Application database and state (subPath) |
+| `/var/local/fileflows`     | `/app/Logs`     | `hostPath` | Application logs (subPath)               |
+| N/A                        | `/temp`         | `emptyDir` | Temporary directory for transcoding      |
+| `192.168.50.7:/mnt/nebula` | `/media/nebula` | `nfs`      | Media library for processing             |

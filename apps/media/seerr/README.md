@@ -18,18 +18,14 @@ argocd app sync seerr
 ### Manual Helm (without ArgoCD)
 
 ```sh
-kubectl apply -f config/pv.yaml
+kubectl apply -f config
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
-helm upgrade --install seerr bjw-s/app-template \
-  --namespace default --create-namespace \
-  -f values.yaml
+helm upgrade --install seerr bjw-s/app-template -f values.yaml
 ```
 
 ## Storage
 
-| source                        | containerPath | description                            |
-| ----------------------------- | ------------- | -------------------------------------- |
-| `/var/local/seerr` (hostPath) | `/app/config` | Application configuration and database |
-
-PV: `seerr-config-pv` → PVC: `seerr-config-pvc`
+| source             | container path | type       | description                            |
+| ------------------ | -------------- | ---------- | -------------------------------------- |
+| `/var/local/seerr` | `/app/config`  | `hostPath` | Application configuration and database |

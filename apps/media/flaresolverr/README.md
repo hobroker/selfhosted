@@ -20,7 +20,5 @@ argocd app sync flaresolverr
 ```sh
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
-helm upgrade --install flaresolverr bjw-s/app-template \
-  --namespace self --create-namespace \
-  -f values.yaml
+helm upgrade --install flaresolverr bjw-s/app-template -f values.yaml
 ```
