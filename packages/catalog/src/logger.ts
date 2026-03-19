@@ -1,22 +1,32 @@
 import pc from "picocolors";
 
 export class CatalogLogger {
-  private readonly collectedErrors: string[] = [];
+  private readonly collectedErrors: string[];
+  private readonly tag: string;
+
+  constructor(tag?: string, sharedErrors?: string[]) {
+    this.collectedErrors = sharedErrors ?? [];
+    this.tag = tag ? pc.dim(`[${tag}] `) : "";
+  }
+
+  child(tag: string): CatalogLogger {
+    return new CatalogLogger(tag, this.collectedErrors);
+  }
 
   info(msg: string): void {
-    console.log(pc.cyan(msg));
+    console.log(this.tag + pc.cyan(msg));
   }
 
   success(msg: string): void {
-    console.log(pc.green(pc.bold(msg)));
+    console.log(this.tag + pc.green(pc.bold(msg)));
   }
 
   warn(msg: string): void {
-    console.log(pc.yellow(msg));
+    console.log(this.tag + pc.yellow(msg));
   }
 
   error(msg: string): void {
-    console.error(pc.red(pc.bold(`✖ ${msg}`)));
+    console.error(this.tag + pc.red(pc.bold(`✖ ${msg}`)));
     this.collectedErrors.push(msg);
   }
 
@@ -25,7 +35,7 @@ export class CatalogLogger {
   }
 
   entry(label: string): void {
-    console.log(pc.dim(`  ${label}`));
+    console.log(this.tag + pc.dim(`  ${label}`));
   }
 
   hasErrors(): boolean {

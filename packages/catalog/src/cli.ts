@@ -45,7 +45,10 @@ program
 
     const options: CliOptions = { root, check: opts.check, dryRun: opts.dryRun };
 
-    await Promise.all([buildReadmes(options, logger), buildCatalog(options, logger)]);
+    await Promise.all([
+      buildReadmes(options, logger.child("readmes")),
+      buildCatalog(options, logger.child("catalog")),
+    ]);
 
     logger.summarize();
 

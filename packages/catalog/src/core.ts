@@ -26,7 +26,7 @@ export async function buildCatalog(options: CliOptions, logger: CatalogLogger): 
       continue;
     }
 
-    logger.entry(label);
+    logger.info(label);
 
     let content: string;
     try {
