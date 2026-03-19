@@ -27,6 +27,8 @@ helm upgrade --install tautulli bjw-s/app-template \
 
 ## Storage
 
-| Name     | Source                | Container Path | Size |
-| -------- | --------------------- | -------------- | ---- |
-| `config` | `/var/local/tautulli` | `/config`      | 1Gi  |
+| source                | container path | type       | description                            |
+| --------------------- | -------------- | ---------- | -------------------------------------- |
+| `/var/local/tautulli` | `/config`      | `hostPath` | Application configuration and database |
+
+PV: `tautulli-config-pv` → PVC: `tautulli-config-pvc`

@@ -24,3 +24,9 @@ helm upgrade --install local-path-provisioner /tmp/local-path-provisioner/deploy
   --namespace local-path-storage --create-namespace \
   -f values.yaml
 ```
+
+## Storage
+
+Data is stored on each node at `/var/local/local-path/<pvc-name>/`.
+
+StorageClass: `local-path-retain` (ReclaimPolicy: Retain)

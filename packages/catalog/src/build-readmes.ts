@@ -5,7 +5,6 @@ import { parseApplication } from "./parse-application";
 import { renderReadme } from "./render-readme";
 import { formatMarkdown } from "./inject";
 import { parsePartialReadme } from "./parse-partial";
-import { parseStorageMounts } from "./parse-storage";
 import type { AppManifest, CliOptions, PartialReadme } from "./types";
 import type { CatalogLogger } from "./logger";
 
@@ -50,8 +49,7 @@ export async function buildReadmes(options: CliOptions, logger: CatalogLogger): 
         return;
       }
 
-      const storage = await parseStorageMounts(app.appDir);
-      const rendered = renderReadme(partial, manifest, storage, logger);
+      const rendered = renderReadme(partial, manifest, logger);
       const readmePath = join(app.appDir, "README.md");
 
       let formatted: string;

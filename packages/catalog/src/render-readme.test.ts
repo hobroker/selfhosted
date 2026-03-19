@@ -144,33 +144,25 @@ describe("renderReadme", () => {
   });
 
   it("appends partial body after install section", () => {
-    const output = renderReadme(partial, manifestHelmDefault, []);
+    const output = renderReadme(partial, manifestHelmDefault);
     const installIdx = output.indexOf("## Installing/upgrading");
     const bodyIdx = output.indexOf("## Storage");
     expect(bodyIdx).toBeGreaterThan(installIdx);
   });
 
-  it("renders storage table when storage mounts provided", () => {
-    const storage = [
-      { name: "config", source: "/var/local/myapp", containerPaths: ["/config"], size: "1Gi" },
-      { name: "data", source: "192.168.50.7:/mnt/nebula", containerPaths: ["/mnt/nebula"], size: "100Ti" },
-    ];
-    const output = renderReadme(partial, manifestHelmDefault, storage);
+  it("renders storage section from partial body", () => {
+    const output = renderReadme(partial, manifestHelmDefault);
     expect(output).toContain("## Storage");
-    expect(output).toContain("`config`");
-    expect(output).toContain("/var/local/myapp");
-    expect(output).toContain("/config");
-    expect(output).toContain("1Gi");
-    expect(output).toContain("192.168.50.7:/mnt/nebula");
+    expect(output).toContain("some storage info");
   });
 
-  it("omits storage section when storage array is empty", () => {
-    const output = renderReadme(partialNoChart, manifestHelmDefault, []);
+  it("omits storage section when partial body is empty", () => {
+    const output = renderReadme(partialNoChart, manifestHelmDefault);
     expect(output).not.toContain("## Storage");
   });
 
   it("Pattern A: emits kubectl apply -f config when no kustomization", () => {
-    const output = renderReadme(partial, manifestHelmDefault, []);
+    const output = renderReadme(partial, manifestHelmDefault);
     expect(output).toContain("kubectl apply -f config");
     expect(output).not.toContain("kubectl apply -k config");
   });
@@ -187,29 +179,29 @@ describe("renderReadme", () => {
   });
 
   it("no --namespace flag when namespace is default", () => {
-    const output = renderReadme(partial, manifestHelmDefault, []);
+    const output = renderReadme(partial, manifestHelmDefault);
     expect(output).not.toContain("--namespace");
   });
 
   it("includes --version flag from targetRevision", () => {
-    const output = renderReadme(partial, manifestHelmDefault, []);
+    const output = renderReadme(partial, manifestHelmDefault);
     expect(output).toContain("--version 4.6.2");
   });
 
   it("includes --namespace flag when namespace is non-default", () => {
-    const output = renderReadme(partialNoChart, manifestHelmNonDefault, []);
+    const output = renderReadme(partialNoChart, manifestHelmNonDefault);
     expect(output).toContain("--namespace monitoring --create-namespace");
   });
 
   it("uses releaseName override in helm command", () => {
-    const output = renderReadme(partialNoChart, manifestWithReleaseName, []);
+    const output = renderReadme(partialNoChart, manifestWithReleaseName);
     expect(output).toContain(
       "helm upgrade --install prometheus-operator prometheus-community/kube-prometheus-stack",
     );
   });
 
   it("Pattern C: emits git clone and helm from path", () => {
-    const output = renderReadme(partialNoChart, manifestGitChart, []);
+    const output = renderReadme(partialNoChart, manifestGitChart);
     expect(output).toContain(
       "git clone --depth 1 --branch v0.0.35 https://github.com/rancher/local-path-provisioner.git /tmp/local-path-provisioner",
     );
@@ -220,7 +212,7 @@ describe("renderReadme", () => {
   });
 
   it("generates correct argocd sync command with app name", () => {
-    const output = renderReadme(partial, manifestHelmDefault, []);
+    const output = renderReadme(partial, manifestHelmDefault);
     expect(output).toContain("argocd app sync myapp");
   });
 });

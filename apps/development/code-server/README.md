@@ -27,7 +27,10 @@ helm upgrade --install code-server bjw-s/app-template \
 
 ## Storage
 
-| Name       | Source                   | Container Path | Size |
-| ---------- | ------------------------ | -------------- | ---- |
-| `config`   | `/var/local/code-server` | `/config`      | 1Gi  |
-| `varlocal` | `/var/local`             | `/var/local`   | 1Ti  |
+| source                   | container path | type       | description               |
+| ------------------------ | -------------- | ---------- | ------------------------- |
+| `/var/local/code-server` | `/config`      | `hostPath` | Application configuration |
+| `/var/local`             | `/var/local`   | `hostPath` | Access to all local data  |
+
+PV: `code-server-config-pv` → PVC: `code-server-config-pvc`
+PV: `code-server-varlocal-pv` → PVC: `code-server-varlocal-pvc`

@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import ejs from "ejs";
 const ejsRender = ejs.render.bind(ejs);
 import type { CatalogLogger } from "./logger";
-import type { AppManifest, PartialReadme, StorageMount } from "./types";
+import type { AppManifest, PartialReadme } from "./types";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TEMPLATE = readFileSync(join(__dirname, "readme.template.ejs"), "utf-8");
@@ -59,7 +59,6 @@ export function deriveHelmAlias(repoURL: string, logger?: CatalogLogger): string
 export function renderReadme(
   partial: PartialReadme,
   manifest: AppManifest,
-  storage: StorageMount[],
   logger?: CatalogLogger,
 ): string {
   const { name, namespace, pattern } = manifest;
@@ -105,6 +104,5 @@ export function renderReadme(
     chart,
     body: partial.body,
     manualHelm,
-    storage,
   });
 }

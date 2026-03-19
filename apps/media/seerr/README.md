@@ -27,6 +27,8 @@ helm upgrade --install seerr bjw-s/app-template \
 
 ## Storage
 
-| Name     | Source             | Container Path | Size |
-| -------- | ------------------ | -------------- | ---- |
-| `config` | `/var/local/seerr` | `/app/config`  | 5Gi  |
+| source             | container path | type       | description                            |
+| ------------------ | -------------- | ---------- | -------------------------------------- |
+| `/var/local/seerr` | `/app/config`  | `hostPath` | Application configuration and database |
+
+PV: `seerr-config-pv` → PVC: `seerr-config-pvc`

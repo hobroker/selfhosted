@@ -27,7 +27,10 @@ helm upgrade --install jellyfin bjw-s/app-template \
 
 ## Storage
 
-| Name     | Source                     | Container Path | Size  |
-| -------- | -------------------------- | -------------- | ----- |
-| `config` | `/var/local/jellyfin`      | `/config`      | 1Gi   |
-| `nebula` | `192.168.50.7:/mnt/nebula` | `/mnt/nebula`  | 100Ti |
+| source                     | container path | type       | description                            |
+| -------------------------- | -------------- | ---------- | -------------------------------------- |
+| `/var/local/jellyfin`      | `/config`      | `hostPath` | Application configuration and database |
+| `192.168.50.7:/mnt/nebula` | `/mnt/nebula`  | `nfs`      | Media library                          |
+
+PV: `jellyfin-config-pv` → PVC: `jellyfin-config-pvc`
+PV: `jellyfin-nebula-pv` → PVC: `jellyfin-nebula-pvc`

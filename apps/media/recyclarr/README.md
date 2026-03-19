@@ -25,14 +25,18 @@ helm upgrade --install recyclarr bjw-s/app-template \
   --version 4.6.2 -f values.yaml
 ```
 
-## Storage
-
-| Name     | Source                 | Container Path | Size |
-| -------- | ---------------------- | -------------- | ---- |
-| `config` | `/var/local/recyclarr` | `/config`      | 1Gi  |
-
 ## Configuration
 
 Edit `config/recyclarr.yml` to customize quality profiles, custom formats, and scoring for Radarr and Sonarr. See the [Recyclarr config reference](https://recyclarr.dev/wiki/yaml/config-reference/) for all available options.
 
 ArgoCD will automatically run a sync job whenever this file changes.
+
+## Storage
+
+| source                 | container path | type       | description            |
+| ---------------------- | -------------- | ---------- | ---------------------- |
+| `/var/local/recyclarr` | `/config`      | `hostPath` | State, logs, and cache |
+
+`recyclarr.yml` is rendered at runtime by an init container — API keys from `infisical-recyclarr-secret` are substituted into the ConfigMap template.
+
+PV: `recyclarr-config-pv` → PVC: `recyclarr-config-pvc`

@@ -27,6 +27,8 @@ helm upgrade --install n8n bjw-s/app-template \
 
 ## Storage
 
-| Name     | Source           | Container Path    | Size |
-| -------- | ---------------- | ----------------- | ---- |
-| `config` | `/var/local/n8n` | `/home/node/.n8n` | 1Gi  |
+| source           | container path    | type       | description                            |
+| ---------------- | ----------------- | ---------- | -------------------------------------- |
+| `/var/local/n8n` | `/home/node/.n8n` | `hostPath` | Application configuration and database |
+
+PV: `n8n-config-pv` → PVC: `n8n-config-pvc`

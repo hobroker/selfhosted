@@ -27,6 +27,9 @@ helm upgrade --install threadfin bjw-s/app-template \
 
 ## Storage
 
-| Name     | Source                 | Container Path         | Size |
-| -------- | ---------------------- | ---------------------- | ---- |
-| `config` | `/var/local/threadfin` | `/home/threadfin/conf` | 1Gi  |
+| source                 | container path         | type       | description               |
+| ---------------------- | ---------------------- | ---------- | ------------------------- |
+| `/var/local/threadfin` | `/home/threadfin/conf` | `hostPath` | Application configuration |
+| —                      | `/tmp/threadfin`       | `emptyDir` | Temporary files           |
+
+PV: `threadfin-config-pv` → PVC: `threadfin-config-pvc`
