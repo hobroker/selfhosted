@@ -10,6 +10,7 @@
   "scripts": {
     "prepare": "husky",
     "generate": "tsx packages/catalog/src/cli.ts",
+    "generate:readmes": "tsx packages/catalog/src/cli.ts generate-readmes",
     "test": "turbo test",
     "typecheck": "turbo typecheck",
     "lint": "turbo lint",
@@ -36,6 +37,8 @@
   },
   "lint-staged": {
     "*.{md,yaml}": "prettier --write",
+    "apps/**/README.partial.md": "bash -c 'npm run generate:readmes'",
+    "apps/**/application.yaml": "bash -c 'npm run generate:readmes'",
     "apps/**/README.md": "bash -c 'npm run generate'"
   }
 }
