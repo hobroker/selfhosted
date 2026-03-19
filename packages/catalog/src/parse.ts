@@ -49,7 +49,7 @@ export function parseReadme(
   if (!result.success) {
     for (const issue of result.error.issues) {
       logger.error(
-        `[${scanned.category}/${scanned.serviceName}] ${issue.path[0]}: ${issue.message}`,
+        `[${scanned.category}/${scanned.serviceName}] ${String(issue.path[0])}: ${issue.message}`,
       );
     }
     return null;
