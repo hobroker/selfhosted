@@ -1,10 +1,10 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { scanApps } from "./scan";
-import { parseReadme } from "./parse";
-import { renderCatalog } from "./render";
+import { scanAppsForGeneration } from "./scan";
+import { parsePartialReadme } from "./parse-partial";
+import { parseEntryFromPartial } from "./parse";
+import { renderCatalog, formatCategoryLabel } from "./render";
 import { injectCatalog } from "./inject";
-import { formatCategoryLabel } from "./render";
 import type { CatalogSection, CliOptions } from "./types";
 import type { CatalogLogger } from "./logger";
 
@@ -12,42 +12,53 @@ export async function buildCatalog(options: CliOptions, logger: CatalogLogger): 
   const appsDir = join(options.root, "apps");
   const readmePath = join(options.root, "README.md");
 
-  const { found: scannedList, missing } = await scanApps(appsDir);
+  const apps = await scanAppsForGeneration(appsDir);
 
-  logger.info(`Found ${scannedList.length} README(s) across apps/`);
+  logger.info(`Found ${apps.length} app(s) across apps/`);
 
   const sectionMap = new Map<string, CatalogSection>();
 
-  for (const scanned of scannedList) {
-    logger.entry(`${scanned.category}/${scanned.serviceName}`);
+  for (const app of apps) {
+    const label = `${app.category}/${app.serviceName}`;
+
+    if (!app.hasPartial) {
+      logger.warn(`${label}: no README.partial.md — skipping catalog entry`);
+      continue;
+    }
+
+    logger.entry(label);
 
     let content: string;
     try {
-      content = await readFile(scanned.absolutePath, "utf-8");
+      content = await readFile(join(app.appDir, "README.partial.md"), "utf-8");
     } catch (err) {
       logger.error(
-        `${scanned.category}/${scanned.serviceName}: failed to read README.md — ${err instanceof Error ? err.message : String(err)}`,
+        `${label}: failed to read README.partial.md — ${err instanceof Error ? err.message : String(err)}`,
       );
       continue;
     }
 
-    const entry = parseReadme(content, scanned, logger);
+    let partial;
+    try {
+      partial = parsePartialReadme(content);
+    } catch (err) {
+      logger.error(
+        `${label}: failed to parse README.partial.md — ${err instanceof Error ? err.message : String(err)}`,
+      );
+      continue;
+    }
 
-    if (entry === null) continue;
+    const entry = parseEntryFromPartial(partial, app);
 
-    if (!sectionMap.has(scanned.category)) {
-      sectionMap.set(scanned.category, {
-        category: scanned.category,
-        categoryLabel: formatCategoryLabel(scanned.category),
+    if (!sectionMap.has(app.category)) {
+      sectionMap.set(app.category, {
+        category: app.category,
+        categoryLabel: formatCategoryLabel(app.category),
         entries: [],
       });
     }
 
-    sectionMap.get(scanned.category)!.entries.push(entry);
-  }
-
-  for (const { category, serviceName } of missing) {
-    logger.error(`${category}/${serviceName} has no README.md`);
+    sectionMap.get(app.category)!.entries.push(entry);
   }
 
   const sections = Array.from(sectionMap.values())

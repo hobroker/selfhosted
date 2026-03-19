@@ -25,9 +25,11 @@ const program = new Command();
 
 program
   .name("catalog")
-  .description("Scan app READMEs and generate the apps table in root README.md")
+  .description(
+    "Generate app READMEs from templates and inject the apps table into the root README.md",
+  )
   .option("--root <path>", "Root directory of the monorepo (auto-detected if omitted)")
-  .option("--check", "Exit 1 if README.md would change (CI mode)", false)
+  .option("--check", "Exit 1 if any output would change (CI mode)", false)
   .option("--dry-run", "Print the result without writing to disk", false)
   .action(async (opts: { root?: string; check: boolean; dryRun: boolean }) => {
     const logger = new CatalogLogger();
@@ -43,35 +45,8 @@ program
 
     const options: CliOptions = { root, check: opts.check, dryRun: opts.dryRun };
 
-    await buildCatalog(options, logger);
-    logger.summarize();
+    await Promise.all([buildReadmes(options, logger), buildCatalog(options, logger)]);
 
-    if (logger.hasErrors()) {
-      process.exit(1);
-    }
-  });
-
-program
-  .command("generate-readmes")
-  .description("Generate README.md for each app from README.partial.md + application.yaml")
-  .option("--root <path>", "Root directory of the monorepo (auto-detected if omitted)")
-  .option("--check", "Exit 1 if any README.md would change (CI mode)", false)
-  .option("--dry-run", "Print output without writing to disk", false)
-  .action(async (opts: { root?: string; check: boolean; dryRun: boolean }) => {
-    const logger = new CatalogLogger();
-
-    const root = opts.root ?? (await findRoot(process.cwd()));
-    if (root === null) {
-      logger.error(
-        "Could not find a monorepo root (no apps/ + README.md found in parent directories)",
-      );
-      logger.summarize();
-      process.exit(1);
-    }
-
-    const options: CliOptions = { root, check: opts.check, dryRun: opts.dryRun };
-
-    await buildReadmes(options, logger);
     logger.summarize();
 
     if (logger.hasErrors()) {
