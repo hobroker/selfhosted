@@ -1,3 +1,7 @@
+resources:
+  - namespace.yaml
+  - ippool.yaml
+
 configMapGenerator:
   - name: metallb-grafana-dashboard
     namespace: metallb-system
