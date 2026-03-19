@@ -27,10 +27,7 @@ helm upgrade --install sonarr bjw-s/app-template \
 
 ## Storage
 
-| source                           | containerPath | description                            |
-| -------------------------------- | ------------- | -------------------------------------- |
-| `/var/local/sonarr` (hostPath)   | `/config`     | Application configuration and database |
-| `192.168.50.7:/mnt/nebula` (NFS) | `/mnt/nebula` | Full nebula share (tvshows, downloads) |
-
-PV: `sonarr-config-pv` → PVC: `sonarr-config-pvc`
-PV: `sonarr-nebula-pv` → PVC: `sonarr-nebula-pvc`
+| Name     | Source                     | Container Path | Size  |
+| -------- | -------------------------- | -------------- | ----- |
+| `config` | `/var/local/sonarr`        | `/config`      | 1Gi   |
+| `nebula` | `192.168.50.7:/mnt/nebula` | `/mnt/nebula`  | 100Ti |

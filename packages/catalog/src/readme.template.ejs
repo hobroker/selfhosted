@@ -1,0 +1,38 @@
+# `<%- name %>`
+
+> <%- description %>
+
+Source Code: <%- sourceCode %>
+<% if (chart) { -%>
+Chart: <%- chart %>
+<% } -%>
+
+## Installing/upgrading
+
+```sh
+# Register / update the Application resource
+kubectl apply -f application.yaml
+
+# Then sync the workload - via ArgoCD UI or:
+argocd app sync <%- name %>
+```
+
+### Manual Helm (without ArgoCD)
+
+```sh
+<%- manualHelm -%>
+```
+<% if (storage && storage.length > 0) { -%>
+
+## Storage
+
+| Name | Source | Container Path | Size |
+| ---- | ------ | -------------- | ---- |
+<% for (const mount of storage) { -%>
+| `<%- mount.name %>` | `<%- mount.source %>` | <%- mount.containerPaths.map(p => '`' + p + '`').join(', ') %> | <%- mount.size %> |
+<% } -%>
+<% } -%>
+<% if (body && body.trim()) { -%>
+
+<%- body.trimEnd() %>
+<% } -%>

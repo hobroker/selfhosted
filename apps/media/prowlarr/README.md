@@ -27,8 +27,6 @@ helm upgrade --install prowlarr bjw-s/app-template \
 
 ## Storage
 
-| hostPath              | containerPath | description                            |
-| --------------------- | ------------- | -------------------------------------- |
-| `/var/local/prowlarr` | `/config`     | Application configuration and database |
-
-PV: `prowlarr-config-pv` (1Gi, Retain) → PVC: `prowlarr-config-pvc` in namespace `default`
+| Name     | Source                | Container Path | Size |
+| -------- | --------------------- | -------------- | ---- |
+| `config` | `/var/local/prowlarr` | `/config`      | 1Gi  |

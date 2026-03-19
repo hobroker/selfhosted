@@ -1,0 +1,16 @@
+<% const versionPart = pattern.targetRevision ? '--version ' + pattern.targetRevision + ' ' : ''; -%>
+<% if (pattern.configPath) { -%>
+<%= pattern.hasKustomization ? 'kubectl apply -k config' : 'kubectl apply -f config' %>
+<% } -%>
+helm repo add <%- pattern.alias %> <%- pattern.helmSource.repoURL %>
+helm repo update <%- pattern.alias %>
+<% if (pattern.needsNamespace) { -%>
+helm upgrade --install <%- pattern.releaseName %> <%- pattern.alias %>/<%- pattern.helmSource.chart %> \
+  <%- versionPart %><%- pattern.namespaceFlags %> \
+  -f values.yaml
+<% } else if (pattern.targetRevision) { -%>
+helm upgrade --install <%- pattern.releaseName %> <%- pattern.alias %>/<%- pattern.helmSource.chart %> \
+  --version <%- pattern.targetRevision %> -f values.yaml
+<% } else { -%>
+helm upgrade --install <%- pattern.releaseName %> <%- pattern.alias %>/<%- pattern.helmSource.chart %> -f values.yaml
+<% } -%>

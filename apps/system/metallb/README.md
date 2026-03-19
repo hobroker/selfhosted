@@ -26,27 +26,23 @@ helm upgrade --install metallb metallb/metallb \
   -f values.yaml
 ```
 
+## After Manual Helm Install
+
+Once the helm chart is deployed and MetalLB CRDs are available, apply the IP pool config:
+
+```sh
+kubectl apply -f postsync/ippool.yaml
+```
+
+> When deploying via ArgoCD, `postsync/` is a separate source with `sync-wave: "1"` — applied automatically after the helm chart is healthy.
+
 ## Prerequisites
 
 These must be applied once per cluster before deploying:
 
-**1. Label the namespace as privileged** (required for speaker pod `NET_RAW`/`NET_ADMIN`):
-
-```sh
-kubectl create namespace metallb-system
-kubectl label namespace metallb-system pod-security.kubernetes.io/enforce=privileged
-```
-
-**2. Talos machine config** must have `allowSchedulingOnControlPlanes: true` — prevents Talos from adding the `exclude-from-external-load-balancers` label and `NoSchedule` taint to control-plane nodes, which would block MetalLB from announcing IPs:
+**1. Talos machine config** must have `allowSchedulingOnControlPlanes: true` — prevents Talos from adding the `exclude-from-external-load-balancers` label and `NoSchedule` taint to control-plane nodes, which would block MetalLB from announcing IPs:
 
 ```yaml
 cluster:
   allowSchedulingOnControlPlanes: true
 ```
-
-## IP Pool
-
-| IP               | service                         |
-| ---------------- | ------------------------------- |
-| `192.168.50.200` | shared (qbittorrent, plex, etc) |
-| `192.168.50.201` | Traefik                         |

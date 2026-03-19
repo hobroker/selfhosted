@@ -1,0 +1,5 @@
+<%= pattern.hasKustomization ? 'kubectl apply -k config' : 'kubectl apply -f config' %>
+git clone --depth 1 --branch <%- pattern.gitChartSource.targetRevision %> <%- pattern.gitChartSource.repoURL %> /tmp/<%- name %>
+helm upgrade --install <%- pattern.releaseName %> /tmp/<%- name %>/<%- pattern.gitChartSource.path %> \
+  <%- pattern.namespaceFlags %> \
+  -f values.yaml

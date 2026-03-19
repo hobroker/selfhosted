@@ -25,11 +25,3 @@ helm upgrade --install traefik traefik/traefik \
   --version 39.0.2 --namespace kube-system --create-namespace \
   -f values.yaml
 ```
-
-## Storage
-
-| source                               | containerPath | description                                 |
-| ------------------------------------ | ------------- | ------------------------------------------- |
-| `/var/local/traefik/acme` (hostPath) | `/acme`       | Storage for ACME certificates (letsencrypt) |
-
-PV: `traefik-acme-pv` → PVC: `traefik-acme-pvc`

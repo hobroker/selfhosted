@@ -27,10 +27,7 @@ helm upgrade --install adguardhome bjw-s/app-template \
 
 ## Storage
 
-| source                                   | containerPath           | description         |
-| ---------------------------------------- | ----------------------- | ------------------- |
-| `/var/local/adguardhome/work` (hostPath) | `/opt/adguardhome/work` | Working data        |
-| `/var/local/adguardhome/conf` (hostPath) | `/opt/adguardhome/conf` | Configuration files |
-
-PV: `adguardhome-work-pv` → PVC: `adguardhome-work-pvc`
-PV: `adguardhome-conf-pv` → PVC: `adguardhome-conf-pvc`
+| Name   | Source                        | Container Path          | Size |
+| ------ | ----------------------------- | ----------------------- | ---- |
+| `work` | `/var/local/adguardhome/work` | `/opt/adguardhome/work` | 1Gi  |
+| `conf` | `/var/local/adguardhome/conf` | `/opt/adguardhome/conf` | 1Gi  |

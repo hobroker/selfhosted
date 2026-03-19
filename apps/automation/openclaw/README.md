@@ -34,14 +34,6 @@ Add the following secrets to Infisical under `/openclaw`:
 | `ANTHROPIC_API_KEY`      | Anthropic API key (`sk-ant-...`) |
 | `OPENCLAW_GATEWAY_TOKEN` | Gateway token for device pairing |
 
-## Storage
-
-| source                           | containerPath          | description                            |
-| -------------------------------- | ---------------------- | -------------------------------------- |
-| `/var/local/openclaw` (hostPath) | `/home/node/.openclaw` | Config, sessions, and installed skills |
-
-PV: `openclaw-data-pv` → PVC: `openclaw-data-pvc`
-
 ## Pairing a device
 
 ```sh

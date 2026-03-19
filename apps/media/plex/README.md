@@ -27,10 +27,7 @@ helm upgrade --install plex bjw-s/app-template \
 
 ## Storage
 
-| source                           | containerPath | description                            |
-| -------------------------------- | ------------- | -------------------------------------- |
-| `/var/local/plex` (hostPath)     | `/config`     | Application configuration and database |
-| `192.168.50.7:/mnt/nebula` (NFS) | `/mnt/nebula` | Access to media library                |
-
-PV: `plex-config-pv` → PVC: `plex-config-pvc`
-PV: `plex-nebula-pv` → PVC: `plex-nebula-pvc`
+| Name     | Source                     | Container Path | Size  |
+| -------- | -------------------------- | -------------- | ----- |
+| `config` | `/var/local/plex`          | `/config`      | 1Gi   |
+| `nebula` | `192.168.50.7:/mnt/nebula` | `/mnt/nebula`  | 100Ti |
