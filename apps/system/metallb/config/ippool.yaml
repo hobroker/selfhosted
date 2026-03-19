@@ -3,6 +3,9 @@ kind: IPAddressPool
 metadata:
   name: default-pool
   namespace: metallb-system
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
 spec:
   addresses:
     - 192.168.50.200-192.168.50.220
@@ -12,6 +15,9 @@ kind: L2Advertisement
 metadata:
   name: default
   namespace: metallb-system
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
 spec:
   ipAddressPools:
     - default-pool
