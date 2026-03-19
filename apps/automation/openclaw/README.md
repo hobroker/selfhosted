@@ -21,9 +21,7 @@ argocd app sync openclaw
 kubectl apply -f config
 helm repo add openclaw https://serhanekicii.github.io/openclaw-helm
 helm repo update openclaw
-helm upgrade --install openclaw openclaw/openclaw \
-  --namespace default --create-namespace \
-  -f values.yaml
+helm upgrade --install openclaw openclaw/openclaw -f values.yaml
 ```
 
 ## Secrets

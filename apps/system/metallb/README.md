@@ -42,7 +42,7 @@ kubectl apply -f ippool.yaml
 helm repo add metallb https://metallb.github.io/metallb
 helm repo update metallb
 helm upgrade --install metallb metallb/metallb \
-  --version 0.14.9 --namespace metallb-system --create-namespace \
+  --namespace metallb-system --create-namespace \
   -f values.yaml
 
 kubectl apply -f ippool.yaml

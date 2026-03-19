@@ -30,9 +30,7 @@ argocd app sync backrest
 kubectl apply -f config
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
-helm upgrade --install backrest bjw-s/app-template \
-  --namespace default --create-namespace \
-  -f values.yaml
+helm upgrade --install backrest bjw-s/app-template -f values.yaml
 ```
 
 ## Storage
