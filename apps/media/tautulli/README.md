@@ -18,18 +18,14 @@ argocd app sync tautulli
 ### Manual Helm (without ArgoCD)
 
 ```sh
-kubectl apply -f config/pv.yaml
+kubectl apply -f config
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
-helm upgrade --install tautulli bjw-s/app-template \
-  --namespace default --create-namespace \
-  -f values.yaml
+helm upgrade --install tautulli bjw-s/app-template -f values.yaml
 ```
 
 ## Storage
 
-| source                           | containerPath | description                            |
-| -------------------------------- | ------------- | -------------------------------------- |
-| `/var/local/tautulli` (hostPath) | `/config`     | Application configuration and database |
-
-PV: `tautulli-config-pv` → PVC: `tautulli-config-pvc`
+| source                | container path | type       | description                            |
+| --------------------- | -------------- | ---------- | -------------------------------------- |
+| `/var/local/tautulli` | `/config`      | `hostPath` | Application configuration and database |

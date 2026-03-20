@@ -5,6 +5,16 @@
 Source Code: https://github.com/traefik/traefik
 Chart: https://github.com/traefik/traefik-helm-chart
 
+## Prerequisites
+
+Update `externalIPs` in `values.yaml` to match your node's IP before deploying:
+
+```yaml
+service:
+  externalIPs:
+    - 192.168.x.x
+```
+
 ## Installing/upgrading
 
 ```sh
@@ -18,22 +28,12 @@ argocd app sync traefik
 ### Manual Helm (without ArgoCD)
 
 ```sh
-kubectl apply -f config/
+kubectl apply -f config
 helm repo add traefik https://helm.traefik.io/traefik
 helm repo update traefik
 helm upgrade --install traefik traefik/traefik \
   --namespace kube-system --create-namespace \
   -f values.yaml
-```
-
-### Configuration
-
-Update `externalIPs` in `values.yaml` to match your node's IP before deploying:
-
-```yaml
-service:
-  externalIPs:
-    - 192.168.x.x
 ```
 
 ### Helm values
@@ -53,8 +53,6 @@ The following environment variables are required and sourced from the `infisical
 
 ## Storage
 
-| source                               | containerPath | description                                 |
-| ------------------------------------ | ------------- | ------------------------------------------- |
-| `/var/local/traefik/acme` (hostPath) | `/acme`       | Storage for ACME certificates (letsencrypt) |
-
-PV: `traefik-acme-pv` → PVC: `traefik-acme-pvc`
+| source                    | container path | type       | description                                 |
+| ------------------------- | -------------- | ---------- | ------------------------------------------- |
+| `/var/local/traefik/acme` | `/acme`        | `hostPath` | Storage for ACME certificates (letsencrypt) |

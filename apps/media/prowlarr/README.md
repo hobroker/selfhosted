@@ -18,17 +18,14 @@ argocd app sync prowlarr
 ### Manual Helm (without ArgoCD)
 
 ```sh
-kubectl apply -f config/pv.yaml
+kubectl apply -f config
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
-helm upgrade --install prowlarr bjw-s/app-template \
-  --namespace default --create-namespace \
-  -f values.yaml
+helm repo update bjw-s
+helm upgrade --install prowlarr bjw-s/app-template -f values.yaml
 ```
 
 ## Storage
 
-| hostPath              | containerPath | description                            |
-| --------------------- | ------------- | -------------------------------------- |
-| `/var/local/prowlarr` | `/config`     | Application configuration and database |
-
-PV: `prowlarr-config-pv` (1Gi, Retain) → PVC: `prowlarr-config-pvc` in namespace `default`
+| source                | container path | type       | description                            |
+| --------------------- | -------------- | ---------- | -------------------------------------- |
+| `/var/local/prowlarr` | `/config`      | `hostPath` | Application configuration and database |

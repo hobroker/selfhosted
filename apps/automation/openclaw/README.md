@@ -21,27 +21,8 @@ argocd app sync openclaw
 kubectl apply -f config
 helm repo add openclaw https://serhanekicii.github.io/openclaw-helm
 helm repo update openclaw
-helm upgrade --install openclaw openclaw/openclaw \
-  --namespace default --create-namespace \
-  -f values.yaml
+helm upgrade --install openclaw openclaw/openclaw -f values.yaml
 ```
-
-## Secrets
-
-Add the following secrets to Infisical under `/openclaw`:
-
-| Key                      | Description                      |
-| ------------------------ | -------------------------------- |
-| `ANTHROPIC_API_KEY`      | Anthropic API key (`sk-ant-...`) |
-| `OPENCLAW_GATEWAY_TOKEN` | Gateway token for device pairing |
-
-## Storage
-
-| source                           | containerPath          | description                            |
-| -------------------------------- | ---------------------- | -------------------------------------- |
-| `/var/local/openclaw` (hostPath) | `/home/node/.openclaw` | Config, sessions, and installed skills |
-
-PV: `openclaw-data-pv` → PVC: `openclaw-data-pvc`
 
 ## Pairing a device
 
@@ -52,3 +33,18 @@ kubectl port-forward -n default svc/openclaw 18789:18789
 kubectl exec -n default deployment/openclaw -c main -- node dist/index.js devices list
 kubectl exec -n default deployment/openclaw -c main -- node dist/index.js devices approve <REQUEST_ID>
 ```
+
+## Storage
+
+| source                | container path         | type       | description                            |
+| --------------------- | ---------------------- | ---------- | -------------------------------------- |
+| `/var/local/openclaw` | `/home/node/.openclaw` | `hostPath` | Config, sessions, and installed skills |
+
+### Secrets
+
+The following environment variables are required and sourced from the `infisical-openclaw-secret`:
+
+| name                     | description                      |
+| ------------------------ | -------------------------------- |
+| `ANTHROPIC_API_KEY`      | Anthropic API key (`sk-ant-...`) |
+| `OPENCLAW_GATEWAY_TOKEN` | Gateway token for device pairing |

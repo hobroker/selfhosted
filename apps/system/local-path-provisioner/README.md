@@ -15,6 +15,17 @@ kubectl apply -f application.yaml
 argocd app sync local-path-provisioner
 ```
 
+### Manual Helm (without ArgoCD)
+
+```sh
+kubectl apply -f config
+git clone --depth 1 --branch v0.0.35 https://github.com/rancher/local-path-provisioner.git /tmp/local-path-provisioner
+helm upgrade --install local-path-provisioner /tmp/local-path-provisioner/deploy/chart/local-path-provisioner \
+  --namespace local-path-storage \
+  -f values.yaml
+rm -rf /tmp/local-path-provisioner
+```
+
 ## Storage
 
 Data is stored on each node at `/var/local/local-path/<pvc-name>/`.

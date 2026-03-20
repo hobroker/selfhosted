@@ -18,26 +18,18 @@ argocd app sync sonarr
 ### Manual Helm (without ArgoCD)
 
 ```sh
-kubectl apply -f config/pv.yaml
+kubectl apply -f config
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
-helm upgrade --install sonarr bjw-s/app-template \
-  --namespace default --create-namespace \
-  -f values.yaml
+helm upgrade --install sonarr bjw-s/app-template -f values.yaml
 ```
-
-### Secrets
-
-| name                        | description                                |
-| --------------------------- | ------------------------------------------ |
-| `infisical-scraparr-secret` | (Used by scraparr) Contains Sonarr API key |
 
 ## Storage
 
-| source                           | containerPath | description                            |
-| -------------------------------- | ------------- | -------------------------------------- |
-| `/var/local/sonarr` (hostPath)   | `/config`     | Application configuration and database |
-| `192.168.50.7:/mnt/nebula` (NFS) | `/mnt/nebula` | Full nebula share (tvshows, downloads) |
+| source                     | container path | type       | description                             |
+| -------------------------- | -------------- | ---------- | --------------------------------------- |
+| `/var/local/sonarr`        | `/config`      | `hostPath` | Application configuration and database  |
+| `192.168.50.7:/mnt/nebula` | `/mnt/nebula`  | `nfs`      | Full nebula share (TV Shows, Downloads) |
 
 PV: `sonarr-config-pv` → PVC: `sonarr-config-pvc`
 PV: `sonarr-nebula-pv` → PVC: `sonarr-nebula-pvc`

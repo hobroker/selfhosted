@@ -18,20 +18,15 @@ argocd app sync qbittorrent
 ### Manual Helm (without ArgoCD)
 
 ```sh
-kubectl apply -f config/pv.yaml
+kubectl apply -k config
 helm repo add bjw-s https://bjw-s-labs.github.io/helm-charts
 helm repo update bjw-s
-helm upgrade --install qbittorrent bjw-s/app-template \
-  --namespace default --create-namespace \
-  -f values.yaml
+helm upgrade --install qbittorrent bjw-s/app-template -f values.yaml
 ```
 
 ## Storage
 
-| source                              | containerPath         | description                        |
-| ----------------------------------- | --------------------- | ---------------------------------- |
-| `/var/local/qbittorrent` (hostPath) | `/config/qBittorrent` | Application configuration          |
-| `192.168.50.7:/mnt/nebula` (NFS)    | `/mnt/nebula`         | Full nebula share (downloads, etc) |
-
-PV: `qbittorrent-config-pv` (1Gi, Retain) → PVC: `qbittorrent-config-pvc`
-PV: `qbittorrent-nebula-pv` (NFS, Retain) → PVC: `qbittorrent-nebula-pvc`
+| source                     | container path        | type       | description                   |
+| -------------------------- | --------------------- | ---------- | ----------------------------- |
+| `/var/local/qbittorrent`   | `/config/qBittorrent` | `hostPath` | Application configuration     |
+| `192.168.50.7:/mnt/nebula` | `/mnt/nebula`         | `nfs`      | Full nebula share (Downloads) |
