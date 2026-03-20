@@ -38,9 +38,9 @@ ArgoCD will automatically run a sync job whenever this file changes.
 
 ### Secrets
 
-Add the following to Infisical at path `/recyclarr`:
+The following environment variables are required and sourced from the `infisical-recyclarr-secret`:
 
-| key              | description        |
+| name             | description        |
 | ---------------- | ------------------ |
 | `SONARR_API_KEY` | API key for Sonarr |
 | `RADARR_API_KEY` | API key for Radarr |

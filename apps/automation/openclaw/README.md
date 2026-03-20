@@ -40,11 +40,11 @@ kubectl exec -n default deployment/openclaw -c main -- node dist/index.js device
 | --------------------- | ---------------------- | ---------- | -------------------------------------- |
 | `/var/local/openclaw` | `/home/node/.openclaw` | `hostPath` | Config, sessions, and installed skills |
 
-## Secrets
+### Secrets
 
-Add the following secrets to Infisical under `/openclaw`:
+The following environment variables are required and sourced from the `infisical-openclaw-secret`:
 
-| Key                      | Description                      |
+| name                     | description                      |
 | ------------------------ | -------------------------------- |
 | `ANTHROPIC_API_KEY`      | Anthropic API key (`sk-ant-...`) |
 | `OPENCLAW_GATEWAY_TOKEN` | Gateway token for device pairing |
