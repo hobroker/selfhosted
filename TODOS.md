@@ -1,4 +1,4 @@
-## Keep CLAUDE.md in sync with CONTRIBUTING.md
+# Keep CLAUDE.md in sync with CONTRIBUTING.md
 
 `CLAUDE.md` references `CONTRIBUTING.md` for the app README format spec. If `CONTRIBUTING.md`
 changes (format rules, categories, PR process), review `CLAUDE.md` for stale content.

@@ -18,7 +18,7 @@ npm run generate -- --check  # verify README is up-to-date (used in CI)
 
 ## Repo Structure
 
-```
+```text
 apps/
   <category>/        # automation, backup, development, media, monitoring, network, system
     <app-name>/
@@ -37,10 +37,15 @@ packages/
 
 ## App README Format
 
-Each app README must follow a strict 5-line header format.
+Each app README requires three fields in its header (the rest is free-form):
+
+1. App name in backticks (`` # `<app-name>` ``)
+2. One-line description prefixed with `> `
+3. A `Source Code:` line with the upstream URL
+
 See `CONTRIBUTING.md` § "App README format" for the exact spec.
 
-**Key rule:** the name in backticks on line 1 must match the directory name exactly,
+**Key rule:** the name in backticks must match the directory name exactly,
 or `npm run generate` will silently produce wrong output.
 
 ## Key Conventions
