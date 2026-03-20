@@ -55,9 +55,9 @@ export const RULES: DependencyRule[] = [
       /traefik\.ingress\.kubernetes\.io/.test(c),
   },
   {
-    provider: "local-path-provisioner",
+    provider: "longhorn",
     label: "StorageClass",
-    detect: (c) => /storageClassName:\s*local-path/.test(c),
+    detect: (c) => /storageClassName:\s*"?longhorn/.test(c),
   },
   {
     provider: "cert-manager",
