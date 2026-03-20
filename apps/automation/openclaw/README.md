@@ -3,7 +3,7 @@
 > AI assistant that connects to messaging platforms and executes tasks autonomously
 
 Source Code: https://github.com/openclaw/openclaw
-Chart: https://serhanekicii.github.io/openclaw-helm
+Chart: https://github.com/serhanekicii/openclaw-helm
 
 ## Installing/upgrading
 
@@ -39,12 +39,3 @@ kubectl exec -n default deployment/openclaw -c main -- node dist/index.js device
 | source                | container path         | type       | description                            |
 | --------------------- | ---------------------- | ---------- | -------------------------------------- |
 | `/var/local/openclaw` | `/home/node/.openclaw` | `hostPath` | Config, sessions, and installed skills |
-
-### Secrets
-
-The following environment variables are required and sourced from the `infisical-openclaw-secret`:
-
-| name                     | description                      |
-| ------------------------ | -------------------------------- |
-| `ANTHROPIC_API_KEY`      | Anthropic API key (`sk-ant-...`) |
-| `OPENCLAW_GATEWAY_TOKEN` | Gateway token for device pairing |

@@ -8,6 +8,8 @@ controllers:
         envFrom:
           - secretRef:
               name: infisical-openclaw-secret
+      chromium:
+        enabled: false
 persistence:
   data:
     storageClassName: ""
