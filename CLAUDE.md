@@ -46,7 +46,7 @@ Each app README requires three fields in its header (the rest is free-form):
 See `CONTRIBUTING.md` § "App README format" for the exact spec.
 
 **Key rule:** the name in backticks must match the directory name exactly,
-or `npm run generate` will silently produce wrong output.
+or `npm run generate` will log an error and may produce incorrect output.
 
 ## Key Conventions
 
@@ -60,8 +60,8 @@ or `npm run generate` will silently produce wrong output.
 ## Gotchas
 
 - **Never edit the `## Apps` table in `README.md` directly** — it is auto-generated. Run `npm run generate` instead, or let the pre-commit hook do it.
-- **App README name must match directory name exactly** — the name in backticks on line 1 must equal the folder name or the catalog generator will silently produce wrong output.
-- **ArgoCD sync is manual by default** (`syncPolicy: {}`) — pushing changes does not auto-deploy. See ArgoCD Workflow section below.
+- **App README name must match directory name exactly** — the name in backticks on line 1 must equal the folder name or the catalog generator will log an error and may produce incorrect output.
+- **ArgoCD sync is manual by default** — no `automated:` block in `syncPolicy` means pushing changes does not auto-deploy. See ArgoCD Workflow section below.
 - **Secrets must exist in Infisical before deploying** — deploying an app before its Infisical secret is created will cause CrashLoopBackOff.
 
 ## ArgoCD Workflow
@@ -99,7 +99,7 @@ kubectl get secret -n default            # list secrets
 
 ## Adding a New App
 
-1. Create `apps/<category>/<app-name>/` with `application.yaml`, `values.yaml`, and `README.md`
+1. Create `apps/<category>/<app-name>/` with `application.yaml`, `values.yaml`, and `README.md` (add `config/` if the app needs extra manifests like PVs or Infisical secrets)
 2. Follow the README format above exactly
 3. Run `npm run generate` to update the main README (or let the pre-commit hook do it)
 4. Run `npm run lint` and `npm run format` before committing

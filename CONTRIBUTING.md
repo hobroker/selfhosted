@@ -9,7 +9,7 @@ apps/
       application.yaml  # ArgoCD Application manifest
       values.yaml       # Helm values overrides
       README.md         # Install instructions, secrets, host volumes
-      config/           # Extra manifests (PVs, Infisical secrets, etc.)
+      config/           # Optional: extra manifests (PVs, Infisical secrets, etc.)
 packages/
   catalog/              # Generates the apps table in the main README.md
 ```
