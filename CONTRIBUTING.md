@@ -21,7 +21,7 @@ packages/
 apps/<category>/<app-name>/
 ```
 
-Use an existing category (`automation`, `development`, `downloads`, `media`, `monitoring`, `system`) or add a new one.
+Use an existing category (`automation`, `backup`, `development`, `media`, `monitoring`, `network`, `system`) or add a new one.
 
 ### 2. Add the required files
 
@@ -94,3 +94,7 @@ This also runs automatically as a pre-commit hook whenever a `apps/**/README.md`
 3. Make your changes
 4. Run `npm run lint` and `npm run format` to ensure consistent style
 5. Push your branch and open a PR targeting `master`
+
+## Keeping Docs in Sync
+
+If you change the app README format, categories, or PR process in this file, also update `CLAUDE.md` — it duplicates some of this information for AI assistant context.
