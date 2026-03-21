@@ -9,8 +9,9 @@ apps/
       application.yaml  # ArgoCD Application manifest
       values.yaml       # Helm values overrides
       README.md         # Install instructions, secrets, host volumes
+      config/           # Optional: extra manifests (PVs, Infisical secrets, etc.)
 packages/
-  catalog/              # Generates README.md and main README.md from app READMEs
+  catalog/              # Generates the apps table in the main README.md
 ```
 
 ## Adding a new App
@@ -21,7 +22,7 @@ packages/
 apps/<category>/<app-name>/
 ```
 
-Use an existing category (`automation`, `development`, `downloads`, `media`, `monitoring`, `system`) or add a new one.
+Use an existing category (`automation`, `backup`, `development`, `media`, `monitoring`, `network`, `system`) or add a new one.
 
 ### 2. Add the required files
 
@@ -40,6 +41,9 @@ metadata:
 spec:
   project: default
   sources:
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      path: apps/<category>/<app-name>/config
     - repoURL: https://bjw-s-labs.github.io/helm-charts
       chart: app-template
       targetRevision: <version>
@@ -52,7 +56,11 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: default
-  syncPolicy: {}
+  revisionHistoryLimit: 3
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
 ```
 
 **`values.yaml`** — your Helm values overrides.
@@ -94,3 +102,7 @@ This also runs automatically as a pre-commit hook whenever a `apps/**/README.md`
 3. Make your changes
 4. Run `npm run lint` and `npm run format` to ensure consistent style
 5. Push your branch and open a PR targeting `master`
+
+## Keeping Docs in Sync
+
+If you change the app README format, categories, or PR process in this file, also update `CLAUDE.md` — it duplicates some of this information for AI assistant context.
