@@ -147,7 +147,8 @@ npm run generate
 | App                                  | Description                                                                       | Source Code                            |
 | ------------------------------------ | --------------------------------------------------------------------------------- | -------------------------------------- |
 | [n8n](apps/automation/n8n)           | Workflow automation platform                                                      | <https://github.com/n8n-io/n8n>        |
-| [openclaw](apps/automation/openclaw) | AI assistant that connects to messaging platforms and executes tasks autonomously | <https://github.com/openclaw/openclaw> |
+| [openclaw](apps/automation/openclaw)                                             | AI assistant that connects to messaging platforms and executes tasks autonomously                                                | <https://github.com/openclaw/openclaw>                        |
+| [openclaw-operator](apps/automation/openclaw-operator)                           | Kubernetes operator for self-hosting OpenClaw AI agents with production-grade security, observability, and lifecycle management | <https://github.com/openclaw-rocks/openclaw-operator>         |
 
 ### Backup
 

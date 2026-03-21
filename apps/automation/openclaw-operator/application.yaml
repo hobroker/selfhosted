@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openclaw-operator
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    category: automation
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      path: apps/automation/openclaw-operator/config
+    - repoURL: ghcr.io/openclaw-rocks/charts
+      chart: openclaw-operator
+      targetRevision: 0.22.2
+      helm:
+        releaseName: openclaw-operator
+        valueFiles:
+          - $values/apps/automation/openclaw-operator/values.yaml
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: openclaw-operator-system
+  revisionHistoryLimit: 3
+  ignoreDifferences:
+    - group: openclaw.rocks
+      kind: OpenClawInstance
+      jsonPointers:
+        - /spec/restoreFrom
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
