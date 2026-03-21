@@ -9,8 +9,9 @@ apps/
       application.yaml  # ArgoCD Application manifest
       values.yaml       # Helm values overrides
       README.md         # Install instructions, secrets, host volumes
+      config/           # Extra manifests (PVs, Infisical secrets, etc.)
 packages/
-  catalog/              # Generates README.md and main README.md from app READMEs
+  catalog/              # Generates the apps table in the main README.md
 ```
 
 ## Adding a new App
@@ -40,6 +41,9 @@ metadata:
 spec:
   project: default
   sources:
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      path: apps/<category>/<app-name>/config
     - repoURL: https://bjw-s-labs.github.io/helm-charts
       chart: app-template
       targetRevision: <version>
@@ -52,7 +56,11 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: default
-  syncPolicy: {}
+  revisionHistoryLimit: 3
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
 ```
 
 **`values.yaml`** — your Helm values overrides.
