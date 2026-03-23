@@ -1,12 +1,2 @@
 resources:
   - namespace.yaml
-
-configMapGenerator:
-  - name: metallb-grafana-dashboard
-    namespace: metallb-system
-    options:
-      labels:
-        grafana_dashboard: "1"
-      disableNameSuffixHash: true
-    files:
-      - metallb.json=metallb-dashboard.json
