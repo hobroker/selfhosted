@@ -9,15 +9,37 @@ Chart: https://charts.longhorn.io
 
 These must be applied once per cluster before deploying.
 
-**1. Install Talos extensions** — Longhorn requires `iscsi-tools` and `util-linux-tools`. Add to `controlplane.yaml`:
+**1. Bake Talos extensions via Image Factory** — Longhorn requires `iscsi-tools` and `util-linux-tools` baked into the installer image using [Talos Image Factory](https://factory.talos.dev):
+
+```sh
+curl -X POST https://factory.talos.dev/schematics \
+  -H 'Content-Type: application/yaml' \
+  --data-binary @- <<'EOF'
+customization:
+  systemExtensions:
+    officialExtensions:
+      - siderolabs/iscsi-tools
+      - siderolabs/util-linux-tools
+EOF
+```
+
+This returns a schematic ID. Set `machine.install.image` in `~/.talos/cluster/controlplane.yaml`:
 
 ```yaml
 machine:
   install:
-    extensions:
-      - image: ghcr.io/siderolabs/iscsi-tools:v0.1.6
-      - image: ghcr.io/siderolabs/util-linux-tools:2.40.2
+    image: factory.talos.dev/installer/<schematic-id>:<talos-version>
 ```
+
+Then upgrade in-place (no data loss with `--preserve`):
+
+```sh
+talosctl upgrade \
+  --image factory.talos.dev/installer/<schematic-id>:<talos-version> \
+  --preserve
+```
+
+Verify extensions loaded after reboot: `talosctl get extensions`
 
 **2. Configure kubelet extra mounts and sysctls** — required for Longhorn to manage storage on Talos:
 
@@ -36,10 +58,10 @@ machine:
     vm.nr_hugepages: "1024"
 ```
 
-Apply and reboot:
+Apply:
 
 ```sh
-talosctl apply-config --file ~/.talos/cluster/controlplane.yaml --reboot
+talosctl apply-config --file ~/.talos/cluster/controlplane.yaml
 ```
 
 See [Talos Linux support docs](https://longhorn.io/docs/1.11.1/advanced-resources/os-distro-specific/talos-linux-support/) for full details.
