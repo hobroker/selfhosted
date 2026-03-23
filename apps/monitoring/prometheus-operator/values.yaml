@@ -12,7 +12,7 @@ prometheus:
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: "local-path-retain"
+          storageClassName: "longhorn-retain"
           resources:
             requests:
               storage: 10Gi
@@ -51,7 +51,7 @@ grafana:
   persistence:
     enabled: true
     size: 1Gi
-    storageClassName: "local-path-retain"
+    storageClassName: "longhorn-retain"
 
 nodeExporter:
   enabled: true
