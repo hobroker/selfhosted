@@ -203,6 +203,7 @@ npm run generate
 | [cert-manager](apps/system/cert-manager)                     | Automatically provision and manage TLS certificates in K8s                                     | <https://github.com/cert-manager/cert-manager>      |
 | [infisical-operator](apps/system/infisical-operator)         | Operator to fetch secrets from Infisical.                                                      | <https://github.com/Infisical/infisical>            |
 | [local-path-provisioner](apps/system/local-path-provisioner) | Local path provisioner with a Retain storage class for persistent storage on node local disks. | <https://github.com/rancher/local-path-provisioner> |
+| [longhorn](apps/system/longhorn)                             | Cloud-native distributed block storage for Kubernetes.                                         | <https://github.com/longhorn/longhorn>              |
 | [metallb](apps/system/metallb)                               | Layer 2 load balancer for bare-metal Kubernetes clusters                                       | <https://github.com/metallb/metallb>                |
 | [rancher](apps/system/rancher)                               | Container management platform                                                                  | <https://github.com/rancher/rancher>                |
 | [reloader](apps/system/reloader)                             | K8s controller that triggers rolling upgrades when ConfigMaps or Secrets change                | <https://github.com/stakater/Reloader>              |
