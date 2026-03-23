@@ -7,6 +7,11 @@ service:
     annotations:
       metallb.io/loadBalancerIPs: 192.168.50.204
 
+defaultBackupStore:
+  backupTarget: s3://hobroker-selfhosted@us/longhorn-backups/
+  backupTargetCredentialSecret: infisical-longhorn-secret
+  pollInterval: 300
+
 defaultSettings:
   defaultReplicaCount: 1
 
