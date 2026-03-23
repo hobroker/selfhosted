@@ -1,0 +1,17 @@
+preUpgradeChecker:
+  jobEnabled: false
+
+service:
+  ui:
+    type: LoadBalancer
+    annotations:
+      metallb.io/loadBalancerIPs: 192.168.50.204
+
+defaultSettings:
+  defaultReplicaCount: 1
+
+persistence:
+  defaultClassReplicaCount: 1
+
+longhornUI:
+  replicas: 1

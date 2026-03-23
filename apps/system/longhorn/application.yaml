@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: longhorn
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    category: system
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      path: apps/system/longhorn/config
+    - repoURL: https://charts.longhorn.io
+      chart: longhorn
+      targetRevision: v1.11.1
+      helm:
+        valueFiles:
+          - $values/apps/system/longhorn/values.yaml
+    - repoURL: https://github.com/hobroker/selfhosted.git
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: longhorn-system
+  revisionHistoryLimit: 3
+  syncPolicy: {}
