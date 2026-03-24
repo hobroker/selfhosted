@@ -79,7 +79,7 @@ argocd app sync longhorn
 ### Manual Helm (without ArgoCD)
 
 ```sh
-kubectl apply -f config/namespace.yaml
+kubectl apply -f config
 helm repo add longhorn https://charts.longhorn.io
 helm repo update longhorn
 helm upgrade --install longhorn longhorn/longhorn \
@@ -96,3 +96,23 @@ helm upgrade --install longhorn longhorn/longhorn \
 ## Access
 
 Longhorn UI is exposed via MetalLB at `192.168.50.204`.
+
+## Backups
+
+Backups are stored in GCS bucket `hobroker-selfhosted` under the `longhorn-backups/` prefix.
+
+### Secrets
+
+Add the following to Infisical under `/longhorn` before deploying:
+
+| Name                    | Description                      |
+| ----------------------- | -------------------------------- |
+| `AWS_ACCESS_KEY_ID`     | GCS HMAC access key              |
+| `AWS_SECRET_ACCESS_KEY` | GCS HMAC secret key              |
+| `AWS_ENDPOINTS`         | `https://storage.googleapis.com` |
+
+Generate HMAC keys: **GCP Console → Cloud Storage → Settings → Interoperability → Create a key for a service account** (requires Storage Object Admin on the bucket).
+
+### Restoring on a new cluster
+
+Once Longhorn is installed and pointed at the same backup target, it automatically discovers all existing backups. Restore a volume via **Longhorn UI → Backup → select → Restore**.
