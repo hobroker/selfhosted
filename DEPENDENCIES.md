@@ -50,9 +50,7 @@ graph TD
 
   subgraph system
     argocd
-    cert-manager
     infisical-operator
-    local-path-provisioner
     longhorn
     metallb
     rancher
@@ -60,8 +58,8 @@ graph TD
     traefik
   end
 
-  adguardhome -->|LoadBalancer IP| metallb
-  argocd -->|LoadBalancer IP| metallb
+  adguardhome -. LoadBalancer IP .-> metallb
+  argocd -. LoadBalancer IP .-> metallb
   argocd -. Ingress .-> traefik
   bazarr -. Ingress .-> traefik
   code-server -. Ingress .-> traefik
@@ -70,11 +68,10 @@ graph TD
   http-https-echo -. Ingress .-> traefik
   jellyfin -. Ingress .-> traefik
   longhorn -->|InfisicalSecret| infisical-operator
-  longhorn -->|LoadBalancer IP| metallb
-  metallb -->|ServiceMonitor / PodMonitor| prometheus-operator
+  longhorn -. LoadBalancer IP .-> metallb
   n8n -. Ingress .-> traefik
   openclaw -->|InfisicalSecret| infisical-operator
-  plex -->|LoadBalancer IP| metallb
+  plex -. LoadBalancer IP .-> metallb
   plex -. Ingress .-> traefik
   prometheus-operator -->|InfisicalSecret| infisical-operator
   prometheus-operator -->|StorageClass| longhorn
@@ -90,7 +87,7 @@ graph TD
   syncthing -. Ingress .-> traefik
   tautulli -. Ingress .-> traefik
   traefik -->|InfisicalSecret| infisical-operator
-  traefik -->|LoadBalancer IP| metallb
+  traefik -. LoadBalancer IP .-> metallb
   traefik -->|ServiceMonitor / PodMonitor| prometheus-operator
 ```
 
@@ -98,40 +95,39 @@ graph TD
 
 | App                   | Depends on            | Reason                      |
 | --------------------- | --------------------- | --------------------------- |
-| `adguardhome`         | `metallb`             | LoadBalancer IP             |
-| `argocd`              | `metallb`             | LoadBalancer IP             |
 | `grafana-backup`      | `infisical-operator`  | InfisicalSecret             |
 | `longhorn`            | `infisical-operator`  | InfisicalSecret             |
-| `longhorn`            | `metallb`             | LoadBalancer IP             |
-| `metallb`             | `prometheus-operator` | ServiceMonitor / PodMonitor |
 | `openclaw`            | `infisical-operator`  | InfisicalSecret             |
-| `plex`                | `metallb`             | LoadBalancer IP             |
 | `prometheus-operator` | `infisical-operator`  | InfisicalSecret             |
 | `prometheus-operator` | `longhorn`            | StorageClass                |
 | `recyclarr`           | `infisical-operator`  | InfisicalSecret             |
 | `reloader`            | `prometheus-operator` | ServiceMonitor / PodMonitor |
 | `scraparr`            | `infisical-operator`  | InfisicalSecret             |
 | `traefik`             | `infisical-operator`  | InfisicalSecret             |
-| `traefik`             | `metallb`             | LoadBalancer IP             |
 | `traefik`             | `prometheus-operator` | ServiceMonitor / PodMonitor |
 
 ## Optional dependencies
 
-| App                   | Depends on | Reason  |
-| --------------------- | ---------- | ------- |
-| `argocd`              | `traefik`  | Ingress |
-| `bazarr`              | `traefik`  | Ingress |
-| `code-server`         | `traefik`  | Ingress |
-| `fileflows`           | `traefik`  | Ingress |
-| `http-https-echo`     | `traefik`  | Ingress |
-| `jellyfin`            | `traefik`  | Ingress |
-| `n8n`                 | `traefik`  | Ingress |
-| `plex`                | `traefik`  | Ingress |
-| `prometheus-operator` | `traefik`  | Ingress |
-| `prowlarr`            | `traefik`  | Ingress |
-| `qbittorrent`         | `traefik`  | Ingress |
-| `radarr`              | `traefik`  | Ingress |
-| `seerr`               | `traefik`  | Ingress |
-| `sonarr`              | `traefik`  | Ingress |
-| `syncthing`           | `traefik`  | Ingress |
-| `tautulli`            | `traefik`  | Ingress |
+| App                   | Depends on | Reason          |
+| --------------------- | ---------- | --------------- |
+| `adguardhome`         | `metallb`  | LoadBalancer IP |
+| `argocd`              | `metallb`  | LoadBalancer IP |
+| `argocd`              | `traefik`  | Ingress         |
+| `bazarr`              | `traefik`  | Ingress         |
+| `code-server`         | `traefik`  | Ingress         |
+| `fileflows`           | `traefik`  | Ingress         |
+| `http-https-echo`     | `traefik`  | Ingress         |
+| `jellyfin`            | `traefik`  | Ingress         |
+| `longhorn`            | `metallb`  | LoadBalancer IP |
+| `n8n`                 | `traefik`  | Ingress         |
+| `plex`                | `metallb`  | LoadBalancer IP |
+| `plex`                | `traefik`  | Ingress         |
+| `prometheus-operator` | `traefik`  | Ingress         |
+| `prowlarr`            | `traefik`  | Ingress         |
+| `qbittorrent`         | `traefik`  | Ingress         |
+| `radarr`              | `traefik`  | Ingress         |
+| `seerr`               | `traefik`  | Ingress         |
+| `sonarr`              | `traefik`  | Ingress         |
+| `syncthing`           | `traefik`  | Ingress         |
+| `tautulli`            | `traefik`  | Ingress         |
+| `traefik`             | `metallb`  | LoadBalancer IP |
