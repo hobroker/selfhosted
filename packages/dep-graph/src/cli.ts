@@ -1,6 +1,7 @@
 import { Command } from "commander";
 import { access, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
+import { format, resolveConfig } from "prettier";
 import { discoverApps, buildGraph } from "./graph.js";
 import { renderMarkdown } from "./render.js";
 import { RULES } from "./rules.js";
@@ -48,7 +49,9 @@ program
       }
 
       const outputPath = join(root, opts.output);
-      await writeFile(outputPath, markdown, "utf8");
+      const config = await resolveConfig(outputPath);
+      const formatted = await format(markdown, { ...config, filepath: outputPath });
+      await writeFile(outputPath, formatted, "utf8");
       console.log(`Written to ${outputPath}`);
       console.log(`${apps.length} apps, ${edges.length} dependencies detected`);
     },
