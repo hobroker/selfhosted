@@ -1,9 +1,13 @@
 import { Command } from "commander";
-import { access } from "node:fs/promises";
+import { access, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
+import { format, resolveConfig } from "prettier";
 import { CatalogLogger } from "./logger";
 import { buildCatalog } from "./core";
 import type { CliOptions } from "./types";
+import { discoverApps, buildGraph } from "./dep-graph/graph";
+import { renderMarkdown as renderDepGraph } from "./dep-graph/render";
+import { RULES } from "./dep-graph/rules";
 
 async function findRoot(from: string): Promise<string | null> {
   let dir = from;
@@ -43,6 +47,21 @@ program
     const options: CliOptions = { root, check: opts.check, dryRun: opts.dryRun };
 
     await buildCatalog(options, logger);
+
+    const apps = await discoverApps(join(root, "apps"));
+    const edges = await buildGraph(apps, RULES);
+    const markdown = renderDepGraph(apps, edges);
+
+    if (opts.dryRun) {
+      console.log(markdown);
+    } else {
+      const outputPath = join(root, "DEPENDENCIES.md");
+      const config = await resolveConfig(outputPath);
+      const formatted = await format(markdown, { ...config, filepath: outputPath });
+      await writeFile(outputPath, formatted, "utf8");
+      logger.success(`DEPENDENCIES.md updated (${apps.length} apps, ${edges.length} edges)`);
+    }
+
     logger.summarize();
 
     if (logger.hasErrors()) {

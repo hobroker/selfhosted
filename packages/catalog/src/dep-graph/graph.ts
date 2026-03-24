@@ -1,6 +1,6 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
-import type { DependencyRule } from "./rules.js";
+import type { DependencyRule } from "./rules";
 
 export interface App {
   name: string;
@@ -63,10 +63,7 @@ async function collectYamlContent(appDir: string): Promise<string> {
   return chunks.join("\n");
 }
 
-export async function buildGraph(
-  apps: App[],
-  rules: DependencyRule[],
-): Promise<Edge[]> {
+export async function buildGraph(apps: App[], rules: DependencyRule[]): Promise<Edge[]> {
   const appNames = new Set(apps.map((a) => a.name));
   const edges: Edge[] = [];
 
@@ -88,7 +85,5 @@ export async function buildGraph(
     }),
   );
 
-  return edges.sort(
-    (a, b) => a.from.localeCompare(b.from) || a.to.localeCompare(b.to),
-  );
+  return edges.sort((a, b) => a.from.localeCompare(b.from) || a.to.localeCompare(b.to));
 }

@@ -44,16 +44,14 @@ export const RULES: DependencyRule[] = [
   {
     provider: "infisical-operator",
     label: "InfisicalSecret",
-    detect: (c) =>
-      /kind:\s*InfisicalSecret/.test(c) || /infisical-\w+-secret/.test(c),
+    detect: (c) => /kind:\s*InfisicalSecret/.test(c) || /infisical-\w+-secret/.test(c),
   },
   {
     provider: "traefik",
     label: "Ingress",
     optional: true,
     detect: (c) =>
-      /ingressClassName:\s*traefik/.test(c) ||
-      /traefik\.ingress\.kubernetes\.io/.test(c),
+      /ingressClassName:\s*traefik/.test(c) || /traefik\.ingress\.kubernetes\.io/.test(c),
   },
   {
     provider: "longhorn",

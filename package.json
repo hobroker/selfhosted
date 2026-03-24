@@ -5,13 +5,11 @@
   "author": "Igor Leahu <igor.leahu24@gmail.com>",
   "packageManager": "npm@11.12.0",
   "workspaces": [
-    "packages/catalog",
-    "packages/dep-graph"
+    "packages/catalog"
   ],
   "scripts": {
     "prepare": "husky",
     "generate": "tsx packages/catalog/src/cli.ts",
-    "dep-graph": "tsx packages/dep-graph/src/cli.ts",
     "test": "turbo test",
     "typecheck": "turbo typecheck",
     "lint": "turbo lint",
