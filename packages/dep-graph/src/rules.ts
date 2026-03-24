@@ -30,6 +30,7 @@ export const RULES: DependencyRule[] = [
   {
     provider: "metallb",
     label: "LoadBalancer IP",
+    optional: true,
     detect: (c) => /metallb\.io\/loadBalancerIPs/.test(c),
   },
   {
