@@ -5,14 +5,13 @@
   "platformAutomerge": false,
   "separateMajorMinor": false,
   "separateMultipleMajor": false,
+  "argocd": {
+    "managerFilePatterns": ["/apps/.+/application\\.yaml$/"]
+  },
   "packageRules": [
     {
-      "matchFileNames": ["packages/cli/**"],
-      "groupName": "NPM cli package"
-    },
-    {
-      "matchFileNames": ["packages/catalog/**"],
-      "groupName": "NPM catalog package"
+      "matchFileNames": ["packages/**"],
+      "groupName": "NPM packages"
     },
     {
       "matchManagers": ["npm"],
@@ -35,12 +34,16 @@
       "groupName": "monitoring"
     },
     {
-      "matchFileNames": ["apps/downloads/**"],
-      "groupName": "downloads"
+      "matchFileNames": ["apps/backup/**"],
+      "groupName": "backup"
     },
     {
       "matchFileNames": ["apps/development/**"],
       "groupName": "development"
+    },
+    {
+      "matchFileNames": ["apps/network/**"],
+      "groupName": "network"
     },
     {
       "matchFileNames": ["apps/system/**"],
@@ -57,10 +60,6 @@
     {
       "matchPackageNames": ["linuxserver/jellyfin"],
       "allowedVersions": "<=19"
-    },
-    {
-      "matchPackageNames": ["linuxserver/overseerr"],
-      "allowedVersions": "<=9"
     }
   ]
 }
