@@ -16,7 +16,8 @@ export async function buildDepGraph(
   const markdown = renderMarkdown(apps, edges);
 
   if (options.dryRun) {
-    console.log(markdown);
+    logger.section("Dry-run mode: generated dependency graph content");
+    logger.info(markdown);
   } else {
     const outputPath = join(options.root, "DEPENDENCIES.md");
     const config = await resolveConfig(outputPath);
