@@ -5,14 +5,17 @@ import { parseReadme } from "./parse";
 import { renderCatalog } from "./render";
 import { injectCatalog } from "./inject";
 import { formatCategoryLabel } from "./render";
-import type { CatalogSection, CliOptions } from "./types";
+import type { App, CatalogSection, CliOptions } from "./types";
 import type { CatalogLogger } from "./logger";
 
-export async function buildCatalog(options: CliOptions, logger: CatalogLogger): Promise<void> {
-  const appsDir = join(options.root, "apps");
+export async function buildCatalog(
+  options: CliOptions,
+  logger: CatalogLogger,
+  apps: App[],
+): Promise<void> {
   const readmePath = join(options.root, "README.md");
 
-  const { found: scannedList, missing } = await scanApps(appsDir);
+  const { found: scannedList, missing } = await scanApps(apps);
 
   logger.info(`Found ${scannedList.length} README(s) across apps/`);
 

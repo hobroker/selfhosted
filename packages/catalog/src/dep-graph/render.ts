@@ -1,4 +1,5 @@
-import type { App, Edge } from "./graph";
+import type { App } from "../types";
+import type { Edge } from "./graph";
 
 export function renderMermaid(apps: App[], edges: Edge[]): string {
   const byCategory = new Map<string, App[]>();

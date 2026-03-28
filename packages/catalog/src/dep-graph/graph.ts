@@ -1,45 +1,13 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { DependencyRule } from "./rules";
-
-export interface App {
-  name: string;
-  category: string;
-  dir: string;
-}
+import type { App } from "../types";
 
 export interface Edge {
   from: string;
   to: string;
   label: string;
   optional: boolean;
-}
-
-export async function discoverApps(appsDir: string): Promise<App[]> {
-  const apps: App[] = [];
-
-  const categories = await readdir(appsDir, { withFileTypes: true });
-  await Promise.all(
-    categories
-      .filter((d) => d.isDirectory())
-      .map(async (cat) => {
-        const services = await readdir(join(appsDir, cat.name), {
-          withFileTypes: true,
-        });
-        for (const svc of services.filter((d) => d.isDirectory())) {
-          apps.push({
-            name: svc.name,
-            category: cat.name,
-            dir: join(appsDir, cat.name, svc.name),
-          });
-        }
-      }),
-  );
-
-  return apps.sort((a, b) => {
-    const catOrder = a.category.localeCompare(b.category);
-    return catOrder !== 0 ? catOrder : a.name.localeCompare(b.name);
-  });
 }
 
 async function collectYamlContent(appDir: string): Promise<string> {
