@@ -33,17 +33,3 @@ persistence:
     existingClaim: plex-nebula-pvc
     globalMounts:
       - path: /mnt/nebula
-
-ingress:
-  main:
-    enabled: true
-    annotations:
-      traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    className: "traefik"
-    hosts:
-      - host: plex.hobroker.me
-        paths:
-          - path: /
-            pathType: Prefix
-            service:
-              identifier: main
