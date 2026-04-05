@@ -15,7 +15,7 @@ spec:
       path: apps/automation/openclaw/config
     - repoURL: https://serhanekicii.github.io/openclaw-helm
       chart: openclaw
-      targetRevision: 1.5.5
+      targetRevision: 1.5.12
       helm:
         valueFiles:
           - $values/apps/automation/openclaw/values.yaml
