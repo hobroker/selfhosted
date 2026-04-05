@@ -194,16 +194,10 @@ radarr:
 
       # ── HDR (UHD-specific) ─────────────────────────────────────────────────
       # Samsung TV supports HDR10 natively but NOT Dolby Vision.
-      # DV HDR10 has an HDR10 fallback layer → safe to boost.
-      # Pure DV has no HDR10 fallback → penalise to avoid washed-out picture.
+      # Block releases that are pure DV with no HDR10 fallback layer —
+      # they will display washed-out on a non-DV display.
       - trash_ids:
-          - e23edd2482476e595fb990b12e7c609c # DV HDR10
-        assign_scores_to:
-          - name: UHD Bluray + WEB
-            score: 25
-
-      - trash_ids:
-          - 58d6a88f13e2db7f5059c41047876f00 # DV (no HDR10 fallback)
+          - 923b6abef9b17f937fab56cfcf89e1f1 # DV (w/o HDR fallback)
         assign_scores_to:
           - name: UHD Bluray + WEB
             score: -10000
