@@ -112,6 +112,25 @@ radarr:
       type: movie
 
     quality_profiles:
+      - name: UHD Bluray + WEB
+        reset_unmatched_scores:
+          enabled: true
+        upgrade:
+          allowed: true
+          until_quality: Bluray-2160p
+          until_score: 10000
+        min_format_score: 0
+        qualities:
+          - name: Remux-2160p
+            enabled: false
+          - name: Bluray-2160p
+            enabled: true
+          - name: WEB 2160p
+            enabled: true
+            qualities:
+              - WEBDL-2160p
+              - WEBRip-2160p
+
       - name: HD Bluray + WEB
         reset_unmatched_scores:
           enabled: true
@@ -150,6 +169,8 @@ radarr:
           - c9fd353f8f5f1baf56dc601c4cb29920 # PCOK
           - e36a0ba1bc902b26ee40818a1d59b8bd # PMTP
         assign_scores_to:
+          - name: UHD Bluray + WEB
+            score: 70
           - name: HD Bluray + WEB
             score: 70
 
@@ -158,19 +179,41 @@ radarr:
       - trash_ids:
           - 493b6d1dbec3c3364c59d7607f7e3405 # HDR
         assign_scores_to:
+          - name: UHD Bluray + WEB
+            score: 30
           - name: HD Bluray + WEB
             score: 20
 
       - trash_ids:
           - caa37d0df9c348912df1fb1d88f9273a # HDR10+ Boost
         assign_scores_to:
+          - name: UHD Bluray + WEB
+            score: 20
           - name: HD Bluray + WEB
             score: 15
+
+      # ── HDR (UHD-specific) ─────────────────────────────────────────────────
+      # Samsung TV supports HDR10 natively but NOT Dolby Vision.
+      # DV HDR10 has an HDR10 fallback layer → safe to boost.
+      # Pure DV has no HDR10 fallback → penalise to avoid washed-out picture.
+      - trash_ids:
+          - e23edd2482476e595fb990b12e7c609c # DV HDR10
+        assign_scores_to:
+          - name: UHD Bluray + WEB
+            score: 25
+
+      - trash_ids:
+          - 58d6a88f13e2db7f5059c41047876f00 # DV (no HDR10 fallback)
+        assign_scores_to:
+          - name: UHD Bluray + WEB
+            score: -10000
 
       # ── Audio ──────────────────────────────────────────────────────────────
       - trash_ids:
           - 185f1dd7264c4562b9022d963ac37424 # DD+ (EAC3)
         assign_scores_to:
+          - name: UHD Bluray + WEB
+            score: 8
           - name: HD Bluray + WEB
             score: 8
 
@@ -179,6 +222,8 @@ radarr:
           - dcf3ec6938fa32445f590a4da84256cd # DTS-HD MA
           - a570d4a0e56a2874b64e5bfa55202a1b # FLAC
         assign_scores_to:
+          - name: UHD Bluray + WEB
+            score: 10
           - name: HD Bluray + WEB
             score: 10
 
@@ -186,6 +231,8 @@ radarr:
       - trash_ids:
           - 4b900e171accbfb172729b63323ea8ca # MULTi
         assign_scores_to:
+          - name: UHD Bluray + WEB
+            score: 25
           - name: HD Bluray + WEB
             score: 25
 
@@ -194,5 +241,7 @@ radarr:
           - b8cd450cbfa689c0259a01d9e29ba3d6 # 3D
           - ed38b889b31be83fda192888e2286d83 # BR-DISK (full disc rip)
         assign_scores_to:
+          - name: UHD Bluray + WEB
+            score: -10000
           - name: HD Bluray + WEB
             score: -10000
