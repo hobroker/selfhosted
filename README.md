@@ -151,10 +151,11 @@ npm run generate
 
 ### Backup
 
-| App                                | Description                                             | Source Code                                |
-| ---------------------------------- | ------------------------------------------------------- | ------------------------------------------ |
-| [backrest](apps/backup/backrest)   | A web-accessible backup solution built on top of restic | <https://github.com/garethgeorge/backrest> |
-| [syncthing](apps/backup/syncthing) | Continuous file synchronization                         | <https://github.com/syncthing/syncthing>   |
+| App                                | Description                                                                            | Source Code                                |
+| ---------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------ |
+| [backrest](apps/backup/backrest)   | A web-accessible backup solution built on top of restic                                | <https://github.com/garethgeorge/backrest> |
+| [kopia](apps/backup/kopia)         | Fast and secure backup tool with deduplication, compression, and cloud storage support | <https://github.com/kopia/kopia>           |
+| [syncthing](apps/backup/syncthing) | Continuous file synchronization                                                        | <https://github.com/syncthing/syncthing>   |
 
 ### Development
 
