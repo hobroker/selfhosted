@@ -4,6 +4,8 @@ import { dirname, join } from "node:path";
 import { CatalogLogger } from "./logger";
 import { buildCatalog } from "./core";
 import type { CliOptions } from "./types";
+import { discoverApps } from "./scan";
+import { buildDepGraph } from "./dep-graph/core";
 
 async function findRoot(from: string): Promise<string | null> {
   let dir = from;
@@ -42,7 +44,11 @@ program
 
     const options: CliOptions = { root, check: opts.check, dryRun: opts.dryRun };
 
-    await buildCatalog(options, logger);
+    const apps = await discoverApps(join(root, "apps"));
+
+    await buildCatalog(options, logger, apps);
+    await buildDepGraph(options, logger, apps);
+
     logger.summarize();
 
     if (logger.hasErrors()) {
