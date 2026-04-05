@@ -30,6 +30,27 @@ Edit `config/recyclarr.yml` to customize quality profiles, custom formats, and s
 
 ArgoCD will automatically run a sync job whenever this file changes.
 
+### Adding or updating quality profiles / custom formats
+
+All custom format `trash_id` values come from the [TRaSH Guides JSON files](https://github.com/TRaSH-Guides/Guides/tree/master/docs/json). Browse by service:
+
+- **Radarr CFs** — `docs/json/radarr/cf/*.json`
+- **Sonarr CFs** — `docs/json/sonarr/cf/*.json`
+- **Pre-built profile groups** — `docs/json/radarr/cf-groups/` and `docs/json/sonarr/cf-groups/`
+
+Each JSON file contains a `trash_id` field and a `name` field — use the `trash_id` in `recyclarr.yml`.
+
+Useful starting points on the TRaSH Guides website:
+
+| Goal                                        | URL                                                                   |
+| ------------------------------------------- | --------------------------------------------------------------------- |
+| Radarr quality profiles (HD, UHD, Remux…)   | https://trash-guides.info/Radarr/radarr-setup-quality-profiles/       |
+| Sonarr quality profiles (WEB, Anime…)       | https://trash-guides.info/Sonarr/sonarr-setup-quality-profiles/       |
+| All Radarr custom formats with explanations | https://trash-guides.info/Radarr/Radarr-collection-of-custom-formats/ |
+| All Sonarr custom formats with explanations | https://trash-guides.info/Sonarr/sonarr-collection-of-custom-formats/ |
+
+> **Note:** CF names and `trash_id` values do change between TRaSH Guide releases. Always verify IDs against the JSON source above before adding them — recyclarr will warn about invalid IDs on the next sync.
+
 ## Storage
 
 | source                 | container path | type       | description            |
