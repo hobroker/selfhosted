@@ -2,8 +2,8 @@
 
 > AI assistant that connects to messaging platforms and executes tasks autonomously
 
-Source Code: https://github.com/openclaw/openclaw
-Chart: https://github.com/serhanekicii/openclaw-helm
+Source Code: https://gitlab.com/xrow-public/helm-openclaw
+Chart: oci://registry.gitlab.com/xrow-public/helm-openclaw/charts/openclaw
 
 ## Installing/upgrading
 
@@ -19,23 +19,25 @@ argocd app sync openclaw
 
 ```sh
 kubectl apply -f config
-helm repo add openclaw https://serhanekicii.github.io/openclaw-helm
-helm repo update openclaw
-helm upgrade --install openclaw openclaw/openclaw -f values.yaml
+helm upgrade --install openclaw \
+  oci://registry.gitlab.com/xrow-public/helm-openclaw/charts/openclaw \
+  --version 1.17.2 \
+  -f values.yaml
 ```
 
 ## Pairing a device
 
 ```sh
-kubectl port-forward -n default svc/openclaw 18789:18789
-# Open http://localhost:18789, enter the gateway token, click Connect
+# Read the auto-generated gateway token
+kubectl get secret -n default openclaw-token -o jsonpath='{.data.token}' | base64 -d; echo
 
-kubectl exec -n default deployment/openclaw -c main -- node dist/index.js devices list
-kubectl exec -n default deployment/openclaw -c main -- node dist/index.js devices approve <REQUEST_ID>
+# Forward the UI
+kubectl port-forward -n default svc/openclaw 18789:18789
+# Open http://localhost:18789, paste the token, click Connect
 ```
 
 ## Storage
 
-| source                | container path         | type       | description                            |
-| --------------------- | ---------------------- | ---------- | -------------------------------------- |
-| `/var/local/openclaw` | `/home/node/.openclaw` | `hostPath` | Config, sessions, and installed skills |
+| source                | container path                | type       | description                            |
+| --------------------- | ----------------------------- | ---------- | -------------------------------------- |
+| `/var/local/openclaw` | `/opt/app-root/src/.openclaw` | `hostPath` | Config, sessions, and installed skills |
