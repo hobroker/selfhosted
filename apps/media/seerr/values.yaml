@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/seerr-team/seerr
-          tag: v3.1.0
+          tag: v3.2.0
           pullPolicy: IfNotPresent
 
 service:
