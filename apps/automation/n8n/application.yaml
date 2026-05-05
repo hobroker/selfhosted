@@ -15,7 +15,7 @@ spec:
       path: apps/automation/n8n/config
     - repoURL: https://bjw-s-labs.github.io/helm-charts
       chart: app-template
-      targetRevision: 4.6.2
+      targetRevision: 5.0.0
       helm:
         valueFiles:
           - $values/apps/automation/n8n/values.yaml
