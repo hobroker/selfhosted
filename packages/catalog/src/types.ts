@@ -1,3 +1,9 @@
+export interface App {
+  name: string;
+  category: string;
+  dir: string;
+}
+
 export interface ScannedReadme {
   absolutePath: string;
   category: string;
