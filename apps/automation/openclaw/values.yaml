@@ -1,14 +1,7 @@
 app-template:
   controllers:
     main:
-      pod:
-        annotations:
-          secret.reloader.stakater.com/reload: "infisical-openclaw-secret"
       containers:
-        main:
-          envFrom:
-            - secretRef:
-                name: infisical-openclaw-secret
         chromium:
           enabled: false
   persistence:
