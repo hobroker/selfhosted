@@ -1,17 +1,85 @@
-controllers:
-  main:
-    pod:
-      annotations:
-        secret.reloader.stakater.com/reload: "infisical-openclaw-secret"
-    containers:
-      main:
-        envFrom:
-          - secretRef:
-              name: infisical-openclaw-secret
-      chromium:
-        enabled: false
-persistence:
-  data:
-    storageClassName: ""
-    globalMounts:
-      - path: /home/node/.openclaw
+app-template:
+  controllers:
+    main:
+      pod:
+        annotations:
+          secret.reloader.stakater.com/reload: "infisical-openclaw-secret"
+      containers:
+        main:
+          envFrom:
+            - secretRef:
+                name: infisical-openclaw-secret
+        chromium:
+          enabled: false
+  persistence:
+    data:
+      storageClass: ""
+      globalMounts:
+        - path: /home/node/.openclaw
+  configMaps:
+    config:
+      data:
+        openclaw.json: |
+          {
+            "gateway": {
+              "port": 18789,
+              "mode": "local",
+              "trustedProxies": ["10.0.0.1"]
+            },
+            "browser": {
+              "enabled": true,
+              "defaultProfile": "default",
+              "profiles": {
+                "default": {
+                  "cdpUrl": "http://localhost:9222",
+                  "color": "#4285F4"
+                }
+              }
+            },
+            "agents": {
+              "defaults": {
+                "workspace": "/home/node/.openclaw/workspace",
+                "model": {
+                  "primary": "deepseek/deepseek-v4-pro"
+                },
+                "userTimezone": "UTC",
+                "timeoutSeconds": 600,
+                "maxConcurrent": 1
+              },
+              "list": [
+                {
+                  "id": "main",
+                  "default": true,
+                  "identity": {
+                    "name": "OpenClaw",
+                    "emoji": "🦞"
+                  }
+                }
+              ]
+            },
+            "session": {
+              "scope": "per-sender",
+              "store": "/home/node/.openclaw/sessions",
+              "reset": {
+                "mode": "idle",
+                "idleMinutes": 60
+              }
+            },
+            "logging": {
+              "level": "info",
+              "consoleLevel": "info",
+              "consoleStyle": "compact",
+              "redactSensitive": "tools"
+            },
+            "tools": {
+              "profile": "full",
+              "web": {
+                "search": {
+                  "enabled": false
+                },
+                "fetch": {
+                  "enabled": true
+                }
+              }
+            }
+          }
