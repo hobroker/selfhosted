@@ -11,7 +11,7 @@ spec:
   project: default
   sources:
     - repoURL: https://github.com/hobroker/selfhosted.git
-      targetRevision: HEAD
+      targetRevision: fix/openclaw-primary-model
       path: apps/automation/openclaw/config
     - repoURL: https://serhanekicii.github.io/openclaw-helm
       chart: openclaw
@@ -20,7 +20,7 @@ spec:
         valueFiles:
           - $values/apps/automation/openclaw/values.yaml
     - repoURL: https://github.com/hobroker/selfhosted.git
-      targetRevision: HEAD
+      targetRevision: fix/openclaw-primary-model
       ref: values
   destination:
     server: https://kubernetes.default.svc
