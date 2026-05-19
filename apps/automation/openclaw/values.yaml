@@ -14,8 +14,6 @@ app-template:
   persistence:
     data:
       storageClass: ""
-      globalMounts:
-        - path: /home/node/.openclaw
   configMaps:
     config:
       data:
