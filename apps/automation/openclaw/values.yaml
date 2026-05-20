@@ -7,6 +7,13 @@ app-template:
   persistence:
     data:
       storageClass: ""
+    npm-cache:
+      enabled: true
+      type: emptyDir
+      advancedMounts:
+        main:
+          main:
+            - path: /home/node/.npm
   configMaps:
     config:
       data:
