@@ -1,8 +1,6 @@
 # OpenClaw values for bjw-s-labs/app-template (vendored from openclaw chart 1.5.36).
 # Upstream chart (serhanekicii/openclaw-helm) was archived 2026-05-25.
 
-openclawVersion: "2026.5.12"
-chromiumVersion: "148.0.7778.97"
 configMode: merge
 skills:
   - weather
@@ -28,7 +26,7 @@ controllers:
           - /scripts/init-config.sh
         env:
           CONFIG_MODE: '{{ .Values.configMode | default "merge" }}'
-        securityContext:
+        securityContext: &containerSecurityContext
           runAsUser: 1000
           runAsGroup: 1000
           runAsNonRoot: true
@@ -49,15 +47,7 @@ controllers:
           SKILLS_TO_INSTALL: '{{ .Values.skills | join " " }}'
           HOME: /tmp
           NPM_CONFIG_CACHE: /tmp/.npm
-        securityContext:
-          runAsUser: 1000
-          runAsGroup: 1000
-          runAsNonRoot: true
-          readOnlyRootFilesystem: true
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - ALL
+        securityContext: *containerSecurityContext
 
     containers:
       main:
@@ -76,15 +66,7 @@ controllers:
           - "18789"
         envFrom: []
         env: {}
-        securityContext:
-          runAsUser: 1000
-          runAsGroup: 1000
-          runAsNonRoot: true
-          readOnlyRootFilesystem: true
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - ALL
+        securityContext: *containerSecurityContext
         resources:
           requests:
             cpu: 200m
@@ -113,22 +95,12 @@ controllers:
               periodSeconds: 10
               timeoutSeconds: 5
               failureThreshold: 3
-          startup:
-            enabled: true
-            type: TCP
-            spec:
-              tcpSocket:
-                port: 18789
-              initialDelaySeconds: 5
-              periodSeconds: 5
-              timeoutSeconds: 5
-              failureThreshold: 30
 
       chromium:
         enabled: false
         image:
           repository: chromedp/headless-shell
-          tag: "{{ .Values.chromiumVersion }}"
+          tag: 148.0.7778.97
         env:
           # Fontconfig cache needs a writable directory
           XDG_CACHE_HOME: /tmp
@@ -254,42 +226,9 @@ configMaps:
 
         log "Starting skills initialization"
 
-        # ============================================================
-        # Runtime Dependencies
-        # ============================================================
-        # Some skills require additional runtimes (Python, Go, etc.)
-        # Install them here so they persist across pod restarts.
-        #
-        # Example: Install uv (Python package manager) for Python skills
-        # mkdir -p /home/node/.openclaw/bin
-        # if [ ! -f /home/node/.openclaw/bin/uv ]; then
-        #   log "Installing uv..."
-        #   curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/home/node/.openclaw/bin sh
-        # fi
-        #
-        # Example: Install pnpm and packages for interfaces (e.g., MS Teams)
-        # The read-only filesystem and non-root UID prevent writing to default
-        # pnpm paths (/usr/local/lib/node_modules, ~/.local/share/pnpm, etc.).
-        # Redirect PNPM_HOME to the PVC so the binary persists across restarts.
-        # The init container's HOME=/tmp ensures pnpm's cache, state, and config
-        # writes land on /tmp (writable emptyDir). The store goes on the PVC so
-        # hardlinks work (same filesystem as node_modules) and persist.
-        # PNPM_HOME=/home/node/.openclaw/pnpm
-        # mkdir -p "$PNPM_HOME"
-        # if [ ! -f "$PNPM_HOME/pnpm" ]; then
-        #   log "Installing pnpm..."
-        #   curl -fsSL https://get.pnpm.io/install.sh | env PNPM_HOME="$PNPM_HOME" SHELL=/bin/sh sh -
-        # fi
-        # export PATH="$PNPM_HOME:$PATH"
-        # log "Installing interface dependencies..."
-        # cd /home/node/.openclaw
-        # pnpm install <your-package> --store-dir /home/node/.openclaw/.pnpm-store
-
-        # ============================================================
-        # Skill Installation
-        # ============================================================
         # Installs skills listed in SKILLS_TO_INSTALL (set via the top-level skills: [] value).
         # Set skills: [] in your values to skip skill installation entirely.
+        # If a skill needs an extra runtime (uv, pnpm, etc.), install it here before the loop.
         mkdir -p /home/node/.openclaw/workspace/skills
         cd /home/node/.openclaw/workspace
         install_skill() {
@@ -329,8 +268,6 @@ configMaps:
   config:
     enabled: true
     data:
-      bash_aliases: |
-        alias openclaw='node /app/dist/index.js'
       openclaw.json: |
         {
           "gateway": {
@@ -428,17 +365,6 @@ persistence:
       main:
         init-config:
           - path: /config
-            readOnly: true
-
-  bash-aliases:
-    enabled: true
-    type: configMap
-    identifier: config
-    advancedMounts:
-      main:
-        main:
-          - path: /home/node/.bash_aliases
-            subPath: bash_aliases
             readOnly: true
 
   data:
