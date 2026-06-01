@@ -250,7 +250,8 @@ configMaps:
               return 0
             fi
             # Add a little jitter so concurrent pods don't retry in lockstep.
-            jitter=$((RANDOM % 5))
+            # POSIX sh has no $RANDOM, so read one byte from /dev/urandom (fall back to 0).
+            jitter=$(( $(od -An -N1 -tu1 /dev/urandom 2>/dev/null || echo 0) % 5 ))
             if [ "$i" -lt "$attempts" ]; then
               log "WARNING: Failed to install skill: $skill (attempt $i/$attempts). Retrying in $((delay + jitter))s..."
               sleep $((delay + jitter))
