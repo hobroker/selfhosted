@@ -104,15 +104,7 @@ controllers:
         env:
           # Fontconfig cache needs a writable directory
           XDG_CACHE_HOME: /tmp
-        securityContext:
-          runAsUser: 1000
-          runAsGroup: 1000
-          runAsNonRoot: true
-          readOnlyRootFilesystem: true
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - ALL
+        securityContext: *containerSecurityContext
         resources:
           requests:
             cpu: 100m
