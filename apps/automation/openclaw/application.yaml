@@ -13,10 +13,11 @@ spec:
     - repoURL: https://github.com/hobroker/selfhosted.git
       targetRevision: HEAD
       path: apps/automation/openclaw/config
-    - repoURL: https://serhanekicii.github.io/openclaw-helm
-      chart: openclaw
-      targetRevision: 1.5.36
+    - repoURL: https://bjw-s-labs.github.io/helm-charts
+      chart: app-template
+      targetRevision: 4.6.2
       helm:
+        releaseName: openclaw
         valueFiles:
           - $values/apps/automation/openclaw/values.yaml
     - repoURL: https://github.com/hobroker/selfhosted.git
