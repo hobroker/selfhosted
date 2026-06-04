@@ -20,7 +20,7 @@ controllers:
       init-config:
         image:
           repository: ghcr.io/openclaw/openclaw
-          tag: 2026.5.12
+          tag: 2026.6.1
         command:
           - sh
           - /scripts/init-config.sh
@@ -39,7 +39,7 @@ controllers:
       init-skills:
         image:
           repository: ghcr.io/openclaw/openclaw
-          tag: 2026.5.12
+          tag: 2026.6.1
         command:
           - sh
           - /scripts/init-skills.sh
@@ -53,7 +53,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/openclaw/openclaw
-          tag: 2026.5.12
+          tag: 2026.6.1
           pullPolicy: IfNotPresent
         command:
           - node
@@ -100,7 +100,7 @@ controllers:
         enabled: false
         image:
           repository: chromedp/headless-shell
-          tag: 148.0.7778.97
+          tag: 149.0.7808.0
         env:
           # Fontconfig cache needs a writable directory
           XDG_CACHE_HOME: /tmp
