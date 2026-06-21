@@ -281,9 +281,6 @@ configMaps:
           "agents": {
             "defaults": {
               "workspace": "/home/node/.openclaw/workspace",
-              "model": {
-                "primary": "deepseek/deepseek-v4-pro"
-              },
               "userTimezone": "UTC",
               "timeoutSeconds": 600,
               "maxConcurrent": 1
