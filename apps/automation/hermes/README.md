@@ -44,11 +44,19 @@ On a fresh volume the config is empty. The `dashboard` container is a plain web
 UI and stays up regardless, so use it (or its container shell) to write the
 initial config; the `main` gateway will pick it up on its next restart.
 
+The **provider key** comes from Infisical (see [Secrets](#secrets)); the
+**model selection** is written to `config.yaml` on the PVC (`/opt/data`) once,
+via the wizard or `hermes model`. This repo uses DeepSeek:
+
 ```sh
 # Option A - run the setup wizard against the persistent volume:
 kubectl exec -it -n default deployment/hermes -c dashboard -- hermes setup
 
-# Option B - use the dashboard UI:
+# Option B - select DeepSeek non-interactively (key comes from DEEPSEEK_API_KEY):
+kubectl exec -it -n default deployment/hermes -c dashboard -- \
+  hermes config set model deepseek/deepseek-chat
+
+# Option C - use the dashboard UI:
 kubectl port-forward -n default deployment/hermes 9119:9119
 # open http://localhost:9119 and configure the model, tools and gateways
 
@@ -70,14 +78,26 @@ kubectl port-forward -n default deployment/hermes 9119:9119
 # open http://localhost:9119
 ```
 
-## Secrets (optional)
+## Secrets
 
-The interactive wizard/dashboard stores provider API keys in `/opt/data`, so no
-Kubernetes secret is required to get started. The `infisical-hermes-secret`
-(Infisical path `/hermes`) is wired into the gateway via `envFrom` for the
-optional env-based integrations documented upstream — e.g. `API_SERVER_KEY` /
-`API_SERVER_HOST` for the OpenAI-compatible API server, and the `TEAMS_*` /
-`GOOGLE_CHAT_*` variables. Leave the Infisical path empty if you don't use them.
+The `infisical-hermes-secret` (Infisical path `/hermes`) is wired into the
+gateway via `envFrom`, so anything stored there is available to Hermes as an
+environment variable.
+
+| Infisical key      | Purpose                                                                                                                                                        |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `DEEPSEEK_API_KEY` | LLM provider key — DeepSeek ([platform.deepseek.com](https://platform.deepseek.com/api_keys)). Paired with `model: deepseek/deepseek-chat` in the setup above. |
+
+The following are **optional**, only needed for the matching upstream
+integration:
+
+- `API_SERVER_KEY` / `API_SERVER_HOST` — expose the OpenAI-compatible API server
+- `TEAMS_*` — Microsoft Teams gateway
+- `GOOGLE_CHAT_*` — Google Chat gateway
+
+> The gateway mounts this secret with `envFrom`, so the `infisical-hermes-secret`
+> object must exist before the pod starts. Create the `/hermes` path in Infisical
+> (with at least `DEEPSEEK_API_KEY`) before syncing.
 
 ## Storage
 
