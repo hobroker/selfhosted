@@ -1,0 +1,85 @@
+# Hermes Agent values for bjw-s-labs/app-template.
+# The gateway and dashboard run from the same image and share /opt/data.
+# Upstream reference: https://github.com/NousResearch/hermes-agent/blob/main/docker-compose.yml
+
+defaultPodOptions:
+  securityContext:
+    # The s6-overlay /init entrypoint remaps the internal `hermes` user to
+    # HERMES_UID/HERMES_GID below; fsGroup keeps the PVC group-owned by it.
+    fsGroup: 1000
+    fsGroupChangePolicy: OnRootMismatch
+
+controllers:
+  main:
+    replicas: 1
+    # Single ReadWriteOnce volume shared by both containers, so never run two
+    # pods at once.
+    strategy: Recreate
+
+    containers:
+      main:
+        image:
+          repository: docker.io/nousresearch/hermes-agent
+          tag: v2026.7.7.2
+          pullPolicy: IfNotPresent
+        # Keep the image's default /init (s6-overlay PID 1) entrypoint and only
+        # override the command, exactly as docker-compose does.
+        args:
+          - gateway
+          - run
+        env:
+          # Remap the container's `hermes` user to the host owner of
+          # /var/local/hermes so files stay readable/writable on the host.
+          HERMES_UID: "1000"
+          HERMES_GID: "1000"
+        # Optional integration secrets (API_SERVER_KEY, TEAMS_*, GOOGLE_CHAT_*).
+        # The managed secret is created by the Infisical operator; it may be
+        # empty if you only use the interactive wizard / dashboard.
+        envFrom:
+          - secretRef:
+              name: infisical-hermes-secret
+        resources:
+          requests:
+            cpu: 200m
+            memory: 512Mi
+          limits:
+            cpu: 2000m
+            memory: 2Gi
+
+      dashboard:
+        image:
+          repository: docker.io/nousresearch/hermes-agent
+          tag: v2026.7.7.2
+          pullPolicy: IfNotPresent
+        # The dashboard stores API keys and has no auth of its own, so it binds
+        # to localhost only. Reach it via `kubectl port-forward` (see README).
+        # Do NOT change this to --insecure --host 0.0.0.0.
+        args:
+          - dashboard
+          - --host
+          - 127.0.0.1
+          - --no-open
+        env:
+          HERMES_UID: "1000"
+          HERMES_GID: "1000"
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+
+persistence:
+  data:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi
+    storageClass: ""
+    advancedMounts:
+      main:
+        main:
+          - path: /opt/data
+        dashboard:
+          - path: /opt/data
