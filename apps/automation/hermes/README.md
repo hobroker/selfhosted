@@ -9,8 +9,9 @@ The pod runs two containers from the same image, mirroring the upstream
 
 - **`main`** — the gateway (`gateway run`), which connects out to your
   messaging platforms and runs the agent.
-- **`dashboard`** — the web UI (`dashboard --host 127.0.0.1 --no-open`), used to
-  configure the model, tools and gateways.
+- **`dashboard`** — the web UI (`dashboard --host 0.0.0.0 --no-open`), used to
+  configure the model, tools and gateways. LAN-exposed behind the bundled
+  username/password auth (see [Accessing the dashboard](#accessing-the-dashboard)).
 
 Both share the `/opt/data` volume, so configuration written by either one is
 visible to the other.
@@ -44,9 +45,10 @@ On a fresh volume the config is empty. The `dashboard` container is a plain web
 UI and stays up regardless, so use it (or its container shell) to write the
 initial config; the `main` gateway will pick it up on its next restart.
 
-The **provider key** comes from Infisical (see [Secrets](#secrets)); the
-**model selection** is written to `config.yaml` on the PVC (`/opt/data`) once,
-via the wizard or `hermes model`. This repo uses DeepSeek:
+Both the **provider key** and the **model selection** are set through the
+dashboard and stored on the PVC (`/opt/data`) — keys in `.env`, model in
+`config.yaml`. Set them once via the wizard, `hermes` CLI, or the dashboard UI.
+This repo uses DeepSeek:
 
 ```sh
 # Option A - run the setup wizard against the persistent volume:
@@ -56,9 +58,8 @@ kubectl exec -it -n default deployment/hermes -c dashboard -- hermes setup
 kubectl exec -it -n default deployment/hermes -c dashboard -- \
   hermes config set model deepseek/deepseek-chat
 
-# Option C - use the dashboard UI:
-kubectl port-forward -n default deployment/hermes 9119:9119
-# open http://localhost:9119 and configure the model, tools and gateways
+# Option C - use the dashboard UI at http://192.168.50.205:9119
+# (see "Accessing the dashboard" below) and configure the model, tools and gateways
 
 # After config exists, restart so the gateway loads it:
 kubectl rollout restart -n default deployment/hermes
@@ -70,34 +71,57 @@ kubectl rollout restart -n default deployment/hermes
 
 ## Accessing the dashboard
 
-The dashboard binds to `127.0.0.1` only and has no authentication, so it is not
-exposed through Traefik. Reach it over a port-forward instead:
+The dashboard is exposed on the LAN via a MetalLB LoadBalancer IP (same
+pattern as AdGuard Home and Plex):
+
+<http://192.168.50.205:9119>
+
+Binding to a non-loopback host engages the dashboard's
+[fail-closed auth gate](https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard):
+it **refuses to start** unless an auth provider is configured (`--insecure`
+would bypass it, but is never used here). The bundled username/password
+provider is enabled by the `HERMES_DASHBOARD_BASIC_AUTH_*` vars, which live in
+`/opt/data/.env` on the PVC — set them via the dashboard's **API Keys** page.
+If they are missing the dashboard container crashloops. Verify the gate is up:
+
+```sh
+curl -s http://192.168.50.205:9119/api/status | jq '.auth_required, .auth_providers'
+# true
+# ["basic"]
+```
+
+The dashboard stays off Traefik / the public domain. A port-forward still
+works as an alternative:
 
 ```sh
 kubectl port-forward -n default deployment/hermes 9119:9119
 # open http://localhost:9119
 ```
 
-## Secrets
+## Root access
 
-The `infisical-hermes-secret` (Infisical path `/hermes`) is wired into the
-gateway via `envFrom`, so anything stored there is available to Hermes as an
-environment variable.
+The image has no `USER` directive — s6-overlay's `/init` runs as root and only
+the supervised services drop to the unprivileged `hermes` user. So
+`kubectl exec -it -n default deployment/hermes -c main -- bash` gives a **root**
+shell directly, even though the agent's own commands run as `hermes`.
 
-| Infisical key      | Purpose                                                                                                                                                        |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `DEEPSEEK_API_KEY` | LLM provider key — DeepSeek ([platform.deepseek.com](https://platform.deepseek.com/api_keys)). Paired with `model: deepseek/deepseek-chat` in the setup above. |
+## Secrets & config
 
-The following are **optional**, only needed for the matching upstream
-integration:
+There is no external secret injection. All keys and settings are entered through
+the dashboard and persisted on the PVC (`/opt/data`), so they survive restarts
+and upgrades:
 
-- `API_SERVER_KEY` / `API_SERVER_HOST` — expose the OpenAI-compatible API server
-- `TEAMS_*` — Microsoft Teams gateway
-- `GOOGLE_CHAT_*` — Google Chat gateway
+| Key / setting                          | Where                     | Purpose                                                                                        |
+| -------------------------------------- | ------------------------- | ---------------------------------------------------------------------------------------------- |
+| `DEEPSEEK_API_KEY`                     | `.env` (API Keys page)    | LLM provider key — DeepSeek ([platform.deepseek.com](https://platform.deepseek.com/api_keys)). |
+| `HERMES_DASHBOARD_BASIC_AUTH_USERNAME` | `.env` (API Keys page)    | Dashboard login username — required or the LAN-bound dashboard fails closed at startup.        |
+| `HERMES_DASHBOARD_BASIC_AUTH_PASSWORD` | `.env` (API Keys page)    | Dashboard login password.                                                                      |
+| `HERMES_DASHBOARD_BASIC_AUTH_SECRET`   | `.env` (API Keys page)    | Session-signing secret, 32+ random bytes: `openssl rand -base64 32`.                           |
+| `model`                                | `config.yaml` (Config UI) | e.g. `deepseek/deepseek-chat`.                                                                 |
 
-> The gateway mounts this secret with `envFrom`, so the `infisical-hermes-secret`
-> object must exist before the pod starts. Create the `/hermes` path in Infisical
-> (with at least `DEEPSEEK_API_KEY`) before syncing.
+Optional integration keys, only needed for the matching upstream gateway, go in
+the same `.env`: `API_SERVER_KEY` / `API_SERVER_HOST` (OpenAI-compatible API
+server), `TEAMS_*` (Microsoft Teams), `GOOGLE_CHAT_*` (Google Chat).
 
 ## Storage
 

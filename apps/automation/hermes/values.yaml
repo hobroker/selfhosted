@@ -32,12 +32,9 @@ controllers:
           # /var/local/hermes so files stay readable/writable on the host.
           HERMES_UID: "1000"
           HERMES_GID: "1000"
-        # Optional integration secrets (API_SERVER_KEY, TEAMS_*, GOOGLE_CHAT_*).
-        # The managed secret is created by the Infisical operator; it may be
-        # empty if you only use the interactive wizard / dashboard.
-        envFrom:
-          - secretRef:
-              name: infisical-hermes-secret
+        # Provider key (DEEPSEEK_API_KEY) and any integration secrets are set
+        # via the dashboard and persisted to /opt/data/.env on the PVC, so the
+        # gateway reads them from there — no external secret injection needed.
         resources:
           requests:
             cpu: 200m
@@ -51,13 +48,17 @@ controllers:
           repository: docker.io/nousresearch/hermes-agent
           tag: v2026.7.7.2
           pullPolicy: IfNotPresent
-        # The dashboard stores API keys and has no auth of its own, so it binds
-        # to localhost only. Reach it via `kubectl port-forward` (see README).
-        # Do NOT change this to --insecure --host 0.0.0.0.
+        # Binding to a non-loopback host engages the dashboard's fail-closed
+        # auth gate: it refuses to start unless an auth provider is configured.
+        # The HERMES_DASHBOARD_BASIC_AUTH_* username/password vars live in
+        # /opt/data/.env (set via the dashboard's API Keys page, persisted on
+        # the PVC), so the dashboard is LAN-exposed (MetalLB, see service below)
+        # behind a login — never through Traefik / the public domain, never
+        # with --insecure.
         args:
           - dashboard
           - --host
-          - 127.0.0.1
+          - 0.0.0.0
           - --no-open
         env:
           HERMES_UID: "1000"
@@ -69,6 +70,17 @@ controllers:
           limits:
             cpu: 500m
             memory: 512Mi
+
+service:
+  main:
+    controller: main
+    type: LoadBalancer
+    externalTrafficPolicy: Local
+    annotations:
+      metallb.io/loadBalancerIPs: 192.168.50.205
+    ports:
+      http:
+        port: 9119
 
 persistence:
   data:
