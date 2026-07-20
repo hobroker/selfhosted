@@ -10,8 +10,9 @@ The pod runs two containers from the same image, mirroring the upstream
 - **`main`** — the gateway (`gateway run`), which connects out to your
   messaging platforms and runs the agent.
 - **`dashboard`** — the web UI (`dashboard --host 0.0.0.0 --no-open`), used to
-  configure the model, tools and gateways. LAN-exposed behind the bundled
-  username/password auth (see [Accessing the dashboard](#accessing-the-dashboard)).
+  configure the model, tools and gateways. Exposed on the LAN and via
+  `hermes.hobroker.me`, always behind the bundled username/password auth
+  (see [Accessing the dashboard](#accessing-the-dashboard)).
 
 Both share the `/opt/data` volume, so configuration written by either one is
 visible to the other.
@@ -71,8 +72,12 @@ kubectl rollout restart -n default deployment/hermes
 
 ## Accessing the dashboard
 
-The dashboard is exposed on the LAN via a MetalLB LoadBalancer IP (same
-pattern as AdGuard Home and Plex):
+The dashboard is reachable two ways.
+
+**1. Traefik ingress** — <https://hermes.hobroker.me>
+
+**2. MetalLB LoadBalancer IP on the LAN** (same pattern as AdGuard Home and
+Plex), kept as a fallback for when DNS or Cloudflare Access is misconfigured:
 
 <http://192.168.50.205:9119>
 
@@ -90,8 +95,26 @@ curl -s http://192.168.50.205:9119/api/status | jq '.auth_required, .auth_provid
 # ["basic"]
 ```
 
-The dashboard stays off Traefik / the public domain. A port-forward still
-works as an alternative:
+### Before the ingress is usable
+
+The ingress only creates the Traefik route. Two things live outside this repo
+and must be done in the Cloudflare dashboard, **in this order**:
+
+1. Create the **Cloudflare Access application** for `hermes.hobroker.me` with
+   the same policy used by the other apps.
+2. Only then create the **DNS record** for `hermes.hobroker.me`.
+
+Doing these in the other order publishes the dashboard with nothing but the
+bundled basic auth in front of it. That matters more here than for the \*arr
+apps: this container has a root shell, the provider API key, and an agent that
+executes tasks. Verify the gate is live before relying on it:
+
+```sh
+curl -sI https://hermes.hobroker.me | grep -i '^location'
+# expect a redirect to hobroker.cloudflareaccess.com
+```
+
+A port-forward still works as an alternative:
 
 ```sh
 kubectl port-forward -n default deployment/hermes 9119:9119

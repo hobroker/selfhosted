@@ -52,9 +52,11 @@ controllers:
         # auth gate: it refuses to start unless an auth provider is configured.
         # The HERMES_DASHBOARD_BASIC_AUTH_* username/password vars live in
         # /opt/data/.env (set via the dashboard's API Keys page, persisted on
-        # the PVC), so the dashboard is LAN-exposed (MetalLB, see service below)
-        # behind a login — never through Traefik / the public domain, never
-        # with --insecure.
+        # the PVC), so every path to the dashboard lands behind a login — never
+        # with --insecure. Two paths are exposed: the MetalLB LAN IP and the
+        # Traefik ingress (both below); the ingress additionally sits behind
+        # Cloudflare Access, which must be configured before the DNS record
+        # is created. See README § "Accessing the dashboard".
         args:
           - dashboard
           - --host
@@ -81,6 +83,19 @@ service:
     ports:
       http:
         port: 9119
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    hosts:
+      - host: hermes.hobroker.me
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
 
 persistence:
   data:
