@@ -20,7 +20,7 @@ controllers:
       main:
         image:
           repository: docker.io/nousresearch/hermes-agent
-          tag: v2026.7.7.2
+          tag: v2026.7.20
           pullPolicy: IfNotPresent
         # Keep the image's default /init (s6-overlay PID 1) entrypoint and only
         # override the command, exactly as docker-compose does.
@@ -46,7 +46,7 @@ controllers:
       dashboard:
         image:
           repository: docker.io/nousresearch/hermes-agent
-          tag: v2026.7.7.2
+          tag: v2026.7.20
           pullPolicy: IfNotPresent
         # Binding to a non-loopback host engages the dashboard's fail-closed
         # auth gate: it refuses to start unless an auth provider is configured.
