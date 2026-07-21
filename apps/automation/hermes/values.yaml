@@ -1,0 +1,112 @@
+# Hermes Agent values for bjw-s-labs/app-template.
+# The gateway and dashboard run from the same image and share /opt/data.
+# Upstream reference: https://github.com/NousResearch/hermes-agent/blob/main/docker-compose.yml
+
+defaultPodOptions:
+  securityContext:
+    # The s6-overlay /init entrypoint remaps the internal `hermes` user to
+    # HERMES_UID/HERMES_GID below; fsGroup keeps the PVC group-owned by it.
+    fsGroup: 1000
+    fsGroupChangePolicy: OnRootMismatch
+
+controllers:
+  main:
+    replicas: 1
+    # Single ReadWriteOnce volume shared by both containers, so never run two
+    # pods at once.
+    strategy: Recreate
+
+    containers:
+      main:
+        image:
+          repository: docker.io/nousresearch/hermes-agent
+          tag: v2026.7.20
+          pullPolicy: IfNotPresent
+        # Keep the image's default /init (s6-overlay PID 1) entrypoint and only
+        # override the command, exactly as docker-compose does.
+        args:
+          - gateway
+          - run
+        env:
+          # Remap the container's `hermes` user to the host owner of
+          # /var/local/hermes so files stay readable/writable on the host.
+          HERMES_UID: "1000"
+          HERMES_GID: "1000"
+        # Provider key (DEEPSEEK_API_KEY) and any integration secrets are set
+        # via the dashboard and persisted to /opt/data/.env on the PVC, so the
+        # gateway reads them from there — no external secret injection needed.
+        resources:
+          requests:
+            cpu: 200m
+            memory: 512Mi
+          limits:
+            cpu: 2000m
+            memory: 2Gi
+
+      dashboard:
+        image:
+          repository: docker.io/nousresearch/hermes-agent
+          tag: v2026.7.20
+          pullPolicy: IfNotPresent
+        # Binding to a non-loopback host engages the dashboard's fail-closed
+        # auth gate: it refuses to start unless an auth provider is configured.
+        # The HERMES_DASHBOARD_BASIC_AUTH_* username/password vars live in
+        # /opt/data/.env (set via the dashboard's API Keys page, persisted on
+        # the PVC), so every path to the dashboard lands behind a login — never
+        # with --insecure. Two paths are exposed: the MetalLB LAN IP and the
+        # Traefik ingress (both below); the ingress additionally sits behind
+        # Cloudflare Access, which must be configured before the DNS record
+        # is created. See README § "Accessing the dashboard".
+        args:
+          - dashboard
+          - --host
+          - 0.0.0.0
+          - --no-open
+        env:
+          HERMES_UID: "1000"
+          HERMES_GID: "1000"
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+
+service:
+  main:
+    controller: main
+    type: LoadBalancer
+    externalTrafficPolicy: Local
+    annotations:
+      metallb.io/loadBalancerIPs: 192.168.50.205
+    ports:
+      http:
+        port: 9119
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    hosts:
+      - host: hermes.hobroker.me
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+
+persistence:
+  data:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi
+    storageClass: ""
+    advancedMounts:
+      main:
+        main:
+          - path: /opt/data
+        dashboard:
+          - path: /opt/data

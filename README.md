@@ -144,10 +144,11 @@ npm run generate
 
 ### Automation
 
-| App                                  | Description                                                                       | Source Code                            |
-| ------------------------------------ | --------------------------------------------------------------------------------- | -------------------------------------- |
-| [n8n](apps/automation/n8n)           | Workflow automation platform                                                      | <https://github.com/n8n-io/n8n>        |
-| [openclaw](apps/automation/openclaw) | AI assistant that connects to messaging platforms and executes tasks autonomously | <https://github.com/openclaw/openclaw> |
+| App                                  | Description                                                                        | Source Code                                    |
+| ------------------------------------ | ---------------------------------------------------------------------------------- | ---------------------------------------------- |
+| [hermes](apps/automation/hermes)     | Personal AI agent that connects to messaging platforms and runs tasks autonomously | <https://github.com/NousResearch/hermes-agent> |
+| [n8n](apps/automation/n8n)           | Workflow automation platform                                                       | <https://github.com/n8n-io/n8n>                |
+| [openclaw](apps/automation/openclaw) | AI assistant that connects to messaging platforms and executes tasks autonomously  | <https://github.com/openclaw/openclaw>         |
 
 ### Backup
 
