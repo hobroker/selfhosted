@@ -53,6 +53,7 @@ service:
 serviceMonitor:
   main:
     enabled: true
+    jobLabel: scraparr
     serviceName: '{{ include "bjw-s.common.lib.chart.names.name" $ }}'
     endpoints:
       - port: http
