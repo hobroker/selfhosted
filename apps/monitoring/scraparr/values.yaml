@@ -10,7 +10,7 @@ controllers:
       main:
         image:
           repository: thegameprofi/scraparr
-          tag: 3.0.3
+          tag: 3.1.0
           pullPolicy: IfNotPresent
         env:
           - name: SONARR_URL
@@ -53,6 +53,7 @@ service:
 serviceMonitor:
   main:
     enabled: true
+    jobLabel: scraparr
     serviceName: '{{ include "bjw-s.common.lib.chart.names.name" $ }}'
     endpoints:
       - port: http
