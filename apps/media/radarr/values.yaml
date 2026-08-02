@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: linuxserver/radarr
-          tag: 6.2.0-develop
+          tag: 6.4.0-develop
           pullPolicy: IfNotPresent
         env:
           PGID: "1000"
@@ -24,6 +24,7 @@ service:
 serviceMonitor:
   metrics:
     serviceName: '{{ include "bjw-s.common.lib.chart.names.fullname" $ }}-metrics'
+    jobLabel: radarr
     enabled: true
     endpoints:
       - port: http
