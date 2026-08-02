@@ -14,7 +14,7 @@ spec:
   sources:
     - repoURL: https://stakater.github.io/stakater-charts
       chart: reloader
-      targetRevision: 2.2.8
+      targetRevision: 2.2.14
       helm:
         valueFiles:
           - $values/apps/system/reloader/values.yaml
