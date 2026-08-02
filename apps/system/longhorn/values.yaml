@@ -4,6 +4,11 @@ preUpgradeChecker:
 service:
   ui:
     type: LoadBalancer
+    # Pin the auto-assigned NodePort so the rendered manifest matches the live
+    # Service. LoadBalancer Services also allocate a NodePort; when left unset
+    # the chart renders `nodePort: null` and ArgoCD reports a permanent diff
+    # against the value Kubernetes assigned (32709).
+    nodePort: 32709
     annotations:
       metallb.io/loadBalancerIPs: 192.168.50.204
 
