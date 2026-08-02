@@ -6,9 +6,9 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: "npm"
@@ -24,9 +24,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: "npm"
@@ -38,8 +38,8 @@ jobs:
   kubeconform:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: yokawasa/action-setup-kube-tools@v0.13.1
+      - uses: actions/checkout@v7
+      - uses: yokawasa/action-setup-kube-tools@v0.14.0
         with:
           kubeconform: "0.7.0"
       - name: Validate manifests
