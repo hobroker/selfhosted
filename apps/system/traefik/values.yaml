@@ -62,9 +62,8 @@ env:
         key: CF_DNS_API_TOKEN
         name: infisical-traefik-secret
 
-logs:
-  general:
-    level: INFO
+log:
+  level: INFO
 
 providers:
   kubernetesCRD:
