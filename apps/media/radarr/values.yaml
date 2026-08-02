@@ -24,6 +24,7 @@ service:
 serviceMonitor:
   metrics:
     serviceName: '{{ include "bjw-s.common.lib.chart.names.fullname" $ }}-metrics'
+    jobLabel: radarr
     enabled: true
     endpoints:
       - port: http

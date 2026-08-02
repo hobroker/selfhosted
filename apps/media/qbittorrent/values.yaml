@@ -43,6 +43,7 @@ service:
 serviceMonitor:
   metrics:
     serviceName: '{{ include "bjw-s.common.lib.chart.names.name" $ }}-metrics'
+    jobLabel: qbittorrent
     enabled: true
     endpoints:
       - port: http
