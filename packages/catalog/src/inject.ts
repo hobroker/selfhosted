@@ -45,8 +45,8 @@ export async function injectCatalog(
   }
 
   if (options.dryRun) {
-    console.log("\n--- dry-run output ---\n");
-    console.log(updated);
+    logger.section("Dry-run mode: generated catalog content");
+    logger.info(newBlock);
     return;
   }
 
