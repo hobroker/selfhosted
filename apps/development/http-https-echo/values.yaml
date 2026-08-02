@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: mendhak/http-https-echo
-          tag: 38
+          tag: 41
           pullPolicy: IfNotPresent
 
 service:
