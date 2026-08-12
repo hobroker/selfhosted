@@ -61,7 +61,7 @@ or `npm run generate` will log an error and may produce incorrect output.
 
 - **Never edit the `## Apps` table in `README.md` directly** — it is auto-generated. Run `npm run generate` instead, or let the pre-commit hook do it.
 - **App README name must match directory name exactly** — the name in backticks on line 1 must equal the folder name or the catalog generator will log an error and may produce incorrect output.
-- **ArgoCD sync is manual by default** — no `automated:` block in `syncPolicy` means pushing changes does not auto-deploy. See ArgoCD Workflow section below.
+- **ArgoCD sync is manual by default** — sync is manual unless `syncPolicy.automated` is present; pushing changes does not auto-deploy without it. `syncOptions` (e.g. `CreateNamespace=true`, `ServerSideApply=true`, as in the `CONTRIBUTING.md` template) are orthogonal — they tune _how_ a sync applies, not _whether_ it runs, so a manual app may carry them and `syncPolicy: {}` is equally valid. See ArgoCD Workflow section below.
 - **Secrets must exist in Infisical before deploying** — deploying an app before its Infisical secret is created will cause CrashLoopBackOff.
 
 ## ArgoCD Workflow
@@ -81,7 +81,7 @@ The Kubernetes Secret name is referenced in `values.yaml` under `controllers.mai
 
 Before deploying a new app:
 
-1. Add the required secrets to Infisical (project: selfhosted)
+1. Add the required secrets to Infisical (project slug `kira`, env `prod`) under the `/<app>` path
 2. Create `config/infisical-<app>-secret.yaml`
 3. Apply it: `kubectl apply -f apps/<cat>/<app>/config/infisical-<app>-secret.yaml`
 
@@ -113,3 +113,8 @@ CI runs on every PR:
 - TypeScript type-check
 - Vitest tests
 - Kubeconform validates all YAML manifests against Kubernetes OpenAPI schemas
+
+Separately, a **Semantic PR** status check requires the **PR title** to be a
+conventional-commit summary (e.g. `feat(<app>): add <app>`, `fix(<app>): …`,
+`chore(<app>): …`). It is enforced on the title only (`.github/semantic.yml`),
+not on individual commits — a non-conventional title fails the check.

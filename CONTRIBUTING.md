@@ -63,6 +63,11 @@ spec:
       - ServerSideApply=true
 ```
 
+> **Sync mode:** ArgoCD only auto-syncs when a `syncPolicy.automated` block is
+> present. The `syncOptions` above tune _how_ a sync applies, not _whether_ it
+> runs, so the app above still syncs manually. Omit them (`syncPolicy: {}`) if
+> you don't need them — both stay manual.
+
 **`values.yaml`** — your Helm values overrides.
 
 **`README.md`** — must follow the format below exactly, as it is parsed by the doc generator.
@@ -102,6 +107,10 @@ This also runs automatically as a pre-commit hook whenever a `apps/**/README.md`
 3. Make your changes
 4. Run `npm run lint` and `npm run format` to ensure consistent style
 5. Push your branch and open a PR targeting `master`
+
+Give the PR a **conventional-commit title** (e.g. `feat(<app>): add <app>`,
+`fix(<app>): …`, `chore(<app>): …`) — the **Semantic PR** check validates the
+title and fails the PR otherwise.
 
 ## Keeping Docs in Sync
 
