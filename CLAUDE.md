@@ -18,22 +18,11 @@ npm run generate -- --check  # verify README is up-to-date (used in CI)
 
 ## Repo Structure
 
-```text
-apps/
-  <category>/        # automation, backup, development, media, monitoring, network, system
-    <app-name>/
-      application.yaml   # ArgoCD Application manifest
-      values.yaml        # Helm values overrides (bjw-s-labs/app-template chart)
-      README.md          # parsed by doc generator — must follow strict format
-      config/
-        pv.yaml                        # PersistentVolume (hostPath)
-        infisical-<app>-secret.yaml    # secret reference via Infisical operator
-packages/
-  catalog/            # TypeScript CLI that generates the apps table in README.md
-.github/workflows/
-  ci.yml             # lint + typecheck + test + kubeconform manifest validation
-  docs.yml           # checks npm run generate is up-to-date
-```
+- `apps/<category>/<app>/` — one dir per app: `application.yaml` (ArgoCD), `values.yaml` (Helm), `README.md` (doc-generator input), optional `config/` (PVs, Infisical secrets, kustomization).
+- `packages/catalog/` — TypeScript CLI that generates the apps table in `README.md`.
+- `.github/workflows/` — `ci.yml` (lint/typecheck/test/kubeconform), `docs.yml` (README up-to-date check).
+
+See `CONTRIBUTING.md` § "Project Structure" for the full tree and the list of categories.
 
 ## App README Format
 
@@ -61,7 +50,7 @@ or `npm run generate` will log an error and may produce incorrect output.
 
 - **Never edit the `## Apps` table in `README.md` directly** — it is auto-generated. Run `npm run generate` instead, or let the pre-commit hook do it.
 - **App README name must match directory name exactly** — the name in backticks on line 1 must equal the folder name or the catalog generator will log an error and may produce incorrect output.
-- **ArgoCD sync is manual by default** — sync is manual unless `syncPolicy.automated` is present; pushing changes does not auto-deploy without it. `syncOptions` (e.g. `CreateNamespace=true`, `ServerSideApply=true`, as in the `CONTRIBUTING.md` template) are orthogonal — they tune _how_ a sync applies, not _whether_ it runs, so a manual app may carry them and `syncPolicy: {}` is equally valid. See ArgoCD Workflow section below.
+- **ArgoCD sync is manual by default** — sync is manual unless `syncPolicy.automated` is present; `syncOptions` (`CreateNamespace`, `ServerSideApply`) don't change that. See the ArgoCD Workflow section below, and `CONTRIBUTING.md` § "Adding a new App" for how `syncOptions` relate to sync mode.
 - **Secrets must exist in Infisical before deploying** — deploying an app before its Infisical secret is created will cause CrashLoopBackOff.
 
 ## ArgoCD Workflow

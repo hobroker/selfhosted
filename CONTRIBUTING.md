@@ -4,14 +4,20 @@
 
 ```
 apps/
-  <category>/
+  <category>/           # automation, backup, development, media, monitoring, network, system
     <app>/
       application.yaml  # ArgoCD Application manifest
-      values.yaml       # Helm values overrides
-      README.md         # Install instructions, secrets, host volumes
-      config/           # Optional: extra manifests (PVs, Infisical secrets, etc.)
+      values.yaml       # Helm values overrides (bjw-s-labs/app-template chart)
+      README.md         # Install instructions, secrets, host volumes — parsed by the doc generator
+      config/           # Optional: extra manifests, applied via kustomize
+        pv.yaml                        # PersistentVolume (hostPath)
+        infisical-<app>-secret.yaml    # secret reference via the Infisical operator
+        kustomization.yaml             # lists the config/ manifests
 packages/
-  catalog/              # Generates the apps table in the main README.md
+  catalog/              # TypeScript CLI that generates the apps table in the main README.md
+.github/workflows/
+  ci.yml                # lint + typecheck + test + kubeconform manifest validation
+  docs.yml              # checks `npm run generate` output is up to date
 ```
 
 ## Adding a new App
