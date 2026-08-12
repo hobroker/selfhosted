@@ -10,7 +10,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/dannyvfilms/floppy
-          tag: v26.8.6
+          tag: pr-685
           pullPolicy: IfNotPresent
         env:
           - name: TZ
