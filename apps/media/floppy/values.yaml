@@ -21,6 +21,12 @@ controllers:
           # Public origin for ALLOWED_HOSTS / CSRF trusted origins behind Traefik.
           - name: URLS
             value: https://floppy.hobroker.me
+          # In-cluster service names for internal webhook callers that reach the
+          # pod directly as http://floppy:8000 (bypassing the zero-auth proxy on
+          # the public URL). Without this Django rejects them with DisallowedHost.
+          # The app auto-appends localhost/127.0.0.1 and the URLS host on top.
+          - name: ALLOWED_HOSTS
+            value: floppy,floppy.default,floppy.default.svc.cluster.local
           # Needed to create the first account. Set to "false" and re-sync once
           # your account exists to close public signups.
           - name: REGISTRATION
