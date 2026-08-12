@@ -50,11 +50,10 @@ docker run -it --rm \
   login
 ```
 
-The wizard walks through Trakt (prints a `trakt.tv/activate` URL) and Plex (credentials
-
-- 2FA if enabled, then server selection). It writes `.env`, `servers.yml`,
-  `.pytrakt.json`, and `config.yml` into `./plextraktsync-config/`. Copy that onto the
-  node hosting the PV:
+The wizard walks through Trakt (prints a `trakt.tv/activate` URL) and Plex (credentials,
+2FA if enabled, then server selection). It writes `.env`, `servers.yml`,
+`.pytrakt.json`, and `config.yml` into `./plextraktsync-config/`. Copy that onto the
+node hosting the PV:
 
 ```sh
 rsync -a ./plextraktsync-config/ <node>:/var/local/plextraktsync/
