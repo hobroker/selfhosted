@@ -9,10 +9,10 @@ apps/
       application.yaml  # ArgoCD Application manifest
       values.yaml       # Helm values overrides (bjw-s-labs/app-template chart)
       README.md         # Install instructions, secrets, host volumes — parsed by the doc generator
-      config/           # Optional: extra manifests, applied via kustomize
+      config/           # Optional: extra manifests (ArgoCD applies this dir)
         pv.yaml                        # PersistentVolume (hostPath)
         infisical-<app>-secret.yaml    # secret reference via the Infisical operator
-        kustomization.yaml             # lists the config/ manifests
+        kustomization.yaml             # optional: only if you use kustomize to apply config/
 packages/
   catalog/              # TypeScript CLI that generates the apps table in the main README.md
 .github/workflows/
@@ -52,7 +52,7 @@ spec:
       path: apps/<category>/<app-name>/config
     - repoURL: https://bjw-s-labs.github.io/helm-charts
       chart: app-template
-      targetRevision: <version>
+      targetRevision: 5.0.1 # match existing apps
       helm:
         valueFiles:
           - $values/apps/<category>/<app-name>/values.yaml
@@ -111,7 +111,9 @@ This also runs automatically as a pre-commit hook whenever a `apps/**/README.md`
 1. Fork the repo and clone your fork
 2. Create a branch from `master`
 3. Make your changes
-4. Run `npm run lint` and `npm run format` to ensure consistent style
+4. Run the same checks CI does: `npm run lint`, `npm run format`,
+   `npm run typecheck`, `npm run test`, and `npm run generate -- --check`
+   (manifests are additionally validated with kubeconform in CI)
 5. Push your branch and open a PR targeting `master`
 
 Give the PR a **conventional-commit title** (e.g. `feat(<app>): add <app>`,
@@ -120,4 +122,4 @@ title and fails the PR otherwise.
 
 ## Keeping Docs in Sync
 
-If you change the app README format, categories, or PR process in this file, also update `CLAUDE.md` — it duplicates some of this information for AI assistant context.
+If you change the app README format, categories, or PR process in this file, also check `CLAUDE.md` — it summarizes and links to this information for AI assistant context.
