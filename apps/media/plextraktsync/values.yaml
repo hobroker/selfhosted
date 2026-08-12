@@ -1,0 +1,40 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  main:
+    type: cronjob
+    cronjob:
+      schedule: "0 * * * *"
+      successfulJobsHistory: 1
+      failedJobsHistory: 1
+    containers:
+      main:
+        image:
+          repository: ghcr.io/taxel/plextraktsync
+          tag: 0.32.0
+          pullPolicy: IfNotPresent
+        args:
+          - sync
+        env:
+          - name: PLEX_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: infisical-plextraktsync-secret
+                key: PLEX_TOKEN
+          - name: TRAKT_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: infisical-plextraktsync-secret
+                key: TRAKT_CLIENT_ID
+          - name: TRAKT_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: infisical-plextraktsync-secret
+                key: TRAKT_CLIENT_SECRET
+
+persistence:
+  config:
+    existingClaim: plextraktsync-config-pvc
+    globalMounts:
+      - path: /app/config

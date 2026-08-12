@@ -166,21 +166,22 @@ npm run generate
 
 ### Media
 
-| App                                     | Description                                                                               | Source Code                                    |
-| --------------------------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| [bazarr](apps/media/bazarr)             | Companion application to Sonarr and Radarr that manages and downloads subtitles.          | <https://github.com/morpheus65535/bazarr>      |
-| [fileflows](apps/media/fileflows)       | File processing application                                                               | <https://github.com/revenz/FileFlows>          |
-| [flaresolverr](apps/media/flaresolverr) | Proxy server to bypass Cloudflare protection                                              | <https://github.com/FlareSolverr/FlareSolverr> |
-| [jellyfin](apps/media/jellyfin)         | An open-source media server                                                               | <https://github.com/jellyfin/jellyfin>         |
-| [plex](apps/media/plex)                 | A media server that organizes and streams video and audio content across devices.         | <https://www.plex.tv/>                         |
-| [prowlarr](apps/media/prowlarr)         | Indexer manager/proxy built on the popular \*arr stack to integrate with various PVR apps | <https://github.com/Prowlarr/Prowlarr>         |
-| [qbittorrent](apps/media/qbittorrent)   | Bittorrent client with a feature rich Web UI for remote access                            | <https://github.com/qbittorrent/qBittorrent>   |
-| [radarr](apps/media/radarr)             | A movie tracking and automation tool that downloads movies as they become available.      | <https://github.com/Radarr/Radarr>             |
-| [recyclarr](apps/media/recyclarr)       | Automatically sync TRaSH Guide settings to Radarr and Sonarr.                             | <https://github.com/recyclarr/recyclarr>       |
-| [seerr](apps/media/seerr)               | A modern media request and discovery tool.                                                | <https://github.com/seerr-team/seerr>          |
-| [sonarr](apps/media/sonarr)             | A TV series tracking and automation tool for downloading episodes as they air.            | <https://github.com/Sonarr/Sonarr>             |
-| [tautulli](apps/media/tautulli)         | A monitoring and analytics tool for Plex                                                  | <https://github.com/Tautulli/Tautulli>         |
-| [threadfin](apps/media/threadfin)       | An M3U proxy for Kernel/Plex/Jellyfin/Emby based on xTeVe                                 | <https://github.com/Threadfin/Threadfin>       |
+| App                                       | Description                                                                               | Source Code                                    |
+| ----------------------------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| [bazarr](apps/media/bazarr)               | Companion application to Sonarr and Radarr that manages and downloads subtitles.          | <https://github.com/morpheus65535/bazarr>      |
+| [fileflows](apps/media/fileflows)         | File processing application                                                               | <https://github.com/revenz/FileFlows>          |
+| [flaresolverr](apps/media/flaresolverr)   | Proxy server to bypass Cloudflare protection                                              | <https://github.com/FlareSolverr/FlareSolverr> |
+| [jellyfin](apps/media/jellyfin)           | An open-source media server                                                               | <https://github.com/jellyfin/jellyfin>         |
+| [plex](apps/media/plex)                   | A media server that organizes and streams video and audio content across devices.         | <https://www.plex.tv/>                         |
+| [plextraktsync](apps/media/plextraktsync) | Sync Plex watch history and ratings to Trakt.                                             | <https://github.com/Taxel/PlexTraktSync>       |
+| [prowlarr](apps/media/prowlarr)           | Indexer manager/proxy built on the popular \*arr stack to integrate with various PVR apps | <https://github.com/Prowlarr/Prowlarr>         |
+| [qbittorrent](apps/media/qbittorrent)     | Bittorrent client with a feature rich Web UI for remote access                            | <https://github.com/qbittorrent/qBittorrent>   |
+| [radarr](apps/media/radarr)               | A movie tracking and automation tool that downloads movies as they become available.      | <https://github.com/Radarr/Radarr>             |
+| [recyclarr](apps/media/recyclarr)         | Automatically sync TRaSH Guide settings to Radarr and Sonarr.                             | <https://github.com/recyclarr/recyclarr>       |
+| [seerr](apps/media/seerr)                 | A modern media request and discovery tool.                                                | <https://github.com/seerr-team/seerr>          |
+| [sonarr](apps/media/sonarr)               | A TV series tracking and automation tool for downloading episodes as they air.            | <https://github.com/Sonarr/Sonarr>             |
+| [tautulli](apps/media/tautulli)           | A monitoring and analytics tool for Plex                                                  | <https://github.com/Tautulli/Tautulli>         |
+| [threadfin](apps/media/threadfin)         | An M3U proxy for Kernel/Plex/Jellyfin/Emby based on xTeVe                                 | <https://github.com/Threadfin/Threadfin>       |
 
 ### Monitoring
 
