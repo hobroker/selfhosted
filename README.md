@@ -171,6 +171,7 @@ npm run generate
 | [bazarr](apps/media/bazarr)             | Companion application to Sonarr and Radarr that manages and downloads subtitles.          | <https://github.com/morpheus65535/bazarr>      |
 | [fileflows](apps/media/fileflows)       | File processing application                                                               | <https://github.com/revenz/FileFlows>          |
 | [flaresolverr](apps/media/flaresolverr) | Proxy server to bypass Cloudflare protection                                              | <https://github.com/FlareSolverr/FlareSolverr> |
+| [floppy](apps/media/floppy)             | Self-hosted all-in-one media tracker and Trakt alternative.                               | <https://github.com/dannyvfilms/Floppy>        |
 | [jellyfin](apps/media/jellyfin)         | An open-source media server                                                               | <https://github.com/jellyfin/jellyfin>         |
 | [plex](apps/media/plex)                 | A media server that organizes and streams video and audio content across devices.         | <https://www.plex.tv/>                         |
 | [prowlarr](apps/media/prowlarr)         | Indexer manager/proxy built on the popular \*arr stack to integrate with various PVR apps | <https://github.com/Prowlarr/Prowlarr>         |

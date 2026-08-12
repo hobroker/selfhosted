@@ -1,0 +1,101 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  main:
+    pod:
+      annotations:
+        secret.reloader.stakater.com/reload: "infisical-floppy-secret"
+    containers:
+      main:
+        image:
+          repository: ghcr.io/dannyvfilms/floppy
+          tag: v26.8.6
+          pullPolicy: IfNotPresent
+        env:
+          - name: TZ
+            value: Europe/Chisinau
+          # Redis runs as a sidecar in this same pod (see below).
+          - name: REDIS_URL
+            value: redis://localhost:6379
+          # Public origin for ALLOWED_HOSTS / CSRF trusted origins behind Traefik.
+          - name: URLS
+            value: https://floppy.hobroker.me
+          # Needed to create the first account. Set to "false" and re-sync once
+          # your account exists to close public signups.
+          - name: REGISTRATION
+            value: "true"
+          - name: SECRET
+            valueFrom:
+              secretKeyRef:
+                name: infisical-floppy-secret
+                key: SECRET
+          - name: TMDB_API
+            valueFrom:
+              secretKeyRef:
+                name: infisical-floppy-secret
+                key: TMDB_API
+          - name: TVDB_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: infisical-floppy-secret
+                key: TVDB_API_KEY
+      redis:
+        image:
+          repository: redis
+          tag: 8-alpine
+          pullPolicy: IfNotPresent
+        # Ephemeral cache / session store on an emptyDir, so keep persistence
+        # off and cap memory with an LRU eviction policy (mirrors upstream compose).
+        args:
+          - --maxmemory
+          - 256mb
+          - --maxmemory-policy
+          - volatile-lru
+          - --save
+          - ""
+          - --appendonly
+          - "no"
+        # Sidecar has no service port; skip the chart's default port-based probes.
+        probes:
+          liveness:
+            enabled: false
+          readiness:
+            enabled: false
+          startup:
+            enabled: false
+
+service:
+  main:
+    controller: main
+    type: ClusterIP
+    ports:
+      http:
+        port: 8000
+
+persistence:
+  db:
+    existingClaim: floppy-db-pvc
+    advancedMounts:
+      main:
+        main:
+          - path: /floppy/db
+  redis:
+    type: emptyDir
+    advancedMounts:
+      main:
+        redis:
+          - path: /data
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    hosts:
+      - host: floppy.hobroker.me
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
