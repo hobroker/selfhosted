@@ -18,22 +18,11 @@ npm run generate -- --check  # verify README is up-to-date (used in CI)
 
 ## Repo Structure
 
-```text
-apps/
-  <category>/        # automation, backup, development, media, monitoring, network, system
-    <app-name>/
-      application.yaml   # ArgoCD Application manifest
-      values.yaml        # Helm values overrides (bjw-s-labs/app-template chart)
-      README.md          # parsed by doc generator — must follow strict format
-      config/
-        pv.yaml                        # PersistentVolume (hostPath)
-        infisical-<app>-secret.yaml    # secret reference via Infisical operator
-packages/
-  catalog/            # TypeScript CLI that generates the apps table in README.md
-.github/workflows/
-  ci.yml             # lint + typecheck + test + kubeconform manifest validation
-  docs.yml           # checks npm run generate is up-to-date
-```
+- `apps/<category>/<app>/` — one dir per app: `application.yaml` (ArgoCD), `values.yaml` (Helm), `README.md` (doc-generator input), optional `config/` (PVs, Infisical secrets, kustomization).
+- `packages/catalog/` — TypeScript CLI that generates the apps table in `README.md`.
+- `.github/workflows/` — `ci.yml` (lint/typecheck/test/kubeconform), `docs.yml` (README up-to-date check).
+
+See `CONTRIBUTING.md` § "Project Structure" for the full tree and the list of categories.
 
 ## App README Format
 
@@ -61,7 +50,7 @@ or `npm run generate` will log an error and may produce incorrect output.
 
 - **Never edit the `## Apps` table in `README.md` directly** — it is auto-generated. Run `npm run generate` instead, or let the pre-commit hook do it.
 - **App README name must match directory name exactly** — the name in backticks on line 1 must equal the folder name or the catalog generator will log an error and may produce incorrect output.
-- **ArgoCD sync is manual by default** — no `automated:` block in `syncPolicy` means pushing changes does not auto-deploy. See ArgoCD Workflow section below.
+- **ArgoCD sync is manual by default** — sync is manual unless `syncPolicy.automated` is present; `syncOptions` (`CreateNamespace`, `ServerSideApply`) don't change that. See the ArgoCD Workflow section below, and `CONTRIBUTING.md` § "Adding a new App" for how `syncOptions` relate to sync mode.
 - **Secrets must exist in Infisical before deploying** — deploying an app before its Infisical secret is created will cause CrashLoopBackOff.
 
 ## ArgoCD Workflow
@@ -81,7 +70,7 @@ The Kubernetes Secret name is referenced in `values.yaml` under `controllers.mai
 
 Before deploying a new app:
 
-1. Add the required secrets to Infisical (project: selfhosted)
+1. Add the required secrets to Infisical (project slug `kira`, env `prod`) under the `/<app>` path
 2. Create `config/infisical-<app>-secret.yaml`
 3. Apply it: `kubectl apply -f apps/<cat>/<app>/config/infisical-<app>-secret.yaml`
 
@@ -102,8 +91,8 @@ kubectl get secret -n default            # list secrets
 1. Create `apps/<category>/<app-name>/` with `application.yaml`, `values.yaml`, and `README.md` (add `config/` if the app needs extra manifests like PVs or Infisical secrets)
 2. Follow the README format above exactly
 3. Run `npm run generate` to update the main README (or let the pre-commit hook do it)
-4. Run `npm run lint` and `npm run format` before committing
-5. See `CONTRIBUTING.md` for full details and the `application.yaml` template
+4. Before committing, run the same checks as CI: `npm run lint`, `npm run format`, `npm run typecheck`, `npm run test`, `npm run generate -- --check`
+5. See `CONTRIBUTING.md` for full details and the file templates
 
 ## CI
 
@@ -113,3 +102,8 @@ CI runs on every PR:
 - TypeScript type-check
 - Vitest tests
 - Kubeconform validates all YAML manifests against Kubernetes OpenAPI schemas
+
+Separately, a **Semantic PR** status check requires the **PR title** to be a
+conventional-commit summary (e.g. `feat(<app>): add <app>`, `fix(<app>): …`,
+`chore(<app>): …`). It is enforced on the title only (`.github/semantic.yml`),
+not on individual commits — a non-conventional title fails the check.

@@ -4,14 +4,20 @@
 
 ```
 apps/
-  <category>/
+  <category>/           # automation, backup, development, media, monitoring, network, system
     <app>/
       application.yaml  # ArgoCD Application manifest
-      values.yaml       # Helm values overrides
-      README.md         # Install instructions, secrets, host volumes
-      config/           # Optional: extra manifests (PVs, Infisical secrets, etc.)
+      values.yaml       # Helm values overrides (bjw-s-labs/app-template chart)
+      README.md         # Install instructions, secrets, host volumes — parsed by the doc generator
+      config/           # Optional: extra manifests (ArgoCD applies this dir)
+        pv.yaml                        # PersistentVolume (hostPath)
+        infisical-<app>-secret.yaml    # secret reference via the Infisical operator
+        kustomization.yaml             # optional: only if you use kustomize to apply config/
 packages/
-  catalog/              # Generates the apps table in the main README.md
+  catalog/              # TypeScript CLI that generates the apps table in the main README.md
+.github/workflows/
+  ci.yml                # lint + typecheck + test + kubeconform manifest validation
+  docs.yml              # checks `npm run generate` output is up to date
 ```
 
 ## Adding a new App
@@ -22,7 +28,7 @@ packages/
 apps/<category>/<app-name>/
 ```
 
-Use an existing category (`automation`, `backup`, `development`, `media`, `monitoring`, `network`, `system`) or add a new one.
+Use an existing category (listed under Project Structure above) or add a new one.
 
 ### 2. Add the required files
 
@@ -46,7 +52,7 @@ spec:
       path: apps/<category>/<app-name>/config
     - repoURL: https://bjw-s-labs.github.io/helm-charts
       chart: app-template
-      targetRevision: <version>
+      targetRevision: 5.0.1 # match existing apps
       helm:
         valueFiles:
           - $values/apps/<category>/<app-name>/values.yaml
@@ -63,9 +69,96 @@ spec:
       - ServerSideApply=true
 ```
 
-**`values.yaml`** — your Helm values overrides.
+> **Sync mode:** ArgoCD only auto-syncs when a `syncPolicy.automated` block is
+> present. The `syncOptions` above tune _how_ a sync applies, not _whether_ it
+> runs, so the app above still syncs manually. Omit them (`syncPolicy: {}`) if
+> you don't need them — both stay manual.
+
+**`values.yaml`** — your Helm values overrides for the `app-template` chart
+(`controllers`, `containers`, `service`, `persistence`, `ingress`, …). See the
+[app-template docs](https://bjw-s-labs.github.io/helm-charts/docs/app-template/)
+and the [fully-commented values reference](https://github.com/bjw-s-labs/helm-charts/blob/main/charts/library/common/values.yaml)
+for every option, and any existing app under `apps/` for a working example.
 
 **`README.md`** — must follow the format below exactly, as it is parsed by the doc generator.
+
+**`config/` (optional)** — extra manifests for apps that need a host volume or
+secrets. ArgoCD applies everything in this directory.
+
+`config/pv.yaml` — a hostPath `PersistentVolume` + `PersistentVolumeClaim`. App
+config/db lives at `/var/local/<app-name>`; media/NAS volumes instead use NFS to
+`/mnt/nebula`. The PVC binds the PV by `volumeName`:
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: <app-name>-config-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  hostPath:
+    path: /var/local/<app-name>
+    type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: <app-name>-config-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ""
+  volumeName: <app-name>-config-pv
+  resources:
+    requests:
+      storage: 1Gi
+```
+
+`config/infisical-<app-name>-secret.yaml` — maps Infisical secrets (project slug
+`kira`, env `prod`, path `/<app-name>`) into a Kubernetes Secret. Reference the
+resulting secret from `values.yaml` via `env[].valueFrom.secretKeyRef`. The
+secrets must already exist in Infisical, or the pod will CrashLoopBackOff:
+
+```yaml
+apiVersion: secrets.infisical.com/v1alpha1
+kind: InfisicalSecret
+metadata:
+  name: infisical-<app-name>-secret
+  namespace: default
+spec:
+  resyncInterval: 60
+  authentication:
+    universalAuth:
+      secretsScope:
+        projectSlug: kira
+        envSlug: prod
+        secretsPath: "/<app-name>"
+        recursive: true
+      credentialsRef:
+        secretName: universal-auth-credentials
+        secretNamespace: infisical-operator-system
+  managedKubeSecretReferences:
+    - secretName: infisical-<app-name>-secret
+      secretNamespace: default
+      creationPolicy: "Owner"
+      secretType: Opaque
+      template:
+        includeAllSecrets: true
+```
+
+`config/kustomization.yaml` — only needed if you apply `config/` with kustomize:
+
+```yaml
+resources:
+  - pv.yaml
+  - infisical-<app-name>-secret.yaml
+```
 
 ### 3. App README format
 
@@ -100,9 +193,15 @@ This also runs automatically as a pre-commit hook whenever a `apps/**/README.md`
 1. Fork the repo and clone your fork
 2. Create a branch from `master`
 3. Make your changes
-4. Run `npm run lint` and `npm run format` to ensure consistent style
+4. Run the same checks CI does: `npm run lint`, `npm run format`,
+   `npm run typecheck`, `npm run test`, and `npm run generate -- --check`
+   (manifests are additionally validated with kubeconform in CI)
 5. Push your branch and open a PR targeting `master`
+
+Give the PR a **conventional-commit title** (e.g. `feat(<app>): add <app>`,
+`fix(<app>): …`, `chore(<app>): …`) — the **Semantic PR** check validates the
+title and fails the PR otherwise.
 
 ## Keeping Docs in Sync
 
-If you change the app README format, categories, or PR process in this file, also update `CLAUDE.md` — it duplicates some of this information for AI assistant context.
+If you change the app README format, categories, or PR process in this file, also check `CLAUDE.md` — it summarizes and links to this information for AI assistant context.
