@@ -28,6 +28,21 @@ helm upgrade --install plextraktsync bjw-s/app-template -f values.yaml
 
 The cronjob runs every hour and syncs Plex watch history and ratings to Trakt.
 
+The Plex server URL is set via `PLEX_BASEURL` in `values.yaml` (defaults to the
+in-cluster Plex service at `http://plex:32400`). `PLEX_TOKEN` alone is not enough —
+PlexTraktSync needs to know which server to connect to.
+
+> **First-run bootstrap:** PlexTraktSync is designed around a one-time interactive
+> `plextraktsync login`, which persists `servers.yml`, `.env`, and `.pytrakt.json`
+> (including the completed Trakt OAuth) into `/app/config`. Run it once against the
+> mounted config volume before relying on the hourly `sync` cronjob, e.g.:
+>
+> ```sh
+> kubectl run plextraktsync-login -n default --rm -it --restart=Never \
+>   --image=ghcr.io/taxel/plextraktsync:0.32.0 \
+>   --overrides='{"spec":{"volumes":[{"name":"config","persistentVolumeClaim":{"claimName":"plextraktsync-config-pvc"}}],"containers":[{"name":"login","image":"ghcr.io/taxel/plextraktsync:0.32.0","stdin":true,"tty":true,"args":["login"],"volumeMounts":[{"name":"config","mountPath":"/app/config"}]}]}}'
+> ```
+
 ## Storage
 
 | source                     | container path | type       | description      |

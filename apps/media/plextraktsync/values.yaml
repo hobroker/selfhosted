@@ -17,6 +17,8 @@ controllers:
         args:
           - sync
         env:
+          - name: PLEX_BASEURL
+            value: http://plex:32400
           - name: PLEX_TOKEN
             valueFrom:
               secretKeyRef:
