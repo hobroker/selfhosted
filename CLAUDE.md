@@ -91,8 +91,8 @@ kubectl get secret -n default            # list secrets
 1. Create `apps/<category>/<app-name>/` with `application.yaml`, `values.yaml`, and `README.md` (add `config/` if the app needs extra manifests like PVs or Infisical secrets)
 2. Follow the README format above exactly
 3. Run `npm run generate` to update the main README (or let the pre-commit hook do it)
-4. Run `npm run lint` and `npm run format` before committing
-5. See `CONTRIBUTING.md` for full details and the `application.yaml` template
+4. Before committing, run the same checks as CI: `npm run lint`, `npm run format`, `npm run typecheck`, `npm run test`, `npm run generate -- --check`
+5. See `CONTRIBUTING.md` for full details and the file templates
 
 ## CI
 

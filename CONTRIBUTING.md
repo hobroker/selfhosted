@@ -28,7 +28,7 @@ packages/
 apps/<category>/<app-name>/
 ```
 
-Use an existing category (`automation`, `backup`, `development`, `media`, `monitoring`, `network`, `system`) or add a new one.
+Use an existing category (listed under Project Structure above) or add a new one.
 
 ### 2. Add the required files
 
@@ -74,7 +74,11 @@ spec:
 > runs, so the app above still syncs manually. Omit them (`syncPolicy: {}`) if
 > you don't need them — both stay manual.
 
-**`values.yaml`** — your Helm values overrides.
+**`values.yaml`** — your Helm values overrides for the `app-template` chart
+(`controllers`, `containers`, `service`, `persistence`, `ingress`, …). See the
+[app-template docs](https://bjw-s-labs.github.io/helm-charts/docs/app-template/)
+and the [fully-commented values reference](https://github.com/bjw-s-labs/helm-charts/blob/main/charts/library/common/values.yaml)
+for every option, and any existing app under `apps/` for a working example.
 
 **`README.md`** — must follow the format below exactly, as it is parsed by the doc generator.
 
