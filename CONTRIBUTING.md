@@ -78,6 +78,84 @@ spec:
 
 **`README.md`** — must follow the format below exactly, as it is parsed by the doc generator.
 
+**`config/` (optional)** — extra manifests for apps that need a host volume or
+secrets. ArgoCD applies everything in this directory.
+
+`config/pv.yaml` — a hostPath `PersistentVolume` + `PersistentVolumeClaim`. App
+config/db lives at `/var/local/<app-name>`; media/NAS volumes instead use NFS to
+`/mnt/nebula`. The PVC binds the PV by `volumeName`:
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: <app-name>-config-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  hostPath:
+    path: /var/local/<app-name>
+    type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: <app-name>-config-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ""
+  volumeName: <app-name>-config-pv
+  resources:
+    requests:
+      storage: 1Gi
+```
+
+`config/infisical-<app-name>-secret.yaml` — maps Infisical secrets (project slug
+`kira`, env `prod`, path `/<app-name>`) into a Kubernetes Secret. Reference the
+resulting secret from `values.yaml` via `env[].valueFrom.secretKeyRef`. The
+secrets must already exist in Infisical, or the pod will CrashLoopBackOff:
+
+```yaml
+apiVersion: secrets.infisical.com/v1alpha1
+kind: InfisicalSecret
+metadata:
+  name: infisical-<app-name>-secret
+  namespace: default
+spec:
+  resyncInterval: 60
+  authentication:
+    universalAuth:
+      secretsScope:
+        projectSlug: kira
+        envSlug: prod
+        secretsPath: "/<app-name>"
+        recursive: true
+      credentialsRef:
+        secretName: universal-auth-credentials
+        secretNamespace: infisical-operator-system
+  managedKubeSecretReferences:
+    - secretName: infisical-<app-name>-secret
+      secretNamespace: default
+      creationPolicy: "Owner"
+      secretType: Opaque
+      template:
+        includeAllSecrets: true
+```
+
+`config/kustomization.yaml` — only needed if you apply `config/` with kustomize:
+
+```yaml
+resources:
+  - pv.yaml
+  - infisical-<app-name>-secret.yaml
+```
+
 ### 3. App README format
 
 The doc generator reads three fields from each app's `README.md`:
