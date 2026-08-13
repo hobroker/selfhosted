@@ -76,9 +76,11 @@ cd selfhosted
 
 ### 3. Bootstrap ArgoCD (optional)
 
-ArgoCD watches this Git repo and automatically syncs changes to your cluster — no manual `helm install` needed. It also provides a web UI to monitor and manage all your deployments. See [apps/system/argocd](apps/system/argocd) for bootstrap instructions.
+ArgoCD watches this Git repo and syncs changes from it to your cluster — no manual `helm install` needed. It also provides a web UI to monitor and manage all your deployments. See [apps/system/argocd](apps/system/argocd) for bootstrap instructions.
 
 ### 4. Deploy an app
+
+> On a fresh cluster, bring up the [system apps](#system-app-order) first (storage, ingress, secrets) — workload apps depend on them.
 
 Pick an app and follow its `README.md` — each one has copy-paste commands for both ArgoCD and plain Helm. For example, to deploy [Syncthing](apps/backup/syncthing) with ArgoCD:
 
