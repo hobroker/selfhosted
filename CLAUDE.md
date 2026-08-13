@@ -60,7 +60,7 @@ or `npm run generate` will log an error and may produce incorrect output.
 3. Sync manually: ArgoCD UI → app → Sync, or: `argocd app sync <app-name>`
 4. To watch rollout: `kubectl rollout status deploy/<app> -n default`
 
-System apps (argocd, traefik, cert-manager, metallb) use sync-waves and should be deployed first.
+System apps (metallb, longhorn, traefik, infisical-operator, reloader, rancher) use sync-waves and should be deployed first.
 
 ## Secrets (Infisical)
 

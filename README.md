@@ -116,11 +116,12 @@ If you're not using ArgoCD, you can deploy any app directly with `helm install` 
 
 System apps must be synced before any other apps. ArgoCD sync-wave annotations handle ordering automatically when syncing all at once. If syncing manually, use this order:
 
-1. [local-path-provisioner](apps/system/local-path-provisioner) — persistent storage class
-2. [traefik](apps/system/traefik) — ingress / reverse proxy
-3. [infisical-operator](apps/system/infisical-operator) — secret injection
-4. [reloader](apps/system/reloader) — rolling restarts on config/secret changes
-5. Apps (any order)
+1. [metallb](apps/system/metallb) — load balancer (assigns external IPs)
+2. [longhorn](apps/system/longhorn) — persistent storage
+3. [traefik](apps/system/traefik) — ingress / reverse proxy
+4. [infisical-operator](apps/system/infisical-operator) — secret injection
+5. [reloader](apps/system/reloader) — rolling restarts on config/secret changes
+6. Apps (any order)
 
 ## Host Directories
 
@@ -133,7 +134,7 @@ The defaults below reflect this homelab's setup — update them to match your ow
 
 To customize paths, edit the `config/pv.yaml` in each app you deploy.
 
-A custom `StorageClass` with a `Retain` reclaim policy is also available to prevent data loss when PVCs are deleted — see [local-path-provisioner](apps/system/local-path-provisioner).
+A `longhorn-retain` `StorageClass` with a `Retain` reclaim policy is also available to prevent data loss when PVCs are deleted — see [longhorn](apps/system/longhorn).
 
 ## Secrets
 
