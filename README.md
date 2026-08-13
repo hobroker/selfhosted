@@ -18,7 +18,7 @@ Run your own media server, backups, monitoring, automation, and more — on hard
   - [3. Bootstrap ArgoCD (optional)](#3-bootstrap-argocd-optional)
   - [4. Deploy an app](#4-deploy-an-app)
 - [How It Works](#how-it-works)
-- [Deploy Order](#deploy-order)
+- [System App Order](#system-app-order)
 - [Host Directories](#host-directories)
 - [Secrets](#secrets)
 - [Deploying an App](#deploying-an-app)
@@ -108,7 +108,7 @@ This is simplified — real external access also depends on your DNS and (if ena
 
 Not using ArgoCD? You can install any app directly with Helm (`helm upgrade --install`) — the same `values.yaml` drives both paths.
 
-## Deploy Order
+## System App Order
 
 System apps must be synced before any other apps. ArgoCD sync-wave annotations handle ordering automatically when syncing all at once. If syncing manually, use this order:
 
