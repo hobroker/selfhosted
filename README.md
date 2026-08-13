@@ -61,7 +61,7 @@ Every app lives in `apps/<category>/<app>/` with its own Helm values, ArgoCD man
 
 Bring up any Kubernetes cluster and export a working kubeconfig. If this is your first cluster, [k3s](https://k3s.io/) is the easiest way to start:
 
-```shell
+```sh
 curl -sfL https://get.k3s.io | sh -
 ```
 
@@ -69,7 +69,7 @@ curl -sfL https://get.k3s.io | sh -
 
 ### 2. Clone this repo
 
-```
+```sh
 git clone https://github.com/hobroker/selfhosted.git
 cd selfhosted
 ```
@@ -80,17 +80,13 @@ ArgoCD watches this Git repo and automatically syncs changes to your cluster —
 
 ### 4. Deploy an app
 
-Pick an app and follow its `README.md` — each one includes instructions for both ArgoCD and plain Helm deployment. For example, to deploy [Syncthing](apps/backup/syncthing):
+Pick an app and follow its `README.md` — each one has copy-paste commands for both ArgoCD and plain Helm. For example, to deploy [Syncthing](apps/backup/syncthing) with ArgoCD:
 
-```shell
-# With ArgoCD
+```sh
 kubectl apply -f apps/backup/syncthing/application.yaml
-
-# Or with Helm directly
-helm install syncthing apps/backup/syncthing
 ```
 
-See [Deploying an App](#deploying-an-app) for more details.
+Prefer plain Helm? Each app's README lists the exact `helm upgrade --install` commands. The apps install from the remote `app-template` chart (not a local one), so there's no `helm install <path>`. See [Deploying an App](#deploying-an-app) for details.
 
 ## How It Works
 
@@ -106,11 +102,11 @@ flowchart LR
     traefik -->|routes by domain| apps
 ```
 
-Most apps are packaged as Helm charts. ArgoCD watches this repo and continuously syncs chart/manifests to your cluster. Traefik acts as the reverse proxy, routing incoming requests to the right app based on domain/path rules. Infisical injects secrets into pods at deploy time.
+In short: you push a change, ArgoCD applies the updated Helm charts to your cluster, and Traefik routes each incoming request to the right app by domain. Infisical injects secrets into pods at deploy time, and volumes are mounted from the host or NFS.
 
-This is a simplified flow: external access depends on your ingress config, DNS, and (if enabled) TLS setup.
+This is simplified — real external access also depends on your DNS and (if enabled) TLS setup.
 
-If you're not using ArgoCD, you can deploy any app directly with `helm install` — the Helm values work the same either way.
+Not using ArgoCD? You can install any app directly with Helm (`helm upgrade --install`) — the same `values.yaml` drives both paths.
 
 ## Deploy Order
 
@@ -134,7 +130,7 @@ The defaults below reflect this homelab's setup — update them to match your ow
 
 To customize paths, edit the `config/pv.yaml` in each app you deploy.
 
-A `longhorn-retain` `StorageClass` with a `Retain` reclaim policy is also available to prevent data loss when PVCs are deleted — see [longhorn](apps/system/longhorn).
+Longhorn also provides a `longhorn-retain` StorageClass, whose `Retain` reclaim policy keeps your data even if a PVC is deleted — see [longhorn](apps/system/longhorn).
 
 ## Secrets
 
