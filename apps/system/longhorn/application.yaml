@@ -28,4 +28,5 @@ spec:
     server: https://kubernetes.default.svc
     namespace: longhorn-system
   revisionHistoryLimit: 3
-  syncPolicy: {}
+  syncPolicy:
+    automated: {}

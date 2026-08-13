@@ -110,14 +110,21 @@ Not using ArgoCD? You can install any app directly with Helm (`helm upgrade --in
 
 ## System App Order
 
-System apps must be synced before any other apps. ArgoCD sync-wave annotations handle ordering automatically when syncing all at once. If syncing manually, use this order:
+System apps must be running before any workload apps. A root **app-of-apps** ([`bootstrap/system.yaml`](bootstrap/system.yaml)) handles this — apply it once and ArgoCD deploys every system app in [sync-wave](https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/) order, waiting for each wave to become healthy before starting the next:
+
+```sh
+kubectl apply -f bootstrap/system.yaml
+```
+
+The resulting order (apps in the same wave deploy in parallel):
 
 1. [metallb](apps/system/metallb) — load balancer (assigns external IPs)
-2. [longhorn](apps/system/longhorn) — persistent storage
-3. [traefik](apps/system/traefik) — ingress / reverse proxy
-4. [infisical-operator](apps/system/infisical-operator) — secret injection
-5. [reloader](apps/system/reloader) — rolling restarts on config/secret changes
-6. Apps (any order)
+2. [longhorn](apps/system/longhorn) · [traefik](apps/system/traefik) — persistent storage + ingress
+3. [infisical-operator](apps/system/infisical-operator) — secret injection
+4. [reloader](apps/system/reloader) — rolling restarts on config/secret changes
+5. [rancher](apps/system/rancher) — cluster management UI
+
+> The system apps set `syncPolicy.automated` so the app-of-apps can drive them in order; workload apps stay manual-sync by default. ArgoCD itself ([apps/system/argocd](apps/system/argocd)) is bootstrapped separately and manages itself.
 
 ## Host Directories
 
