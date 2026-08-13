@@ -34,9 +34,9 @@ Once ArgoCD is running, deploy all system apps in the correct order with the roo
 kubectl apply -f bootstrap/system.yaml
 ```
 
-This creates and auto-syncs metallb, longhorn, traefik, infisical-operator, reloader, and rancher in [sync-wave](https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/) order. See [System App Order](../../../README.md#system-app-order) for the waves.
+This creates and auto-syncs metallb, longhorn, traefik, infisical-operator, and reloader in [sync-wave](https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/) order. See [System App Order](../../../README.md#system-app-order) for the waves.
 
-Workload apps are registered individually and synced manually:
+Workload apps (and rancher) are registered individually and synced manually:
 
 ```sh
 kubectl apply -f apps/<category>/<app>/application.yaml

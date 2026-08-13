@@ -61,7 +61,7 @@ or `npm run generate` will log an error and may produce incorrect output.
 3. Sync manually: ArgoCD UI → app → Sync, or: `argocd app sync <app-name>`
 4. To watch rollout: `kubectl rollout status deploy/<app> -n default`
 
-System apps (metallb, longhorn, traefik, infisical-operator, reloader, rancher) auto-sync in sync-wave order via the root app-of-apps (`bootstrap/system.yaml`) and come up before workload apps. Apply it once after bootstrapping ArgoCD: `kubectl apply -f bootstrap/system.yaml`.
+System apps (metallb, longhorn, traefik, infisical-operator, reloader) auto-sync in sync-wave order via the root app-of-apps (`bootstrap/system.yaml`) and come up before workload apps. Apply it once after bootstrapping ArgoCD: `kubectl apply -f bootstrap/system.yaml`. (argocd and rancher are excluded — deployed manually.)
 
 ## Secrets (Infisical)
 

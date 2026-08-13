@@ -3,10 +3,9 @@
 # Applied once after ArgoCD is bootstrapped:
 #   kubectl apply -f bootstrap/system.yaml
 #
-# It discovers every apps/system/<app>/application.yaml (except argocd, which
-# bootstraps itself) and deploys them in sync-wave order:
-#   metallb (1) -> longhorn / traefik (2) -> infisical-operator (3)
-#     -> reloader (4) -> rancher (5)
+# It discovers every apps/system/<app>/application.yaml (except argocd and
+# rancher, see excludes below) and deploys them in sync-wave order:
+#   metallb (1) -> longhorn / traefik (2) -> infisical-operator (3) -> reloader (4)
 # Ordering only holds because the child apps set syncPolicy.automated, so each
 # wave is synced and healthy before the next begins.
 apiVersion: argoproj.io/v1alpha1
@@ -27,8 +26,8 @@ spec:
       # Pick up only the per-app Application manifests — never their values.yaml,
       # config/, or postsync/. A single `*` does not cross directory levels.
       include: "*/application.yaml"
-      # argocd is bootstrapped via Helm and manages itself.
-      exclude: "argocd/application.yaml"
+      # argocd bootstraps itself; rancher is an optional UI deployed manually.
+      exclude: "{argocd/application.yaml,rancher/application.yaml}"
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd

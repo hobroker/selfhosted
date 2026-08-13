@@ -122,9 +122,8 @@ The resulting order (apps in the same wave deploy in parallel):
 2. [longhorn](apps/system/longhorn) · [traefik](apps/system/traefik) — persistent storage + ingress
 3. [infisical-operator](apps/system/infisical-operator) — secret injection
 4. [reloader](apps/system/reloader) — rolling restarts on config/secret changes
-5. [rancher](apps/system/rancher) — cluster management UI
 
-> The system apps set `syncPolicy.automated` so the app-of-apps can drive them in order; workload apps stay manual-sync by default. ArgoCD itself ([apps/system/argocd](apps/system/argocd)) is bootstrapped separately and manages itself.
+> These apps set `syncPolicy.automated` so the app-of-apps can drive them in order; workload apps stay manual-sync by default. Two system apps sit outside the wave and are deployed manually: [argocd](apps/system/argocd) (bootstrapped separately, manages itself) and [rancher](apps/system/rancher) (an optional management UI).
 
 ## Host Directories
 
