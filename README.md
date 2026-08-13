@@ -1,5 +1,8 @@
 # Selfhosted
 
+[![CI](https://github.com/hobroker/selfhosted/actions/workflows/ci.yml/badge.svg)](https://github.com/hobroker/selfhosted/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 Run your own media server, backups, monitoring, automation, and more — on hardware you control. This repository contains a collection of self-hosted apps, deployable on any Kubernetes cluster via [Helm](https://helm.sh/) or [ArgoCD](https://argo-cd.readthedocs.io/).
 
 > [!NOTE]
@@ -7,6 +10,7 @@ Run your own media server, backups, monitoring, automation, and more — on hard
 
 ## Table of Contents
 
+- [Overview](#overview)
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
   - [1. Set up a Kubernetes cluster](#1-set-up-a-kubernetes-cluster)
@@ -18,7 +22,6 @@ Run your own media server, backups, monitoring, automation, and more — on hard
 - [Host Directories](#host-directories)
 - [Secrets](#secrets)
 - [Deploying an App](#deploying-an-app)
-- [Docs Generation](#docs-generation)
 - [Apps](#apps)
   - [Automation](#automation)
   - [Backup](#backup)
@@ -31,13 +34,26 @@ Run your own media server, backups, monitoring, automation, and more — on hard
 - [References](#references)
 - [Contributing](#contributing)
 
+## Overview
+
+**31 self-hosted apps across 7 categories**, all deployed the same way — one Helm chart plus GitOps. The stack:
+
+- **[Kubernetes](https://kubernetes.io/)** — runs everything (distribution-agnostic: Talos, k3s, …)
+- **[bjw-s app-template](https://bjw-s-labs.github.io/helm-charts/docs/app-template/)** — the single Helm chart every app is built on, so configs stay consistent
+- **[ArgoCD](https://argo-cd.readthedocs.io/)** — GitOps controller; continuously syncs this repo to the cluster
+- **[Traefik](https://traefik.io/)** — ingress / reverse proxy (`<app>.<domain>`)
+- **[Infisical](https://infisical.com/)** — injects secrets into pods at deploy time
+- **[Reloader](https://github.com/stakater/Reloader)** — restarts pods when their config or secrets change
+
+Every app lives in `apps/<category>/<app>/` with its own Helm values, ArgoCD manifest, and README. Browse the full list under [Apps](#apps).
+
 ## Prerequisites
 
 - A Kubernetes cluster (any distribution — [Talos](https://www.talos.dev/), [k3s](https://k3s.io/), etc.)
 - [Helm](https://helm.sh/docs/intro/install/) — Kubernetes package manager
 - [kubectl](https://kubernetes.io/docs/tasks/tools/) — Kubernetes CLI
 - [ArgoCD](https://argo-cd.readthedocs.io/en/stable/getting_started/) — optional GitOps controller (see [apps/system/argocd](apps/system/argocd))
-- [Node.js](https://nodejs.org/) + npm — optional, for [generating docs](#docs-generation)
+- [Node.js](https://nodejs.org/) + npm — optional, for regenerating the [Apps](#apps) table (see [CONTRIBUTING.md](CONTRIBUTING.md))
 
 ## Getting Started
 
@@ -78,8 +94,17 @@ See [Deploying an App](#deploying-an-app) for more details.
 
 ## How It Works
 
-> [!NOTE]
-> Git push → ArgoCD detects changes → sync applies Helm manifests to the cluster → Traefik routes traffic → App reachable
+```mermaid
+flowchart LR
+    dev([git push]) --> repo[(Git repo)]
+    repo -->|watches & syncs| argo[ArgoCD]
+    argo -->|applies Helm manifests| cluster{{Kubernetes cluster}}
+    infisical[Infisical] -. injects secrets .-> cluster
+    storage[(Host / NFS storage)] -. mounts volumes .-> cluster
+    cluster --> apps[Apps]
+    user([You]) -->|request| traefik[Traefik]
+    traefik -->|routes by domain| apps
+```
 
 Most apps are packaged as Helm charts. ArgoCD watches this repo and continuously syncs chart/manifests to your cluster. Traefik acts as the reverse proxy, routing incoming requests to the right app based on domain/path rules. Infisical injects secrets into pods at deploy time.
 
@@ -129,14 +154,6 @@ kubectl apply -f apps/<category>/<name>/application.yaml
 ```
 
 Then sync it in the ArgoCD UI or with `argocd app sync <name>`.
-
-## Docs Generation
-
-The [Apps](#apps) tables in this README are auto-generated from app metadata. To regenerate them after adding or updating an app:
-
-```shell
-npm run generate
-```
 
 ## Apps
 
