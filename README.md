@@ -1,5 +1,8 @@
 # Selfhosted
 
+[![CI](https://github.com/hobroker/selfhosted/actions/workflows/ci.yml/badge.svg)](https://github.com/hobroker/selfhosted/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 Run your own media server, backups, monitoring, automation, and more — on hardware you control. This repository contains a collection of self-hosted apps, deployable on any Kubernetes cluster via [Helm](https://helm.sh/) or [ArgoCD](https://argo-cd.readthedocs.io/).
 
 > [!NOTE]
@@ -7,6 +10,7 @@ Run your own media server, backups, monitoring, automation, and more — on hard
 
 ## Table of Contents
 
+- [Overview](#overview)
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
   - [1. Set up a Kubernetes cluster](#1-set-up-a-kubernetes-cluster)
@@ -14,11 +18,10 @@ Run your own media server, backups, monitoring, automation, and more — on hard
   - [3. Bootstrap ArgoCD (optional)](#3-bootstrap-argocd-optional)
   - [4. Deploy an app](#4-deploy-an-app)
 - [How It Works](#how-it-works)
-- [Deploy Order](#deploy-order)
+- [System App Order](#system-app-order)
 - [Host Directories](#host-directories)
 - [Secrets](#secrets)
 - [Deploying an App](#deploying-an-app)
-- [Docs Generation](#docs-generation)
 - [Apps](#apps)
   - [Automation](#automation)
   - [Backup](#backup)
@@ -31,13 +34,26 @@ Run your own media server, backups, monitoring, automation, and more — on hard
 - [References](#references)
 - [Contributing](#contributing)
 
+## Overview
+
+**<!-- stats:start -->31 self-hosted apps across 7 categories<!-- stats:end -->**, all deployed the same way — one Helm chart plus GitOps. The stack:
+
+- **[Kubernetes](https://kubernetes.io/)** — runs everything (distribution-agnostic: Talos, k3s, …)
+- **[bjw-s app-template](https://bjw-s-labs.github.io/helm-charts/docs/app-template/)** — the single Helm chart every app is built on, so configs stay consistent
+- **[ArgoCD](https://argo-cd.readthedocs.io/)** — GitOps controller; continuously syncs this repo to the cluster
+- **[Traefik](https://traefik.io/)** — ingress / reverse proxy (`<app>.<domain>`)
+- **[Infisical](https://infisical.com/)** — injects secrets into pods at deploy time
+- **[Reloader](https://github.com/stakater/Reloader)** — restarts pods when their config or secrets change
+
+Every app lives in `apps/<category>/<app>/` with its own Helm values, ArgoCD manifest, and README. Browse the full list under [Apps](#apps).
+
 ## Prerequisites
 
 - A Kubernetes cluster (any distribution — [Talos](https://www.talos.dev/), [k3s](https://k3s.io/), etc.)
 - [Helm](https://helm.sh/docs/intro/install/) — Kubernetes package manager
 - [kubectl](https://kubernetes.io/docs/tasks/tools/) — Kubernetes CLI
 - [ArgoCD](https://argo-cd.readthedocs.io/en/stable/getting_started/) — optional GitOps controller (see [apps/system/argocd](apps/system/argocd))
-- [Node.js](https://nodejs.org/) + npm — optional, for [generating docs](#docs-generation)
+- [Node.js](https://nodejs.org/) + npm — optional, for regenerating the [Apps](#apps) table (see [CONTRIBUTING.md](CONTRIBUTING.md))
 
 ## Getting Started
 
@@ -45,7 +61,7 @@ Run your own media server, backups, monitoring, automation, and more — on hard
 
 Bring up any Kubernetes cluster and export a working kubeconfig. If this is your first cluster, [k3s](https://k3s.io/) is the easiest way to start:
 
-```shell
+```sh
 curl -sfL https://get.k3s.io | sh -
 ```
 
@@ -53,49 +69,63 @@ curl -sfL https://get.k3s.io | sh -
 
 ### 2. Clone this repo
 
-```
+```sh
 git clone https://github.com/hobroker/selfhosted.git
 cd selfhosted
 ```
 
 ### 3. Bootstrap ArgoCD (optional)
 
-ArgoCD watches this Git repo and automatically syncs changes to your cluster — no manual `helm install` needed. It also provides a web UI to monitor and manage all your deployments. See [apps/system/argocd](apps/system/argocd) for bootstrap instructions.
+ArgoCD watches this Git repo and syncs changes from it to your cluster — no manual `helm install` needed. It also provides a web UI to monitor and manage all your deployments. See [apps/system/argocd](apps/system/argocd) for bootstrap instructions.
 
 ### 4. Deploy an app
 
-Pick an app and follow its `README.md` — each one includes instructions for both ArgoCD and plain Helm deployment. For example, to deploy [Syncthing](apps/backup/syncthing):
+> On a fresh cluster, bring up the [system apps](#system-app-order) first (storage, ingress, secrets) — workload apps depend on them.
 
-```shell
-# With ArgoCD
+Pick an app and follow its `README.md` — each one has copy-paste commands for both ArgoCD and plain Helm. For example, to deploy [Syncthing](apps/backup/syncthing) with ArgoCD:
+
+```sh
 kubectl apply -f apps/backup/syncthing/application.yaml
-
-# Or with Helm directly
-helm install syncthing apps/backup/syncthing
 ```
 
-See [Deploying an App](#deploying-an-app) for more details.
+Prefer plain Helm? Each app's README lists the exact `helm upgrade --install` commands. The apps install from the remote `app-template` chart (not a local one), so there's no `helm install <path>`. See [Deploying an App](#deploying-an-app) for details.
 
 ## How It Works
 
-> [!NOTE]
-> Git push → ArgoCD detects changes → sync applies Helm manifests to the cluster → Traefik routes traffic → App reachable
+```mermaid
+flowchart LR
+    dev([git push]) --> repo[(Git repo)]
+    repo -->|watches & syncs| argo[ArgoCD]
+    argo -->|applies Helm manifests| cluster{{Kubernetes cluster}}
+    infisical[Infisical] -. injects secrets .-> cluster
+    storage[(Host / NFS storage)] -. mounts volumes .-> cluster
+    cluster --> apps[Apps]
+    user([You]) -->|request| traefik[Traefik]
+    traefik -->|routes by domain| apps
+```
 
-Most apps are packaged as Helm charts. ArgoCD watches this repo and continuously syncs chart/manifests to your cluster. Traefik acts as the reverse proxy, routing incoming requests to the right app based on domain/path rules. Infisical injects secrets into pods at deploy time.
+In short: you push a change, ArgoCD applies the updated Helm charts to your cluster, and Traefik routes each incoming request to the right app by domain. Infisical injects secrets into pods at deploy time, and volumes are mounted from the host or NFS.
 
-This is a simplified flow: external access depends on your ingress config, DNS, and (if enabled) TLS setup.
+This is simplified — real external access also depends on your DNS and (if enabled) TLS setup.
 
-If you're not using ArgoCD, you can deploy any app directly with `helm install` — the Helm values work the same either way.
+Not using ArgoCD? You can install any app directly with Helm (`helm upgrade --install`) — the same `values.yaml` drives both paths.
 
-## Deploy Order
+## System App Order
 
-System apps must be synced before any other apps. ArgoCD sync-wave annotations handle ordering automatically when syncing all at once. If syncing manually, use this order:
+System apps must be running before any workload apps. A root **app-of-apps** ([`bootstrap/system.yaml`](bootstrap/system.yaml)) handles this — apply it once and ArgoCD deploys every system app in [sync-wave](https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/) order, waiting for each wave to become healthy before starting the next:
 
-1. [local-path-provisioner](apps/system/local-path-provisioner) — persistent storage class
-2. [traefik](apps/system/traefik) — ingress / reverse proxy
+```sh
+kubectl apply -f bootstrap/system.yaml
+```
+
+The resulting order (apps in the same wave deploy in parallel):
+
+1. [metallb](apps/system/metallb) — load balancer (assigns external IPs)
+2. [longhorn](apps/system/longhorn) · [traefik](apps/system/traefik) — persistent storage + ingress
 3. [infisical-operator](apps/system/infisical-operator) — secret injection
 4. [reloader](apps/system/reloader) — rolling restarts on config/secret changes
-5. Apps (any order)
+
+> These apps set `syncPolicy.automated` so the app-of-apps can drive them in order; workload apps stay manual-sync by default. Two system apps sit outside the wave and are deployed manually: [argocd](apps/system/argocd) (bootstrapped separately, manages itself) and [rancher](apps/system/rancher) (an optional management UI).
 
 ## Host Directories
 
@@ -108,7 +138,7 @@ The defaults below reflect this homelab's setup — update them to match your ow
 
 To customize paths, edit the `config/pv.yaml` in each app you deploy.
 
-A custom `StorageClass` with a `Retain` reclaim policy is also available to prevent data loss when PVCs are deleted — see [local-path-provisioner](apps/system/local-path-provisioner).
+Longhorn also provides a `longhorn-retain` StorageClass, whose `Retain` reclaim policy keeps your data even if a PVC is deleted — see [longhorn](apps/system/longhorn).
 
 ## Secrets
 
@@ -129,14 +159,6 @@ kubectl apply -f apps/<category>/<name>/application.yaml
 ```
 
 Then sync it in the ArgoCD UI or with `argocd app sync <name>`.
-
-## Docs Generation
-
-The [Apps](#apps) tables in this README are auto-generated from app metadata. To regenerate them after adding or updating an app:
-
-```shell
-npm run generate
-```
 
 ## Apps
 

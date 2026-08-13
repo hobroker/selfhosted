@@ -19,6 +19,7 @@ npm run generate -- --check  # verify README is up-to-date (used in CI)
 ## Repo Structure
 
 - `apps/<category>/<app>/` — one dir per app: `application.yaml` (ArgoCD), `values.yaml` (Helm), `README.md` (doc-generator input), optional `config/` (PVs, Infisical secrets, kustomization).
+- `bootstrap/system.yaml` — root app-of-apps that deploys the `apps/system` apps in sync-wave order.
 - `packages/catalog/` — TypeScript CLI that generates the apps table in `README.md`.
 - `.github/workflows/` — `ci.yml` (lint/typecheck/test/kubeconform), `docs.yml` (README up-to-date check).
 
@@ -43,14 +44,14 @@ or `npm run generate` will log an error and may produce incorrect output.
 - **Secrets**: Injected via [Infisical operator](https://infisical.com/docs/integrations/platforms/kubernetes). Each app has an `infisical-<app>-secret.yaml` in `config/`.
 - **Storage**: Default host paths are `/var/local/<app>` (config/db) and `/mnt/nebula` (media/NAS). StorageClass uses `Retain` reclaim policy.
 - **Ingress**: All apps use Traefik. Domain pattern: `<app>.hobroker.me`.
-- **ArgoCD sync**: `syncPolicy: {}` means manual sync by default. System apps use sync-waves for ordering.
+- **ArgoCD sync**: workload apps are manual-sync (`syncPolicy: {}`) by default. System apps set `syncPolicy.automated` and are deployed in sync-wave order by the root app-of-apps (`bootstrap/system.yaml`).
 - **Auto-generated content**: The `## Apps` section in `README.md` is auto-generated. Never edit it manually — always run `npm run generate`.
 
 ## Gotchas
 
 - **Never edit the `## Apps` table in `README.md` directly** — it is auto-generated. Run `npm run generate` instead, or let the pre-commit hook do it.
 - **App README name must match directory name exactly** — the name in backticks on line 1 must equal the folder name or the catalog generator will log an error and may produce incorrect output.
-- **ArgoCD sync is manual by default** — sync is manual unless `syncPolicy.automated` is present; `syncOptions` (`CreateNamespace`, `ServerSideApply`) don't change that. See the ArgoCD Workflow section below, and `CONTRIBUTING.md` § "Adding a new App" for how `syncOptions` relate to sync mode.
+- **ArgoCD sync is manual by default** — sync is manual unless `syncPolicy.automated` is present; `syncOptions` (`CreateNamespace`, `ServerSideApply`) don't change that. System apps are the exception: they set `automated` and are ordered by the root app-of-apps (`bootstrap/system.yaml`). See the ArgoCD Workflow section below, and `CONTRIBUTING.md` § "Adding a new App" for how `syncOptions` relate to sync mode.
 - **Secrets must exist in Infisical before deploying** — deploying an app before its Infisical secret is created will cause CrashLoopBackOff.
 
 ## ArgoCD Workflow
@@ -60,7 +61,7 @@ or `npm run generate` will log an error and may produce incorrect output.
 3. Sync manually: ArgoCD UI → app → Sync, or: `argocd app sync <app-name>`
 4. To watch rollout: `kubectl rollout status deploy/<app> -n default`
 
-System apps (argocd, traefik, cert-manager, metallb) use sync-waves and should be deployed first.
+System apps (metallb, longhorn, traefik, infisical-operator, reloader) auto-sync in sync-wave order via the root app-of-apps (`bootstrap/system.yaml`) and come up before workload apps. Apply it once after bootstrapping ArgoCD: `kubectl apply -f bootstrap/system.yaml`. (argocd and rancher are excluded — deployed manually.)
 
 ## Secrets (Infisical)
 

@@ -37,6 +37,7 @@ spec:
       jsonPointers:
         - /spec/conversion/webhook/clientConfig/caBundle
   syncPolicy:
+    automated: {}
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true

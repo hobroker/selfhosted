@@ -13,6 +13,8 @@ apps/
         pv.yaml                        # PersistentVolume (hostPath)
         infisical-<app>-secret.yaml    # secret reference via the Infisical operator
         kustomization.yaml             # optional: only if you use kustomize to apply config/
+bootstrap/
+  system.yaml           # root app-of-apps: deploys apps/system in sync-wave order
 packages/
   catalog/              # TypeScript CLI that generates the apps table in the main README.md
 .github/workflows/
@@ -73,6 +75,14 @@ spec:
 > present. The `syncOptions` above tune _how_ a sync applies, not _whether_ it
 > runs, so the app above still syncs manually. Omit them (`syncPolicy: {}`) if
 > you don't need them — both stay manual.
+
+> **System apps are different:** anything under `apps/system/` is auto-discovered
+> by the root app-of-apps ([`bootstrap/system.yaml`](bootstrap/system.yaml)) via
+> its `*/application.yaml` glob. To slot a new system app into the ordered
+> bring-up, give it both `syncPolicy.automated: {}` and an
+> `argocd.argoproj.io/sync-wave` annotation (choose a wave relative to the
+> existing ones). To keep it out of the wave and deploy it manually — like
+> `argocd` and `rancher` — add it to the root's `exclude` instead.
 
 **`values.yaml`** — your Helm values overrides for the `app-template` chart
 (`controllers`, `containers`, `service`, `persistence`, `ingress`, …). See the

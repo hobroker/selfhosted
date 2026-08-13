@@ -1,9 +1,14 @@
-import { buildUpdatedReadme, contentWouldChange, injectCatalog } from "./inject";
+import { buildUpdatedReadme, buildUpdatedStats, contentWouldChange, injectCatalog } from "./inject";
 import { CatalogLogger } from "./logger";
 
 vi.mock("prettier", () => ({
   resolveConfig: vi.fn().mockResolvedValue(null),
   format: vi.fn().mockImplementation(async (content: string) => content),
+}));
+
+vi.mock("node:fs/promises", () => ({
+  readFile: vi.fn(),
+  writeFile: vi.fn(),
 }));
 
 const BLOCK = "### Media\n\n| App | Description | Source Code |\n| --- | --- | --- |";
@@ -37,6 +42,22 @@ describe("buildUpdatedReadme", () => {
   });
 });
 
+describe("buildUpdatedStats", () => {
+  const readmeWithStats = "Runs **<!-- stats:start -->old count<!-- stats:end -->** today.\n";
+
+  it("replaces the inline text between the stats markers", () => {
+    const result = buildUpdatedStats(readmeWithStats, "31 apps across 7 categories");
+    expect(result).toBe(
+      "Runs **<!-- stats:start -->31 apps across 7 categories<!-- stats:end -->** today.\n",
+    );
+  });
+
+  it("is a no-op when the stats markers are absent", () => {
+    const noMarkers = "No stats markers here.\n";
+    expect(buildUpdatedStats(noMarkers, "31 apps across 7 categories")).toBe(noMarkers);
+  });
+});
+
 describe("contentWouldChange", () => {
   it("returns true when the block differs", () => {
     expect(contentWouldChange(readmeWithMarkers, BLOCK)).toBe(true);
@@ -57,7 +78,6 @@ describe("injectCatalog", () => {
   });
 
   it("logs an error when markers are missing", async () => {
-    vi.mock("node:fs/promises", () => ({ readFile: vi.fn(), writeFile: vi.fn() }));
     const { readFile } = await import("node:fs/promises");
     vi.mocked(readFile).mockResolvedValue(readmeWithoutMarkers as never);
 
@@ -67,7 +87,6 @@ describe("injectCatalog", () => {
   });
 
   it("--check: logs error when README would change", async () => {
-    vi.mock("node:fs/promises", () => ({ readFile: vi.fn(), writeFile: vi.fn() }));
     const { readFile } = await import("node:fs/promises");
     vi.mocked(readFile).mockResolvedValue(readmeWithMarkers as never);
 
@@ -77,7 +96,6 @@ describe("injectCatalog", () => {
   });
 
   it("--check: no error when README is already up to date", async () => {
-    vi.mock("node:fs/promises", () => ({ readFile: vi.fn(), writeFile: vi.fn() }));
     const { readFile } = await import("node:fs/promises");
     const upToDate = buildUpdatedReadme(readmeWithMarkers, BLOCK);
     vi.mocked(readFile).mockResolvedValue(upToDate as never);
@@ -87,7 +105,6 @@ describe("injectCatalog", () => {
   });
 
   it("--dry-run: does not call writeFile", async () => {
-    vi.mock("node:fs/promises", () => ({ readFile: vi.fn(), writeFile: vi.fn() }));
     const { readFile, writeFile } = await import("node:fs/promises");
     vi.mocked(readFile).mockResolvedValue(readmeWithMarkers as never);
 
@@ -96,7 +113,6 @@ describe("injectCatalog", () => {
   });
 
   it("normal mode: calls writeFile with updated content", async () => {
-    vi.mock("node:fs/promises", () => ({ readFile: vi.fn(), writeFile: vi.fn() }));
     const { readFile, writeFile } = await import("node:fs/promises");
     vi.mocked(readFile).mockResolvedValue(readmeWithMarkers as never);
     vi.mocked(writeFile).mockResolvedValue(undefined);

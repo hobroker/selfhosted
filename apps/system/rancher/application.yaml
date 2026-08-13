@@ -7,8 +7,6 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
   labels:
     category: system
-  annotations:
-    argocd.argoproj.io/sync-wave: "5"
 spec:
   project: default
   sources:

@@ -12,8 +12,18 @@ const MARKER_START = "<!-- apps:start -->";
 const MARKER_END = "<!-- apps:end -->";
 const BLOCK_PATTERN = new RegExp(`(${MARKER_START})([\\s\\S]*?)(${MARKER_END})`, "m");
 
+const STATS_START = "<!-- stats:start -->";
+const STATS_END = "<!-- stats:end -->";
+const STATS_PATTERN = new RegExp(`(${STATS_START})([\\s\\S]*?)(${STATS_END})`, "m");
+
 export function buildUpdatedReadme(original: string, newBlock: string): string {
   return original.replace(BLOCK_PATTERN, (_match, p1, _p2, p3) => `${p1}\n\n${newBlock}\n\n${p3}`);
+}
+
+// Replaces the inline text between the stats markers. No-op when the markers are
+// absent, so the stats line stays optional.
+export function buildUpdatedStats(original: string, statsText: string): string {
+  return original.replace(STATS_PATTERN, (_match, p1, _p2, p3) => `${p1}${statsText}${p3}`);
 }
 
 export function contentWouldChange(original: string, newBlock: string): boolean {
@@ -25,6 +35,7 @@ export async function injectCatalog(
   readmePath: string,
   options: Pick<CliOptions, "check" | "dryRun">,
   logger: CatalogLogger,
+  statsText?: string,
 ): Promise<void> {
   const original = await readFile(readmePath, "utf-8");
 
@@ -33,7 +44,9 @@ export async function injectCatalog(
     return;
   }
 
-  const updated = await formatMarkdown(buildUpdatedReadme(original, newBlock), readmePath);
+  const withCatalog = buildUpdatedReadme(original, newBlock);
+  const withStats = statsText ? buildUpdatedStats(withCatalog, statsText) : withCatalog;
+  const updated = await formatMarkdown(withStats, readmePath);
 
   if (options.check) {
     if (updated !== original) {
