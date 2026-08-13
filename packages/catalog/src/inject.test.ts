@@ -42,10 +42,9 @@ describe("buildUpdatedStats", () => {
 
   it("replaces the inline text between the stats markers", () => {
     const result = buildUpdatedStats(readmeWithStats, "31 apps across 7 categories");
-    expect(result).toContain(
-      "**<!-- stats:start -->31 apps across 7 categories<!-- stats:end -->**",
+    expect(result).toBe(
+      "Runs **<!-- stats:start -->31 apps across 7 categories<!-- stats:end -->** today.\n",
     );
-    expect(result).not.toContain("old count");
   });
 
   it("is a no-op when the stats markers are absent", () => {
