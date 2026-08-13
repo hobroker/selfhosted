@@ -56,8 +56,11 @@ export async function buildCatalog(options: CliOptions, logger: CatalogLogger): 
 
   const markdown = renderCatalog(sections);
 
+  const totalApps = sections.reduce((sum, s) => sum + s.entries.length, 0);
+  const statsText = `${totalApps} self-hosted apps across ${sections.length} categories`;
+
   try {
-    await injectCatalog(markdown, readmePath, options, logger);
+    await injectCatalog(markdown, readmePath, options, logger, statsText);
   } catch (err) {
     logger.error(`Failed to write README.md — ${err instanceof Error ? err.message : String(err)}`);
   }

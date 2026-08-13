@@ -36,7 +36,7 @@ Run your own media server, backups, monitoring, automation, and more — on hard
 
 ## Overview
 
-**31 self-hosted apps across 7 categories**, all deployed the same way — one Helm chart plus GitOps. The stack:
+**<!-- stats:start -->31 self-hosted apps across 7 categories<!-- stats:end -->**, all deployed the same way — one Helm chart plus GitOps. The stack:
 
 - **[Kubernetes](https://kubernetes.io/)** — runs everything (distribution-agnostic: Talos, k3s, …)
 - **[bjw-s app-template](https://bjw-s-labs.github.io/helm-charts/docs/app-template/)** — the single Helm chart every app is built on, so configs stay consistent

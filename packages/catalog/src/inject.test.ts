@@ -1,4 +1,4 @@
-import { buildUpdatedReadme, contentWouldChange, injectCatalog } from "./inject";
+import { buildUpdatedReadme, buildUpdatedStats, contentWouldChange, injectCatalog } from "./inject";
 import { CatalogLogger } from "./logger";
 
 vi.mock("prettier", () => ({
@@ -34,6 +34,23 @@ describe("buildUpdatedReadme", () => {
     const result = buildUpdatedReadme(readmeWithMarkers, BLOCK);
     expect(result).toContain("# My Project");
     expect(result).toContain("Footer text.");
+  });
+});
+
+describe("buildUpdatedStats", () => {
+  const readmeWithStats = "Runs **<!-- stats:start -->old count<!-- stats:end -->** today.\n";
+
+  it("replaces the inline text between the stats markers", () => {
+    const result = buildUpdatedStats(readmeWithStats, "31 apps across 7 categories");
+    expect(result).toContain(
+      "**<!-- stats:start -->31 apps across 7 categories<!-- stats:end -->**",
+    );
+    expect(result).not.toContain("old count");
+  });
+
+  it("is a no-op when the stats markers are absent", () => {
+    const noMarkers = "No stats markers here.\n";
+    expect(buildUpdatedStats(noMarkers, "31 apps across 7 categories")).toBe(noMarkers);
   });
 });
 
