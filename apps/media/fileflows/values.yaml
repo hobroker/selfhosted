@@ -23,6 +23,9 @@ service:
   main:
     controller: main
     type: ClusterIP
+    ports:
+      http:
+        port: 5000
 
 persistence:
   config:
