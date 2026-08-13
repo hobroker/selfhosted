@@ -58,6 +58,8 @@ jobs:
           kubeconform: "0.7.0"
       - uses: azure/setup-helm@v4
         with:
-          version: v3.16.4
+          # Match the Helm bundled in ArgoCD's repo-server (argocd v3.4.6 ships
+          # Helm v3.19.4) so CI renders charts the same way sync does.
+          version: v3.19.4
       - name: Render app-template values and validate
         run: ./scripts/helm-validate.sh
