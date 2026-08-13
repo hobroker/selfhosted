@@ -48,3 +48,16 @@ jobs:
             -schema-location default \
             -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
             -summary
+
+  helm-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: yokawasa/action-setup-kube-tools@v0.14.0
+        with:
+          kubeconform: "0.7.0"
+      - uses: azure/setup-helm@v4
+        with:
+          version: v3.16.4
+      - name: Render app-template values and validate
+        run: ./scripts/helm-validate.sh
