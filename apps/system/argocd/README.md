@@ -26,21 +26,22 @@ kubectl apply -f application.yaml
 argocd app sync argocd
 ```
 
-## Register / update the Application resourceing Services
+## Deploying the rest of the platform
 
-Each service has an `application.yaml` co-located in its chart directory. Register services individually:
+Once ArgoCD is running, deploy all system apps in the correct order with the root app-of-apps (run from the repo root):
 
 ```sh
-kubectl apply -f charts/<category>/<service>/application.yaml
+kubectl apply -f bootstrap/system.yaml
 ```
 
-Then sync via the ArgoCD UI. For system services, sync in this order:
+This creates and auto-syncs metallb, longhorn, traefik, infisical-operator, reloader, and rancher in [sync-wave](https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/) order. See [System App Order](../../../README.md#system-app-order) for the waves.
 
-1. `local-path-provisioner`
-2. `traefik`
-3. `infisical-operator`
-4. `reloader` (optional)
-5. `rancher` (optional)
+Workload apps are registered individually and synced manually:
+
+```sh
+kubectl apply -f apps/<category>/<app>/application.yaml
+# then sync via the ArgoCD UI or: argocd app sync <app>
+```
 
 ## CLI Access
 

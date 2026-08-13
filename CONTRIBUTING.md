@@ -13,6 +13,8 @@ apps/
         pv.yaml                        # PersistentVolume (hostPath)
         infisical-<app>-secret.yaml    # secret reference via the Infisical operator
         kustomization.yaml             # optional: only if you use kustomize to apply config/
+bootstrap/
+  system.yaml           # root app-of-apps: deploys apps/system in sync-wave order
 packages/
   catalog/              # TypeScript CLI that generates the apps table in the main README.md
 .github/workflows/
