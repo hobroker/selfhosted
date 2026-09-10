@@ -15,7 +15,7 @@ spec:
       path: apps/network/adguardhome/config
     - repoURL: https://bjw-s-labs.github.io/helm-charts
       chart: app-template
-      targetRevision: 5.0.1
+      targetRevision: 5.1.0
       helm:
         valueFiles:
           - $values/apps/network/adguardhome/values.yaml
