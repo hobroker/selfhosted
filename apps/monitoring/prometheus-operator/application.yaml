@@ -28,6 +28,7 @@ spec:
     namespace: monitoring
   revisionHistoryLimit: 3
   syncPolicy:
+    automated: {}
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true

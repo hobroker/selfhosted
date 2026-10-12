@@ -66,21 +66,21 @@ spec:
     namespace: default
   revisionHistoryLimit: 3
   syncPolicy:
+    automated: {}
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true
 ```
 
-> **Sync mode:** ArgoCD only auto-syncs when a `syncPolicy.automated` block is
-> present. The `syncOptions` above tune _how_ a sync applies, not _whether_ it
-> runs, so the app above still syncs manually. Omit them (`syncPolicy: {}`) if
-> you don't need them — both stay manual.
+> **Sync mode:** every app auto-syncs — ArgoCD deploys a change as soon as it
+> lands in Git, because of the `syncPolicy.automated` block. Keep it. The
+> `syncOptions` tune _how_ a sync applies, not _whether_ it runs; without
+> `automated` the app would only sync manually.
 
 > **System apps are different:** anything under `apps/system/` is auto-discovered
 > by the root app-of-apps ([`bootstrap/system.yaml`](bootstrap/system.yaml)) via
 > its `*/application.yaml` glob. To slot a new system app into the ordered
-> bring-up, give it both `syncPolicy.automated: {}` and an
-> `argocd.argoproj.io/sync-wave` annotation (choose a wave relative to the
+> bring-up, give it an `argocd.argoproj.io/sync-wave` annotation (choose a wave relative to the
 > existing ones). To keep it out of the wave and deploy it manually — like
 > `argocd` and `rancher` — add it to the root's `exclude` instead.
 
@@ -197,6 +197,20 @@ npm run generate
 ```
 
 This also runs automatically as a pre-commit hook whenever a `apps/**/README.md` is staged.
+
+### 5. Register the app with ArgoCD
+
+Once merged, apply the Application once — from then on, changes to its
+`values.yaml` and `config/` auto-sync:
+
+```shell
+kubectl apply -f apps/<category>/<app-name>/application.yaml
+```
+
+The `Application` resource itself isn't synced from Git, so re-run this whenever
+you change `application.yaml` (for example a chart `targetRevision` bump).
+System apps in the sync wave are the exception — the root app-of-apps applies
+them.
 
 ## Opening a Pull Request
 

@@ -8,10 +8,10 @@ Chart: https://github.com/rancher/rancher/tree/main/chart
 ## Installing/upgrading
 
 ```sh
-# Register / update the Application resource
+# Register / update the Application resource (it auto-syncs from then on)
 kubectl apply -f application.yaml
 
-# Then sync the workload - via ArgoCD UI or:
+# Optional: sync immediately instead of waiting for the next poll
 argocd app sync rancher
 ```
 
