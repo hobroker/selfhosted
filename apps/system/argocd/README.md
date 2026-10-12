@@ -16,13 +16,13 @@ helm upgrade --install argocd argo/argo-cd \
   -f values.yaml
 ```
 
-After the initial bootstrap, ArgoCD manages itself — upgrades are done by bumping `targetRevision` in `application.yaml` and syncing via the UI.
+After the initial bootstrap, ArgoCD manages itself — upgrades are done by bumping `targetRevision` in `application.yaml` and pushing; it auto-syncs.
 
 ```sh
-# Register / update the Application resource
+# Register / update the Application resource (it auto-syncs from then on)
 kubectl apply -f application.yaml
 
-# Then sync the workload - via ArgoCD UI or:
+# Optional: sync immediately instead of waiting for the next poll
 argocd app sync argocd
 ```
 
@@ -36,11 +36,11 @@ kubectl apply -f bootstrap/system.yaml
 
 This creates and auto-syncs metallb, longhorn, traefik, infisical-operator, and reloader in [sync-wave](https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/) order. See [System App Order](../../../README.md#system-app-order) for the waves.
 
-Workload apps (and rancher) are registered individually and synced manually:
+Workload apps (and rancher) are registered individually; once registered they auto-sync:
 
 ```sh
 kubectl apply -f apps/<category>/<app>/application.yaml
-# then sync via the ArgoCD UI or: argocd app sync <app>
+# optional, to sync immediately: argocd app sync <app>
 ```
 
 ## CLI Access
