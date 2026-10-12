@@ -17,7 +17,7 @@ spec:
       path: apps/system/traefik/config
     - repoURL: https://helm.traefik.io/traefik
       chart: traefik
-      targetRevision: 41.1.0
+      targetRevision: 41.7.1
       helm:
         valueFiles:
           - $values/apps/system/traefik/values.yaml
