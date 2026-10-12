@@ -198,6 +198,20 @@ npm run generate
 
 This also runs automatically as a pre-commit hook whenever a `apps/**/README.md` is staged.
 
+### 5. Register the app with ArgoCD
+
+Once merged, apply the Application once — from then on, changes to its
+`values.yaml` and `config/` auto-sync:
+
+```shell
+kubectl apply -f apps/<category>/<app-name>/application.yaml
+```
+
+The `Application` resource itself isn't synced from Git, so re-run this whenever
+you change `application.yaml` (for example a chart `targetRevision` bump).
+System apps in the sync wave are the exception — the root app-of-apps applies
+them.
+
 ## Opening a Pull Request
 
 1. Fork the repo and clone your fork

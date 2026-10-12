@@ -16,7 +16,7 @@ helm upgrade --install argocd argo/argo-cd \
   -f values.yaml
 ```
 
-After the initial bootstrap, ArgoCD manages itself — upgrades are done by bumping `targetRevision` in `application.yaml` and pushing; it auto-syncs.
+After the initial bootstrap, ArgoCD manages itself. To upgrade, bump `targetRevision` in `application.yaml`, push, and re-apply the Application below — pushing alone doesn't update the live Application. ArgoCD then auto-syncs the upgrade.
 
 ```sh
 # Register / update the Application resource (it auto-syncs from then on)

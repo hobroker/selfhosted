@@ -56,10 +56,12 @@ or `npm run generate` will log an error and may produce incorrect output.
 
 ## ArgoCD Workflow
 
-1. Edit `values.yaml` (or `application.yaml`) and commit/push
+1. Edit `values.yaml` (or files in `config/`) and commit/push
 2. ArgoCD detects the change and auto-syncs it (`syncPolicy.automated: {}`) — no manual sync needed
 3. To sync immediately instead of waiting for the next poll: ArgoCD UI → app → Sync, or: `argocd app sync <app-name>`
 4. To watch rollout: `kubectl rollout status deploy/<app> -n default`
+
+Auto-sync only covers an app's _sources_ (`values.yaml`, `config/`). The `Application` resource itself is not synced from Git, so a new app — or any change to `application.yaml` (e.g. a chart `targetRevision` bump from Renovate) — needs `kubectl apply -f apps/<cat>/<app>/application.yaml`. System apps in the wave are the exception: the root app-of-apps applies their `application.yaml` for you.
 
 System apps (metallb, longhorn, traefik, infisical-operator, reloader) auto-sync in sync-wave order via the root app-of-apps (`bootstrap/system.yaml`) and come up before workload apps. Apply it once after bootstrapping ArgoCD: `kubectl apply -f bootstrap/system.yaml`. (argocd and rancher are excluded from the wave — their Application is applied manually, then they auto-sync like every other app.)
 
@@ -92,8 +94,9 @@ kubectl get secret -n default            # list secrets
 1. Create `apps/<category>/<app-name>/` with `application.yaml`, `values.yaml`, and `README.md` (add `config/` if the app needs extra manifests like PVs or Infisical secrets)
 2. Follow the README format above exactly
 3. Run `npm run generate` to update the main README (or let the pre-commit hook do it)
-4. Before committing, run the same checks as CI: `npm run lint`, `npm run format`, `npm run typecheck`, `npm run test`, `npm run generate -- --check`
-5. See `CONTRIBUTING.md` for full details and the file templates
+4. After merging, register it once: `kubectl apply -f apps/<category>/<app-name>/application.yaml` — it auto-syncs from then on
+5. Before committing, run the same checks as CI: `npm run lint`, `npm run format`, `npm run typecheck`, `npm run test`, `npm run generate -- --check`
+6. See `CONTRIBUTING.md` for full details and the file templates
 
 ## CI
 
