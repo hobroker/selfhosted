@@ -44,24 +44,24 @@ or `npm run generate` will log an error and may produce incorrect output.
 - **Secrets**: Injected via [Infisical operator](https://infisical.com/docs/integrations/platforms/kubernetes). Each app has an `infisical-<app>-secret.yaml` in `config/`.
 - **Storage**: Default host paths are `/var/local/<app>` (config/db) and `/mnt/nebula` (media/NAS). StorageClass uses `Retain` reclaim policy.
 - **Ingress**: All apps use Traefik. Domain pattern: `<app>.hobroker.me`.
-- **ArgoCD sync**: workload apps are manual-sync (`syncPolicy: {}`) by default. System apps set `syncPolicy.automated` and are deployed in sync-wave order by the root app-of-apps (`bootstrap/system.yaml`).
+- **ArgoCD sync**: every app auto-syncs (`syncPolicy.automated: {}`) — pushing a change to Git is enough to deploy it. System apps are additionally deployed in sync-wave order by the root app-of-apps (`bootstrap/system.yaml`).
 - **Auto-generated content**: The `## Apps` section in `README.md` is auto-generated. Never edit it manually — always run `npm run generate`.
 
 ## Gotchas
 
 - **Never edit the `## Apps` table in `README.md` directly** — it is auto-generated. Run `npm run generate` instead, or let the pre-commit hook do it.
 - **App README name must match directory name exactly** — the name in backticks on line 1 must equal the folder name or the catalog generator will log an error and may produce incorrect output.
-- **ArgoCD sync is manual by default** — sync is manual unless `syncPolicy.automated` is present; `syncOptions` (`CreateNamespace`, `ServerSideApply`) don't change that. System apps are the exception: they set `automated` and are ordered by the root app-of-apps (`bootstrap/system.yaml`). See the ArgoCD Workflow section below, and `CONTRIBUTING.md` § "Adding a new App" for how `syncOptions` relate to sync mode.
+- **ArgoCD auto-sync needs `syncPolicy.automated`** — every app sets it; without it an app syncs manually. `syncOptions` (`CreateNamespace`, `ServerSideApply`) don't change that. Pushing to `master` deploys, so don't merge half-finished changes. See the ArgoCD Workflow section below, and `CONTRIBUTING.md` § "Adding a new App".
 - **Secrets must exist in Infisical before deploying** — deploying an app before its Infisical secret is created will cause CrashLoopBackOff.
 
 ## ArgoCD Workflow
 
 1. Edit `values.yaml` (or `application.yaml`) and commit/push
-2. ArgoCD detects the change but does **not** auto-sync (`syncPolicy: {}` by default)
-3. Sync manually: ArgoCD UI → app → Sync, or: `argocd app sync <app-name>`
+2. ArgoCD detects the change and auto-syncs it (`syncPolicy.automated: {}`) — no manual sync needed
+3. To sync immediately instead of waiting for the next poll: ArgoCD UI → app → Sync, or: `argocd app sync <app-name>`
 4. To watch rollout: `kubectl rollout status deploy/<app> -n default`
 
-System apps (metallb, longhorn, traefik, infisical-operator, reloader) auto-sync in sync-wave order via the root app-of-apps (`bootstrap/system.yaml`) and come up before workload apps. Apply it once after bootstrapping ArgoCD: `kubectl apply -f bootstrap/system.yaml`. (argocd and rancher are excluded — deployed manually.)
+System apps (metallb, longhorn, traefik, infisical-operator, reloader) auto-sync in sync-wave order via the root app-of-apps (`bootstrap/system.yaml`) and come up before workload apps. Apply it once after bootstrapping ArgoCD: `kubectl apply -f bootstrap/system.yaml`. (argocd and rancher are excluded from the wave — their Application is applied manually, then they auto-sync like every other app.)
 
 ## Secrets (Infisical)
 
