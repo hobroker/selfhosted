@@ -125,7 +125,7 @@ The resulting order (apps in the same wave deploy in parallel):
 3. [infisical-operator](apps/system/infisical-operator) — secret injection
 4. [reloader](apps/system/reloader) — rolling restarts on config/secret changes
 
-> These apps set `syncPolicy.automated` so the app-of-apps can drive them in order; workload apps stay manual-sync by default. Two system apps sit outside the wave and are deployed manually: [argocd](apps/system/argocd) (bootstrapped separately, manages itself) and [rancher](apps/system/rancher) (an optional management UI).
+> Every app — system and workload alike — sets `syncPolicy.automated`, so ArgoCD deploys changes as soon as they are pushed; for system apps it also lets the app-of-apps drive them in order. Two system apps sit outside the wave and their Application is applied manually: [argocd](apps/system/argocd) (bootstrapped separately, manages itself) and [rancher](apps/system/rancher) (an optional management UI).
 
 ## Host Directories
 
