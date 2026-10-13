@@ -6,7 +6,6 @@ controllers:
     type: cronjob
     labels:
       cronjob: grafana-backup
-    strategy: RollingUpdate
     containers:
       main:
         image:
