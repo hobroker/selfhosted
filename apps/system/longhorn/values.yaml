@@ -25,3 +25,11 @@ persistence:
 
 longhornUI:
   replicas: 1
+
+metrics:
+  serviceMonitor:
+    enabled: true
+    annotations:
+      # Longhorn syncs in the system wave, before prometheus-operator installs
+      # the ServiceMonitor CRD; don't block the sync on a fresh bootstrap.
+      argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
