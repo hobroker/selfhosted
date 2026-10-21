@@ -7,7 +7,7 @@ controllers:
       main:
         image:
           repository: linuxserver/qbittorrent
-          tag: 5.2.3
+          tag: 5.3.0
           pullPolicy: IfNotPresent
         env:
           PGID: "1000"
