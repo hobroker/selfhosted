@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Sign-in failed · hobroker.me</title>
+    <style>
+      :root {
+        --bg: #f6f5f2;
+        --card: #ffffff;
+        --text: #1d1d1f;
+        --muted: #6b6b70;
+        --border: #e4e2dd;
+        --accent: #d9480f;
+        --accent-soft: #fdebe2;
+        --btn-text: #ffffff;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #111113;
+          --card: #1a1a1d;
+          --text: #ededef;
+          --muted: #9a9aa1;
+          --border: #2a2a2f;
+          --accent: #ff7a3d;
+          --accent-soft: #2c1a12;
+          --btn-text: #111113;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+      body {
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        padding: 24px 16px;
+        background: var(--bg);
+        color: var(--text);
+        font:
+          16px/1.5 ui-sans-serif,
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+      }
+      main {
+        width: 100%;
+        max-width: 440px;
+        padding: 36px 32px 28px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+      }
+      .badge {
+        display: inline-grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+        background: var(--accent-soft);
+        color: var(--accent);
+      }
+      .code {
+        margin: 0 0 4px;
+        color: var(--accent);
+        font:
+          600 13px/1.4 ui-monospace,
+          SFMono-Regular,
+          Menlo,
+          monospace;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      h1 {
+        margin: 0 0 12px;
+        font-size: 24px;
+        line-height: 1.25;
+        font-weight: 650;
+      }
+      p {
+        margin: 0 0 16px;
+        color: var(--muted);
+      }
+      .host {
+        color: var(--text);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 14px;
+        word-break: break-all;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 24px;
+      }
+      a.btn {
+        display: inline-block;
+        padding: 10px 16px;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 550;
+        text-decoration: none;
+      }
+      a.primary {
+        background: var(--accent);
+        color: var(--btn-text);
+      }
+      a.secondary {
+        border: 1px solid var(--border);
+        color: var(--text);
+      }
+      a.btn:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      footer {
+        margin-top: 28px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="badge" aria-hidden="true">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4 21a8 8 0 0 1 11-7.4M17 15l4 4M21 15l-4 4" />
+        </svg>
+      </div>
+      <p class="code">Identity denied</p>
+      <h1>Your sign-in wasn't accepted</h1>
+      <p>
+        The identity provider couldn't verify you for
+        <span class="host" id="host">this app</span>.
+      </p>
+      <p>
+        This usually means the login was cancelled, timed out, or used an account that isn't
+        allowed. Try again, or sign in with another account.
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="/cdn-cgi/access/logout">Use a different account</a>
+        <a class="btn secondary" href="/">Try again</a>
+      </div>
+      <footer>hobroker.me · protected by Cloudflare Access</footer>
+    </main>
+    <script>
+      document.getElementById("host").textContent = location.hostname || "this app";
+    </script>
+  </body>
+</html>
