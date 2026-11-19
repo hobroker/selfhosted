@@ -20,7 +20,7 @@ spec:
       path: apps/system/metallb/postsync
     - repoURL: https://metallb.github.io/metallb
       chart: metallb
-      targetRevision: 0.16.1
+      targetRevision: 0.16.2
       helm:
         valueFiles:
           - $values/apps/system/metallb/values.yaml
